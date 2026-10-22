@@ -53,9 +53,9 @@ export const privacy = {
               and is never used for tracking.
             </li>
             <li>
-              <strong>One more cookie, only if you have the preview passcode.</strong> While the free
-              chart is in preview, a cookie called{' '}
-              <code className="type-data-sm">at-preview</code> keeps it open on this device for 30
+              <strong>One more cookie, only if you have the preview passcode.</strong> For the pages
+              still in preview, a cookie called{' '}
+              <code className="type-data-sm">at-preview</code> keeps them open on this device for 30
               days. It holds a scrambled form of the passcode, not the passcode, and nothing about
               you.
             </li>
@@ -142,6 +142,29 @@ export const privacy = {
               Deleting it removes your chart, your birth details, and everything tied to them.
             </li>
           </ul>
+          {/* PLACEHOLDER (2b): what an account stores, for Kevin to review. */}
+          <p>
+            Sign-in is open to the team only for now, with Google. An account stores your email
+            address, the name you choose, and who can see your chart. Google also shares your
+            Google name and photo with our sign-in service, which keeps them with your sign-in
+            record. We never use your Google name. Your photo shows beside your name at the top of
+            the page while you are signed in, loaded from Google.
+          </p>
+          {/* PLACEHOLDER (2c): saved birth details, for Kevin to review. */}
+          <p>
+            When you save your chart, we keep your birth date, your birth time if you give one, your
+            birthplace as you picked it, its map coordinates, and its time zone. Only you can read
+            them. From them our server works out your placements, the sign and house of each body in
+            your chart, and keeps those too. Other members never see your birth details, and never
+            a degree. Signs and houses can narrow down when and where someone was born, so they
+            follow the visibility you choose, and they start private.
+          </p>
+          <p>
+            You can change your birth details once an hour. If you ran the free chart first and
+            chose to save it, its details wait in that browser tab until you sign in and save them.
+            They are cleared once saved, when you sign out, or after an hour, and they never reach
+            us before you save.
+          </p>
         </>
       ),
     },
@@ -166,6 +189,11 @@ export const privacy = {
             chart and receives only the text you type in the place field, as described above. As
             features open, each new service that handles your data (for the database and sign-in)
             is named here before it goes live, with what it receives.
+          </p>
+          {/* PLACEHOLDER (2b): for Kevin to review. */}
+          <p>
+            For team sign-in, Supabase holds accounts and the database, and Google confirms who you
+            are when you choose to sign in with Google.
           </p>
           <p>
             We do not sell your information, share it for advertising, or send marketing email. We

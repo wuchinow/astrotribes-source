@@ -70,6 +70,9 @@ describe('rate limits', () => {
       passcode: { limit: 5, windowMs: 900_000 },
       chart: { limit: 10, windowMs: 60_000 },
       place: { limit: 60, windowMs: 60_000 },
+      signIn: { limit: 10, windowMs: 900_000 },
+      account: { limit: 20, windowMs: 60_000 },
+      birth: { limit: 10, windowMs: 900_000 },
     });
   });
 

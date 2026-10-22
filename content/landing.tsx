@@ -27,6 +27,16 @@ export const hero = {
   ],
 } satisfies Block & Record<string, unknown>;
 
+// PLACEHOLDER: the hero's wheel of the 12 Tribes (1l), from lg up. Sign names come from lib/keys.ts.
+export const wheel = {
+  placeholder: true,
+  label: 'The 12 Tribes',
+  season: 'The Sun is in',
+  focus: 'The Tribe of',
+  visit: (sign: string) => `Visit the ${sign} Tribe`,
+  link: (sign: string, dates: string) => `${sign} Tribe, ${dates}`,
+} satisfies Block & Record<string, unknown>;
+
 export const contrast = {
   placeholder: true, // PLACEHOLDER: Dawa writes the words (design system, Aristotle lessons)
   eyebrow: 'What this is',

@@ -39,6 +39,10 @@ select lives_ok(
   $$insert into public.birth_data (user_id, birth_date, birth_time, time_known, place_label, latitude, longitude, timezone)
     values (tests.id('second'), date '1960-01-01' + floor(random() * 16800)::int, null, false, 'Synthetic', 0, 0, 'Etc/UTC')$$,
   'a second member inserts their own row, with no birth time');
+-- Past 0002's one change an hour, so the policy is what refuses the next update.
+reset role;
+select tests.backdate_birth_data('second');
+select tests.be('second');
 select throws_ok(
   $$update public.birth_data set user_id = tests.id('first') where user_id = tests.id('second')$$,
   '42501', null, 'a second member cannot hand their row to the first member''s id');
@@ -50,6 +54,7 @@ select is((select count(*) from public.birth_data where user_id = tests.id('seco
   'the second member still has exactly their own row');
 
 -- Unknown time (open decision 11): no time when the flag is false, and the reverse.
+select tests.backdate_birth_data('first');
 select throws_ok(
   $$update public.birth_data set birth_time = '12:00' where user_id = tests.id('second')$$,
   '23514', null, 'a time without time_known is refused');

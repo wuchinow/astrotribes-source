@@ -1,6 +1,6 @@
 -- The shape of the schema: RLS, policies, and privileges, read from the catalog.
 begin;
-select plan(47);
+select plan(49);
 
 -- Invariant 1: RLS on every table, no policy that is simply true.
 select is(
@@ -62,6 +62,7 @@ select ok(not has_table_privilege('authenticated', 'public.birth_data', 'DELETE'
 select ok(not has_table_privilege('authenticated', 'public.placements', 'SELECT'), 'members have no table-wide select on placements');
 select ok(has_column_privilege('authenticated', 'public.placements', 'sign', 'SELECT'), 'members read a placement''s sign');
 select ok(has_column_privilege('authenticated', 'public.placements', 'house', 'SELECT'), 'members read a placement''s house');
+select ok(has_column_privilege('authenticated', 'public.placements', 'sign_alternate', 'SELECT'), 'members read a placement''s alternate sign (0002)');
 select ok(not has_column_privilege('authenticated', 'public.placements', 'degree', 'SELECT'), 'members cannot read a degree');
 select ok(not has_column_privilege('authenticated', 'public.placements', 'minute', 'SELECT'), 'members cannot read a minute');
 select ok(not has_table_privilege('authenticated', 'public.placements', 'INSERT'), 'members do not insert placements');
@@ -75,6 +76,8 @@ select ok(not has_table_privilege('authenticated', 'public.member_counts', 'INSE
 select ok(not has_schema_privilege('authenticated', 'private', 'USAGE'), 'members cannot use the private schema');
 select ok(not has_function_privilege('authenticated', 'private.handle_new_user()', 'EXECUTE'),
   'members cannot execute the new-user trigger function');
+select ok(not has_function_privilege('authenticated', 'private.birth_data_changed()', 'EXECUTE'),
+  'members cannot execute the birth details trigger function (0002)');
 
 -- service_role: placements only. No path to birth_data (invariant 2).
 select ok(has_table_privilege('service_role', 'public.placements', 'SELECT, INSERT, UPDATE, DELETE'),

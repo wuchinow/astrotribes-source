@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
-type Variant = 'primary' | 'secondary' | 'tertiary';
+type Variant = 'primary' | 'secondary' | 'tertiary' | 'danger';
 type Size = 'sm' | 'md' | 'lg' | 'nav';
 
 interface CommonProps {
@@ -32,6 +32,8 @@ const variants: Record<Variant, string> = {
   secondary: 'bg-transparent text-ink-900 border-ink-900 hover:bg-surface-200',
   tertiary:
     'border-transparent bg-transparent text-cobalt-600 px-2 hover:underline hover:decoration-gold-500 hover:decoration-2 hover:underline-offset-4',
+  // An action that cannot be undone (2b: Delete my account). Ember, the colour errors already take.
+  danger: 'bg-transparent text-ember-500 border-ember-500 hover:bg-surface-200',
 };
 
 // Small buttons are 36px tall; the ::before extends the hit area to 44px.

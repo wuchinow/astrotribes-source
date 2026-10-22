@@ -35,7 +35,16 @@ export const parseChartRequest = (
   if (keys.length !== FIELDS.length || !FIELDS.every((f) => keys.includes(f))) {
     return { ok: false, code: 'invalid_body' };
   }
-  const { date, time, lat, lon } = body as Record<string, unknown>;
+  return checkChartFields(body as Record<string, unknown>);
+};
+
+/** The field checks alone, shared with the saved birth details (2c), which arrive as a form. */
+export const checkChartFields = ({
+  date,
+  time,
+  lat,
+  lon,
+}: Record<string, unknown>): { ok: true; value: ChartRequest } | { ok: false; code: ChartRequestError } => {
   if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return { ok: false, code: 'invalid_date' };
   }

@@ -34,7 +34,22 @@ stable
 set search_path = ''
 as $$ select current_setting('tests.' || label)::uuid $$;
 
--- Random birth details for a labelled user.
+-- Moves a labelled user's last change of birth details two hours back, past 0002's one change
+-- an hour, so a test can update the row. Triggers are off for this one statement only, which
+-- needs the superuser the tests connect as.
+create function tests.backdate_birth_data(label text)
+returns void
+language plpgsql
+set search_path = ''
+as $$
+begin
+  set local session_replication_role = replica;
+  update public.birth_data set updated_at = now() - interval '2 hours' where user_id = tests.id(label);
+  set local session_replication_role = origin;
+end;
+$$;
+
+-- Random birth details for a labelled user, last changed two hours ago.
 create function tests.give_birth_data(label text)
 returns void
 language sql
@@ -51,6 +66,7 @@ as $$
     random() * 120 - 60,
     random() * 360 - 180,
     'Etc/UTC');
+  select tests.backdate_birth_data(label);
 $$;
 
 -- A full chart for a labelled user: the Sun in the sign given, everything else at random.

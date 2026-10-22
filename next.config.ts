@@ -26,7 +26,14 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['sweph', 'geo-tz'],
   outputFileTracingIncludes: {
     '/api/chart': ENGINE_FILES,
+    '/welcome': ENGINE_FILES,
     '/share/**': ['./assets/fonts/*.ttf', './public/brand/logo-mono.svg', './app/tokens.css'],
+  },
+  // geo-tz ships three zone datasets and the tracer takes all of them; the engine reads only the
+  // full historical one (geo-tz/all). The other two are about 42 MB in every function that
+  // carries the engine, counted again in every deployment Vercel keeps (Oct 22).
+  outputFileTracingExcludes: {
+    '*': ['./node_modules/geo-tz/data/timezones-1970.*', './node_modules/geo-tz/data/timezones-now.*'],
   },
   // Development logging stays quiet about anything a request carried (invariant 9): no fetch URLs
   // (the Geoapify URL holds the typed place and the key), no server function calls, and no

@@ -1,10 +1,9 @@
 import { NextRequest } from 'next/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { POST as chartPOST } from '@/app/api/chart/route';
-import { POST as placePOST } from '@/app/api/place/route';
 import { GET as previewGET, POST as previewPOST } from '@/app/api/preview/route';
 import {
   GATED_PREFIXES,
+  MEMBER_PREFIXES,
   PREVIEW_COOKIE,
   PREVIEW_MAX_AGE,
   isGatedPath,
@@ -29,7 +28,7 @@ const req = (path: string, init: { cookie?: string; method?: string; body?: Body
     },
   });
 
-const passcodeForm = (passcode: string, next = '/chart') => {
+const passcodeForm = (passcode: string, next = '/sky') => {
   const form = new URLSearchParams({ passcode, next });
   return {
     method: 'POST',
@@ -45,66 +44,53 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 describe('the proxy matcher', () => {
-  it('lists exactly the gated prefixes', () => {
-    expect(config.matcher).toEqual(GATED_PREFIXES.map((p) => `${p}/:path*`));
+  it('lists exactly the gated and member prefixes', () => {
+    expect(config.matcher).toEqual([...GATED_PREFIXES, ...MEMBER_PREFIXES].map((p) => `${p}/:path*`));
   });
 
-  it('leaves the public pages open', () => {
-    for (const path of ['/', '/oracle', '/oracle/consult', '/privacy', '/tribes/leo', '/share/leo/taurus/gemini', '/preview', '/api/preview']) {
-      expect(isGatedPath(path), path).toBe(false);
-    }
-    for (const path of ['/chart', '/sky', '/api/chart', '/api/place', '/chart/anything']) {
-      expect(isGatedPath(path), path).toBe(true);
-    }
+  it('gates only /sky: the free chart and sign-in are open (Oct 22)', () => {
+    const open = ['/', '/oracle', '/privacy', '/tribes/leo', '/share/leo/taurus/gemini', '/preview', '/api/preview',
+      '/chart', '/api/chart', '/api/place', '/sign-in', '/auth/callback', '/account', '/api/account/export', '/welcome', '/your-chart'];
+    for (const path of open) expect(isGatedPath(path), path).toBe(false);
+    for (const path of ['/sky', '/sky/anything']) expect(isGatedPath(path), path).toBe(true);
   });
 });
 
 describe('the proxy', () => {
-  it('sends a page without the cookie to /preview', () => {
-    const response = proxy(req('/chart'));
+  it('sends /sky without the cookie to /preview', async () => {
+    const response = await proxy(req('/sky'));
     expect(response.status).toBe(307);
-    expect(response.headers.get('location')).toBe(`${BASE}/preview?next=%2Fchart`);
-    expect(proxy(req('/sky')).headers.get('location')).toBe(`${BASE}/preview?next=%2Fsky`);
+    expect(response.headers.get('location')).toBe(`${BASE}/preview?next=%2Fsky`);
   });
 
-  it('answers an API without the cookie with a 401', async () => {
-    for (const path of ['/api/chart', '/api/place']) {
-      const response = proxy(req(path, { method: 'POST' }));
-      expect(response.status, path).toBe(401);
-      expect(await response.json()).toEqual({ error: 'preview_required' });
-    }
-  });
-
-  it('lets the right cookie through, uncached', () => {
-    const response = proxy(req('/chart', { cookie: previewToken(PASS) }));
+  it('lets the right cookie through, uncached', async () => {
+    const response = await proxy(req('/sky', { cookie: previewToken(PASS) }));
     expect(response.headers.get('x-middleware-next')).toBe('1');
     expect(response.headers.get('cache-control')).toBe('private, no-store');
   });
 
-  it('refuses a wrong cookie, and a cookie from an old passcode', () => {
-    expect(proxy(req('/chart', { cookie: 'nonsense' })).status).toBe(307);
+  it('refuses a wrong cookie, and a cookie from an old passcode', async () => {
+    expect((await proxy(req('/sky', { cookie: 'nonsense' }))).status).toBe(307);
     const old = previewToken('the old passcode');
-    expect(proxy(req('/chart', { cookie: old })).status).toBe(307);
+    expect((await proxy(req('/sky', { cookie: old }))).status).toBe(307);
     vi.stubEnv('PREVIEW_PASSCODE', 'a new passcode');
-    expect(proxy(req('/chart', { cookie: previewToken(PASS) })).status).toBe(307);
+    expect((await proxy(req('/sky', { cookie: previewToken(PASS) }))).status).toBe(307);
   });
 
-  it('stays closed when PREVIEW_PASSCODE is unset or blank', () => {
-    for (const value of [undefined, '', '   ']) {
-      vi.stubEnv('PREVIEW_PASSCODE', value as string);
-      expect(proxy(req('/chart', { cookie: previewToken(value ?? '') })).status).toBe(307);
-      expect(passcodeMatches(value ?? '')).toBe(false);
+  it('lets the member paths through without a passcode, uncached', async () => {
+    for (const path of ['/sign-in', '/auth/callback?code=x', '/account', '/api/account/export', '/welcome', '/your-chart']) {
+      const response = await proxy(req(path));
+      expect(response.headers.get('x-middleware-next'), path).toBe('1');
+      expect(response.headers.get('cache-control'), path).toBe('private, no-store');
     }
   });
-});
 
-describe('each gated route checks for itself (invariant 5)', () => {
-  it('refuses /api/chart and /api/place without the cookie, even past the proxy', async () => {
-    const body = JSON.stringify({ date: '2000-01-01', time: null, lat: 0, lon: 0 });
-    const chart = await chartPOST(req('/api/chart', { method: 'POST', body }));
-    expect(chart.status).toBe(401);
-    const place = await placePOST(req('/api/place', { method: 'POST', body: JSON.stringify({ text: 'Somewhere' }) }));
-    expect(place.status).toBe(401);
+  it('stays closed when PREVIEW_PASSCODE is unset or blank', async () => {
+    for (const value of [undefined, '', '   ']) {
+      vi.stubEnv('PREVIEW_PASSCODE', value as string);
+      expect((await proxy(req('/sky', { cookie: previewToken(value ?? '') }))).status).toBe(307);
+      expect(passcodeMatches(value ?? '')).toBe(false);
+    }
   });
 });
 
@@ -127,7 +113,7 @@ describe('/api/preview', () => {
   it('sends a wrong passcode back with an error and no cookie', async () => {
     const response = await previewPOST(req('/api/preview', passcodeForm('wrong')));
     expect(response.status).toBe(303);
-    expect(response.headers.get('location')).toBe(`${BASE}/preview?next=%2Fchart&error=wrong`);
+    expect(response.headers.get('location')).toBe(`${BASE}/preview?next=%2Fsky&error=wrong`);
     expect(response.headers.get('set-cookie')).toBeNull();
   });
 
@@ -139,10 +125,10 @@ describe('/api/preview', () => {
   });
 
   it('only ever returns to a gated page: no open redirect', async () => {
-    for (const next of ['https://evil.example', '//evil.example', '/\\evil.example', '/chart?x=1', 'javascript:alert(1)', '/oracle']) {
-      expect(safeReturnPath(next), next).toBe('/chart');
+    for (const next of ['https://evil.example', '//evil.example', '/\\evil.example', '/sky?x=1', 'javascript:alert(1)', '/oracle']) {
+      expect(safeReturnPath(next), next).toBe('/sky');
       const response = await previewPOST(req('/api/preview', passcodeForm(PASS, next)));
-      expect(response.headers.get('location'), next).toBe(`${BASE}/chart`);
+      expect(response.headers.get('location'), next).toBe(`${BASE}/sky`);
       resetRateLimits();
     }
   });

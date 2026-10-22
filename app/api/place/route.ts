@@ -1,10 +1,9 @@
-// Birthplace autocomplete for the /chart form, behind the passcode. The browser posts the typed
+// Birthplace autocomplete for the /chart form and the welcome steps. The browser posts the typed
 // text (never in our URL); the server asks Geoapify and answers {results: [{label, lat, lon}]}.
 // Nothing is kept or logged; errors are codes.
 import type { NextRequest } from 'next/server';
 import { cleanPlaceText, searchPlaces, type PlaceError } from '@/lib/geoapify';
 import { json, tooMany } from '@/lib/json';
-import { hasPreviewAccess } from '@/lib/preview';
 import { takeRateLimit } from '@/lib/rate-limit';
 
 const MAX_BODY = 512;
@@ -19,8 +18,6 @@ const STATUS: Record<PlaceError, number> = {
 
 export async function POST(request: NextRequest) {
   try {
-    if (!hasPreviewAccess(request.cookies)) return json({ error: 'preview_required' }, 401);
-
     const limit = takeRateLimit('place', request.headers);
     if (!limit.ok) return tooMany(limit.retryAfter);
 

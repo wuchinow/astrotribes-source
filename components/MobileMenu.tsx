@@ -5,12 +5,13 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState } from 'react';
 import { appearanceCopy } from '@/content/appearance';
 import { DISCLOSURE_EVENT } from './AppearancePanel';
+import { HeaderAccount } from './HeaderAccount';
 import { MoodToggle } from './MoodToggle';
 import { NavLinks } from './NavLinks';
 
 /**
  * The header's menu below lg: a menu button and a panel under the header row with the main nav, then
- * the mood toggle (1h: the header keeps only the logo, the primary action, and this button on a
+ * the account link (2b), the mood toggle (1h: the header keeps only the logo, the primary action, and this button on a
  * phone). The menu closes on Escape (focus returns to the button), on a link, on a new page, and when
  * another disclosure opens.
  */
@@ -75,6 +76,9 @@ export function MobileMenu() {
               onNavigate={() => setOpenOn(null)}
             />
           </nav>
+          <div className="mt-2 border-t border-ink-200 pt-2">
+            <HeaderAccount place="menu" onNavigate={() => setOpenOn(null)} />
+          </div>
           <div className="mt-2 border-t border-ink-200 pt-2 pb-2">
             <div className="flex items-center gap-2 type-body-sm text-ink-700">
               <MoodToggle />

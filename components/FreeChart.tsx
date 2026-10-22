@@ -1,7 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { errorCopy, formCopy, resultCopy } from '@/content/chart';
+import { carryCopy } from '@/content/welcome';
+import { keepCarry } from '@/lib/carry';
 import { THREE, sharePath, type FreeChart as Chart } from '@/lib/free-chart';
 import { ArtWash } from './ArtWash';
 import { Button } from './Button';
@@ -20,10 +23,13 @@ const focusFirstError = () =>
     document.querySelector<HTMLElement>('form [aria-invalid="true"]')?.focus(),
   );
 
-// Birth details live in this component's state only: never in storage, a cookie, or a URL, and a
-// reload returns an empty form (invariant 9). Only date, time, and coordinates go to /api/chart.
+// Birth details live in this component's state only: never in a cookie or a URL, and a reload
+// returns an empty form (invariant 9). Only date, time, and coordinates go to /api/chart. The one
+// exception is the visitor's own choice: Save this chart keeps them in this tab's sessionStorage
+// for the welcome steps to fill in (2c, lib/carry.ts), and nothing is sent until they save there.
 
 export function FreeChart() {
+  const router = useRouter();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [unknownTime, setUnknownTime] = useState(false);
@@ -92,6 +98,10 @@ export function FreeChart() {
         placeLabel={place.label}
         headingRef={resultHeading}
         onStartOver={() => setChart(null)}
+        onSave={() => {
+          keepCarry({ date, time: unknownTime ? null : time, place: { label: place.label, lat: place.lat, lon: place.lon } });
+          router.push('/welcome');
+        }}
       />
     );
   }
@@ -284,9 +294,11 @@ interface ResultProps {
   placeLabel: string;
   headingRef: React.RefObject<HTMLHeadingElement | null>;
   onStartOver: () => void;
+  /** Keeps the details in this tab and goes to sign-in and the welcome steps (2c). */
+  onSave: () => void;
 }
 
-function Result({ chart, placeLabel, headingRef, onStartOver }: ResultProps) {
+function Result({ chart, placeLabel, headingRef, onStartOver, onSave }: ResultProps) {
   const uid = useId();
   const tribeHref = chart.sun.candidates ? '/#tribes' : `/tribes/${chart.sun.sign}`;
 
@@ -320,6 +332,12 @@ function Result({ chart, placeLabel, headingRef, onStartOver }: ResultProps) {
       <Section band>
         <TintPanel>
           <Eyebrow>{resultCopy.next.eyebrow}</Eyebrow>
+          <div className="mb-8 grid gap-2">
+            <div>
+              <Button onClick={onSave}>{carryCopy.save}</Button>
+            </div>
+            <p className="max-w-[56ch] type-caption text-ink-500">{carryCopy.note}</p>
+          </div>
           <ul className="flex flex-wrap gap-6">
             <li className="grid gap-1">
               <Button href={tribeHref} variant="secondary">

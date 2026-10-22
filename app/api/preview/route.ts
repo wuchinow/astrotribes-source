@@ -63,6 +63,6 @@ export async function POST(request: NextRequest) {
     response.headers.set('Cache-Control', 'no-store');
     return response;
   } catch {
-    return back(request, '/chart', 'wrong');
+    return back(request, '/sign-in', 'wrong');
   }
 }

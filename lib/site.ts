@@ -27,6 +27,9 @@ export const LEGAL_NAV: readonly NavLink[] = [
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
   { href: '/contact', label: 'Contact' },
+  // The site's code, offered under the AGPL that the Swiss Ephemeris needs (David, Oct 22): a
+  // no-history copy of production without docs, art, or glyphs, until the paid licence replaces it.
+  { href: 'https://github.com/wuchinow/astrotribes-source', label: 'Source' },
 ];
 
 // The team's address (David, Sep 25), shown as a mailto link on Privacy, Terms, Contact, and the footer.

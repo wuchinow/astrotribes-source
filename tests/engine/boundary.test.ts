@@ -1,7 +1,6 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { isGatedPath } from '@/lib/preview';
 
 // Invariant 4 and the AGPL boundary: the engine runs on the server only, and no client
 // component imports it. lib/engine/index.ts imports 'server-only', so a client import also
@@ -28,18 +27,14 @@ describe('engine boundary', () => {
     expect(offenders.map((f) => path.relative(root, f))).toEqual([]);
   });
 
-  it('is imported only by routes behind the preview passcode (S4)', () => {
+  it('is imported only by the free chart route and the birth details save (S4)', () => {
     const sources = ['app', 'components', 'content', 'lib'].flatMap((dir) => walk(path.join(root, dir)));
     const importers = sources
       .filter((file) => !file.startsWith(path.join(root, 'lib/engine')))
       .filter((file) => /from ['"]@\/lib\/engine['"]/.test(readFileSync(file, 'utf8')))
       .map((f) => path.relative(root, f));
-    expect(importers).toEqual(['app/api/chart/route.ts']);
-    // The route's URL, from its file path: app/api/chart/route.ts serves /api/chart.
-    for (const file of importers) {
-      const url = `/${file.replace(/^app\//, '').replace(/\/route\.ts$/, '').replace(/\([^)]+\)\//g, '')}`;
-      expect(isGatedPath(url), url).toBe(true);
-    }
+    // The free chart's route, and saving birth details (2c).
+    expect(importers.sort()).toEqual(['app/(public)/welcome/actions.ts', 'app/api/chart/route.ts']);
   });
 
   it('never reaches the public share page', () => {

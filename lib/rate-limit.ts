@@ -1,4 +1,4 @@
-// Per-IP limits for the free chart's routes, held in this instance's memory (no database in layer 1).
+// Per-IP limits for the free chart's routes and sign-in (2b), held in this instance's memory (no database in layer 1).
 // Known limit, recorded in docs/ASSESSMENT.md: each warm instance counts on its own, and a cold one
 // starts empty. Enough behind the passcode; a durable limit gates the engine routes going public.
 // Keys are salted hashes of the IP, never the IP, and nothing here logs.
@@ -9,6 +9,11 @@ export const RATE_LIMITS = {
   passcode: { limit: 5, windowMs: 15 * 60_000 },
   chart: { limit: 10, windowMs: 60_000 },
   place: { limit: 60, windowMs: 60_000 },
+  // Sign-in (2b): starting Google sign-in, and the account page's export and delete.
+  signIn: { limit: 10, windowMs: 15 * 60_000 },
+  account: { limit: 20, windowMs: 60_000 },
+  // Saving birth details (2c). The database holds the real limit, one change an hour (0002).
+  birth: { limit: 10, windowMs: 15 * 60_000 },
 } as const;
 export type RateLimitName = keyof typeof RATE_LIMITS;
 

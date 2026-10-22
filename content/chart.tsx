@@ -7,9 +7,11 @@ import type { ThreeBody } from '@/lib/free-chart';
 // PLACEHOLDER: the passcode page.
 export const previewCopy = {
   eyebrow: 'Preview',
-  line: 'The free chart',
+  line: "Today's sky",
   accent: 'is in preview.',
-  body: 'Only the team can open it for now. If you have the passcode, enter it here.',
+  body: 'Anyone can open it. Type the passcode below to come in.',
+  /** Shown with the passcode itself (David, Oct 22). */
+  code: 'The passcode is',
   label: 'Passcode',
   submit: 'Open the preview',
   wrong: "That passcode didn't match. Check it and try again.",
@@ -52,7 +54,6 @@ export const errorCopy = {
   rate_limited: "That's a lot of charts at once. Wait a minute and try again.",
   place_down: "Place search isn't answering. Try again in a moment.",
   place_off: 'Place search is not set up here yet.',
-  preview_required: 'Your preview pass has run out. Reload the page to enter the passcode again.',
   failed: "Your chart didn't come through this time. Try again in a moment.",
 };
 

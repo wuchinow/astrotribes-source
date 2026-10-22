@@ -3,19 +3,21 @@ import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline } from '@/components/Section';
 import { previewCopy } from '@/content/chart';
-import { previewIsOpenable, safeReturnPath } from '@/lib/preview';
+import { previewIsOpenable, publicPasscode, safeReturnPath } from '@/lib/preview';
 
 export const metadata: Metadata = { title: 'Preview' };
 
 /**
  * The passcode page. A plain form that posts to /api/preview, so it works without JavaScript.
- * The passcode travels in the body only; `next` is one of the gated pages, never a full URL.
+ * The passcode travels in the body only; `next` is the gated page, never a full URL. The page
+ * shows the passcode itself, so anyone can open the preview (David, Oct 22).
  */
 export default async function PreviewPage({ searchParams }: PageProps<'/preview'>) {
   const params = await searchParams;
   const next = safeReturnPath(params.next);
   const closed = !previewIsOpenable() || params.error === 'closed';
   const wrong = !closed && params.error === 'wrong';
+  const code = publicPasscode();
 
   return (
     <ArtWash piece="h" top>
@@ -26,6 +28,11 @@ export default async function PreviewPage({ searchParams }: PageProps<'/preview'
           <p className="max-w-[56ch] type-body-lg text-ink-700">
             {closed ? previewCopy.closed : previewCopy.body}
           </p>
+          {closed || !code ? null : (
+            <p className="mt-4 type-body-lg text-ink-900">
+              {previewCopy.code} <span className="font-mono font-semibold">{code}</span>
+            </p>
+          )}
 
           {closed ? null : (
             <form method="post" action="/api/preview" className="mt-8 grid gap-4">
@@ -37,7 +44,7 @@ export default async function PreviewPage({ searchParams }: PageProps<'/preview'
                 <input
                   id="passcode"
                   name="passcode"
-                  type="password"
+                  type="text"
                   required
                   maxLength={200}
                   autoComplete="off"

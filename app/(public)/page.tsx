@@ -9,6 +9,8 @@ import { NumberedSteps } from '@/components/NumberedSteps';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeCard } from '@/components/TribeCard';
+import { TribeWheel } from '@/components/TribeWheel';
+import { cn } from '@/lib/cn';
 import { imageSet } from '@/lib/art-assets';
 import {
   contrast,
@@ -41,11 +43,12 @@ export const revalidate = 86400;
 // its cards took sky images, and links to the page of all 28 since 1k. Contrast, which touches the hero, takes none; the sections that hold a
 // framed piece take none.
 export default function HomePage() {
+  const season = sunSeasonSign(new Date());
   return (
     <>
       {/* Hero: Jane's ink wash as wallpaper under the nav, a frosted panel, and pins. */}
       <ArtWash piece="h" top>
-        <div className="mx-auto grid min-h-[70dvh] max-w-content items-center gap-6 px-4 pt-27 pb-12 md:grid-cols-[minmax(0,36rem)_1fr] md:items-end md:px-6 md:pt-38 md:pb-20">
+        <div className="mx-auto grid min-h-[70dvh] max-w-content items-center gap-6 px-4 pt-27 pb-12 md:grid-cols-[minmax(0,36rem)_1fr] md:items-end md:px-6 lg:items-center md:pt-38 md:pb-20 lg:pb-34">
           <div className="panel-frost p-6 md:p-10">
             <Eyebrow>{hero.eyebrow}</Eyebrow>
             <Headline as="h1" size="xl" line={hero.line} accent={hero.accent} inline />
@@ -61,19 +64,28 @@ export default function HomePage() {
             </Button>
             <p className="mt-3 type-caption text-ink-500">{hero.note}</p>
           </div>
-          {/* Bottom-aligned with the panel from md (1h). */}
-          <ul className="grid gap-3 md:justify-items-end">
-            {hero.pins.map((pin) => (
-              <li key={pin.href} className="w-full md:w-auto">
-                <FrostPin
-                  href={pin.href}
-                  title={pin.title}
-                  line={pin.line}
-                  mark={pin.mark === 'hexagram' ? <HexagramMark /> : <GlyphIcon glyph={sunSeasonSign(new Date())} size={24} />}
-                />
-              </li>
-            ))}
-          </ul>
+          {/* Bottom-aligned with the panel from md (1h). From lg the wheel of the 12 Tribes takes the
+              right side (1l) and does the Tribe pin's job, so only the Oracle pin stays, under it. The column
+              shifts right by half the outer margin, so the wheel sits midway between the panel and the
+              window's edge, and the Oracle pin hangs below it out of the flow, so the wheel's centre lines up
+              with the panel's (David, Oct 21 and 22). */}
+          <div className="relative grid gap-6 lg:translate-x-[calc((100vw-min(100vw,var(--content-max)))/4)] lg:justify-items-center">
+            <div className="hidden w-full lg:block">
+              <TribeWheel season={season} />
+            </div>
+            <ul className="grid gap-3 md:justify-items-end lg:absolute lg:inset-x-0 lg:top-full lg:mt-6 lg:justify-items-center">
+              {hero.pins.map((pin) => (
+                <li key={pin.href} className={cn('w-full md:w-auto', pin.mark === 'sign' && 'lg:hidden')}>
+                  <FrostPin
+                    href={pin.href}
+                    title={pin.title}
+                    line={pin.line}
+                    mark={pin.mark === 'hexagram' ? <HexagramMark /> : <GlyphIcon glyph={season} size={24} />}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </ArtWash>
 
