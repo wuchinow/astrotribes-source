@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`the pick over 1,000 days > holds its epoch and seed (changing either reshuffles every future day) 1`] = `
+[
+  [
+    "2026-09-26",
+    59,
+    "major-03",
+  ],
+  [
+    "2026-09-27",
+    5,
+    "swords-09",
+  ],
+  [
+    "2026-09-28",
+    23,
+    "cups-10",
+  ],
+  [
+    "2026-09-29",
+    53,
+    "wands-08",
+  ],
+]
+`;

@@ -1,0 +1,470 @@
+{
+  "major-00": {
+    "src": "/tarot/major-00.c869722b.webp",
+    "width": 480,
+    "height": 831,
+    "bytes": 62676
+  },
+  "major-01": {
+    "src": "/tarot/major-01.307e37c4.webp",
+    "width": 480,
+    "height": 808,
+    "bytes": 55844
+  },
+  "major-02": {
+    "src": "/tarot/major-02.84811c43.webp",
+    "width": 480,
+    "height": 850,
+    "bytes": 74216
+  },
+  "major-03": {
+    "src": "/tarot/major-03.e51d1eab.webp",
+    "width": 480,
+    "height": 812,
+    "bytes": 76392
+  },
+  "major-04": {
+    "src": "/tarot/major-04.d3fa0f72.webp",
+    "width": 480,
+    "height": 834,
+    "bytes": 73532
+  },
+  "major-05": {
+    "src": "/tarot/major-05.8036d1a1.webp",
+    "width": 480,
+    "height": 817,
+    "bytes": 77386
+  },
+  "major-06": {
+    "src": "/tarot/major-06.0f44597d.webp",
+    "width": 480,
+    "height": 843,
+    "bytes": 85788
+  },
+  "major-07": {
+    "src": "/tarot/major-07.dec1d92c.webp",
+    "width": 480,
+    "height": 825,
+    "bytes": 71716
+  },
+  "major-08": {
+    "src": "/tarot/major-08.c43cbb4e.webp",
+    "width": 480,
+    "height": 830,
+    "bytes": 54004
+  },
+  "major-09": {
+    "src": "/tarot/major-09.d3e2669b.webp",
+    "width": 480,
+    "height": 812,
+    "bytes": 57716
+  },
+  "major-10": {
+    "src": "/tarot/major-10.bac9276c.webp",
+    "width": 480,
+    "height": 847,
+    "bytes": 83072
+  },
+  "major-11": {
+    "src": "/tarot/major-11.8542ba76.webp",
+    "width": 480,
+    "height": 835,
+    "bytes": 72216
+  },
+  "major-12": {
+    "src": "/tarot/major-12.f4898437.webp",
+    "width": 480,
+    "height": 841,
+    "bytes": 75324
+  },
+  "major-13": {
+    "src": "/tarot/major-13.ddef7d30.webp",
+    "width": 480,
+    "height": 823,
+    "bytes": 81222
+  },
+  "major-14": {
+    "src": "/tarot/major-14.22a137fb.webp",
+    "width": 480,
+    "height": 833,
+    "bytes": 83560
+  },
+  "major-15": {
+    "src": "/tarot/major-15.39c69872.webp",
+    "width": 480,
+    "height": 821,
+    "bytes": 74384
+  },
+  "major-16": {
+    "src": "/tarot/major-16.ecc48734.webp",
+    "width": 480,
+    "height": 840,
+    "bytes": 75208
+  },
+  "major-17": {
+    "src": "/tarot/major-17.964943b4.webp",
+    "width": 480,
+    "height": 813,
+    "bytes": 67680
+  },
+  "major-18": {
+    "src": "/tarot/major-18.37290231.webp",
+    "width": 480,
+    "height": 850,
+    "bytes": 80960
+  },
+  "major-19": {
+    "src": "/tarot/major-19.4eb50f54.webp",
+    "width": 480,
+    "height": 826,
+    "bytes": 74892
+  },
+  "major-20": {
+    "src": "/tarot/major-20.f9595ba7.webp",
+    "width": 480,
+    "height": 820,
+    "bytes": 77686
+  },
+  "major-21": {
+    "src": "/tarot/major-21.aaf9306e.webp",
+    "width": 480,
+    "height": 817,
+    "bytes": 79082
+  },
+  "wands-01": {
+    "src": "/tarot/wands-01.a45e52c7.webp",
+    "width": 480,
+    "height": 853,
+    "bytes": 57962
+  },
+  "wands-02": {
+    "src": "/tarot/wands-02.bdedf468.webp",
+    "width": 480,
+    "height": 816,
+    "bytes": 65764
+  },
+  "wands-03": {
+    "src": "/tarot/wands-03.98230bbb.webp",
+    "width": 480,
+    "height": 832,
+    "bytes": 74552
+  },
+  "wands-04": {
+    "src": "/tarot/wands-04.f820486b.webp",
+    "width": 480,
+    "height": 820,
+    "bytes": 53850
+  },
+  "wands-05": {
+    "src": "/tarot/wands-05.8f759e23.webp",
+    "width": 480,
+    "height": 847,
+    "bytes": 67316
+  },
+  "wands-06": {
+    "src": "/tarot/wands-06.add02679.webp",
+    "width": 480,
+    "height": 823,
+    "bytes": 62978
+  },
+  "wands-07": {
+    "src": "/tarot/wands-07.6e6451fc.webp",
+    "width": 480,
+    "height": 833,
+    "bytes": 64292
+  },
+  "wands-08": {
+    "src": "/tarot/wands-08.07eb1c9e.webp",
+    "width": 480,
+    "height": 814,
+    "bytes": 56648
+  },
+  "wands-09": {
+    "src": "/tarot/wands-09.ab661b7b.webp",
+    "width": 480,
+    "height": 840,
+    "bytes": 74026
+  },
+  "wands-10": {
+    "src": "/tarot/wands-10.6d1497ea.webp",
+    "width": 480,
+    "height": 823,
+    "bytes": 68832
+  },
+  "wands-11": {
+    "src": "/tarot/wands-11.e4913be4.webp",
+    "width": 480,
+    "height": 833,
+    "bytes": 84972
+  },
+  "wands-12": {
+    "src": "/tarot/wands-12.19e28fe6.webp",
+    "width": 480,
+    "height": 815,
+    "bytes": 82190
+  },
+  "wands-13": {
+    "src": "/tarot/wands-13.7aac68a2.webp",
+    "width": 480,
+    "height": 844,
+    "bytes": 95738
+  },
+  "wands-14": {
+    "src": "/tarot/wands-14.3161513d.webp",
+    "width": 480,
+    "height": 813,
+    "bytes": 91176
+  },
+  "cups-01": {
+    "src": "/tarot/cups-01.e9cea3c8.webp",
+    "width": 480,
+    "height": 834,
+    "bytes": 74678
+  },
+  "cups-02": {
+    "src": "/tarot/cups-02.95355431.webp",
+    "width": 480,
+    "height": 814,
+    "bytes": 75878
+  },
+  "cups-03": {
+    "src": "/tarot/cups-03.8698d360.webp",
+    "width": 480,
+    "height": 850,
+    "bytes": 79450
+  },
+  "cups-04": {
+    "src": "/tarot/cups-04.d405fcda.webp",
+    "width": 480,
+    "height": 820,
+    "bytes": 72416
+  },
+  "cups-05": {
+    "src": "/tarot/cups-05.6f3b0060.webp",
+    "width": 480,
+    "height": 839,
+    "bytes": 49320
+  },
+  "cups-06": {
+    "src": "/tarot/cups-06.cfc00161.webp",
+    "width": 480,
+    "height": 820,
+    "bytes": 84770
+  },
+  "cups-07": {
+    "src": "/tarot/cups-07.734644e0.webp",
+    "width": 480,
+    "height": 852,
+    "bytes": 68472
+  },
+  "cups-08": {
+    "src": "/tarot/cups-08.1effc22c.webp",
+    "width": 480,
+    "height": 832,
+    "bytes": 65220
+  },
+  "cups-09": {
+    "src": "/tarot/cups-09.707abca3.webp",
+    "width": 480,
+    "height": 834,
+    "bytes": 62712
+  },
+  "cups-10": {
+    "src": "/tarot/cups-10.bc1294ec.webp",
+    "width": 480,
+    "height": 810,
+    "bytes": 78042
+  },
+  "cups-11": {
+    "src": "/tarot/cups-11.22dd963b.webp",
+    "width": 480,
+    "height": 844,
+    "bytes": 79816
+  },
+  "cups-12": {
+    "src": "/tarot/cups-12.6b937116.webp",
+    "width": 480,
+    "height": 824,
+    "bytes": 73562
+  },
+  "cups-13": {
+    "src": "/tarot/cups-13.ac51549f.webp",
+    "width": 480,
+    "height": 834,
+    "bytes": 74792
+  },
+  "cups-14": {
+    "src": "/tarot/cups-14.1b7ee3b7.webp",
+    "width": 480,
+    "height": 816,
+    "bytes": 77650
+  },
+  "swords-01": {
+    "src": "/tarot/swords-01.64164641.webp",
+    "width": 480,
+    "height": 839,
+    "bytes": 62460
+  },
+  "swords-02": {
+    "src": "/tarot/swords-02.a0afa9bb.webp",
+    "width": 480,
+    "height": 819,
+    "bytes": 58656
+  },
+  "swords-03": {
+    "src": "/tarot/swords-03.73302170.webp",
+    "width": 480,
+    "height": 832,
+    "bytes": 50666
+  },
+  "swords-04": {
+    "src": "/tarot/swords-04.58a83d02.webp",
+    "width": 480,
+    "height": 816,
+    "bytes": 58380
+  },
+  "swords-05": {
+    "src": "/tarot/swords-05.ac26d3d2.webp",
+    "width": 480,
+    "height": 844,
+    "bytes": 80920
+  },
+  "swords-06": {
+    "src": "/tarot/swords-06.cb1b9e54.webp",
+    "width": 480,
+    "height": 821,
+    "bytes": 64178
+  },
+  "swords-07": {
+    "src": "/tarot/swords-07.b2e96541.webp",
+    "width": 480,
+    "height": 843,
+    "bytes": 53906
+  },
+  "swords-08": {
+    "src": "/tarot/swords-08.6ffc4287.webp",
+    "width": 480,
+    "height": 818,
+    "bytes": 70984
+  },
+  "swords-09": {
+    "src": "/tarot/swords-09.29e6ba83.webp",
+    "width": 480,
+    "height": 854,
+    "bytes": 71976
+  },
+  "swords-10": {
+    "src": "/tarot/swords-10.9b63926f.webp",
+    "width": 480,
+    "height": 824,
+    "bytes": 62622
+  },
+  "swords-11": {
+    "src": "/tarot/swords-11.3a27516d.webp",
+    "width": 480,
+    "height": 839,
+    "bytes": 64816
+  },
+  "swords-12": {
+    "src": "/tarot/swords-12.43bbc88c.webp",
+    "width": 480,
+    "height": 814,
+    "bytes": 68588
+  },
+  "swords-13": {
+    "src": "/tarot/swords-13.f60b6582.webp",
+    "width": 480,
+    "height": 851,
+    "bytes": 68676
+  },
+  "swords-14": {
+    "src": "/tarot/swords-14.f78af656.webp",
+    "width": 480,
+    "height": 818,
+    "bytes": 73236
+  },
+  "pentacles-01": {
+    "src": "/tarot/pentacles-01.670edf33.webp",
+    "width": 480,
+    "height": 834,
+    "bytes": 64148
+  },
+  "pentacles-02": {
+    "src": "/tarot/pentacles-02.2e6e5cc9.webp",
+    "width": 480,
+    "height": 820,
+    "bytes": 72234
+  },
+  "pentacles-03": {
+    "src": "/tarot/pentacles-03.fc7de5a1.webp",
+    "width": 480,
+    "height": 848,
+    "bytes": 83514
+  },
+  "pentacles-04": {
+    "src": "/tarot/pentacles-04.1a220004.webp",
+    "width": 480,
+    "height": 825,
+    "bytes": 64310
+  },
+  "pentacles-05": {
+    "src": "/tarot/pentacles-05.6bc0a6bb.webp",
+    "width": 480,
+    "height": 824,
+    "bytes": 84476
+  },
+  "pentacles-06": {
+    "src": "/tarot/pentacles-06.2a1eb187.webp",
+    "width": 480,
+    "height": 809,
+    "bytes": 60564
+  },
+  "pentacles-07": {
+    "src": "/tarot/pentacles-07.785285a3.webp",
+    "width": 480,
+    "height": 847,
+    "bytes": 80412
+  },
+  "pentacles-08": {
+    "src": "/tarot/pentacles-08.75b05833.webp",
+    "width": 480,
+    "height": 831,
+    "bytes": 69100
+  },
+  "pentacles-09": {
+    "src": "/tarot/pentacles-09.91cfba96.webp",
+    "width": 480,
+    "height": 834,
+    "bytes": 63080
+  },
+  "pentacles-10": {
+    "src": "/tarot/pentacles-10.fc10c1a4.webp",
+    "width": 480,
+    "height": 825,
+    "bytes": 76532
+  },
+  "pentacles-11": {
+    "src": "/tarot/pentacles-11.20af937e.webp",
+    "width": 480,
+    "height": 846,
+    "bytes": 56734
+  },
+  "pentacles-12": {
+    "src": "/tarot/pentacles-12.d3bee129.webp",
+    "width": 480,
+    "height": 819,
+    "bytes": 53936
+  },
+  "pentacles-13": {
+    "src": "/tarot/pentacles-13.cfa9fee6.webp",
+    "width": 480,
+    "height": 833,
+    "bytes": 92222
+  },
+  "pentacles-14": {
+    "src": "/tarot/pentacles-14.57a5cba4.webp",
+    "width": 480,
+    "height": 812,
+    "bytes": 73682
+  }
+}

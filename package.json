@@ -1,0 +1,43 @@
+{
+  "name": "astrotribes",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/engine-check.mjs && next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:db": "supabase test db --db-url postgresql://supabase_admin:postgres@127.0.0.1:54322/postgres",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "geo-tz": "8.1.9",
+    "lucide-react": "^1.47.0",
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "0.0.1",
+    "sweph": "2.10.3-8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "jiti": "^2.7.0",
+    "linkedom": "^0.18.13",
+    "sharp": "^0.35.4",
+    "subset-font": "^2.9.0",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^5.0.1"
+  }
+}

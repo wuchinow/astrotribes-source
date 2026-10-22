@@ -1,0 +1,2069 @@
+{
+  "$about": "The 78 cards for the Daily Oracle (1c). The card's identity and art sit outside `reading`; A. E. Waite's divinatory meanings sit inside it, quoted verbatim as printed, with their source, credit, and review flag, so a reviewed reading replaces `reading` card by card with no code change. The day shows the upright meaning only; the reversed stays in the data. `name` is the card's own title (Waite's list heads card 8 Fortitude and card 20 The Last Judgment; see nameInWaite). Alt texts are Claude's placeholders. Art: lib/tarot-files.json; where each image comes from: credits.json.",
+  "version": 1,
+  "sources": {
+    "waite-pkt": {
+      "short": "A. E. Waite's 1911 Pictorial Key to the Tarot",
+      "work": "The Pictorial Key to the Tarot, being fragments of a secret tradition under the veil of divination",
+      "author": "Arthur Edward Waite",
+      "illustrator": "Pamela Colman Smith",
+      "publisher": "William Rider & Son, London",
+      "firstEdition": "1911 (the title page; released in December 1910). The unillustrated Key to the Tarot is the 1910 book.",
+      "transcribedFrom": "the 1922 Rider reprint (title page 1922; its verso reads \"First Published 1910, Reprinted 1922\"), as transcribed on Wikisource: https://en.wikisource.org/wiki/The_Pictorial_Key_to_the_Tarot, page images at https://commons.wikimedia.org/wiki/File:The_Pictorial_Key_to_the_Tarot.pdf",
+      "checkedAgainst": "https://archive.org/details/a.-e.-waite-the-pictorial-key-to-the-tarot (an OCR of the sacred-texts transcription of the first edition); every difference settled on the page image",
+      "part": "Part III: the Greater Arcana and their divinatory meanings (pp. 283 to 287), and the Lesser Arcana, one card to a page (pp. 170 to 280)",
+      "license": "Public domain"
+    }
+  },
+  "cards": [
+    {
+      "id": "major-00",
+      "arcana": "major",
+      "name": "The Fool",
+      "nameInWaite": "ZERO. THE FOOL",
+      "alt": "A young traveler in a bright tunic steps toward a cliff edge, a white rose in hand and a small white dog at his heels",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Folly, mania, extravagance, intoxication, delirium, frenzy, bewrayment.",
+        "reversed": "Negligence, absence, distribution, carelessness, apathy, nullity, vanity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 286,
+          "pdfPage": 299
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-01",
+      "arcana": "major",
+      "name": "The Magician",
+      "nameInWaite": "THE MAGICIAN",
+      "alt": "A robed figure raises a wand to the sky and points to the ground, a cup, a sword, and a pentacle on the table before him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Skill, diplomacy, address, subtlety; sickness, pain, loss, disaster, snares of enemies; self-confidence, will; the Querent, if male.",
+        "reversed": "Physician, Magus, mental disease, disgrace, disquiet.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 283,
+          "pdfPage": 296
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-02",
+      "arcana": "major",
+      "name": "The High Priestess",
+      "nameInWaite": "THE HIGH PRIESTESS",
+      "alt": "A seated woman in blue robes holds a scroll between a black pillar and a white pillar, a crescent moon at her feet",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Secrets, mystery, the future as yet unrevealed; the woman who interests the Querent, if male; the Querent herself, if female; silence, tenacity; mystery, wisdom, science.",
+        "reversed": "Passion, moral or physical ardour, conceit, surface knowledge.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 283,
+          "pdfPage": 296
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-03",
+      "arcana": "major",
+      "name": "The Empress",
+      "nameInWaite": "THE EMPRESS",
+      "alt": "A crowned woman rests on cushions in a field of wheat, a heart-shaped shield beside her and a stream behind",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Fruitfulness, action, initiative, length of days; the unknown, clandestine; also difficulty, doubt, ignorance.",
+        "reversed": "Light, truth, the unravelling of involved matters, public rejoicings; according to another reading, vacillation.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 283,
+          "pdfPage": 296
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-04",
+      "arcana": "major",
+      "name": "The Emperor",
+      "nameInWaite": "THE EMPEROR",
+      "alt": "A bearded ruler in armor and a red robe sits on a stone throne carved with rams' heads, holding an ankh scepter",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Stability, power, protection, realization; a great person; aid, reason, conviction; also authority and will.",
+        "reversed": "Benevolence, compassion, credit; also confusion to enemies, obstruction, immaturity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 283,
+          "pdfPage": 296
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-05",
+      "arcana": "major",
+      "name": "The Hierophant",
+      "nameInWaite": "THE HIEROPHANT",
+      "alt": "A crowned priest raises his hand in blessing over two kneeling monks, crossed keys at his feet",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Marriage, alliance, captivity, servitude; by another account, mercy and goodness; inspiration; the man to whom the Querent has recourse.",
+        "reversed": "Society, good understanding, concord, over-kindness, weakness.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 284,
+          "pdfPage": 297
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": [
+            "Printed 'over-' ends a line (p. 284) with 'kindness' on the next, so the scan cannot show whether the hyphen is part of the word. Kept 'over-kindness' as Wikisource's proofreaders read it; the sacred-texts transcription of the 1910 printing has 'overkindness'."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-06",
+      "arcana": "major",
+      "name": "The Lovers",
+      "nameInWaite": "THE LOVERS",
+      "alt": "A man and a woman stand beneath a winged angel, a fruit tree with a serpent behind her and a tree of flames behind him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Attraction, love, beauty, trials overcome.",
+        "reversed": "Failure, foolish designs. Another account speaks of marriage frustrated and contrarieties of all kinds.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 284,
+          "pdfPage": 297
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-07",
+      "arcana": "major",
+      "name": "The Chariot",
+      "nameInWaite": "THE CHARIOT",
+      "alt": "A crowned charioteer stands in a canopied chariot drawn by a black sphinx and a white sphinx",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Succour, providence; also war, triumph, presumption, vengeance, trouble.",
+        "reversed": "Riot, quarrel, dispute, litigation, defeat.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 284,
+          "pdfPage": 297
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-08",
+      "arcana": "major",
+      "name": "Strength",
+      "nameInWaite": "FORTITUDE",
+      "alt": "A woman in white gently closes the jaws of a lion, a figure eight floating above her head",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Power, energy, action, courage, magnanimity; also complete success and honours.",
+        "reversed": "Despotism, abuse of power, weakness, discord, sometimes even disgrace.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 284,
+          "pdfPage": 297
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": [
+            "Waite heads this entry 'Fortitude'; the card is numbered 8 and is titled 'Strength' on the card and 'Strength, or Fortitude' in Part II. The site shows the card's own title, Strength; Waite's heading is kept in nameInWaite."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-09",
+      "arcana": "major",
+      "name": "The Hermit",
+      "nameInWaite": "THE HERMIT",
+      "alt": "A cloaked old man stands on a snowy peak holding up a lantern with a star inside",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Prudence, circumspection; also and especially treason, dissimulation, roguery, corruption.",
+        "reversed": "Concealment, disguise, policy, fear, unreasoned caution.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 284,
+          "pdfPage": 297
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-10",
+      "arcana": "major",
+      "name": "Wheel of Fortune",
+      "nameInWaite": "WHEEL OF FORTUNE",
+      "alt": "A great wheel marked with letters turns in the sky, a sphinx on top, a serpent and a jackal-headed figure at its sides, winged creatures in the corners",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Destiny, fortune, success, elevation, luck, felicity.",
+        "reversed": "Increase, abundance, superfluity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 284,
+          "pdfPage": 297
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-11",
+      "arcana": "major",
+      "name": "Justice",
+      "nameInWaite": "JUSTICE",
+      "alt": "A crowned figure in red sits between two pillars holding an upright sword and a pair of scales",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Equity, rightness, probity, executive; triumph of the deserving side in law.",
+        "reversed": "Law in all its departments, legal complications, bigotry, bias, excessive severity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 285,
+          "pdfPage": 298
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-12",
+      "arcana": "major",
+      "name": "The Hanged Man",
+      "nameInWaite": "THE HANGED MAN",
+      "alt": "A man hangs upside down by one foot from a living wooden cross, calm, a halo around his head",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Wisdom, circumspection, discernment, trials, sacrifice, intuition, divination, prophecy.",
+        "reversed": "Selfishness, the crowd, body politic.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 285,
+          "pdfPage": 298
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-13",
+      "arcana": "major",
+      "name": "Death",
+      "nameInWaite": "DEATH",
+      "alt": "A skeleton in black armor rides a white horse with a black banner marked by a white rose, people falling and kneeling before it",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "End, mortality, destruction, corruption; also, for a man, the loss of a benefactor; for a woman, many contrarieties; for a maid, failure of marriage projects.",
+        "reversed": "Inertia, sleep, lethargy, petrifaction, somnambulism; hope destroyed.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 285,
+          "pdfPage": 298
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 2,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-14",
+      "arcana": "major",
+      "name": "Temperance",
+      "nameInWaite": "TEMPERANCE",
+      "alt": "A winged angel with one foot in a pool pours water between two cups, a path leading to a distant crown of light",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Economy, moderation, frugality, management, accommodation.",
+        "reversed": "Things connected with churches, religions, sects, the priesthood, sometimes even the priest who will marry the Querent; also disunion, unfortunate combinations, competing interests.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 285,
+          "pdfPage": 298
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-15",
+      "arcana": "major",
+      "name": "The Devil",
+      "nameInWaite": "THE DEVIL",
+      "alt": "A horned, bat-winged figure crouches on a block above a chained man and woman who wear small horns and tails",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Ravage, violence, vehemence, extraordinary efforts, force, fatality; that which is predestined but is not for this reason evil.",
+        "reversed": "Evil fatality, weakness, pettiness, blindness.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 285,
+          "pdfPage": 298
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-16",
+      "arcana": "major",
+      "name": "The Tower",
+      "nameInWaite": "THE TOWER",
+      "alt": "Lightning strikes a tall tower and knocks off its crown as flames burst from the windows and two people fall",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Misery, distress, indigence, adversity, calamity, disgrace, deception, ruin. It is a card in particular of unforeseen catastrophe.",
+        "reversed": "According to one account, the same in a lesser degree; also oppression, imprisonment, tyranny.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 286,
+          "pdfPage": 299
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-17",
+      "arcana": "major",
+      "name": "The Star",
+      "nameInWaite": "THE STAR",
+      "alt": "A naked woman kneels by a pool pouring water from two jugs onto the land and into the pool, a large star and seven small stars above",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Loss, theft, privation, abandonment; another reading says—hope and bright prospects,",
+        "reversed": "Arrogance, haughtiness, impotence.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 286,
+          "pdfPage": 299
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": [
+            "Printed with a comma before 'Reversed' ('bright prospects, Reversed:'), where a full stop is expected. Kept as printed; the other source agrees."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-18",
+      "arcana": "major",
+      "name": "The Moon",
+      "nameInWaite": "THE MOON",
+      "alt": "A moon with a face shines over a path between two towers as a dog and a wolf howl and a crayfish climbs from a pool",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Hidden enemies, danger, calumny, darkness, terror, deception, occult forces, error.",
+        "reversed": "Instability, inconstancy, silence, lesser degrees of deception and error.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 286,
+          "pdfPage": 299
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-19",
+      "arcana": "major",
+      "name": "The Sun",
+      "nameInWaite": "THE SUN",
+      "alt": "A smiling sun shines on a child riding a white horse with a red banner, sunflowers along a wall behind",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Material happiness, fortunate marriage, contentment.",
+        "reversed": "The same in a lesser sense.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 286,
+          "pdfPage": 299
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-20",
+      "arcana": "major",
+      "name": "Judgement",
+      "nameInWaite": "THE LAST JUDGMENT",
+      "alt": "An angel blows a trumpet from the clouds as men, women, and children rise from their coffins with open arms",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Change of position, renewal, outcome. Another account specifies total loss though lawsuit.",
+        "reversed": "Weakness, pusillanimity, simplicity; also deliberation, decision, sentence.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 286,
+          "pdfPage": 299
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": [
+            "Printed 'total loss though lawsuit', probably a misprint for 'through'. Kept as printed; the other source agrees."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "major-21",
+      "arcana": "major",
+      "name": "The World",
+      "nameInWaite": "THE WORLD",
+      "alt": "A dancing figure wrapped in a sash holds two wands inside an oval wreath, an angel, an eagle, a bull, and a lion in the corners",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Assured success, recompense, voyage, route, emigration, flight, change of place.",
+        "reversed": "Inertia, fixity, stagnation, permanence.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 287,
+          "pdfPage": 300
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-01",
+      "arcana": "minor",
+      "name": "Ace of Wands",
+      "nameInWaite": "WANDS / Ace",
+      "alt": "A hand reaches from a cloud holding a sprouting wand over a green valley with a castle",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Creation, invention, enterprise, the powers which result in these; principle, beginning, source; birth, family, origin, and in a sense the virility which is behind them; the starting point of enterprises; according to another account, money, fortune, inheritance.",
+        "reversed": "Fall, decadence, ruin, perdition, to perish; also a certain clouded joy.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 196,
+          "pdfPage": 209
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-02",
+      "arcana": "minor",
+      "name": "Two of Wands",
+      "nameInWaite": "WANDS / Two",
+      "alt": "A man on a battlement holds a small globe and looks out over sea and land, one wand in his hand and another fixed to the wall",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Between the alternative readings there is no marriage possible; on the one hand, riches, fortune, magnificence; on the other, physical suffering, disease, chagrin, sadness, mortification. The design gives one suggestion; here is a lord overlooking his dominion and alternately contemplating a globe; it looks like the malady, the mortification, the sadness of Alexander amidst the grandeur of this world’s wealth.",
+        "reversed": "Surprise, wonder, enchantment, emotion, trouble, fear.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 194,
+          "pdfPage": 207
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-03",
+      "arcana": "minor",
+      "name": "Three of Wands",
+      "nameInWaite": "WANDS / Three",
+      "alt": "A man stands on a cliff with his back to us watching ships at sea, three wands planted around him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "He symbolizes established strength, enterprise, effort, trade, commerce, discovery; those are his ships, bearing his merchandise, which are sailing over the sea. The card also signifies able co-operation in business, as if the successful merchant prince were looking from his side towards yours with a view to help you.",
+        "reversed": "The end of troubles, suspension or cessation of adversity, toil and disappointment.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 192,
+          "pdfPage": 205
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-04",
+      "arcana": "minor",
+      "name": "Four of Wands",
+      "nameInWaite": "WANDS / Four",
+      "alt": "Four wands hung with a garland of flowers stand before a castle, two figures raising bouquets in welcome",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "They are for once almost on the surface—country life, haven of refuge, a species of domestic harvest-home, repose, concord, harmony, prosperity, peace, and the perfected work of these.",
+        "reversed": "The meaning remains unaltered; it is prosperity, increase, felicity, beauty, embellishment.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 190,
+          "pdfPage": 203
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-05",
+      "arcana": "minor",
+      "name": "Five of Wands",
+      "nameInWaite": "WANDS / Five",
+      "alt": "Five young men brandish wands at one another in a mock fight",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Imitation, as, for example, sham fight, but also the strenuous competition and struggle of the search after riches and fortune. In this sense it connects with the battle of life. Hence some attributions say that it is a card of gold, gain, opulence.",
+        "reversed": "Litigation, disputes, trickery, contradiction.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 188,
+          "pdfPage": 201
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-06",
+      "arcana": "minor",
+      "name": "Six of Wands",
+      "nameInWaite": "WANDS / Six",
+      "alt": "A rider crowned with laurel carries a wreathed wand through a crowd holding wands",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "The card has been so designed that it can cover several significations; on the surface, it is a victor triumphing, but it is also great news, such as might be carried in state by the King’s courier; it is expectation crowned with its own desire, the crown of hope, and so forth.",
+        "reversed": "Apprehension, fear, as of a victorious enemy at the gate; treachery, disloyalty, as of gates being opened to the enemy; also indefinite delay.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 186,
+          "pdfPage": 199
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-07",
+      "arcana": "minor",
+      "name": "Seven of Wands",
+      "nameInWaite": "WANDS / Seven",
+      "alt": "A man on a hill defends himself with one wand against six wands rising from below",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "It is a card of valour, for, on the surface, six are attacking one, who has, however, the vantage position. On the intellectual plane, it signifies discussion, wordy strife; in business—negotiations, war of trade, barter, competition. It is further a card of success, for the combatant is on the top and his enemies may be unable to reach him.",
+        "reversed": "Perplexity, embarrassments, anxiety. It is also a caution against indecision.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 184,
+          "pdfPage": 197
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-08",
+      "arcana": "minor",
+      "name": "Eight of Wands",
+      "nameInWaite": "WANDS / Eight",
+      "alt": "Eight wands fly through the air in parallel over a river and open country",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Activity in undertakings, the path of such activity, swiftness, as that of an express messenger; great haste, great hope, speed towards an end which promises assured felicity; generally, that which is on the move; also the arrows of love.",
+        "reversed": "Arrows of jealousy, internal dispute, stingings of conscience, quarrels; and domestic disputes for persons who are married.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 182,
+          "pdfPage": 195
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-09",
+      "arcana": "minor",
+      "name": "Nine of Wands",
+      "nameInWaite": "WANDS / Nine",
+      "alt": "A man with a bandaged head stands on guard with a wand, eight more wands behind him like a fence",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "The card signifies strength in opposition. If attacked, the person will meet an onslaught boldly; and his build shews that he may prove a formidable antagonist. With this main significance there are all its possible adjuncts—delay, suspension, adjournment.",
+        "reversed": "Obstacles, adversity, calamity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 180,
+          "pdfPage": 193
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-10",
+      "arcana": "minor",
+      "name": "Ten of Wands",
+      "nameInWaite": "WANDS / Ten",
+      "alt": "A man bends under the weight of ten wands as he carries them toward a town",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "A card of many significances, and some of the readings cannot be harmonized. I set aside that which connects it with honour and good faith. The chief meaning is oppression simply, but it is also fortune, gain, any kind of success, and then it is the oppression of these things. It is also a card of false-seeming, disguise, perfidy. The place which the figure is approaching may suffer from the rods that he carries. Success is stultified if the Nine of Swords follows, and if it is a question of a lawsuit, there will be certain loss.",
+        "reversed": "Contrarieties, difficulties, intrigues, and their analogies.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 178,
+          "pdfPage": 191
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-11",
+      "arcana": "minor",
+      "name": "Page of Wands",
+      "nameInWaite": "WANDS / Page",
+      "alt": "A young man in a patterned tunic stands in a desert holding a tall sprouting wand and looking up at its top",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Dark young man, faithful, a lover, an envoy, a postman. Beside a man, he will bear favourable testimony concerning him. A dangerous rival, if followed by the Page of Cups. Has the chief qualities of his suit. He may signify family intelligence.",
+        "reversed": "Anecdotes, announcements, evil news. Also indecision and the instability which accompanies it.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 176,
+          "pdfPage": 189
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-12",
+      "arcana": "minor",
+      "name": "Knight of Wands",
+      "nameInWaite": "WANDS / Knight",
+      "alt": "A knight in armor on a rearing horse holds a sprouting wand, pyramids in the distance",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Departure, absence, flight, emigration. A dark young man, friendly. Change of residence.",
+        "reversed": "Rupture, division, interruption, discord.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 174,
+          "pdfPage": 187
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-13",
+      "arcana": "minor",
+      "name": "Queen of Wands",
+      "nameInWaite": "WANDS / Queen",
+      "alt": "A crowned queen on a throne carved with lions holds a wand and a sunflower, a black cat at her feet",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "A dark woman, countrywoman, friendly, chaste, loving, honourable. If the card beside her signifies a man, she is well disposed towards him; if a woman, she is interested in the Querent. Also, love of money, or a certain success in business.",
+        "reversed": "Good, economical, obliging, serviceable. Signifies also—but in certain positions and in the neighbourhood of other cards tending in such directions—opposition, jealousy, even deceit and infidelity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 172,
+          "pdfPage": 185
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "wands-14",
+      "arcana": "minor",
+      "name": "King of Wands",
+      "nameInWaite": "THE SUIT OF WANDS / King",
+      "alt": "A crowned king on a throne decorated with lions and salamanders holds a sprouting wand, a small salamander beside him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Dark man, friendly, countryman, generally married, honest and conscientious. The card always signifies honesty, and may mean news concerning an unexpected heritage to fall in before very long.",
+        "reversed": "Good, but severe; austere, yet tolerant.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 170,
+          "pdfPage": 183
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-01",
+      "arcana": "minor",
+      "name": "Ace of Cups",
+      "nameInWaite": "CUPS / Ace",
+      "alt": "A hand from a cloud holds a cup overflowing in five streams, a dove descending into it above a pool of water lilies",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "House of the true heart, joy, content, abode, nourishment, abundance, fertility; Holy Table, felicity hereof.",
+        "reversed": "House of the false heart, mutation, instability, revolution.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 224,
+          "pdfPage": 237
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-02",
+      "arcana": "minor",
+      "name": "Two of Cups",
+      "nameInWaite": "CUPS / Two",
+      "alt": "A young man and woman exchange cups, a winged lion's head above a staff with two serpents between them",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Love, passion, friendship, affinity, union, concord, sympathy, the interrelation of the sexes, and—as a suggestion apart from all offices of divination—that desire which is not in Nature, but by which Nature is sanctified.",
+        "reversed": null,
+        "source": {
+          "id": "waite-pkt",
+          "page": 222,
+          "pdfPage": 235
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": [
+            "No Reversed meaning is printed for this card (page 222); reversed is null. Source B also has none.",
+            "\"interrelation\": printed \"inter-/relation\" split at a line end, so the hyphen may be a real one (\"inter-relation\"); A and B both read \"interrelation\"."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-03",
+      "arcana": "minor",
+      "name": "Three of Cups",
+      "nameInWaite": "CUPS / Three",
+      "alt": "Three women raise cups together in a harvest dance among fruit and flowers",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "The conclusion of any matter in plenty, perfection and merriment; happy issue, victory, fulfilment, solace, healing.",
+        "reversed": "Expedition, dispatch, achievement, end. It signifies also the side of excess in physical enjoyment, and the pleasures of the senses.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 220,
+          "pdfPage": 233
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-04",
+      "arcana": "minor",
+      "name": "Four of Cups",
+      "nameInWaite": "CUPS / Four",
+      "alt": "A young man sits under a tree with folded arms, three cups before him and a hand from a cloud offering a fourth",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Weariness, disgust, aversion, imaginary vexations, as if the wine of this world had caused satiety only; another wine, as if a fairy gift, is now offered the wastrel, but he sees no consolation therein. This is also a card of blended pleasure.",
+        "reversed": "Novelty, presage, new instruction, new relations.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 218,
+          "pdfPage": 231
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-05",
+      "arcana": "minor",
+      "name": "Five of Cups",
+      "nameInWaite": "CUPS / Five",
+      "alt": "A cloaked figure mourns over three spilled cups, two full cups standing behind, a bridge leading to a house across a river",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "It is a card of loss, but something remains over; three have been taken, but two are left; it is a card of inheritance, patrimony, transmission, but not corresponding to expectations; with some interpreters it is a card of marriage, but not without bitterness or frustration.",
+        "reversed": "News, alliances, affinity, consanguinity, ancestry, return, false projects.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 216,
+          "pdfPage": 229
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-06",
+      "arcana": "minor",
+      "name": "Six of Cups",
+      "nameInWaite": "CUPS / Six",
+      "alt": "Two children in an old garden, one handing the other a cup of white flowers, more cups of flowers around them",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "A card of the past and of memories, looking back, as—for example—on childhood; happiness, enjoyment, but coming rather from the past; things that have vanished. Another reading reverses this, giving new relations, new knowledge, new environment, and then the children are disporting in an unfamiliar precinct.",
+        "reversed": "The future, renewal, that which will come to pass presently.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 214,
+          "pdfPage": 227
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-07",
+      "arcana": "minor",
+      "name": "Seven of Cups",
+      "nameInWaite": "CUPS / Seven",
+      "alt": "A figure faces seven cups floating in clouds, each holding a vision: a head, a veiled figure, a snake, a castle, jewels, a wreath, and a dragon",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Fairy favours, images of reflection, sentiment, imagination, things seen in the glass of contemplation; some attainment in these degrees, but nothing permanent or substantial is suggested.",
+        "reversed": "Desire, will, determination, project.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 212,
+          "pdfPage": 225
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-08",
+      "arcana": "minor",
+      "name": "Eight of Cups",
+      "nameInWaite": "CUPS / Eight",
+      "alt": "A cloaked man with a staff walks away from eight stacked cups toward mountains under an eclipsed moon",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "The card speaks for itself on the surface, but other readings are entirely antithetical—giving joy, mildness, timidity, honour, modesty. In practice, it is usually found that the card shews the decline of a matter, or that a matter which has been thought to be important is really of slight consequence—either for good or evil.",
+        "reversed": "Great joy, happiness, feasting.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 210,
+          "pdfPage": 223
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-09",
+      "arcana": "minor",
+      "name": "Nine of Cups",
+      "nameInWaite": "CUPS / Nine",
+      "alt": "A contented man sits with arms folded before a curved table of nine cups",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Concord, contentment, physical bien-être; also victory, success, advantage; satisfaction for the Querent or person for whom the consultation is made.",
+        "reversed": "Truth, loyalty, liberty; but the readings vary and include mistakes, imperfections, etc.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 208,
+          "pdfPage": 221
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": [
+            "\"bien-être\" is printed in italics; plain string cannot show it."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-10",
+      "arcana": "minor",
+      "name": "Ten of Cups",
+      "nameInWaite": "CUPS / Ten",
+      "alt": "A couple with raised arms and two dancing children look up at a rainbow of ten cups above their home",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Contentment, repose of the entire heart; the perfection of that state; also perfection of human love and friendship; if with several picture-cards, a person who is taking charge of the Querent’s interests; also the town, village or country inhabited by the Querent.",
+        "reversed": "Repose of the false heart, indignation, violence.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 206,
+          "pdfPage": 219
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-11",
+      "arcana": "minor",
+      "name": "Page of Cups",
+      "nameInWaite": "CUPS / Page",
+      "alt": "A young man in a flowered tunic stands by the sea looking at a fish rising from the cup in his hand",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Fair young man, one impelled to render service and with whom the Querent will be connected; a studious youth; news, message; application, reflection, meditation; also these things directed to business.",
+        "reversed": "Taste, inclination, attachment, seduction, deception, artifice.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 204,
+          "pdfPage": 217
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-12",
+      "arcana": "minor",
+      "name": "Knight of Cups",
+      "nameInWaite": "CUPS / Knight",
+      "alt": "A knight in a winged helmet rides a calm white horse, holding a cup out before him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Arrival, approach—sometimes that of a messenger; advances, proposition, demeanour, invitation, incitement.",
+        "reversed": "Trickery, artifice, subtlety, swindling, duplicity, fraud.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 202,
+          "pdfPage": 215
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-13",
+      "arcana": "minor",
+      "name": "Queen of Cups",
+      "nameInWaite": "CUPS / Queen",
+      "alt": "A queen on a throne at the water's edge gazes at an ornate covered cup in her hands",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Good, fair woman; honest, devoted woman, who will do service to the Querent; loving intelligence, and hence the gift of vision; success, happiness, pleasure; also wisdom, virtue; a perfect spouse and a good mother.",
+        "reversed": "The accounts vary; good woman; otherwise, distinguished woman but one not to be trusted; perverse woman; vice, dishonour, depravity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 200,
+          "pdfPage": 213
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "cups-14",
+      "arcana": "minor",
+      "name": "King of Cups",
+      "nameInWaite": "THE SUIT OF CUPS / King",
+      "alt": "A king on a throne set on a rough sea holds a cup and a short scepter, a ship and a leaping fish behind him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Fair man, man of business, law, or divinity; responsible, disposed to oblige the Querent; also equity, art and science, including those who profess science, law and art; creative intelligence.",
+        "reversed": "Dishonest, double-dealing man; roguery, exaction, injustice, vice, scandal, pillage, considerable loss.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 198,
+          "pdfPage": 211
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-01",
+      "arcana": "minor",
+      "name": "Ace of Swords",
+      "nameInWaite": "SWORDS / Ace",
+      "alt": "A hand from a cloud holds an upright sword crowned with a wreath above rocky peaks",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Triumph, the excessive degree in everything, conquest, triumph of force. It is a card of great force, in love as well as in hatred. The crown may carry a much higher significance than comes usually within the sphere of fortune-telling.",
+        "reversed": "The same, but the results are disastrous; another account says—conception, childbirth, augmentation, multiplicity.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 252,
+          "pdfPage": 265
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-02",
+      "arcana": "minor",
+      "name": "Two of Swords",
+      "nameInWaite": "SWORDS / Two",
+      "alt": "A blindfolded woman in white sits by the sea with two swords crossed over her chest",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Conformity and the equipoise which it suggests, courage, friendship, concord in a state of arms; another reading gives tenderness, affection, intimacy. The suggestion of harmony and other favourable readings must be considered in a qualified manner, as Swords generally are not symbolical of beneficent forces in human affairs.",
+        "reversed": "Imposture, falsehood, duplicity, disloyalty.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 250,
+          "pdfPage": 263
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-03",
+      "arcana": "minor",
+      "name": "Three of Swords",
+      "nameInWaite": "SWORDS / Three",
+      "alt": "Three swords pierce a red heart against grey clouds and rain",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Removal, absence, delay, division, rupture, dispersion, and all that the design signifies naturally, being too simple and obvious to call for specific enumeration.",
+        "reversed": "Mental alienation, error, loss, distraction, disorder, confusion.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 248,
+          "pdfPage": 261
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-04",
+      "arcana": "minor",
+      "name": "Four of Swords",
+      "nameInWaite": "SWORDS / Four",
+      "alt": "A knight lies in effigy on a tomb in a church, hands joined in prayer, three swords on the wall and one along the tomb",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Vigilance, retreat, solitude, hermit’s repose, exile, tomb and coffin. It is these last that have suggested the design.",
+        "reversed": "Wise administration, circumspection, economy, avarice, precaution, testament.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 246,
+          "pdfPage": 259
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-05",
+      "arcana": "minor",
+      "name": "Five of Swords",
+      "nameInWaite": "SWORDS / Five",
+      "alt": "A man gathers swords with a sly look as two defeated figures walk away toward the sea",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Degradation, destruction, revocation, infamy, dishonour, loss, with the variants and analogues of these.",
+        "reversed": "The same; burial and obsequies.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 244,
+          "pdfPage": 257
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-06",
+      "arcana": "minor",
+      "name": "Six of Swords",
+      "nameInWaite": "SWORDS / Six",
+      "alt": "A ferryman poles a boat carrying a cloaked woman and a child across water, six swords standing upright in the boat",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Journey by water, route, way, envoy, commissionary, expedient.",
+        "reversed": "Declaration, confession, publicity; one account says that it is a proposal of love.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 242,
+          "pdfPage": 255
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-07",
+      "arcana": "minor",
+      "name": "Seven of Swords",
+      "nameInWaite": "SWORDS / Seven",
+      "alt": "A man tiptoes away from a camp carrying five swords, two left standing behind him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Design, attempt, wish, hope, confidence; also quarrelling, a plan that may fail, annoyance. The design is uncertain in its import, because the significations are widely at variance with each other.",
+        "reversed": "Good advice, counsel, instruction, slander, babbling.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 240,
+          "pdfPage": 253
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-08",
+      "arcana": "minor",
+      "name": "Eight of Swords",
+      "nameInWaite": "SWORDS / Eight",
+      "alt": "A blindfolded woman in red stands bound among eight swords planted in wet ground, a castle on a hill behind",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Bad news, violent chagrin, crisis, censure, power in trammels, conflict, calumny; also sickness.",
+        "reversed": "Disquiet, difficulty, opposition, accident, treachery; what is unforeseen; fatality.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 238,
+          "pdfPage": 251
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-09",
+      "arcana": "minor",
+      "name": "Nine of Swords",
+      "nameInWaite": "SWORDS / Nine",
+      "alt": "A woman sits up in bed with her face in her hands, nine swords hanging on the dark wall behind her",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Death, failure, miscarriage, delay, deception, disappointment, despair.",
+        "reversed": "Imprisonment, suspicion, doubt, reasonable fear, shame.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 236,
+          "pdfPage": 249
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-10",
+      "arcana": "minor",
+      "name": "Ten of Swords",
+      "nameInWaite": "SWORDS / Ten",
+      "alt": "A man lies face down under a dark sky with ten swords in his back, a pale dawn along the horizon",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Whatsoever is intimated by the design; also pain, affliction, tears, sadness, desolation. It is not especially a card of violent death.",
+        "reversed": "Advantage, profit, success, favour, but none of these are permanent; also power and authority.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 234,
+          "pdfPage": 247
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-11",
+      "arcana": "minor",
+      "name": "Page of Swords",
+      "nameInWaite": "SWORDS / Page",
+      "alt": "A young man on rough ground holds a sword upright in both hands, clouds and birds in the sky",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Authority, overseeing, secret service, vigilance, spying, examination, and the qualities thereto belonging.",
+        "reversed": "More evil side of these qualities; what is unforeseen, unprepared state; sickness is also intimated.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 232,
+          "pdfPage": 245
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-12",
+      "arcana": "minor",
+      "name": "Knight of Swords",
+      "nameInWaite": "SWORDS / Knight",
+      "alt": "A knight in armor charges on a galloping horse, sword raised, trees bending in the wind",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Skill, bravery, capacity, defence, address, enmity, wrath, war, destruction, opposition, resistance, ruin. There is therefore a sense in which the card signifies death, but it carries this meaning only in its proximity to other cards of fatality.",
+        "reversed": "Imprudence, incapacity, extravagance.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 230,
+          "pdfPage": 243
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-13",
+      "arcana": "minor",
+      "name": "Queen of Swords",
+      "nameInWaite": "SWORDS / Queen",
+      "alt": "A crowned queen on a throne among clouds holds an upright sword and lifts her other hand",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Widowhood, female sadness and embarrassment, absence, sterility, mourning, privation, separation.",
+        "reversed": "Malice, bigotry, artifice, prudery, bale, deceit.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 228,
+          "pdfPage": 241
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "swords-14",
+      "arcana": "minor",
+      "name": "King of Swords",
+      "nameInWaite": "THE SUIT OF SWORDS / King",
+      "alt": "A king on a throne carved with butterflies faces us, holding an upright sword",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Whatsoever arises out of the idea of judgment and all its connexions—power, command, authority, militant intelligence, law, offices of the crown, and so forth.",
+        "reversed": "Cruelty, perversity, barbarity, perfidy, evil intention.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 226,
+          "pdfPage": 239
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-01",
+      "arcana": "minor",
+      "name": "Ace of Pentacles",
+      "nameInWaite": "PENTACLES / Ace",
+      "alt": "A hand from a cloud holds a large golden pentacle over a garden with an arch of white roses",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Perfect contentment, felicity, ecstasy; also speedy intelligence; gold.",
+        "reversed": "The evil side of wealth, bad intelligence; also great riches. In any case it shews prosperity, comfortable material conditions, but whether these are of advantage to the possessor will depend on whether the card is reversed or not.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 280,
+          "pdfPage": 293
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-02",
+      "arcana": "minor",
+      "name": "Two of Pentacles",
+      "nameInWaite": "PENTACLES / Two",
+      "alt": "A young man dances while juggling two pentacles in a loop, ships riding high waves behind him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "On the one hand it is represented as a card of gaiety, recreation and its connexions, which is the subject of the design; but it is read also as news and messages in writing, as obstacles, agitation, trouble, embroilment.",
+        "reversed": "Enforced gaiety, simulated enjoyment, literal sense, handwriting, composition, letters of exchange.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 278,
+          "pdfPage": 291
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-03",
+      "arcana": "minor",
+      "name": "Three of Pentacles",
+      "nameInWaite": "PENTACLES / Three",
+      "alt": "A stonemason on a bench works in a church arch while a monk and a hooded figure hold plans, three pentacles carved above",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Métier, trade, skilled labour; usually, however, regarded as a card of nobility, aristocracy, renown, glory.",
+        "reversed": "Mediocrity, in work and otherwise, puerility, pettiness, weakness.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 276,
+          "pdfPage": 289
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": [
+            "\"Métier\" is printed in italics; plain string cannot show it."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-04",
+      "arcana": "minor",
+      "name": "Four of Pentacles",
+      "nameInWaite": "PENTACLES / Four",
+      "alt": "A crowned man clutches a pentacle to his chest, one on his crown and two under his feet, a city behind",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "The surety of possessions, cleaving to that which one has, gift, legacy, inheritance.",
+        "reversed": "Suspense, delay, opposition.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 274,
+          "pdfPage": 287
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": [
+            "The label is printed \"Reversed ;\" (semicolon, not colon); the label itself is not part of the field."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-05",
+      "arcana": "minor",
+      "name": "Five of Pentacles",
+      "nameInWaite": "PENTACLES / Five",
+      "alt": "Two poor figures, one on crutches, walk through snow past a lit church window with five pentacles",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "The card foretells material trouble above all, whether in the form illustrated—that is, destitution—or otherwise. For some cartomancists, it is a card of love and lovers—wife, husband, friend, mistress; also concordance, affinities. These alternatives cannot be harmonized.",
+        "reversed": "Disorder, chaos, ruin, discord, profligacy.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 272,
+          "pdfPage": 285
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-06",
+      "arcana": "minor",
+      "name": "Six of Pentacles",
+      "nameInWaite": "PENTACLES / Six",
+      "alt": "A merchant weighs coins in a pair of scales and gives alms to two kneeling beggars",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Presents, gifts, gratification; another account says attention, vigilance; now is the accepted time, present prosperity, etc.",
+        "reversed": "Desire, cupidity, envy, jealousy, illusion.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 270,
+          "pdfPage": 283
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 2,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-07",
+      "arcana": "minor",
+      "name": "Seven of Pentacles",
+      "nameInWaite": "PENTACLES / Seven",
+      "alt": "A young farmer leans on his hoe and looks at seven pentacles growing on a green bush",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "These are exceedingly contradictory; in the main, it is a card of money, business, barter; but one reading gives altercation, quarrel—and another innocence, ingenuity, purgation.",
+        "reversed": "Cause for anxiety regarding money which it may be proposed to lend.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 268,
+          "pdfPage": 281
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-08",
+      "arcana": "minor",
+      "name": "Eight of Pentacles",
+      "nameInWaite": "PENTACLES / Eight",
+      "alt": "A craftsman at a bench carves a pentacle, finished pentacles hung beside him",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Work, employment, commission, craftsmanship, skill in craft and business, perhaps in the preparatory stage.",
+        "reversed": "Voided ambition, vanity, cupidity, exaction, usury. It may also signify the possession of skill, in the sense of the ingenious mind turned to cunning and intrigue.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 266,
+          "pdfPage": 279
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-09",
+      "arcana": "minor",
+      "name": "Nine of Pentacles",
+      "nameInWaite": "PENTACLES / Nine",
+      "alt": "A woman in a flowered robe stands in a vineyard with a hooded bird on her hand, nine pentacles among the vines",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Prudence, safety, success, accomplishment, certitude, discernment.",
+        "reversed": "Roguery, deception, voided project, bad faith.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 264,
+          "pdfPage": 277
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-10",
+      "arcana": "minor",
+      "name": "Ten of Pentacles",
+      "nameInWaite": "PENTACLES / Ten",
+      "alt": "An old man with two dogs sits by an archway as a couple and a child talk, ten pentacles set in the pattern of a tree",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Gain, riches; family matters, archives, extraction, the abode of a family.",
+        "reversed": "Chance, fatality, loss, robbery, games of hazard; sometimes gift, dowry, pension.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 262,
+          "pdfPage": 275
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-11",
+      "arcana": "minor",
+      "name": "Page of Pentacles",
+      "nameInWaite": "PENTACLES / Page",
+      "alt": "A young man stands in a flowering field gazing at a pentacle held up in both hands",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Application, study, scholarship, reflection; another reading says news, messages and the bringer thereof; also rule, management.",
+        "reversed": "Prodigality, dissipation, liberality. luxury; unfavourable news.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 260,
+          "pdfPage": 273
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 2,
+          "checked": "2026-09-25",
+          "notes": [
+            "Printed \"liberality.\" (period, confirmed at 1920px) reads like a damaged comma in the list; kept as printed. Source B (1911-based) has a comma."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-12",
+      "arcana": "minor",
+      "name": "Knight of Pentacles",
+      "nameInWaite": "PENTACLES / Knight",
+      "alt": "A knight sits still on a heavy black horse in a ploughed field, holding a pentacle",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Utility, serviceableness, interest, responsibility, rectitude—all on the normal and external plane.",
+        "reversed": "inertia, idleness, repose of that kind, stagnation; also placidity, discouragement, carelessness.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 258,
+          "pdfPage": 271
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 1,
+          "checked": "2026-09-25",
+          "notes": [
+            "\"inertia\" begins with a lowercase i after \"Reversed :\" as printed; kept."
+          ]
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-13",
+      "arcana": "minor",
+      "name": "Queen of Pentacles",
+      "nameInWaite": "PENTACLES / Queen",
+      "alt": "A queen seated in a garden of roses looks down at a pentacle in her lap, a rabbit in the corner",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Opulence, generosity, magnificence, security, liberty.",
+        "reversed": "Evil, suspicion, suspense, fear, mistrust.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 256,
+          "pdfPage": 269
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    },
+    {
+      "id": "pentacles-14",
+      "arcana": "minor",
+      "name": "King of Pentacles",
+      "nameInWaite": "THE SUIT OF PENTACLES / King",
+      "alt": "A king in a robe patterned with grapes sits on a throne carved with bulls, holding a pentacle and a scepter, a castle behind",
+      "altBy": "Claude, a placeholder for review",
+      "reading": {
+        "upright": "Valour, realizing intelligence, business and normal intellectual aptitude, sometimes mathematical gifts and attainments of this kind; success in these paths.",
+        "reversed": "Vice, weakness, ugliness, perversity, corruption, peril.",
+        "source": {
+          "id": "waite-pkt",
+          "page": 254,
+          "pdfPage": 267
+        },
+        "credit": "From A. E. Waite's 1911 Pictorial Key to the Tarot.",
+        "transcription": {
+          "from": "Wikisource (proofread and validated), checked against the Internet Archive text a.-e.-waite-the-pictorial-key-to-the-tarot",
+          "settledOnPageImages": 0,
+          "checked": "2026-09-25",
+          "notes": []
+        },
+        "reviewed": false
+      },
+      "plain": null
+    }
+  ]
+}

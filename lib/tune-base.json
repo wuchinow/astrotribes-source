@@ -1,0 +1,198 @@
+{
+  "$source": "Written by scripts/tune-base.mjs from app/tokens.css and docs/design-system/tokens.json. Do not edit.",
+  "version": "3.4",
+  "tokens": [
+    {
+      "name": "surface-000",
+      "paper": "#fbf8f1",
+      "night": "#1e2b44",
+      "usage": "Lightest surface: inputs, modals, popovers, and the frosted panel over art. Text on it is ink-900 or ink-700."
+    },
+    {
+      "name": "surface-100",
+      "paper": "#f6f0e3",
+      "night": "#101a2f",
+      "usage": "Page background: warm paper on Paper, a deep navy night sky on Night (v3.4 lifted it halfway from v3.3's near-black toward the 0d navy). Body text is ink-700."
+    },
+    {
+      "name": "surface-200",
+      "paper": "#ece3cf",
+      "night": "#18233a",
+      "usage": "Cards and pale tinted panels, a step lighter than their section on Night. Text on it is ink-900 or ink-700; ink-500 at 14px and up."
+    },
+    {
+      "name": "surface-band",
+      "paper": "#f9f5eb",
+      "night": "#0b1526",
+      "usage": "Section bands for page rhythm (1f): a step lighter than the page on Paper, a step darker on Night, alternating with the page tone down a long page; the footer sits on it. Text as on surface-100."
+    },
+    {
+      "name": "surface-hero",
+      "paper": "#f6f0e3",
+      "night": "#152037",
+      "usage": "The hero ground under the art wash: the page color on Paper, a step lighter on Night so Jane's ink wash shows through at a normal blend (1f). Also the color of the nav fade (.at-hero-top). Text sits on a panel."
+    },
+    {
+      "name": "ink-900",
+      "paper": "#1e1a17",
+      "night": "#f5eddb",
+      "usage": "Sumi ink. Headlines and primary text. On Night it resolves to warm paper."
+    },
+    {
+      "name": "ink-700",
+      "paper": "#3b3430",
+      "night": "#ebe3d2",
+      "usage": "Body text. 10.8:1 on Paper surface-100, 12.8:1 on Night."
+    },
+    {
+      "name": "ink-500",
+      "paper": "#6b625b",
+      "night": "#c4bdb0",
+      "usage": "Secondary text, captions, credits, timestamps. 5.3:1 on Paper surface-100, 8.2:1 on Night (7.1:1 on surface-000). Never below 14px."
+    },
+    {
+      "name": "ink-200",
+      "paper": "#d3c9b8",
+      "night": "#323f5a",
+      "usage": "Hairline rules, card borders, dividers. Never readable text."
+    },
+    {
+      "name": "cobalt-600",
+      "paper": "#27498a",
+      "night": "#a8c5f2",
+      "usage": "Van Gogh's night blue, the interactive color: links, secondary and tertiary buttons, active nav, selected states, and the primary button on Night. The primary button on Paper is deep plum (button-primary); everything else clickable is cobalt, and nothing that is not clickable is cobalt. 7.7:1 on Paper, 10.4:1 on Night (the pale swirl blue)."
+    },
+    {
+      "name": "cobalt-400",
+      "paper": "#5577b8",
+      "night": "#86aae6",
+      "usage": "Hover on cobalt-600 fills and the 2px focus ring (3.9:1 on Paper)."
+    },
+    {
+      "name": "cobalt-100",
+      "paper": "#e1e8f4",
+      "night": "#243a61",
+      "usage": "Tints: selected rows, KeyChip backgrounds, pale info panels. Text on it is cobalt-600 or ink-900."
+    },
+    {
+      "name": "on-cobalt",
+      "paper": "#fbf8f1",
+      "night": "#15233f",
+      "usage": "Text and icons on a cobalt-600 fill."
+    },
+    {
+      "name": "gold-500",
+      "paper": "#cf9a17",
+      "night": "#dab255",
+      "usage": "Star gold. Decorative on Paper (stars, dividers, the pull-quote rule). On Night it is the highlight: the logo, the italic accent line of a headline, the crescent; clearer and more yellow in v3.3 (#dab255). 9.1:1 on Night surface-100; never text on Paper."
+    },
+    {
+      "name": "gold-300",
+      "paper": "#efc94d",
+      "night": "#c9a248",
+      "usage": "Light gold for the crescent and stars on night grounds and dark lockups. Decorative."
+    },
+    {
+      "name": "plum-700",
+      "paper": "#5b2a5e",
+      "night": "#d7a6d4",
+      "usage": "Rich plum, the highlight on Paper: the italic accent line of a headline, Dawa's quote marks, highlighted words, the selected tag, and the primary button's hover. 9.5:1 on Paper. On Night it resolves to a light plum for highlighted text (9.0:1); the headline accent on Night uses gold. Clickable only as the primary button's hover on Paper."
+    },
+    {
+      "name": "plum-fill",
+      "paper": "#5b2a5e",
+      "night": "#6f3572",
+      "usage": "Plum as a fill: a highlight badge, a member tag, the text-selection color. Text on it is on-plum."
+    },
+    {
+      "name": "on-plum",
+      "paper": "#fbf8f1",
+      "night": "#f5eddb",
+      "usage": "Text on a plum fill. 10.2:1 on Paper, 7.4:1 on Night."
+    },
+    {
+      "name": "button-primary",
+      "paper": "#4a2150",
+      "night": "#a8c5f2",
+      "usage": "The primary button's fill (Sep 25): the logo's deep plum on Paper, pale cobalt on Night. Primary buttons only, one per view. A plum Night button (#8a4a8d) is an option for Dawa (open 16)."
+    },
+    {
+      "name": "button-primary-hover",
+      "paper": "#5b2a5e",
+      "night": "#86aae6",
+      "usage": "Hover on the primary button."
+    },
+    {
+      "name": "on-button-primary",
+      "paper": "#fbf8f1",
+      "night": "#15233f",
+      "usage": "Text on the primary button. 12.2:1 on Paper's deep plum, 8.9:1 on Night's pale cobalt."
+    },
+    {
+      "name": "highlight",
+      "paper": "#5b2a5e",
+      "night": "#dab255",
+      "usage": "The headline accent: the italic second line and single highlighted words. Rich plum on Paper, star gold on Night."
+    },
+    {
+      "name": "logo",
+      "paper": "#4a2150",
+      "night": "#dab255",
+      "usage": "The logo's tone (Sep 24): deep plum on Paper (11.4:1 on surface-100, 12.2:1 on surface-000), star gold on Night. Darker than plum-700 so the mark reads as ink with a plum cast. The logo only; never text or fills."
+    },
+    {
+      "name": "ember-500",
+      "paper": "#a44716",
+      "night": "#f29a5e",
+      "usage": "Ember, from the moon's halo. Eyebrow category labels, stamps, live marks, error text. One strong use per screen. 5.3:1 on Paper surface-100."
+    },
+    {
+      "name": "night-900",
+      "paper": "#13213f",
+      "night": "#060b15",
+      "usage": "Deep night band: the emphasis card (like Grove's dark band), dark lockups, the scrim under sky images. Text on it is on-night. On Night it takes an ink-200 hairline, since it sits close to surface-band."
+    },
+    {
+      "name": "on-night",
+      "paper": "#f5eddb",
+      "night": "#f5eddb",
+      "usage": "Text on night-900 bands in either mood. 13.7:1 on Paper's band, 16.9:1 on Night's."
+    },
+    {
+      "name": "on-night-soft",
+      "paper": "#c9c1b1",
+      "night": "#c9c1b1",
+      "usage": "Secondary text on night-900 bands. 8.9:1."
+    },
+    {
+      "name": "fire",
+      "paper": "#a8442e",
+      "night": "#e07a5f",
+      "usage": "Element accent for Aries, Leo, Sagittarius. Badges and tallies only."
+    },
+    {
+      "name": "earth",
+      "paper": "#5f6d3a",
+      "night": "#a3b56e",
+      "usage": "Element accent for Taurus, Virgo, Capricorn. Badges and tallies only."
+    },
+    {
+      "name": "air",
+      "paper": "#466b99",
+      "night": "#93b4dc",
+      "usage": "Element accent for Gemini, Libra, Aquarius. Badges and tallies only."
+    },
+    {
+      "name": "water",
+      "paper": "#2c6470",
+      "night": "#7fc0c9",
+      "usage": "Element accent for Cancer, Scorpio, Pisces, a village teal. Badges and tallies only."
+    },
+    {
+      "name": "on-element",
+      "paper": "#fbf8f1",
+      "night": "#15233f",
+      "usage": "Text and glyphs on an element fill, at least 5:1."
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "$comment": "PLACEHOLDER: Claude Code's draft lines for the free chart (push 1b), one per sign for the Sun, Moon, and Rising. Every entry is reviewed: false and source: draft until Dawa approves or replaces it; swapping his lines in is a change to this file only. tests/free-chart/signs.test.ts checks the shape and the copy rules.",
+  "entries": [
+    {
+      "body": "sun",
+      "sign": "aries",
+      "line": "You come alive at the start of things. You would rather try and learn than wait and wonder.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "aries",
+      "line": "Your feelings arrive fast and leave fast. You settle by doing something about them.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "aries",
+      "line": "People meet your energy first. You come across as direct, quick, and ready to go.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "taurus",
+      "line": "You build slowly and you build to last. What you love, you keep.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "taurus",
+      "line": "You settle when things are steady and real. Comfort, for you, is something you can touch.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "taurus",
+      "line": "People meet your calm first. You come across as grounded, patient, and hard to rush.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "gemini",
+      "line": "You are made of questions. Two ideas at once feels like home to you.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "gemini",
+      "line": "You feel things by talking them through. A good conversation settles you more than silence does.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "gemini",
+      "line": "People meet your quick mind first. You come across as light, curious, and easy to talk to.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "cancer",
+      "line": "You care in practical ways. The people you keep close know exactly where they stand.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "cancer",
+      "line": "Your feelings run deep and remember everything. You settle among your own people, in your own place.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "cancer",
+      "line": "People meet your warmth first, and your caution. You take your time letting people in.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "leo",
+      "line": "You warm a room by being fully in it. You do your best work where people can see it.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "leo",
+      "line": "You need to feel seen, and you are generous when you are. Affection out loud settles you.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "leo",
+      "line": "People meet your presence first. You come across as warm, bright, and a little theatrical.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "virgo",
+      "line": "You notice what others miss and you fix it quietly. Getting it right is its own reward.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "virgo",
+      "line": "You settle by putting things in order. A small useful task calms you more than a pep talk.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "virgo",
+      "line": "People meet your care for detail first. You come across as thoughtful, modest, and quietly capable.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "libra",
+      "line": "You look for the balance in every room. Fairness and beauty matter to you in equal parts.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "libra",
+      "line": "You feel best when things between people are right. A quarrel unsettles you until it is mended.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "libra",
+      "line": "People meet your grace first. You come across as easy, fair, and good company.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "scorpio",
+      "line": "You go all the way in or not at all. You would rather know the truth than feel comfortable.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "scorpio",
+      "line": "Your feelings are private and strong. You trust slowly, and once you do, it is for good.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "scorpio",
+      "line": "People meet your intensity first. You come across as focused, private, and hard to read.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "sagittarius",
+      "line": "You are always heading somewhere. A big question and an open road suit you.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "sagittarius",
+      "line": "You settle by moving. Room to roam, in body or in mind, keeps your spirits up.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "sagittarius",
+      "line": "People meet your optimism first. You come across as frank, friendly, and up for anything.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "capricorn",
+      "line": "You play the long game. You climb steadily, and you keep your word.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "capricorn",
+      "line": "You feel safest when you are useful and in charge of things. You carry a lot and say little about it.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "capricorn",
+      "line": "People meet your composure first. You come across as capable, serious, and older than your years.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "aquarius",
+      "line": "You see how things could be different. You are loyal to ideas, and to your friends.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "aquarius",
+      "line": "You feel things from a little distance. Some space to think settles you.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "aquarius",
+      "line": "People meet your originality first. You come across as friendly, independent, and a bit unusual.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "sun",
+      "sign": "pisces",
+      "line": "You feel your way through the world. You pick up what others feel before they say it.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "moon",
+      "sign": "pisces",
+      "line": "Your feelings are wide and tidal. Music, water, or quiet time alone settles you.",
+      "reviewed": false,
+      "source": "draft"
+    },
+    {
+      "body": "rising",
+      "sign": "pisces",
+      "line": "People meet your softness first. You come across as dreamy, kind, and easy to confide in.",
+      "reviewed": false,
+      "source": "draft"
+    }
+  ]
+}

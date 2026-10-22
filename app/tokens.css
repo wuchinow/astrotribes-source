@@ -1,0 +1,204 @@
+/*
+ * The token layer. Values come from the design system's tokens.json,
+ * claude.ai/artifact/LYZGzxDUab14DbbTDiJC9w, mirrored at docs/design-system/tokens.json.
+ * Palette v3.4 (design system v20, Sep 25 evening): the Night lift, surface-band and surface-hero,
+ * and wash-texture, from the 1f build block.
+ * Never invent a value here: change the design system first, then this
+ * file. tests/tokens.test.ts checks every text pair and the mirror.
+ *
+ * Raw variables use the design system's own names (--surface-100,
+ * --cobalt-600, --shadow-rest), so its CSS idioms carry over one to one.
+ * The @theme blocks below expose them to Tailwind.
+ */
+
+/* Paper, the default mood */
+:root,
+[data-theme="paper"] {
+  color-scheme: light;
+  --surface-000: #fbf8f1;
+  --surface-100: #f6f0e3;
+  --surface-200: #ece3cf;
+  /* Section bands (v3.4): a step lighter than the page on Paper, a step darker on Night */
+  --surface-band: #f9f5eb;
+  /* The hero ground under the art wash (v3.4): the page on Paper, a step lighter on Night */
+  --surface-hero: var(--surface-100);
+  --ink-900: #1e1a17;
+  --ink-700: #3b3430;
+  --ink-500: #6b625b;
+  --ink-200: #d3c9b8;
+  --cobalt-600: #27498a;
+  --cobalt-400: #5577b8;
+  --cobalt-100: #e1e8f4;
+  --on-cobalt: #fbf8f1;
+  --gold-500: #cf9a17;
+  --gold-300: #efc94d;
+  --plum-700: #5b2a5e;
+  --plum-fill: #5b2a5e;
+  --on-plum: #fbf8f1;
+  /* The primary button (v19): the logo's deep plum, plum-700 on hover. Primary buttons only. */
+  --button-primary: #4a2150;
+  --button-primary-hover: #5b2a5e;
+  --on-button-primary: var(--on-plum);
+  --highlight: var(--plum-700);
+  /* The logo's tone (design system v16): deep plum on Paper, star gold on Night. The logo only. */
+  --logo: #4a2150;
+  --ember-500: #a44716;
+  --night-900: #13213f;
+  --on-night: #f5eddb;
+  --on-night-soft: #c9c1b1;
+  --fire: #a8442e;
+  --earth: #5f6d3a;
+  --air: #466b99;
+  --water: #2c6470;
+  --on-element: #fbf8f1;
+  --shadow-rest: 0 1px 2px rgba(30, 26, 23, 0.05), 0 6px 20px -10px rgba(30, 26, 23, 0.14);
+  --shadow-warm: 0 2px 4px rgba(30, 26, 23, 0.05), 0 16px 40px -16px rgba(30, 26, 23, 0.22);
+}
+
+/*
+ * Night, the optional mood: a deep navy sky with warm paper ink (palette v3.4). Layered, not flat:
+ * night-900, then band, page, hero, cards, panels, tints, and hairlines, each a step lighter.
+ * Body and caption text (ink-700, ink-500) a step lighter in 1h (David, Sep 25 evening; design system v24).
+ */
+[data-theme="night"] {
+  color-scheme: dark;
+  --surface-000: #1e2b44;
+  --surface-100: #101a2f;
+  --surface-200: #18233a;
+  --surface-band: #0b1526;
+  --surface-hero: #152037;
+  --ink-900: #f5eddb;
+  --ink-700: #ebe3d2;
+  --ink-500: #c4bdb0;
+  --ink-200: #323f5a;
+  --cobalt-600: #a8c5f2;
+  --cobalt-400: #86aae6;
+  --cobalt-100: #243a61;
+  --on-cobalt: #15233f;
+  --gold-500: #dab255;
+  --gold-300: #c9a248;
+  --plum-700: #d7a6d4;
+  --plum-fill: #6f3572;
+  --on-plum: #f5eddb;
+  /* The primary button on Night stays pale cobalt (v19); hover lightens to cobalt-400 (dark text 6.6:1) */
+  --button-primary: var(--cobalt-600);
+  --button-primary-hover: var(--cobalt-400);
+  --on-button-primary: var(--on-cobalt);
+  --highlight: var(--gold-500);
+  --logo: var(--gold-500);
+  --ember-500: #f29a5e;
+  --night-900: #060b15;
+  --on-night: #f5eddb;
+  --on-night-soft: #c9c1b1;
+  --fire: #e07a5f;
+  --earth: #a3b56e;
+  --air: #93b4dc;
+  --water: #7fc0c9;
+  --on-element: #15233f;
+  --shadow-rest: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -10px rgba(0, 0, 0, 0.6);
+  --shadow-warm: 0 2px 4px rgba(0, 0, 0, 0.45), 0 18px 44px -16px rgba(0, 0, 0, 0.7);
+}
+
+/* The same in both moods */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --touch: 44px;
+  --measure: 65ch;
+  --content-max: 1120px;
+  --duration-fast: 200ms;
+  --duration-reveal: 500ms;
+  --duration-drift: 30s;
+  /*
+   * The art wash (v20): 30% by default and at most, 0.6 of it on Night (a normal blend), half of it
+   * behind a section, and a fifth of it for a texture (6% at the default, the same in both moods).
+   */
+  --wash-art: 0.3;
+  --wash-night: 0.6;
+  --wash-section: 0.5;
+  --wash-texture: 0.2;
+  --wash-sky: 0.5;
+  --panel: 0.8;
+  --grain: 0.035;
+}
+
+/* Tailwind: drop the defaults so only the design system's values exist */
+@theme {
+  --color-*: initial;
+  --shadow-*: initial;
+  --radius-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+
+  /* Radii share the design system's names, so they are defined once, here */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --default-transition-duration: 200ms;
+}
+
+/* Tailwind: map the raw variables so every utility follows the mood */
+@theme inline {
+  --color-surface-000: var(--surface-000);
+  --color-surface-100: var(--surface-100);
+  --color-surface-200: var(--surface-200);
+  --color-surface-band: var(--surface-band);
+  --color-surface-hero: var(--surface-hero);
+  --color-ink-900: var(--ink-900);
+  --color-ink-700: var(--ink-700);
+  --color-ink-500: var(--ink-500);
+  --color-ink-200: var(--ink-200);
+  --color-cobalt-600: var(--cobalt-600);
+  --color-cobalt-400: var(--cobalt-400);
+  --color-cobalt-100: var(--cobalt-100);
+  --color-on-cobalt: var(--on-cobalt);
+  --color-gold-500: var(--gold-500);
+  --color-gold-300: var(--gold-300);
+  --color-plum-700: var(--plum-700);
+  --color-plum-fill: var(--plum-fill);
+  --color-on-plum: var(--on-plum);
+  --color-button-primary: var(--button-primary);
+  --color-button-primary-hover: var(--button-primary-hover);
+  --color-on-button-primary: var(--on-button-primary);
+  --color-highlight: var(--highlight);
+  --color-logo: var(--logo);
+  --color-ember-500: var(--ember-500);
+  --color-night-900: var(--night-900);
+  --color-on-night: var(--on-night);
+  --color-on-night-soft: var(--on-night-soft);
+  --color-fire: var(--fire);
+  --color-earth: var(--earth);
+  --color-air: var(--air);
+  --color-water: var(--water);
+  --color-on-element: var(--on-element);
+
+  --shadow-rest: var(--shadow-rest);
+  --shadow-warm: var(--shadow-warm);
+
+  --spacing-touch: var(--touch);
+  --container-measure: var(--measure);
+  --container-content: var(--content-max);
+
+  --opacity-wash-art: var(--wash-art);
+  --opacity-wash-texture: var(--wash-texture);
+  --opacity-wash-sky: var(--wash-sky);
+  --opacity-panel: var(--panel);
+  --opacity-grain: var(--grain);
+
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-body: var(--font-nunito-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-nunito-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), "SF Mono", Menlo, monospace;
+}
+
+/* night:hidden, night:block, and so on */
+@custom-variant night (&:where([data-theme="night"], [data-theme="night"] *));

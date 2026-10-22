@@ -1,0 +1,423 @@
+{
+  "h": {
+    "crop": {
+      "ratio": 1.2715,
+      "files": {
+        "160": {
+          "h": 126,
+          "avif": {
+            "src": "/art/h-ink-wash/h-ink-wash-crop-160.0227e017.avif",
+            "bytes": 2053
+          },
+          "webp": {
+            "src": "/art/h-ink-wash/h-ink-wash-crop-160.57097541.webp",
+            "bytes": 2394
+          }
+        },
+        "720": {
+          "h": 566,
+          "avif": {
+            "src": "/art/h-ink-wash/h-ink-wash-crop-720.e8d9ccc3.avif",
+            "bytes": 32203
+          },
+          "webp": {
+            "src": "/art/h-ink-wash/h-ink-wash-crop-720.9b2f8b19.webp",
+            "bytes": 55618
+          }
+        },
+        "1440": {
+          "h": 1132,
+          "avif": {
+            "src": "/art/h-ink-wash/h-ink-wash-crop-1440.d9fd127d.avif",
+            "bytes": 113564
+          },
+          "webp": {
+            "src": "/art/h-ink-wash/h-ink-wash-crop-1440.e9592939.webp",
+            "bytes": 200218
+          }
+        }
+      }
+    }
+  },
+  "p6": {
+    "crop": {
+      "ratio": 0.6237,
+      "files": {
+        "160": {
+          "h": 257,
+          "avif": {
+            "src": "/art/p6-characters/p6-characters-crop-160.549620da.avif",
+            "bytes": 5833
+          },
+          "webp": {
+            "src": "/art/p6-characters/p6-characters-crop-160.e6ef6d82.webp",
+            "bytes": 8850
+          }
+        },
+        "720": {
+          "h": 1154,
+          "avif": {
+            "src": "/art/p6-characters/p6-characters-crop-720.5136872e.avif",
+            "bytes": 45459
+          },
+          "webp": {
+            "src": "/art/p6-characters/p6-characters-crop-720.e0219105.webp",
+            "bytes": 61604
+          }
+        }
+      }
+    },
+    "wide": {
+      "ratio": 1.6053,
+      "files": {
+        "1220": {
+          "h": 760,
+          "avif": {
+            "src": "/art/p6-characters/p6-characters-wide-1220.3788c65e.avif",
+            "bytes": 39171
+          },
+          "webp": {
+            "src": "/art/p6-characters/p6-characters-wide-1220.2d267167.webp",
+            "bytes": 46334
+          }
+        }
+      }
+    }
+  },
+  "p7": {
+    "wide": {
+      "ratio": 1.83,
+      "files": {
+        "1440": {
+          "h": 787,
+          "avif": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-wide-1440.9565495c.avif",
+            "bytes": 66025
+          },
+          "webp": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-wide-1440.30abd443.webp",
+            "bytes": 96022
+          }
+        }
+      }
+    },
+    "tall": {
+      "ratio": 0.5599,
+      "files": {
+        "720": {
+          "h": 1286,
+          "avif": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-tall-720.4e6193e7.avif",
+            "bytes": 61404
+          },
+          "webp": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-tall-720.07a9a7b5.webp",
+            "bytes": 91986
+          }
+        }
+      }
+    },
+    "free": {
+      "ratio": 1.0207,
+      "files": {
+        "160": {
+          "h": 157,
+          "avif": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-free-160.af75c445.avif",
+            "bytes": 3141
+          },
+          "webp": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-free-160.4a35e8c4.webp",
+            "bytes": 4412
+          }
+        },
+        "720": {
+          "h": 705,
+          "avif": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-free-720.7b964e76.avif",
+            "bytes": 34517
+          },
+          "webp": {
+            "src": "/art/p7-gold-collage/p7-gold-collage-free-720.b55da369.webp",
+            "bytes": 52258
+          }
+        }
+      }
+    }
+  },
+  "p9": {
+    "wide": {
+      "ratio": 1.8309,
+      "files": {
+        "160": {
+          "h": 87,
+          "avif": {
+            "src": "/art/p9-leaves/p9-leaves-wide-160.c053dbb2.avif",
+            "bytes": 1525
+          },
+          "webp": {
+            "src": "/art/p9-leaves/p9-leaves-wide-160.9a8f575e.webp",
+            "bytes": 1390
+          }
+        },
+        "720": {
+          "h": 393,
+          "avif": {
+            "src": "/art/p9-leaves/p9-leaves-wide-720.7851b4fa.avif",
+            "bytes": 14045
+          },
+          "webp": {
+            "src": "/art/p9-leaves/p9-leaves-wide-720.2b19860b.webp",
+            "bytes": 16536
+          }
+        },
+        "1375": {
+          "h": 751,
+          "avif": {
+            "src": "/art/p9-leaves/p9-leaves-wide-1375.0e373676.avif",
+            "bytes": 30382
+          },
+          "webp": {
+            "src": "/art/p9-leaves/p9-leaves-wide-1375.d512af01.webp",
+            "bytes": 37416
+          }
+        }
+      }
+    },
+    "tall": {
+      "ratio": 0.5601,
+      "files": {
+        "720": {
+          "h": 1286,
+          "avif": {
+            "src": "/art/p9-leaves/p9-leaves-tall-720.9803258c.avif",
+            "bytes": 39997
+          },
+          "webp": {
+            "src": "/art/p9-leaves/p9-leaves-tall-720.95ee9854.webp",
+            "bytes": 49840
+          }
+        }
+      }
+    }
+  },
+  "p10": {
+    "crop": {
+      "ratio": 0.7163,
+      "files": {
+        "160": {
+          "h": 223,
+          "avif": {
+            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-160.9fdc8632.avif",
+            "bytes": 3840
+          },
+          "webp": {
+            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-160.ed0cd2ec.webp",
+            "bytes": 5514
+          }
+        },
+        "720": {
+          "h": 1005,
+          "avif": {
+            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-720.a1cd0569.avif",
+            "bytes": 46884
+          },
+          "webp": {
+            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-720.032c1e3d.webp",
+            "bytes": 77832
+          }
+        }
+      }
+    },
+    "wide": {
+      "ratio": 1.6062,
+      "files": {
+        "1285": {
+          "h": 800,
+          "avif": {
+            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-wide-1285.4c7b0c6d.avif",
+            "bytes": 77971
+          },
+          "webp": {
+            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-wide-1285.80edac4b.webp",
+            "bytes": 136356
+          }
+        }
+      }
+    }
+  },
+  "p1": {
+    "crop": {
+      "ratio": 1.015,
+      "files": {
+        "506": {
+          "h": 499,
+          "avif": {
+            "src": "/art/p1-night-hill/p1-night-hill-crop-506.6a8e142a.avif",
+            "bytes": 22432
+          },
+          "webp": {
+            "src": "/art/p1-night-hill/p1-night-hill-crop-506.728601bd.webp",
+            "bytes": 33448
+          }
+        },
+        "1013": {
+          "h": 998,
+          "avif": {
+            "src": "/art/p1-night-hill/p1-night-hill-crop-1013.3a3af086.avif",
+            "bytes": 61791
+          },
+          "webp": {
+            "src": "/art/p1-night-hill/p1-night-hill-crop-1013.d850259f.webp",
+            "bytes": 96970
+          }
+        }
+      }
+    }
+  },
+  "p2": {
+    "crop": {
+      "ratio": 2.0771,
+      "files": {
+        "512": {
+          "h": 247,
+          "avif": {
+            "src": "/art/p2-black-arch/p2-black-arch-crop-512.4d8a4060.avif",
+            "bytes": 10878
+          },
+          "webp": {
+            "src": "/art/p2-black-arch/p2-black-arch-crop-512.cd507c81.webp",
+            "bytes": 15352
+          }
+        },
+        "1024": {
+          "h": 493,
+          "avif": {
+            "src": "/art/p2-black-arch/p2-black-arch-crop-1024.ce01db19.avif",
+            "bytes": 28045
+          },
+          "webp": {
+            "src": "/art/p2-black-arch/p2-black-arch-crop-1024.80290763.webp",
+            "bytes": 39428
+          }
+        }
+      }
+    }
+  },
+  "p3": {
+    "crop": {
+      "ratio": 2.322,
+      "files": {
+        "512": {
+          "h": 221,
+          "avif": {
+            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-512.2964d0eb.avif",
+            "bytes": 7752
+          },
+          "webp": {
+            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-512.6351e72f.webp",
+            "bytes": 8506
+          }
+        },
+        "1024": {
+          "h": 441,
+          "avif": {
+            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-1024.22f8f876.avif",
+            "bytes": 19541
+          },
+          "webp": {
+            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-1024.9ae0fd39.webp",
+            "bytes": 23060
+          }
+        }
+      }
+    }
+  },
+  "p4": {
+    "crop": {
+      "ratio": 1.3333,
+      "files": {
+        "320": {
+          "h": 240,
+          "avif": {
+            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-320.0ad31d35.avif",
+            "bytes": 6522
+          },
+          "webp": {
+            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-320.28c6a7de.webp",
+            "bytes": 8436
+          }
+        },
+        "640": {
+          "h": 480,
+          "avif": {
+            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-640.b9846785.avif",
+            "bytes": 17285
+          },
+          "webp": {
+            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-640.4ae57603.webp",
+            "bytes": 23280
+          }
+        }
+      }
+    }
+  },
+  "p5": {
+    "crop": {
+      "ratio": 0.7504,
+      "files": {
+        "210": {
+          "h": 280,
+          "avif": {
+            "src": "/art/p5-enso/p5-enso-crop-210.e239a3db.avif",
+            "bytes": 4447
+          },
+          "webp": {
+            "src": "/art/p5-enso/p5-enso-crop-210.79fe2b6a.webp",
+            "bytes": 5030
+          }
+        },
+        "421": {
+          "h": 561,
+          "avif": {
+            "src": "/art/p5-enso/p5-enso-crop-421.5d240e52.avif",
+            "bytes": 10920
+          },
+          "webp": {
+            "src": "/art/p5-enso/p5-enso-crop-421.0b521f31.webp",
+            "bytes": 13214
+          }
+        }
+      }
+    }
+  },
+  "p8": {
+    "crop": {
+      "ratio": 0.7089,
+      "files": {
+        "226": {
+          "h": 319,
+          "avif": {
+            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-226.e4d2bc27.avif",
+            "bytes": 5680
+          },
+          "webp": {
+            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-226.cb4ac5a1.webp",
+            "bytes": 6822
+          }
+        },
+        "453": {
+          "h": 639,
+          "avif": {
+            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-453.008b0e26.avif",
+            "bytes": 14925
+          },
+          "webp": {
+            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-453.8cc9d96a.webp",
+            "bytes": 19138
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,960 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@layer base {
+  :root {
+    /* Set on <html> by the head script from the at-appearance cookie (lib/appearance.ts) */
+    --wash: var(--wash-art);
+    --text-step: 0;
+    --wash-mood: 1;
+  }
+
+  [data-theme="night"] {
+    --wash-mood: var(--wash-night);
+  }
+
+  html {
+    background-color: var(--surface-100);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--surface-100);
+    color: var(--ink-700);
+    font-family: var(--font-body);
+    /* 17px on a phone, 18px from tablet up, plus 2px per text size step (the Appearance panel) */
+    font-size: calc(1.0625rem + var(--text-step) * 0.125rem);
+    line-height: 1.6;
+  }
+
+  @media (width >= 48rem) {
+    body {
+      font-size: calc(1.125rem + var(--text-step) * 0.125rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /*
+   * The ring sits 2px off the control, and a 2px surface-000 halo fills that gap (the design
+   * system's .at-btn and .at-chip pattern), so the ring always meets a solid color at 3:1 or better,
+   * even over Jane's art, where the bare ring fell to 2.5:1 at the top of the wash range (1e,
+   * tests/art-contrast.test.ts). The halo replaces a control's resting shadow while it has focus.
+   */
+  :focus-visible {
+    outline: 2px solid var(--cobalt-400);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--surface-000) !important;
+  }
+
+  ::selection {
+    background-color: var(--plum-fill);
+    color: var(--on-plum);
+  }
+}
+
+/* Patterns ported from the design system's bundle.css */
+@layer components {
+  /*
+   * Jane's painting as wallpaper (components/ArtWash.tsx). The region names its own piece in
+   * data-wash; the visitor's pick on <html data-art> overrides it, and None hides every wash. The
+   * per-piece images, sizes, and heights come from lib/art-assets.ts (washCss, in the root layout).
+   * Opacity is the visitor's wash strength, times 0.6 on Night, times 0.5 behind a section, at a
+   * normal blend in both moods (v3.4 retired the Night multiply blend). Text never sits on it directly.
+   */
+  .wash-region {
+    position: relative;
+    isolation: isolate;
+    min-height: var(--wash-sm-h, 0px);
+  }
+
+  .wash-layer {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image: var(--wash-sm);
+    background-size: var(--wash-sm-size);
+    background-position: var(--wash-sm-pos);
+    background-repeat: no-repeat;
+    -webkit-mask-image: var(--wash-sm-mask);
+    mask-image: var(--wash-sm-mask);
+    opacity: calc(var(--wash) * var(--wash-mood) * var(--wash-kind, 1));
+  }
+
+  [data-wash-kind="section"] {
+    --wash-kind: var(--wash-section);
+  }
+
+  @media (width >= 48rem) {
+    .wash-region {
+      min-height: var(--wash-lg-h, 0px);
+    }
+
+    .wash-layer {
+      background-image: var(--wash-lg);
+      background-size: var(--wash-lg-size);
+      background-position: var(--wash-lg-pos);
+      -webkit-mask-image: var(--wash-lg-mask);
+      mask-image: var(--wash-lg-mask);
+    }
+  }
+
+  /* A strip of the region's wash across the top of a card (the free chart result) */
+  .wash-strip {
+    height: 56px;
+    margin: -1.5rem -1.5rem 0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    background-image: var(--wash-strip);
+    background-size: cover;
+    background-position: center;
+    opacity: calc(var(--wash) * var(--wash-mood));
+  }
+
+  /*
+   * A section band (.at-section-band, v3.4): a step lighter than the page on Paper, a step darker on
+   * Night, alternating with the page tone down a long page. The footer sits on it.
+   */
+  .section-band {
+    background-color: var(--surface-band);
+  }
+
+  /*
+   * A texture (.at-texture, v3.4): the page's own painting behind a section at wash-art x
+   * wash-texture (6% at the default), the same in both moods. Ground, not art: text may sit on it,
+   * and tests/art-contrast.test.ts checks every text color over it. The layer is the texture cut
+   * (no seal or signature in it) laid with cover, then zoomed about a point (TEXTURE_CROPS in
+   * lib/art.ts, rules from washCss), so the section shows another part of the hero's file.
+   */
+  .texture-region {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .texture-layer {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--texture-sm);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: calc(var(--wash) * var(--wash-texture));
+  }
+
+  @media (width >= 48rem) {
+    .texture-layer {
+      background-image: var(--texture-lg);
+    }
+  }
+
+  html[data-art="none"] .wash-layer,
+  html[data-art="none"] .wash-strip,
+  html[data-art="none"] .texture-layer {
+    display: none;
+  }
+
+  html[data-art="none"] .wash-region {
+    min-height: 0;
+  }
+
+  /*
+   * The Tribe card header strips: one framed painting (P2) laid across the whole grid, each card a
+   * window onto its part. --i is the card's place; --cols follows the grid's columns.
+   */
+  /*
+   * The 12 Tribe cards' images (1h): one P2 file for the grid, each card a window into it by
+   * background-position (TribeCard, TRIBE_CROPS). The small file under 40rem, the full one above.
+   */
+  .tribe-window {
+    background-image: var(--strip-sm);
+    background-repeat: no-repeat;
+  }
+
+  @media (width >= 40rem) {
+    .tribe-window {
+      background-image: var(--strip-lg);
+    }
+  }
+
+  /*
+   * The landing's Keys cards (1h): an inked sky image in a night-900 window at the top of each card,
+   * at its manifest strength scaled by the visitor's wash. The image fades out toward the bottom of
+   * the window. On Paper the window is its own night and ends in a clean edge on the paper card; on
+   * Night the window's ground itself turns into the card's surface-200 over its last part, so there
+   * is no edge. None hides the image and its credit.
+   */
+  .keys-window {
+    background: var(--night-900);
+  }
+
+  html[data-theme="night"] .keys-window {
+    background: linear-gradient(to bottom, var(--night-900) 55%, var(--surface-200) 100%);
+  }
+
+  .keys-sky {
+    opacity: calc(var(--sky-strength) * var(--wash) / var(--wash-art));
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  }
+
+  /* The image's credit, on a small night panel at the top right, where the image is strongest. */
+  .keys-credit {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    max-width: calc(100% - 1rem);
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--night-900) calc(var(--panel) * 100%), transparent);
+    font-family: var(--font-body);
+    font-size: calc(0.875rem + var(--text-step) * 0.125rem);
+    line-height: 1.35;
+    color: var(--on-night-soft);
+  }
+
+  html[data-art="none"] .keys-sky,
+  html[data-art="none"] .keys-credit {
+    display: none;
+  }
+
+  /*
+   * The hero (.at-hero, v3.4) stands on surface-hero: the page on Paper, a step lighter on Night so
+   * the ink wash shows through, blue grey, at a normal blend.
+   */
+  .hero-top {
+    background-color: var(--surface-hero);
+  }
+
+  /*
+   * The soft surface-hero fade across the top of a hero (.at-hero-top, v3.4), so the nav meets AA
+   * over the darkest part of the painting. ::after at z-index -1 paints after the painting (-2) and
+   * under the content. Height and strength: checked by sampling in 0d (docs/ASSESSMENT.md) and by
+   * tests/art-contrast.test.ts. 182px since 1h, when the header moved down 24px: the fade is as strong
+   * at the logo's lower edge (y 104) as the 140px fade was at y 80.
+   */
+  .hero-top::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: -1;
+    height: 182px;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-hero) 85%, transparent) 0%,
+      transparent 100%
+    );
+  }
+
+  /* The frosted surface-000 panel that carries text over art */
+  .panel-frost {
+    position: relative;
+    background: color-mix(in srgb, var(--surface-000) calc(var(--panel) * 100%), transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-rest);
+  }
+
+  /* A frosted card pinned over the art (.at-frost): a title, one line, an arrow */
+  .pin-frost {
+    display: inline-grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 14px;
+    min-height: var(--touch);
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--surface-000) 82%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--ink-200);
+    box-shadow: var(--shadow-rest);
+    text-decoration: none;
+    transition: box-shadow var(--duration-fast);
+  }
+
+  .pin-frost:hover {
+    box-shadow: var(--shadow-warm);
+  }
+
+  /* The large italic serif numeral of a numbered item (.at-steps) */
+  .step-numeral {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--ink-500);
+    font-variation-settings: "opsz" 144, "SOFT" 60;
+  }
+
+  /* The ember category label over a numbered item (.at-cat, 14px as of v11) */
+  .category-label {
+    margin: 0 0 6px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ember-500);
+  }
+
+  /*
+   * A form field (.at-field). The border is ink-500, not the system's ink-200, so a field's edge
+   * meets 3:1 against its panel in both moods (U6d; decided Sep 23). Focus adds the global
+   * cobalt-400 ring; an error turns the border ember.
+   */
+  .field-input {
+    display: block;
+    width: 100%;
+    min-height: var(--touch);
+    padding: 0 12px;
+    border: 1.5px solid var(--ink-500);
+    border-radius: var(--radius-sm);
+    background: var(--surface-000);
+    color: var(--ink-900);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+
+  .field-input:focus {
+    border-color: var(--cobalt-600);
+  }
+
+  .field-input[aria-invalid="true"] {
+    border-color: var(--ember-500);
+  }
+
+  .field-input::placeholder {
+    color: var(--ink-500);
+  }
+
+  /* The logo as a recolorable mask: set --logo-src, color comes from `color` */
+  .logo-mask {
+    display: block;
+    background-color: currentColor;
+    -webkit-mask: var(--logo-src) center / contain no-repeat;
+    mask: var(--logo-src) center / contain no-repeat;
+  }
+}
+
+/* Type styles from tokens.json v3. Sizes in rem so browser text settings still work. */
+@utility type-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.85rem + 2.667vw, 4.25rem); /* 40px on a phone to 68px wide */
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  text-wrap: balance;
+}
+
+@utility type-display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.125rem, 5vw, 2.75rem); /* 34px to 44px */
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 120, "SOFT" 30;
+  text-wrap: balance;
+}
+
+@utility type-heading-1 {
+  font-family: var(--font-display);
+  font-size: 1.75rem; /* 28px on a phone */
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+  font-variation-settings: "opsz" 96;
+
+  @media (width >= 48rem) {
+    font-size: 2.1875rem; /* 35px */
+  }
+}
+
+@utility type-heading-2 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  font-variation-settings: "opsz" 72;
+}
+
+@utility type-heading-3 {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility type-label {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Reading sizes grow 2px per text size step (the Appearance panel); headings and UI labels do not. */
+@utility type-body-lg {
+  font-family: var(--font-body);
+  font-size: calc(1.3125rem + var(--text-step) * 0.125rem);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@utility type-body {
+  font-family: var(--font-body);
+  font-size: calc(1.0625rem + var(--text-step) * 0.125rem);
+  line-height: 1.6;
+  font-weight: 400;
+
+  @media (width >= 48rem) {
+    font-size: calc(1.125rem + var(--text-step) * 0.125rem);
+  }
+}
+
+@utility type-body-sm {
+  font-family: var(--font-body);
+  font-size: calc(1rem + var(--text-step) * 0.125rem);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@utility type-ui {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+@utility type-caption {
+  font-family: var(--font-body);
+  font-size: calc(0.875rem + var(--text-step) * 0.125rem);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+@utility type-data {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility type-data-sm {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * The Daily Oracle (1c): the stage, the framed hexagram header, the reading, the card, and Consult.
+ * Which of the five built days shows is set per page by lib/oracle-head.ts.
+ */
+@layer components {
+  /*
+   * The Oracle as a pair (1i): the day's card and the day's hexagram as two equal cards, side by side
+   * from 1024px with their tops aligned (the card left), stacked below it with the hexagram first.
+   * The region is the page wash; there is no tall hero, so the page starts right under the nav.
+   */
+  /* The region's ground (and its nav fade, and the clearing) is the page tone, in both moods. */
+  .oracle-stage {
+    --surface-hero: var(--surface-100);
+  }
+
+  .oracle-pair {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.75rem;
+  }
+
+  @media (width >= 64rem) {
+    .oracle-pair {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: stretch;
+      gap: 2rem;
+    }
+
+    .oracle-pair > .oracle-hex {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+  }
+
+  .oracle-card {
+    height: 100%;
+    padding: 1.5rem 1.25rem 2rem;
+  }
+
+  @media (width >= 48rem) {
+    .oracle-card {
+      padding: 2rem 2.25rem 2.5rem;
+    }
+  }
+
+  /* The hexagram card's column: the clearing (Paper) or the ring (Night) sits behind the card. */
+  .oracle-hex {
+    --clear-r: 7rem;
+    --clear-fade: 120px;
+    /* The centre of the framed header, from the card's top. */
+    --header-y: 5.5rem;
+    position: relative;
+  }
+
+  /* Paper, or a picked painting: the painting cleared behind the card's header, at every wash step. */
+  .oracle-clearing {
+    position: absolute;
+    left: 50%;
+    top: var(--header-y);
+    z-index: -1;
+    width: calc(2 * (var(--clear-r) + var(--clear-fade)));
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--surface-hero) var(--clear-r), transparent 100%);
+    pointer-events: none;
+  }
+
+  /*
+   * Night, with each page's own painting: the inked Ring Nebula centred on the hexagram card's
+   * header, clipped to the card's column and the gap above it (never behind the headline or the
+   * tarot card), at wash-sky scaled by the visitor's wash (30% gives full wash-sky). A picked
+   * painting or None matches none of these rules, so the ring never shares a screen with a Jane
+   * wash, and a background only loads in the mood that shows it.
+   */
+  .sky-clip,
+  .sky-credit {
+    display: none;
+  }
+
+  html[data-theme="night"][data-art="page"] .oracle-stage > .wash-layer,
+  html[data-theme="night"][data-art="page"] .oracle-clearing {
+    display: none;
+    background-image: none;
+  }
+
+  html[data-theme="night"][data-art="page"] .sky-clip {
+    display: block;
+    position: absolute;
+    inset: -2.75rem 0 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    /* No hard edge where the clip meets the headline's gap: the ring fades in over it. */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 2.75rem);
+    mask-image: linear-gradient(to bottom, transparent, #000 2.75rem);
+  }
+
+  .sky-layer {
+    position: absolute;
+    left: 50%;
+    top: calc(2.75rem + var(--header-y));
+    width: min(40rem, 125%);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background-image: var(--sky-sm);
+    background-size: 100% 100%;
+    /* The image's edge never shows: it fades out well inside its square. */
+    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    opacity: calc(var(--sky-strength, var(--wash-sky)) * var(--wash) / var(--wash-art));
+  }
+
+  @media (width >= 64rem) {
+    .sky-layer {
+      background-image: var(--sky-lg);
+    }
+  }
+
+  /* The day's characters, faint in the ring's dark center (Night only; they sit inside the clip). */
+  .oracle-mark {
+    position: absolute;
+    left: 50%;
+    top: calc(2.75rem + var(--header-y));
+    translate: -50% -50%;
+    margin: 0;
+    font-family: var(--font-hanzi), serif;
+    font-weight: 700;
+    font-size: 7rem;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--ink-900);
+    /* 0.3 behind the card's frosted panel shows at about 6% (1h, U27); decorative, aria-hidden. */
+    opacity: 0.3;
+    user-select: none;
+  }
+
+  .oracle-mark-two {
+    font-size: 5rem;
+  }
+
+  /* The sky's credit, on the part of the image that shows above the card, on a small panel. */
+  html[data-theme="night"][data-art="page"] .sky-credit {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.5rem);
+    max-width: 100%;
+    margin: 0;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--surface-000) calc(var(--panel) * 100%), transparent);
+    font-family: var(--font-body);
+    font-size: calc(0.875rem + var(--text-step) * 0.125rem);
+    line-height: 1.4;
+    color: var(--ink-500);
+  }
+
+  /*
+   * In a card of the pair, at every width: the title over the trigrams on the left, the number and
+   * the lines centred on the right across both rows, so the frame has no empty corner (David, Oct 21).
+   */
+  .oracle-card .hexagram-frame {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title lines"
+      "trigrams lines";
+    gap: 1.25rem 1.5rem;
+    padding: 1.25rem;
+  }
+
+  @media (width >= 48rem) {
+    .oracle-card .hexagram-frame {
+      gap: 1.5rem 2rem;
+      padding: 1.5rem 1.75rem;
+    }
+  }
+
+  .oracle-card .hexagram-title {
+    align-self: start;
+  }
+
+  .oracle-card .hexagram-trigrams {
+    align-self: end;
+  }
+
+  .oracle-card .hexagram-lines {
+    align-self: center;
+  }
+
+  /* The image and the six lines, in a modal over the page (David, Oct 21). */
+  .oracle-modal {
+    width: min(42rem, calc(100% - 2rem));
+    max-height: min(85dvh, 52rem);
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--ink-200);
+    border-radius: var(--radius-md);
+    background: var(--surface-000);
+    color: var(--ink-900);
+    box-shadow: var(--shadow-warm);
+  }
+
+  .oracle-modal[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .oracle-modal::backdrop {
+    background: color-mix(in srgb, var(--night-900) 65%, transparent);
+  }
+
+  .oracle-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 1.25rem 0.5rem 1.5rem;
+    border-bottom: 1px solid var(--ink-200);
+  }
+
+  .oracle-modal-body {
+    overflow-y: auto;
+    padding: 1.5rem 1.5rem 2rem;
+  }
+
+  @media (width >= 48rem) {
+    .oracle-modal-head {
+      padding: 0.75rem 1.5rem 0.75rem 2.25rem;
+    }
+
+    .oracle-modal-body {
+      padding: 2rem 2.25rem 2.5rem;
+    }
+  }
+
+  html:has(.oracle-modal[open]) {
+    overflow: hidden;
+  }
+
+  /* Consult: a full-width row under the pair, its button beside the words from 768px. */
+  .oracle-consult {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (width >= 48rem) {
+    .oracle-consult {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 2rem;
+    }
+  }
+
+  /* The framed header (design system, Reading card): a hairline ink frame (the brush corners went, David, Oct 21). */
+  .hexagram-frame {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title title"
+      "trigrams lines";
+    align-items: center;
+    gap: 1rem 1.25rem;
+    padding: 1.25rem;
+    border: 1px solid var(--ink-900);
+  }
+
+  @media (width >= 48rem) {
+    .hexagram-frame {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-areas: "title trigrams lines";
+      gap: 1.75rem;
+      padding: 1.25rem 1.75rem;
+    }
+  }
+
+  .hexagram-title {
+    grid-area: title;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin: 0;
+    color: var(--ink-900);
+  }
+
+  .hexagram-no {
+    flex-basis: 100%;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+
+  .hexagram-chars {
+    font-family: var(--font-hanzi), serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .hexagram-pinyin {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 96;
+  }
+
+  @media (width >= 48rem) {
+    .hexagram-chars {
+      font-size: 3rem;
+    }
+
+    .hexagram-pinyin {
+      font-size: 2.125rem;
+    }
+  }
+
+  .hexagram-trigrams {
+    grid-area: trigrams;
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+
+  .hexagram-trigrams dd {
+    margin: 0;
+  }
+
+  .hexagram-lines {
+    grid-area: lines;
+  }
+
+  /*
+   * The number above the lines, never over them, so both read cleanly (David, Oct 21): the one
+   * ember on the screen (Walker's mark plus number).
+   */
+  .hexagram-numeral {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 2.75rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 144;
+    color: var(--ember-500);
+    user-select: none;
+  }
+
+  @media (width >= 48rem) {
+    .hexagram-numeral {
+      font-size: 3.5rem;
+    }
+  }
+
+  .hexagram-bar {
+    fill: var(--ink-900);
+  }
+
+  .hexagram-mark {
+    fill: none;
+    stroke: var(--ink-900);
+    stroke-width: 2.5;
+  }
+
+  /* The italic line: a phrase quoted from Legge, capitalized where it starts. */
+  .oracle-line {
+    max-width: 40ch;
+    margin: 1.5rem 0 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: calc(1.25rem + var(--text-step) * 0.125rem);
+    line-height: 1.4;
+    color: var(--ink-700);
+  }
+
+  .oracle-line::first-letter {
+    text-transform: uppercase;
+  }
+
+  /* Consult */
+  .consult-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    min-height: var(--touch);
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--ink-200);
+    border-radius: var(--radius-sm);
+    background: var(--surface-000);
+    cursor: pointer;
+  }
+
+  .consult-option input {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0.125rem;
+    flex: none;
+    accent-color: var(--cobalt-600);
+  }
+
+  .coin {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .coin-heads {
+    fill: var(--ink-900);
+    stroke: var(--ink-900);
+    stroke-width: 2;
+  }
+
+  .coin-tails {
+    fill: var(--surface-000);
+    stroke: var(--ink-900);
+    stroke-width: 2;
+  }
+
+  .coin-hole {
+    fill: var(--surface-100);
+    stroke: var(--ink-900);
+    stroke-width: 2;
+  }
+
+  .coin-flip {
+    animation: coin-flip var(--duration-fast, 200ms) ease-out 2;
+  }
+
+  @keyframes coin-flip {
+    from {
+      transform: scaleX(1);
+    }
+    50% {
+      transform: scaleX(0.1);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .consult-stack {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .consult-stack li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .consult-bar {
+    width: 4rem;
+    height: 0.5rem;
+    flex: none;
+    background: var(--ink-900);
+  }
+
+  .consult-bar-broken {
+    background: linear-gradient(90deg, var(--ink-900) 42%, transparent 42% 58%, var(--ink-900) 58%);
+  }
+}

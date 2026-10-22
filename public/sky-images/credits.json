@@ -1,0 +1,151 @@
+{
+  "$about": "The sky images on the site, inked by scripts/ink-sky.mjs from lib/sky.ts. Credits confirmed on each release page.",
+  "images": {
+    "ring": {
+      "subject": "The Ring Nebula (M57)",
+      "credit": "The Hubble Heritage Team (AURA/STScI/NASA)",
+      "tinted": false,
+      "license": "NASA and STScI release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/image-detail/hubble-ringnebula-1999-stsci-01evvfqsn9vs4r6nbd4t4x6j5g/",
+      "released": "1999-01-06",
+      "source": "reference/images/space images/nasa-galaxy-cluster.jpg (misnamed in the Lovable export)",
+      "crop": [
+        58,
+        30,
+        1100,
+        1100
+      ],
+      "levels": {
+        "black": 4,
+        "white": 150,
+        "gamma": 0.65
+      },
+      "median": null,
+      "strength": 0.6,
+      "ramp": [
+        "#060b15",
+        "#3a4a6b",
+        "#e8dfc9"
+      ],
+      "files": {
+        "720": {
+          "src": "/sky-images/ring-nebula/ring-nebula-720.f78ca11c.webp",
+          "width": 720,
+          "height": 720,
+          "bytes": 10840
+        },
+        "1100": {
+          "src": "/sky-images/ring-nebula/ring-nebula-1100.9ec026ba.webp",
+          "width": 1100,
+          "height": 1100,
+          "bytes": 23698
+        }
+      }
+    },
+    "keysSun": {
+      "subject": "The center of the Milky Way in infrared",
+      "credit": "NASA/JPL-Caltech/S. Stolovy (Spitzer Science Center/Caltech)",
+      "tinted": false,
+      "license": "NASA and JPL release; not copyrighted in the United States",
+      "release": "https://www.spitzer.caltech.edu/image/ssc2006-02a1-spitzer-view-of-the-center-of-the-milky-way",
+      "released": "2006-01-10",
+      "source": "reference/images/space images/nasa-helix-nebula.jpg (misnamed in the Lovable export)",
+      "crop": [
+        2140,
+        1985,
+        2800,
+        1575
+      ],
+      "levels": {
+        "black": 14,
+        "white": 240,
+        "gamma": 1.1
+      },
+      "median": 5,
+      "strength": 0.8,
+      "ramp": [
+        "#060b15",
+        "#3a4a6b",
+        "#e8dfc9"
+      ],
+      "files": {
+        "720": {
+          "src": "/sky-images/milky-way-core/milky-way-core-720.569b0e53.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 15122
+        }
+      }
+    },
+    "keysMoon": {
+      "subject": "The Ring Nebula (M57), its upper arc",
+      "credit": "The Hubble Heritage Team (AURA/STScI/NASA)",
+      "tinted": false,
+      "license": "NASA and STScI release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/image-detail/hubble-ringnebula-1999-stsci-01evvfqsn9vs4r6nbd4t4x6j5g/",
+      "released": "1999-01-06",
+      "source": "reference/images/space images/nasa-galaxy-cluster.jpg (misnamed in the Lovable export)",
+      "crop": [
+        0,
+        40,
+        1215,
+        683
+      ],
+      "levels": {
+        "black": 4,
+        "white": 200,
+        "gamma": 0.85
+      },
+      "median": null,
+      "strength": 0.8,
+      "ramp": [
+        "#060b15",
+        "#3a4a6b",
+        "#e8dfc9"
+      ],
+      "files": {
+        "720": {
+          "src": "/sky-images/ring-nebula-arc/ring-nebula-arc-720.2263bacd.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 6082
+        }
+      }
+    },
+    "keysRising": {
+      "subject": "Mystic Mountain in the Carina Nebula",
+      "credit": "NASA, ESA, Hubble 20th Anniversary Team, Mario Livio (STScI)",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/asset/hubble/hubble-captures-view-of-mystic-mountain/",
+      "released": "2010-04-22",
+      "source": "reference/images/space images/nasa-earth-from-space.jpg (misnamed in the Lovable export)",
+      "crop": [
+        0,
+        90,
+        2104,
+        1183
+      ],
+      "levels": {
+        "black": 8,
+        "white": 220,
+        "gamma": 0.9
+      },
+      "median": null,
+      "strength": 0.8,
+      "ramp": [
+        "#060b15",
+        "#3a4a6b",
+        "#e8dfc9"
+      ],
+      "files": {
+        "720": {
+          "src": "/sky-images/mystic-mountain/mystic-mountain-720.176b227d.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 25330
+        }
+      }
+    }
+  }
+}
