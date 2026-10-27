@@ -27,6 +27,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/api/chart': ENGINE_FILES,
     '/welcome': ENGINE_FILES,
+    '/sky': ENGINE_FILES,
     '/share/**': ['./assets/fonts/*.ttf', './public/brand/logo-mono.svg', './app/tokens.css'],
   },
   // geo-tz ships three zone datasets and the tracer takes all of them; the engine reads only the

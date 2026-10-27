@@ -1,7 +1,6 @@
-// The preview passcode. Since Oct 22 it gates only the /sky stub and keeps Tune team-only: the free
-// chart and sign-in opened that day (David), once the site's code was public under the AGPL (the
-// Source link) and the Vercel Firewall limited /api/chart and /api/place per IP. proxy.ts turns
-// visitors away at the door, and the gated page checks again here (invariant 5).
+// The preview passcode. Since 1d it gates no page and only keeps Tune team-only: the free chart and
+// sign-in opened on Oct 22 (David), once the site's code was public under the AGPL (the Source link)
+// and the Vercel Firewall limited /api/chart and /api/place per IP, and Today's sky opened with 1d.
 // Nothing in this file logs, and the passcode itself never leaves it: the cookie holds an HMAC.
 import 'server-only';
 import { createHmac, timingSafeEqual } from 'node:crypto';
@@ -10,30 +9,21 @@ export const PREVIEW_COOKIE = 'at-preview';
 export const PREVIEW_MAX_AGE = 60 * 60 * 24 * 30; // 30 days, in seconds
 
 /**
- * Every path behind the passcode. proxy.ts's matcher lists these and MEMBER_PREFIXES (its config
- * has to be a literal), and tests/preview/gate.test.ts checks that they agree.
+ * The member paths, open to anyone: proxy.ts refreshes the Supabase session on these. Its matcher
+ * lists them (its config has to be a literal), and tests/preview/gate.test.ts checks that they agree.
  */
-export const GATED_PREFIXES = ['/sky'] as const;
-
-/** The member paths, open to anyone: proxy.ts refreshes the Supabase session on these. */
 export const MEMBER_PREFIXES = ['/sign-in', '/auth', '/account', '/api/account', '/welcome', '/your-chart'] as const;
 
-/** Where the passcode page may send someone back to: gated pages only, never a full URL. */
-export const RETURN_PATHS = ['/sky'] as const;
+/** Where the passcode page may send someone back to: the home page only (no page is gated), never a full URL. */
+export const RETURN_PATHS = ['/'] as const;
 export type ReturnPath = (typeof RETURN_PATHS)[number];
 
 const under = (pathname: string, prefix: string) => pathname === prefix || pathname.startsWith(`${prefix}/`);
 
-export const isGatedPath = (pathname: string): boolean => GATED_PREFIXES.some((prefix) => under(pathname, prefix));
-
 export const isMemberPath = (pathname: string): boolean => MEMBER_PREFIXES.some((prefix) => under(pathname, prefix));
 
-/** Where the passcode page returns a visitor turned away from `pathname`. */
-export const returnPathFor = (pathname: string): ReturnPath =>
-  RETURN_PATHS.find((path) => under(pathname, path)) ?? '/sky';
-
 export const safeReturnPath = (value: unknown): ReturnPath =>
-  RETURN_PATHS.find((path) => path === value) ?? '/sky';
+  RETURN_PATHS.find((path) => path === value) ?? '/';
 
 /** Null when PREVIEW_PASSCODE is unset or blank: then nothing opens. */
 const passcode = (): string | null => {

@@ -23,10 +23,10 @@ export function SiteHeader() {
     <header className="absolute inset-x-0 top-0 z-30">
       <div className="relative mx-auto flex max-w-content items-center justify-between gap-2 px-4 pt-5 pb-2 md:gap-4 md:px-6 md:pt-8">
         <Link href="/" className="inline-flex min-h-touch shrink-0 items-center">
-          <Logo className="w-[120px] min-[24rem]:w-[164px] md:w-[280px] xl:w-[340px]" label="AstroTribes, home" />
+          <Logo className="w-[120px] min-[24rem]:w-[164px] md:w-[280px] lg:w-[248px] xl:w-[340px]" label="AstroTribes, home" />
         </Link>
         <nav aria-label="Main" className="hidden lg:block">
-          <NavLinks tone="ink" className="flex items-center gap-6" />
+          <NavLinks tone="ink" className="flex items-center gap-4 xl:gap-6" />
         </nav>
         <div className="flex items-center gap-2 lg:gap-3">
           <div className="hidden items-center lg:flex">

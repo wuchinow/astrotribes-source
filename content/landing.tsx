@@ -162,9 +162,4 @@ export const comingSoon = {
     accent: 'is almost here.',
     body: 'Sun, Moon, and Rising from your birth details, with nothing stored.',
   },
-  sky: {
-    line: "Today's sky",
-    accent: 'arrives soon.',
-    body: 'Where the Moon and planets are today, in plain words.',
-  },
 };

@@ -62,9 +62,7 @@ describe('the sky images', () => {
     }
   });
 
-  it('are never served under /sky, which the preview passcode gates', () => {
-    const proxy = readFileSync(path.join(process.cwd(), 'proxy.ts'), 'utf8');
-    expect(proxy).toMatch(/'\/sky\/:path\*'/);
+  it('are never served under /sky/, the path of the Today\'s sky page', () => {
     for (const id of IDS) for (const file of files(id)) expect(file.src.startsWith('/sky/')).toBe(false);
   });
 });
