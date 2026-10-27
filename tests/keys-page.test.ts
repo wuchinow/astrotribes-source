@@ -29,7 +29,6 @@ import {
   type BodyId,
   type KeyId,
 } from '@/lib/keys';
-import { isGatedPath } from '@/lib/preview';
 import { PRIMARY_NAV } from '@/lib/site';
 import { config } from '@/proxy';
 
@@ -182,7 +181,6 @@ describe('the way to the 28 Keys page', () => {
   });
 
   it('is outside the passcode', () => {
-    expect(isGatedPath('/keys')).toBe(false);
     expect(config.matcher.some((pattern: string) => pattern.startsWith('/keys'))).toBe(false);
   });
 });

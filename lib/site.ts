@@ -5,15 +5,15 @@ export interface NavLink {
   label: string;
 }
 
-// The main nav (1h, from the Sep 27 UX audit): How it works only jumps down the landing, and Sky waits
-// behind the passcode until the engine license is settled; it comes back when it is public. Keys is
-// its own page since 1k; Tribes still jumps down the landing until the Tribe pages have an index.
-// The labels name each count, and the Oracle is the Daily Oracle everywhere it shows (David, Oct 21);
-// its address stays /oracle.
+// The main nav (1h, from the Sep 27 UX audit): How it works only jumps down the landing. Keys is its
+// own page since 1k; Tribes still jumps down the landing until the Tribe pages have an index. The
+// labels name each count, and the Oracle is the Daily Oracle everywhere it shows (David, Oct 21); its
+// address stays /oracle. Today's sky came back once it was public (1d, David, Oct 27).
 export const PRIMARY_NAV: readonly NavLink[] = [
   { href: '/#tribes', label: '12 Tribes' },
   { href: '/keys', label: '28 Keys' },
   { href: '/oracle', label: 'Daily Oracle' },
+  { href: '/sky', label: "Today's sky" },
 ];
 
 /**

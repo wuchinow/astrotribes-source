@@ -27,14 +27,14 @@ describe('engine boundary', () => {
     expect(offenders.map((f) => path.relative(root, f))).toEqual([]);
   });
 
-  it('is imported only by the free chart route and the birth details save (S4)', () => {
+  it('is imported only by the free chart route, the birth details save (S4), and Today\'s sky (1d)', () => {
     const sources = ['app', 'components', 'content', 'lib'].flatMap((dir) => walk(path.join(root, dir)));
     const importers = sources
       .filter((file) => !file.startsWith(path.join(root, 'lib/engine')))
       .filter((file) => /from ['"]@\/lib\/engine['"]/.test(readFileSync(file, 'utf8')))
       .map((f) => path.relative(root, f));
-    // The free chart's route, and saving birth details (2c).
-    expect(importers.sort()).toEqual(['app/(public)/welcome/actions.ts', 'app/api/chart/route.ts']);
+    // The free chart's route, saving birth details (2c), and Today's sky (1d; skyNow only, no birth details).
+    expect(importers.sort()).toEqual(['app/(public)/welcome/actions.ts', 'app/api/chart/route.ts', 'lib/today-sky.ts']);
   });
 
   it('never reaches the public share page', () => {
