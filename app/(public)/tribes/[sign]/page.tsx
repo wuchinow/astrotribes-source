@@ -9,6 +9,7 @@ import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeBadge } from '@/components/TribeBadge';
 import { TribeCard, windowBoxStyle } from '@/components/TribeCard';
+import { TribePainting } from '@/components/TribePainting';
 import { TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
 import { FRAMED, TRIBE_CROPS } from '@/lib/art';
 import { imageSet } from '@/lib/art-assets';
@@ -22,8 +23,10 @@ import { PRIMARY_ACTION } from '@/lib/site';
 //
 // Jane's art, one piece per region: the hero is the sign's own window of P2, wider than its card's
 // (so each Tribe has its own painting), the night band carries P8, the element family's cards their
-// P2 windows, and the next step's painted edge P4. Members' gallery art (Jane Kwan's and Kirstie
-// Connon's among it) comes with layer 3.
+// P2 windows, and the next step's painted edge P4. Kirstie Connon's painting of the sign stands
+// under the facts in the signature section, framed and credited (David, Nov 3, from Dawa's Oct 28
+// ask): below the facts, so it never shares the first screen with the hero's window of Jane's P2.
+// Members' gallery art comes with layer 3.
 //
 // Rhythm: the hero on surface-hero, then the page tone and the band alternating. No textures: the
 // hero's painting is a window of P2, which has no texture cut.
@@ -133,26 +136,29 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
               </blockquote>
             </figure>
           </div>
-          <dl className="grid content-start border-b border-ink-200">
-            {[
-              [copy.signature.facts.dates, signDates(sign)],
-              [copy.signature.facts.element, element],
-              [copy.signature.facts.mode, copy.mode[def.mode]],
-              [copy.signature.facts.symbol, words.symbol],
-            ].map(([label, value]) => (
-              <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-                <dt className="type-label text-ink-500">{label}</dt>
-                <dd className="type-body-sm text-ink-900">{value}</dd>
+          <div className="grid content-start gap-10">
+            <dl className="grid content-start border-b border-ink-200">
+              {[
+                [copy.signature.facts.dates, signDates(sign)],
+                [copy.signature.facts.element, element],
+                [copy.signature.facts.mode, copy.mode[def.mode]],
+                [copy.signature.facts.symbol, words.symbol],
+              ].map(([label, value]) => (
+                <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
+                  <dt className="type-label text-ink-500">{label}</dt>
+                  <dd className="type-body-sm text-ink-900">{value}</dd>
+                </div>
+              ))}
+              <div className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
+                <dt className="type-label text-ink-500">{copy.signature.facts.ruler}</dt>
+                <dd className="type-body-sm text-ink-700">
+                  <span className="font-semibold text-ink-900">{words.ruler.name}</span>
+                  <span className="mt-1 block">{words.ruler.line}</span>
+                </dd>
               </div>
-            ))}
-            <div className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-              <dt className="type-label text-ink-500">{copy.signature.facts.ruler}</dt>
-              <dd className="type-body-sm text-ink-700">
-                <span className="font-semibold text-ink-900">{words.ruler.name}</span>
-                <span className="mt-1 block">{words.ruler.line}</span>
-              </dd>
-            </div>
-          </dl>
+            </dl>
+            <TribePainting sign={sign} sizes="(min-width: 64rem) 24rem, calc(100vw - 2rem)" />
+          </div>
         </div>
       </Section>
 
