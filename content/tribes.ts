@@ -21,9 +21,11 @@ export interface TribeWords {
   prompts: readonly [string, string, string];
   /** A light line the Tribe would recognize. */
   smile: string;
+  /** The sign's shadow side: Dawa's words (Tribe Shadows doc, Oct 26), reviewed. */
+  shadows: readonly string[];
 }
 
-// PLACEHOLDER: every sign's words. reviewed: false until Dawa approves them.
+// PLACEHOLDER: every sign's words except `shadows`, which are Dawa's. reviewed: false until he approves the rest.
 export const TRIBE_WORDS: Record<SignId, TribeWords> = {
   aries: {
     symbol: 'The ram',
@@ -37,6 +39,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'What did you start this year?',
     ],
     smile: '“I’m working on my patience. How long does that take?”',
+    shadows: ['Impatience', 'Impulsiveness', 'Tactlessness', 'Recklessness', 'Anger'],
   },
   taurus: {
     symbol: 'The bull',
@@ -50,6 +53,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you handle change you did not choose?',
     ],
     smile: '“I’m open to new ideas, as long as nothing changes.”',
+    shadows: ['Stubborn', 'Predictable'],
   },
   gemini: {
     symbol: 'The twins',
@@ -63,6 +67,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The best conversation you had lately',
     ],
     smile: '“I have two moods and both of them have opinions.”',
+    shadows: ['Flighty', 'Forgetful', 'Fickle', 'Distracted'],
   },
   cancer: {
     symbol: 'The crab',
@@ -76,6 +81,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you take care of yourself, not just everyone else?',
     ],
     smile: '“I’m not crying, I’m remembering something from 2009.”',
+    shadows: ['Insecure', 'Indirect', 'Evasive', 'Defensive'],
   },
   leo: {
     symbol: 'The lion',
@@ -89,6 +95,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you share the spotlight?',
     ],
     smile: '“I don’t need attention. I just like it when it finds me.”',
+    shadows: ['Vain', 'Melodramatic', 'Domineering'],
   },
   virgo: {
     symbol: 'The maiden',
@@ -102,6 +109,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Something useful you learned this month',
     ],
     smile: '“I’m relaxed. I made a list of ways to relax.”',
+    shadows: ['Judgmental', 'Rigid', 'Nitpicky'],
   },
   libra: {
     symbol: 'The scales',
@@ -115,6 +123,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you decide when both sides are right?',
     ],
     smile: '“I can’t decide whether this is funny. What do you think?”',
+    shadows: ['Noncommittal', 'Indecisive', 'Evasive'],
   },
   scorpio: {
     symbol: 'The scorpion',
@@ -132,6 +141,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The question you keep coming back to',
     ],
     smile: '“I’ll tell you how I feel. Eventually. Maybe.”',
+    shadows: ['Suspicious', 'Secretive', 'Vindictive'],
   },
   sagittarius: {
     symbol: 'The archer',
@@ -145,6 +155,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The best thing a stranger taught you',
     ],
     smile: '“I’m not late. I took the scenic route through three other plans.”',
+    shadows: ['Naive', 'Reckless', 'Restless'],
   },
   capricorn: {
     symbol: 'The sea goat',
@@ -158,6 +169,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Advice you would give your younger self',
     ],
     smile: '“I scheduled some spontaneity for Thursday.”',
+    shadows: ['Rigid', 'Uptight', 'Compulsive'],
   },
   aquarius: {
     symbol: 'The water bearer',
@@ -175,6 +187,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The community that shaped you',
     ],
     smile: '“I’m a team player. The team just hasn’t caught up yet.”',
+    shadows: ['Dogmatic', 'Fanatical', 'Impersonal'],
   },
   pisces: {
     symbol: 'The fish',
@@ -192,6 +205,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Something that moved you this week',
     ],
     smile: '“I didn’t forget. I was somewhere else for a minute.”',
+    shadows: ['Passive', 'Impressionable', 'Ungrounded'],
   },
 };
 
@@ -218,6 +232,14 @@ export const tribePage = {
     line: (sign: string) => `What every ${sign}`,
     accent: 'has in common.',
     smileLabel: 'You will recognize this',
+    // Dawa's words (Tribe Shadows doc, Oct 26), lightly edited for punctuation. Not a placeholder.
+    shadow: {
+      label: 'The shadow side',
+      note: [
+        'Not every Tribe member necessarily has each of these shadows. They are not meant to insult. They are the potential pitfalls, and represent the shadow side of each zodiac sign.',
+        'But keep in mind, the shadow is as valid as the Tribe’s more traditionally positive qualities. The shadow exists because of the Sun’s light. There cannot be one without the other. To fully understand a zodiac sign’s energy, you must know all aspects of each sign.',
+      ],
+    },
     facts: { dates: 'Sun dates', element: 'Element', mode: 'Mode', symbol: 'Symbol', ruler: 'Ruling planet' },
     traditional: (name: string) => `${name} is the traditional ruler.`,
   },

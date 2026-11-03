@@ -42,13 +42,13 @@
       "name": "ink-700",
       "paper": "#3b3430",
       "night": "#ebe3d2",
-      "usage": "Body text. 10.8:1 on Paper surface-100, 12.8:1 on Night."
+      "usage": "Body text. 10.8:1 on Paper surface-100, 13.6:1 on Night (one step lighter in v24)."
     },
     {
       "name": "ink-500",
       "paper": "#6b625b",
       "night": "#c4bdb0",
-      "usage": "Secondary text, captions, credits, timestamps. 5.3:1 on Paper surface-100, 8.2:1 on Night (7.1:1 on surface-000). Never below 14px."
+      "usage": "Secondary text, captions, credits, timestamps. 5.3:1 on Paper surface-100, 9.3:1 on Night (7.6:1 on surface-000; one step lighter in v24). Never below 14px."
     },
     {
       "name": "ink-200",
@@ -137,8 +137,8 @@
     {
       "name": "logo",
       "paper": "#4a2150",
-      "night": "#dab255",
-      "usage": "The logo's tone (Sep 24): deep plum on Paper (11.4:1 on surface-100, 12.2:1 on surface-000), star gold on Night. Darker than plum-700 so the mark reads as ink with a plum cast. The logo only; never text or fills."
+      "night": "#f5eddb",
+      "usage": "The logo's tone (Sep 24): deep plum on Paper (11.4:1 on surface-100, 12.2:1 on surface-000); on Night warm paper (ink-900), so the moon and wordmark read lighter than the gold rays (Nov 3, logo round 15). Darker than plum-700 so the mark reads as ink with a plum cast. The logo only; never text or fills."
     },
     {
       "name": "ember-500",

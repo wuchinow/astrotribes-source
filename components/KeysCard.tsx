@@ -15,11 +15,12 @@ interface KeysCardProps {
 }
 
 /**
- * One of the landing's three Keys cards (1h, design system v23's card-grid exception): an inked sky
+ * One of the landing's three Keys cards (1h, design system v23's card-grid exception): a sky
  * image in a night-900 window at the top, Dawa's Sun or Moon glyph (none on Rising), the body's name,
  * and its keys with their one-line meanings. On Paper the window is its own night with a clean
  * edge; on Night it fades into the card. The image loads lazily, at its manifest strength scaled by
- * the visitor's wash; None hides it and its credit, and the window stays as plain night.
+ * the visitor's wash; None hides it and its credit, and the window stays as plain night. No text sits
+ * on the image (David, Nov 3): its credit is a caption at the foot of the card.
  */
 export function KeysCard({ body, keys, sky }: KeysCardProps) {
   const image = SKY[sky];
@@ -40,7 +41,6 @@ export function KeysCard({ body, keys, sky }: KeysCardProps) {
           className="keys-sky absolute inset-0 size-full object-cover"
           style={{ '--sky-strength': skyFiles.images[sky].strength } as CSSProperties}
         />
-        <p className="keys-credit">{skyFiles.images[sky].credit}</p>
       </div>
       <div className="flex flex-1 flex-col p-4 md:p-6">
         {/* Rising has no glyph of Dawa's; its space is kept so the three titles line up. */}
@@ -53,6 +53,7 @@ export function KeysCard({ body, keys, sky }: KeysCardProps) {
             </li>
           ))}
         </ul>
+        <p className="keys-credit mt-auto pt-6 type-caption text-ink-500">Image: {skyFiles.images[sky].credit}</p>
       </div>
     </article>
   );

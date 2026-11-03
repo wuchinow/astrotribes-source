@@ -185,7 +185,7 @@
   }
 
   /*
-   * The landing's Keys cards (1h): an inked sky image in a night-900 window at the top of each card,
+   * The landing's Keys cards (1h): a sky image in a night-900 window at the top of each card,
    * at its manifest strength scaled by the visitor's wash. The image fades out toward the bottom of
    * the window. On Paper the window is its own night and ends in a clean edge on the paper card; on
    * Night the window's ground itself turns into the card's surface-200 over its last part, so there
@@ -203,22 +203,6 @@
     opacity: calc(var(--sky-strength) * var(--wash) / var(--wash-art));
     -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
-  }
-
-  /* The image's credit, on a small night panel at the top right, where the image is strongest. */
-  .keys-credit {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    max-width: calc(100% - 1rem);
-    margin: 0;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--night-900) calc(var(--panel) * 100%), transparent);
-    font-family: var(--font-body);
-    font-size: calc(0.875rem + var(--text-step) * 0.125rem);
-    line-height: 1.35;
-    color: var(--on-night-soft);
   }
 
   html[data-art="none"] .keys-sky,
@@ -548,7 +532,7 @@
   }
 
   /*
-   * Night, with each page's own painting: the inked Ring Nebula centred on the hexagram card's
+   * Night, with each page's own painting: the Ring Nebula centred on the hexagram card's
    * header, clipped to the card's column and the gap above it (never behind the headline or the
    * tarot card), at wash-sky scaled by the visitor's wash (30% gives full wash-sky). A picked
    * painting or None matches none of these rules, so the ring never shares a screen with a Jane

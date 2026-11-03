@@ -40,7 +40,8 @@
   --button-primary-hover: #5b2a5e;
   --on-button-primary: var(--on-plum);
   --highlight: var(--plum-700);
-  /* The logo's tone (design system v16): deep plum on Paper, star gold on Night. The logo only. */
+  /* The logo's tone (design system v16): deep plum on Paper; on Night the moon and wordmark take warm
+   * paper (ink-900), lighter than the gold rays (David, Nov 3: logo round 15). The logo only. */
   --logo: #4a2150;
   --ember-500: #a44716;
   --night-900: #13213f;
@@ -85,7 +86,7 @@
   --button-primary-hover: var(--cobalt-400);
   --on-button-primary: var(--on-cobalt);
   --highlight: var(--gold-500);
-  --logo: var(--gold-500);
+  --logo: var(--ink-900);
   --ember-500: #f29a5e;
   --night-900: #060b15;
   --on-night: #f5eddb;

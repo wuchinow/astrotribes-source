@@ -1,5 +1,5 @@
 // AA on the Oracle's stage (1c): the reading panel over P6 on Paper (and on Night, where a visitor
-// can pick it), and over the inked Ring Nebula on Night.
+// can pick it), and over the Ring Nebula on Night.
 //
 // P6: every pixel of both served cuts, at every wash step, as the browser composites them: the
 // hero ground, P6 at the wash (0.6 of it on Night), then the frosted surface-000 panel. The clearing
@@ -98,7 +98,7 @@ function range(alpha: number) {
   return { min, max };
 }
 
-describe('text on the panels over the inked ring (Night)', () => {
+describe('text on the panels over the ring (Night)', () => {
   it.each([
     ['ink-900', 4.5], ['ink-700', 4.5], ['ink-500', 4.5], ['highlight', 4.5], ['cobalt-600', 4.5],
     ['ember-500', 4.5], ['cobalt-400', 3],

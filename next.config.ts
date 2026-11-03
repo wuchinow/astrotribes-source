@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
       { source: '/:path*', headers },
       // Jane's cuts carry a content hash in their names (scripts/art.mjs), so they never change in place.
       { source: '/art/:path*', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
-      // The Oracle's cards and the inked sky are content-hashed the same way (scripts/tarot-art.mjs, scripts/ink-sky.mjs).
+      // The Oracle's cards and the sky images are content-hashed the same way (scripts/tarot-art.mjs, scripts/ink-sky.mjs).
       { source: '/tarot/:path*', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
       { source: '/sky-images/:stem/:file', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
     ];
