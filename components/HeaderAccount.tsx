@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { accountSlotCopy } from '@/content/account';
 import { accountMenuCopy } from '@/content/welcome';
-import { clearCarry } from '@/lib/carry';
 import { cn } from '@/lib/cn';
 import { browserClient } from '@/lib/supabase/browser';
 import { DISCLOSURE_EVENT } from './AppearancePanel';
@@ -134,7 +133,7 @@ function MenuLinks({ onNavigate, className }: { onNavigate?: () => void; classNa
       <Link href="/account" onClick={onNavigate} className={cn(linkClass, className)}>
         {accountMenuCopy.account}
       </Link>
-      <form method="post" action="/auth/sign-out" onSubmit={clearCarry}>
+      <form method="post" action="/auth/sign-out">
         <button type="submit" className={cn(linkClass, className, 'cursor-pointer text-left')}>
           {accountMenuCopy.signOut}
         </button>

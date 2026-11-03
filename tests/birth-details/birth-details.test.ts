@@ -106,12 +106,11 @@ describe('placementRows', () => {
 });
 
 describe('the save path keeps quiet', () => {
-  // The free chart's canary runs its route; this path needs a session and a database, so the
+  // The public routes' canary runs them; this path needs a session and a database, so the
   // promise is held as text: no console call, and errors are codes from a fixed list.
   const files = [
     'app/(public)/welcome/actions.ts',
     'lib/birth-details.ts',
-    'lib/carry.ts',
     'components/BirthDetailsForm.tsx',
     'app/(public)/your-chart/page.tsx',
     'app/(public)/welcome/page.tsx',

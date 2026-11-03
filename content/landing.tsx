@@ -14,13 +14,13 @@ interface Block {
 
 export const hero = {
   placeholder: true, // PLACEHOLDER: "Welcome home" until Dawa picks a tagline (open decision 4)
-  eyebrow: 'Free, no sign-up',
+  eyebrow: 'Free. No payment, no subscription.',
   line: 'Welcome',
   accent: 'home',
   /** Two sentences, each on its own line. */
   lede: ['Astrology gives you identity.', 'AstroTribes gives you belonging.'],
   /** One quiet line under the button (1h, AT-11). */
-  note: 'About 30 seconds. No account.',
+  note: 'Sign in with Google, then add your birth details. About a minute.',
   pins: [
     { href: '/oracle', title: 'Daily Oracle', line: 'One hexagram, one card', mark: 'hexagram' },
     { href: '/#tribes', title: 'Find your Tribe', line: 'Twelve homes, one is yours', mark: 'sign' },
@@ -53,13 +53,13 @@ export const howItWorks = {
     {
       category: 'Your chart',
       title: 'Get your three.',
-      body: 'Birth date, time, and place. Sun, Moon, and Rising, each in a few plain lines.',
+      body: 'Sign in free, then add your birth date, time, and place. Sun, Moon, and Rising, each in a few plain lines.',
       more: { href: '#faq-birth-time', label: 'Why we ask for your birth time' },
     },
     {
       category: 'Your keys',
       title: 'Unlock all 28.',
-      body: 'Join, and every placement in your chart gets a name and a meaning.',
+      body: 'Every placement in your chart gets a name and a meaning.',
       more: { href: '/keys', label: 'What the 28 Keys are' },
     },
     {
@@ -128,8 +128,8 @@ export const privacyFaq = {
       question: 'Who sees what?',
       answer: (
         <p>
-          Your birth date, time, and place are yours alone. No other member ever sees them. When
-          accounts open, you choose who can see your chart, and you can keep it private.
+          Your birth date, time, and place are yours alone. No other member ever sees them. You
+          choose who can see your chart, and you can keep it private.
         </p>
       ),
     },
@@ -138,9 +138,8 @@ export const privacyFaq = {
       question: 'How do I delete my data?',
       answer: (
         <p>
-          The free chart keeps nothing, so there is nothing to delete. When accounts open, you can
-          download everything we hold and delete your account from settings. Your chart and birth
-          details go with it.
+          From your account page you can download everything we hold and delete your account. Your
+          chart and birth details go with it.
         </p>
       ),
     },
@@ -151,7 +150,7 @@ export const nextStep = {
   placeholder: true, // PLACEHOLDER: heading and line
   eyebrow: 'Start here',
   title: 'See your sky in a minute.',
-  body: 'No account, nothing saved. Join later if you want the rest.',
+  body: 'Free with an account. No payment, no subscription.',
   secondary: { href: '#how-it-works', label: 'How it works' },
 } satisfies Block & Record<string, unknown>;
 

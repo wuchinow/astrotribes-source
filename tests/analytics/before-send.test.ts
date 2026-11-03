@@ -40,8 +40,8 @@ describe('beforeSend', () => {
 describe('where birth details travel', () => {
   const read = (file: string) => readFileSync(path.join(process.cwd(), file), 'utf8');
 
-  it('the free chart and the place search post their bodies, never a query string', () => {
-    for (const [file, route] of [['components/FreeChart.tsx', '/api/chart'], ['components/PlaceCombobox.tsx', '/api/place']]) {
+  it('the place search posts its body, never a query string', () => {
+    for (const [file, route] of [['components/PlaceCombobox.tsx', '/api/place']]) {
       const source = read(file);
       expect(source).toMatch(new RegExp(`fetch\\('${route.replace('/', '\\/')}', \\{\\s*method: 'POST'`));
       expect(source).not.toMatch(/URLSearchParams|searchParams|\?date=|\?text=/);

@@ -1,30 +1,23 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { FreeChart } from '@/components/FreeChart';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
 
 export const metadata: Metadata = { title: 'Your free chart' };
 
-// Open to anyone since Oct 22 (the passcode came off with the public source). The page itself never
-// touches the engine: the form posts to /api/chart. A member who has saved a chart goes to it
-// (2c), so every "Get your chart" button lands right; only a visitor with a session cookie costs a
-// session check.
+// Every "Get your free chart" button lands here. Since Nov 3 (David) the chart is free with an
+// account, so this page draws nothing: a signed-in member goes to the welcome steps, which send a
+// member with a saved chart straight on to it, and everyone else goes to sign-in, whose callback
+// opens the welcome steps. Only a visitor with a session cookie costs a session check (invariant 5:
+// the welcome and chart pages check the session again themselves).
 export default async function ChartPage() {
+  if (!supabaseConfigured()) redirect('/sign-in?error=off');
   const store = await cookies();
-  if (supabaseConfigured() && store.getAll().some(({ name }) => name.startsWith('sb-'))) {
+  if (store.getAll().some(({ name }) => name.startsWith('sb-'))) {
     const supabase = await memberClient();
     const { data } = await supabase.auth.getUser();
-    if (data.user) {
-      const { data: sun } = await supabase
-        .from('placements')
-        .select('body')
-        .eq('user_id', data.user.id)
-        .eq('body', 'sun')
-        .maybeSingle();
-      if (sun) redirect('/your-chart');
-    }
+    if (data.user) redirect('/welcome');
   }
-  return <FreeChart />;
+  redirect('/sign-in');
 }
