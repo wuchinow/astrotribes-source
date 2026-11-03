@@ -1,0 +1,302 @@
+{
+  "aries": {
+    "size": 3300,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/aries-384.e2fca8d6.avif",
+          "bytes": 14094
+        },
+        "webp": {
+          "src": "/tribe-paintings/aries-384.f76cf1ef.webp",
+          "bytes": 20874
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/aries-768.e80747b2.avif",
+          "bytes": 40777
+        },
+        "webp": {
+          "src": "/tribe-paintings/aries-768.33dcf5bb.webp",
+          "bytes": 60774
+        }
+      }
+    }
+  },
+  "taurus": {
+    "size": 3300,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/taurus-384.20f07139.avif",
+          "bytes": 15550
+        },
+        "webp": {
+          "src": "/tribe-paintings/taurus-384.2544bb0b.webp",
+          "bytes": 31216
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/taurus-768.8d8ed1bf.avif",
+          "bytes": 51808
+        },
+        "webp": {
+          "src": "/tribe-paintings/taurus-768.355ab30d.webp",
+          "bytes": 86944
+        }
+      }
+    }
+  },
+  "gemini": {
+    "size": 3300,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/gemini-384.e82f4542.avif",
+          "bytes": 12096
+        },
+        "webp": {
+          "src": "/tribe-paintings/gemini-384.6863232d.webp",
+          "bytes": 20470
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/gemini-768.2aaa9f67.avif",
+          "bytes": 46492
+        },
+        "webp": {
+          "src": "/tribe-paintings/gemini-768.ed70d9f9.webp",
+          "bytes": 75544
+        }
+      }
+    }
+  },
+  "cancer": {
+    "size": 3000,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/cancer-384.dde46a11.avif",
+          "bytes": 15759
+        },
+        "webp": {
+          "src": "/tribe-paintings/cancer-384.4088562f.webp",
+          "bytes": 29342
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/cancer-768.dfa791e6.avif",
+          "bytes": 50154
+        },
+        "webp": {
+          "src": "/tribe-paintings/cancer-768.15ec3db2.webp",
+          "bytes": 80680
+        }
+      }
+    }
+  },
+  "leo": {
+    "size": 3000,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/leo-384.cf95f3b9.avif",
+          "bytes": 14402
+        },
+        "webp": {
+          "src": "/tribe-paintings/leo-384.5c44680d.webp",
+          "bytes": 21918
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/leo-768.29eef149.avif",
+          "bytes": 47918
+        },
+        "webp": {
+          "src": "/tribe-paintings/leo-768.3b577285.webp",
+          "bytes": 67224
+        }
+      }
+    }
+  },
+  "virgo": {
+    "size": 3000,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/virgo-384.ea0fc716.avif",
+          "bytes": 15328
+        },
+        "webp": {
+          "src": "/tribe-paintings/virgo-384.dc11c0da.webp",
+          "bytes": 27806
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/virgo-768.cef5191b.avif",
+          "bytes": 52738
+        },
+        "webp": {
+          "src": "/tribe-paintings/virgo-768.ff0b024a.webp",
+          "bytes": 85706
+        }
+      }
+    }
+  },
+  "libra": {
+    "size": 2956,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/libra-384.0eb804cd.avif",
+          "bytes": 9079
+        },
+        "webp": {
+          "src": "/tribe-paintings/libra-384.13d419da.webp",
+          "bytes": 12350
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/libra-768.6eb43beb.avif",
+          "bytes": 34978
+        },
+        "webp": {
+          "src": "/tribe-paintings/libra-768.ef0dd9da.webp",
+          "bytes": 47510
+        }
+      }
+    }
+  },
+  "scorpio": {
+    "size": 2748,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/scorpio-384.94173cdb.avif",
+          "bytes": 15236
+        },
+        "webp": {
+          "src": "/tribe-paintings/scorpio-384.b8740a15.webp",
+          "bytes": 28822
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/scorpio-768.8f3b4c87.avif",
+          "bytes": 54170
+        },
+        "webp": {
+          "src": "/tribe-paintings/scorpio-768.d421d1ed.webp",
+          "bytes": 88976
+        }
+      }
+    }
+  },
+  "sagittarius": {
+    "size": 2873,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/sagittarius-384.f8f563d1.avif",
+          "bytes": 15216
+        },
+        "webp": {
+          "src": "/tribe-paintings/sagittarius-384.7258af02.webp",
+          "bytes": 26920
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/sagittarius-768.ac55cb0c.avif",
+          "bytes": 51733
+        },
+        "webp": {
+          "src": "/tribe-paintings/sagittarius-768.3d138c40.webp",
+          "bytes": 81060
+        }
+      }
+    }
+  },
+  "capricorn": {
+    "size": 2660,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/capricorn-384.637947cb.avif",
+          "bytes": 14804
+        },
+        "webp": {
+          "src": "/tribe-paintings/capricorn-384.58b7f37e.webp",
+          "bytes": 26520
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/capricorn-768.dab40c75.avif",
+          "bytes": 51846
+        },
+        "webp": {
+          "src": "/tribe-paintings/capricorn-768.d023bf28.webp",
+          "bytes": 79888
+        }
+      }
+    }
+  },
+  "aquarius": {
+    "size": 632,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/aquarius-384.d0d17ea1.avif",
+          "bytes": 11955
+        },
+        "webp": {
+          "src": "/tribe-paintings/aquarius-384.f9d51627.webp",
+          "bytes": 20102
+        }
+      },
+      "632": {
+        "avif": {
+          "src": "/tribe-paintings/aquarius-632.6e36011e.avif",
+          "bytes": 31509
+        },
+        "webp": {
+          "src": "/tribe-paintings/aquarius-632.e7a97f2f.webp",
+          "bytes": 48200
+        }
+      }
+    }
+  },
+  "pisces": {
+    "size": 3000,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/tribe-paintings/pisces-384.1424e1cb.avif",
+          "bytes": 15503
+        },
+        "webp": {
+          "src": "/tribe-paintings/pisces-384.b7de2b9e.webp",
+          "bytes": 30142
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/tribe-paintings/pisces-768.79d79181.avif",
+          "bytes": 51093
+        },
+        "webp": {
+          "src": "/tribe-paintings/pisces-768.0b553012.webp",
+          "bytes": 84828
+        }
+      }
+    }
+  }
+}
