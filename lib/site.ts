@@ -18,10 +18,11 @@ export const PRIMARY_NAV: readonly NavLink[] = [
 
 /**
  * The one primary action, with one label everywhere (1h, AT-08): the header on every page, the hero,
- * the 12 Tribes, and the next step. The free chart sits behind the preview passcode until the engine
- * license is decided; the site is noindex, and the chart is for the team and invitees until then.
+ * the 12 Tribes, and the next step. Since Nov 3 (David) the chart is free with an account: /chart
+ * sends a visitor to Google sign-in, then the welcome steps (name, birth details), then their chart.
+ * No payment and no subscription.
  */
-export const PRIMARY_ACTION: NavLink = { href: '/chart', label: 'Get your chart free' };
+export const PRIMARY_ACTION: NavLink = { href: '/chart', label: 'Get your free chart' };
 
 export const LEGAL_NAV: readonly NavLink[] = [
   { href: '/privacy', label: 'Privacy' },

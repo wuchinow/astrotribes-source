@@ -1,14 +1,14 @@
 import { NextRequest } from 'next/server';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { POST as chartPOST } from '@/app/api/chart/route';
 import { POST as placePOST } from '@/app/api/place/route';
 import { POST as previewPOST } from '@/app/api/preview/route';
 import { PREVIEW_COOKIE, previewToken } from '@/lib/preview';
 import { resetRateLimits } from '@/lib/rate-limit';
 
-// Invariant 9, by experiment: synthetic canary birth details go through every path of the free
-// chart's routes, success and failure, and none of them may appear in anything written to the
-// console, stdout, or stderr, or in a response beyond the signs. The same canaries are searched
+// Invariant 9, by experiment: synthetic canary details go through every path of the public routes
+// that take them, success and failure, and none of them may appear in anything written to the
+// console, stdout, or stderr, or in a response. The anonymous /api/chart was retired on Nov 3 (the
+// chart is free with an account); the welcome steps' own save is covered in tests/birth-details. The same canaries are searched
 // for in the preview deployment's runtime logs (docs/ASSESSMENT.md, 1b).
 
 const CANARY = {
@@ -64,9 +64,6 @@ const post = (path: string, body: string, cookie = true) =>
     },
   });
 
-const birth = (over: Record<string, unknown> = {}) =>
-  JSON.stringify({ date: CANARY.date, time: CANARY.time, lat: CANARY.lat, lon: CANARY.lon, ...over });
-
 /** The response as text, headers included, for the needle search. */
 const dump = async (response: Response) =>
   `${response.status} ${[...response.headers].map(([k, v]) => `${k}: ${v}`).join('\n')}\n${await response.text()}`;
@@ -81,54 +78,6 @@ const run = async (response: Promise<Response>) => {
 const expectNoCanary = (label: string, text: string) => {
   for (const needle of NEEDLES) expect(text.includes(needle), `${label}: ${needle}`).toBe(false);
 };
-
-describe('/api/chart never logs or echoes birth details', () => {
-  it('on success, known time and unknown time', async () => {
-    const known = await run(chartPOST(post('/api/chart', birth())));
-    expect(known).toMatch(/^200 /);
-    expect(known).toMatch(/"sun":\{"sign":"[a-z]+"/);
-    expectNoCanary('known', known);
-    const unknown = await run(chartPOST(post('/api/chart', birth({ time: null }))));
-    expect(unknown).toMatch(/"rising":null/);
-    expectNoCanary('unknown', unknown);
-  });
-
-  it('on every failure', async () => {
-    const cases = [
-      post('/api/chart', `{"date":"${CANARY.date}","time":"${CANARY.time}",broken`),
-      post('/api/chart', birth({ place: CANARY.place })),
-      post('/api/chart', birth({ date: '1711-11-11' })),
-      post('/api/chart', birth({ date: '1911-02-30' })),
-      post('/api/chart', birth({ time: `${CANARY.time}pm` })),
-      post('/api/chart', birth({ lat: 111.1111 })),
-      post('/api/chart', birth(), false),
-    ];
-    for (const request of cases) expectNoCanary('failure', await run(chartPOST(request)));
-  });
-
-  it('when rate-limited', async () => {
-    for (let i = 0; i < 10; i++) await chartPOST(post('/api/chart', birth()));
-    const limited = await run(chartPOST(post('/api/chart', birth())));
-    expect(limited).toMatch(/^429 /);
-    expectNoCanary('limited', limited);
-  });
-
-  it('when the engine throws something unexpected', async () => {
-    vi.resetModules();
-    vi.doMock('@/lib/engine', async (original) => ({
-      ...(await original<typeof import('@/lib/engine')>()),
-      computeChart: () => {
-        throw new Error(`boom ${CANARY.date} ${CANARY.lat}`);
-      },
-    }));
-    const { POST } = await import('@/app/api/chart/route');
-    const text = await run(POST(post('/api/chart', birth())));
-    expect(text).toMatch(/^500 /);
-    expectNoCanary('throw', text);
-    vi.doUnmock('@/lib/engine');
-    vi.resetModules();
-  });
-});
 
 describe('/api/place never logs or echoes the typed place', () => {
   const placeBody = JSON.stringify({ text: CANARY.place });
@@ -184,7 +133,7 @@ describe('/api/preview never logs the passcode', () => {
 
 describe('the console, stdout, and stderr', () => {
   it('carried none of the canaries through any of the paths above', () => {
-    expect(seen.length).toBeGreaterThan(15);
+    expect(seen.length).toBeGreaterThan(8);
     expectNoCanary('captured output', captured.join('\n'));
   });
 });

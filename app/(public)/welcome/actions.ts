@@ -67,5 +67,5 @@ export async function saveBirthDetails(_previous: BirthFormState, form: FormData
     if (error) return fail('failed');
   }
 
-  redirect('/your-chart?saved=1');
+  redirect('/your-chart');
 }

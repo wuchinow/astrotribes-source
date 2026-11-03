@@ -23,10 +23,6 @@ export const previewCopy = {
 
 // PLACEHOLDER: the form.
 export const formCopy = {
-  eyebrow: 'Free, no sign-up',
-  line: 'Your free chart,',
-  accent: 'in three signs.',
-  lede: 'Your Sun, Moon, and Rising, from your birth date, time, and place.',
   whyWeAsk:
     'Why we ask: your date, time, and place set your chart. We use them once for this page and keep nothing.',
   date: { label: 'Date of birth', help: 'Pick it from the calendar, or type it in.' },

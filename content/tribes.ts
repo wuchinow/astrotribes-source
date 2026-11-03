@@ -288,7 +288,7 @@ export const tribePage = {
   nextStep: {
     eyebrow: 'Start here',
     title: 'Find your first three.',
-    body: 'Your Sun, Moon, and Rising from your birth details. No account, nothing saved.',
+    body: 'Your Sun, Moon, and Rising from your birth details. Free with an account, no payment.',
     secondary: { href: '/#tribes', label: 'See all 12 Tribes' },
   },
 

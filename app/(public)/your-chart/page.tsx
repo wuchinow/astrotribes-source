@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { ChartReading } from '@/components/ChartReading';
-import { ClearCarry } from '@/components/ClearCarry';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { yourChartCopy } from '@/content/welcome';
@@ -26,7 +25,7 @@ interface Row {
  * on a day it changed, it says so. The start of what 2d (the reveal) and 2e (Your Keys) grow into.
  * Checks the session itself (invariant 5).
  */
-export default async function YourChartPage({ searchParams }: PageProps<'/your-chart'>) {
+export default async function YourChartPage() {
   if (!supabaseConfigured()) redirect('/sign-in?error=off');
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
@@ -42,11 +41,9 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
   const sun = byBody.get('sun');
   if (!sun) redirect('/welcome');
   const rising = byBody.get('rising') ?? null;
-  const saved = (await searchParams).saved === '1';
 
   return (
     <>
-      {saved ? <ClearCarry /> : null}
       <ArtWash piece="p9" top>
         <div className="mx-auto max-w-content px-4 pt-31 pb-12 md:px-6 md:pt-38 md:pb-16">
           <div className="panel-frost max-w-[40rem] p-6 md:p-10">

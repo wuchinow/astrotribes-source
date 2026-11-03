@@ -11,10 +11,10 @@ export const accountSlotCopy = {
 // PLACEHOLDER: the sign-in page.
 export const signInCopy = {
   title: 'Sign in',
-  eyebrow: 'Members',
+  eyebrow: 'Your free chart',
   line: 'Sign in',
   accent: 'with Google.',
-  body: 'AstroTribes is open to the team for now. Use the Google account the team added for you.',
+  body: 'Sign in with Google, then add your birth details to see your chart. Free, with no payment and no subscription.',
   google: 'Continue with Google',
   note: 'Google shares your name, email address, and photo with our sign-in service. Your photo shows beside your name at the top of the page. The name members see is the one you choose here.',
   errors: {

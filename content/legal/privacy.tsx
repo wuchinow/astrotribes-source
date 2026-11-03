@@ -14,12 +14,13 @@ const mail = (
 
 export const privacy = {
   title: 'Privacy policy',
-  updated: 'September 2026',
+  updated: 'November 2026',
   draft: (
     <p>
       This page is a draft for legal review. [operator] stands for the person or company that runs
       AstroTribes, and [state] for the law that governs it; both are filled in before launch. The
-      line on Vercel Web Analytics is new and waits for the same review.
+      line on Vercel Web Analytics and the Nov 3 change (the free chart now needs an account) wait
+      for the same review.
     </p>
   ),
   intro: (
@@ -38,12 +39,12 @@ export const privacy = {
   sections: [
     {
       id: 'today',
-      title: 'What we collect today',
+      title: 'What we collect when you visit',
       body: (
         <>
           <p>
-            Right now AstroTribes has no accounts, so it holds nothing about you. A few things
-            happen when you visit:
+            If you only look around, AstroTribes holds nothing about you. A few things happen when
+            you visit:
           </p>
           <ul>
             <li>
@@ -62,8 +63,8 @@ export const privacy = {
             <li>
               <strong>Our host&apos;s request logs.</strong> Vercel, which hosts the site, keeps
               short logs of each request, including your IP address and the page you asked for, to
-              run the site and protect it from abuse. The free chart sends your details in the body
-              of the request, never in the page address, so they are not in these logs.
+              run the site and protect it from abuse. Your birth details travel in the body of the
+              request, never in the page address, so they are not in these logs.
             </li>
           </ul>
           <p>
@@ -75,19 +76,35 @@ export const privacy = {
     },
     {
       id: 'free-chart',
-      title: 'Your free chart',
+      title: 'Your free chart and your account',
       body: (
         <>
+          {/* PLACEHOLDER (Nov 3): the chart now needs an account, for Kevin to review. */}
           <p>
-            You give your birth date, time (or tell us you don&apos;t know it), and place. Your
-            browser sends only the date, the time, and the place&apos;s map coordinates to our
-            server, which works out your Sun, Moon, and Rising and sends back the three signs. The
-            name of the place stays on your screen.
+            Your chart is free. It needs an account, but no payment and no subscription. You sign
+            in with Google, choose the name other members see, then give your birth date, time (or
+            tell us you don&apos;t know it), and place.
           </p>
           <p>
-            <strong>The free chart stores and logs nothing.</strong> Your details are used for that
-            one calculation and then discarded. They are not saved, not written to a log, not sent
-            to any analytics, and not kept in your browser: reload the page and the form is empty.
+            <strong>What an account stores.</strong> Your email address, the name you choose, and
+            who can see your chart. Google also shares your Google name and photo with our sign-in
+            service, which keeps them with your sign-in record. We never use your Google name. Your
+            photo shows beside your name at the top of the page while you are signed in, loaded
+            from Google.
+          </p>
+          <p>
+            <strong>Your birth details.</strong> When you save them, we keep your birth date, your
+            birth time if you give one, your birthplace as you picked it, its map coordinates, and
+            its time zone. Only you can read them. No other member ever sees them. From them our
+            server works out your placements, the sign and house of each body in your chart, and
+            keeps those too. Other members never see a degree. Signs and houses can narrow down
+            when and where someone was born, so they follow the visibility you choose, and they
+            start private.
+          </p>
+          <p>
+            You can change your birth details once an hour. You can download everything we hold
+            about you, and delete your account at any time. Deleting it removes your chart, your
+            birth details, and everything tied to them.
           </p>
           <p>
             To stop abuse, we count how often each connection asks, for a few minutes at a time. The
@@ -116,54 +133,8 @@ export const privacy = {
             , by OpenStreetMap contributors.
           </p>
           <p>
-            <strong>Sharing.</strong> If you share your result, the link carries your three signs
+            <strong>Sharing.</strong> If you share your chart, the link carries your three signs
             and nothing else: no date, no time, no place.
-          </p>
-        </>
-      ),
-    },
-    {
-      id: 'accounts',
-      title: 'When accounts open',
-      body: (
-        <>
-          <p>
-            Joining will be optional. When it opens, this policy will be updated first, and it will
-            keep these promises:
-          </p>
-          <ul>
-            <li>
-              Your birth date, time, and place are readable by you alone. No other member ever sees
-              them.
-            </li>
-            <li>You choose who can see your chart, and you can keep it private.</li>
-            <li>
-              You can download everything we hold about you, and delete your account at any time.
-              Deleting it removes your chart, your birth details, and everything tied to them.
-            </li>
-          </ul>
-          {/* PLACEHOLDER (2b): what an account stores, for Kevin to review. */}
-          <p>
-            Sign-in is open to the team only for now, with Google. An account stores your email
-            address, the name you choose, and who can see your chart. Google also shares your
-            Google name and photo with our sign-in service, which keeps them with your sign-in
-            record. We never use your Google name. Your photo shows beside your name at the top of
-            the page while you are signed in, loaded from Google.
-          </p>
-          {/* PLACEHOLDER (2c): saved birth details, for Kevin to review. */}
-          <p>
-            When you save your chart, we keep your birth date, your birth time if you give one, your
-            birthplace as you picked it, its map coordinates, and its time zone. Only you can read
-            them. From them our server works out your placements, the sign and house of each body in
-            your chart, and keeps those too. Other members never see your birth details, and never
-            a degree. Signs and houses can narrow down when and where someone was born, so they
-            follow the visibility you choose, and they start private.
-          </p>
-          <p>
-            You can change your birth details once an hour. If you ran the free chart first and
-            chose to save it, its details wait in that browser tab until you sign in and save them.
-            They are cleared once saved, when you sign out, or after an hour, and they never reach
-            us before you save.
           </p>
         </>
       ),

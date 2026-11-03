@@ -1,12 +1,11 @@
 'use client';
 
-import { startTransition, useActionState, useEffect, useId, useState } from 'react';
+import { startTransition, useActionState, useId, useState } from 'react';
 import { saveBirthDetails } from '@/app/(public)/welcome/actions';
 import { resultCopy } from '@/content/chart';
 import { signLine } from '@/content/signs';
 import { welcomeCopy } from '@/content/welcome';
 import { PICK_BODIES, type BirthFormState, type Picks } from '@/lib/birth-details';
-import { readCarry } from '@/lib/carry';
 import { SIGNS } from '@/lib/keys';
 import { Button } from './Button';
 import { PlaceCombobox, type Place } from './PlaceCombobox';
@@ -27,7 +26,7 @@ const FIELD_OF: Partial<Record<string, FieldName>> = {
 
 /**
  * The birth details step (2c): date, time or "I don't know", and place from our own place search.
- * Filled from the member's saved details when they edit, or from the free chart carried in this tab.
+ * Filled from the member's saved details when they edit.
  * The values live in this component's state and go to the server action in the POST body only.
  * On a day the Sun or the Moon changed sign, with no time, the action asks for a pick first.
  */
@@ -39,23 +38,7 @@ export function BirthDetailsForm({ initial, edit = false }: { initial: BirthInit
   const [unknownTime, setUnknownTime] = useState(initial ? initial.time === null : false);
   const [place, setPlace] = useState<Place | null>(initial?.place ?? null);
   const [picks, setPicks] = useState<Picks>({});
-  const [carried, setCarried] = useState(false);
   const today = new Date().toISOString().slice(0, 10);
-
-  // The free chart's details, when the visitor brought them along and nothing is saved yet.
-  useEffect(() => {
-    if (initial) return;
-    const found = readCarry();
-    if (!found) return;
-    // Storage is only readable after hydration, so this one effect sets state.
-    /* eslint-disable react-hooks/set-state-in-effect */
-    setDate(found.date);
-    setTime(found.time ?? '');
-    setUnknownTime(found.time === null);
-    setPlace(found.place);
-    setCarried(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, [initial]);
 
   const choices = state.status === 'choose' ? state.choices : null;
   const errorCode = state.status === 'error' ? state.code : null;
@@ -80,7 +63,6 @@ export function BirthDetailsForm({ initial, edit = false }: { initial: BirthInit
       }}
       className="mt-8 grid gap-6"
     >
-      {carried ? <p className="rounded-sm border border-ink-200 bg-surface-200 p-4 type-body-sm text-ink-700">{welcomeCopy.carried}</p> : null}
 
       <div className="grid gap-2">
         <label htmlFor={ids.date} className="font-semibold text-[1rem] text-ink-900">
@@ -150,8 +132,6 @@ export function BirthDetailsForm({ initial, edit = false }: { initial: BirthInit
           {welcomeCopy.place.label}
         </label>
         <PlaceCombobox
-          // Remounted once when carried details arrive, so the field shows the carried place.
-          key={carried ? 'carried' : 'fresh'}
           id={ids.place}
           selected={place}
           onSelect={setPlace}

@@ -6,8 +6,8 @@ import { requestClient } from '@/lib/supabase/server';
 export async function POST(request: NextRequest) {
   const response = NextResponse.redirect(new URL('/', request.url), 303);
   response.headers.set('Cache-Control', 'no-store');
-  // The free chart's details carried in a tab (2c, lib/carry.ts) go with the session, whichever
-  // form signed out. The browser clears this site's storage, not its cookies, so mood stays.
+  // Anything this site keeps in the tab's storage goes with the session, whichever form signed
+  // out. The browser clears this site's storage, not its cookies, so mood stays.
   response.headers.set('Clear-Site-Data', '"storage"');
   if (supabaseConfigured()) {
     try {

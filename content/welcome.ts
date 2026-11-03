@@ -13,7 +13,6 @@ export const welcomeCopy = {
   editLine: 'Your birth details,',
   editAccent: 'to change.',
   lede: 'Your chart comes from these three. Only you ever see them. Other members see signs and houses, never your birth date, time, or place.',
-  carried: 'We brought these over from your free chart. Check them, then save.',
   date: { label: 'Birth date', help: 'Day, month, and year.' },
   time: { label: 'Birth time', help: 'As close as you know it. A birth certificate often has it.' },
   place: { label: 'Birthplace', help: 'Start typing the town or city, then pick it from the list.' },
@@ -61,12 +60,6 @@ export const yourChartCopy = {
     edit: 'Change your birth details',
     addTime: 'Add your birth time',
   },
-};
-
-// PLACEHOLDER: the free chart's way into an account.
-export const carryCopy = {
-  save: 'Save this chart to your account',
-  note: 'We keep these details in this browser tab until you sign in and save them, then clear them.',
 };
 
 // PLACEHOLDER: the header's account menu.
