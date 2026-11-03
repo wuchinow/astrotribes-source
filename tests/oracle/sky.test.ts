@@ -1,11 +1,11 @@
-// The inked sky (1c, design system v21; the Keys cards and the ring's lift in 1h): files, credits, strength, and inking.
+// The sky images (1c, design system v21; the Keys cards and the ring's lift in 1h; natural color Oct 26): files, credits, strength, and ground.
 
 import { readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 import credits from '@/public/sky-images/credits.json';
-import { INK_STOPS, SKY, skyCredit } from '@/lib/sky';
+import { SKY, skyCredit } from '@/lib/sky';
 import { readTokens } from '@/lib/tokens';
 
 const tokens = readTokens();
@@ -47,9 +47,13 @@ describe('the sky images', () => {
     }
   });
 
-  it('are inked through night-900 (Night), the mid navy, and paper', () => {
+  it('are screened over night-900 (Night) in their own color, never inked to one hue', async () => {
     for (const id of IDS) {
-      expect(credits.images[id].ramp, id).toEqual([tokens.night['night-900'].toLowerCase(), INK_STOPS.mid, INK_STOPS.light]);
+      expect(credits.images[id].ground, id).toBe(tokens.night['night-900'].toLowerCase());
+      const { data } = await sharp(path.join(process.cwd(), 'public', credits.images[id].files['720'].src)).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+      let chroma = 0;
+      for (let i = 0; i < data.length; i += 3) chroma = Math.max(chroma, Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]));
+      expect(chroma, id).toBeGreaterThan(60);
     }
   });
 

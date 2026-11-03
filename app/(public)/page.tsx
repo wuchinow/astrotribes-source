@@ -34,7 +34,7 @@ export const revalidate = 86400;
 //
 // Jane's art, one piece per region, art and quiet sections alternating: the hero's wash (IMG_9821),
 // the Tribe cards' windows (P2), the night band's framed piece (P1), and the next step's painted edge
-// (P3); P5 sits in the footer. The Keys cards carry the sky instead: one inked telescope image per
+// (P3); P5 sits in the footer. The Keys cards carry the sky instead: one telescope image per
 // card (1h, design system v23's card-grid exception).
 //
 // Rhythm (1f, design system v20): below the hero, sections alternate the page tone and the band,

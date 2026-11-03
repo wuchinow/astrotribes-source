@@ -1,5 +1,5 @@
 {
-  "$about": "The sky images on the site, inked by scripts/ink-sky.mjs from lib/sky.ts. Credits confirmed on each release page.",
+  "$about": "The sky images on the site, cut by scripts/ink-sky.mjs from lib/sky.ts. Credits confirmed on each release page.",
   "images": {
     "ring": {
       "subject": "The Ring Nebula (M57)",
@@ -17,28 +17,24 @@
       ],
       "levels": {
         "black": 4,
-        "white": 150,
+        "white": 255,
         "gamma": 0.65
       },
       "median": null,
       "strength": 0.6,
-      "ramp": [
-        "#060b15",
-        "#3a4a6b",
-        "#e8dfc9"
-      ],
+      "ground": "#060b15",
       "files": {
         "720": {
-          "src": "/sky-images/ring-nebula/ring-nebula-720.f78ca11c.webp",
+          "src": "/sky-images/ring-nebula/ring-nebula-720.cca8b856.webp",
           "width": 720,
           "height": 720,
-          "bytes": 10840
+          "bytes": 15666
         },
         "1100": {
-          "src": "/sky-images/ring-nebula/ring-nebula-1100.9ec026ba.webp",
+          "src": "/sky-images/ring-nebula/ring-nebula-1100.fab56a20.webp",
           "width": 1100,
           "height": 1100,
-          "bytes": 23698
+          "bytes": 37330
         }
       }
     },
@@ -58,22 +54,18 @@
       ],
       "levels": {
         "black": 14,
-        "white": 240,
+        "white": 255,
         "gamma": 1.1
       },
       "median": 5,
       "strength": 0.8,
-      "ramp": [
-        "#060b15",
-        "#3a4a6b",
-        "#e8dfc9"
-      ],
+      "ground": "#060b15",
       "files": {
         "720": {
-          "src": "/sky-images/milky-way-core/milky-way-core-720.569b0e53.webp",
+          "src": "/sky-images/milky-way-core/milky-way-core-720.2f4a7cc5.webp",
           "width": 720,
           "height": 405,
-          "bytes": 15122
+          "bytes": 27922
         }
       }
     },
@@ -93,22 +85,18 @@
       ],
       "levels": {
         "black": 4,
-        "white": 200,
+        "white": 255,
         "gamma": 0.85
       },
       "median": null,
       "strength": 0.8,
-      "ramp": [
-        "#060b15",
-        "#3a4a6b",
-        "#e8dfc9"
-      ],
+      "ground": "#060b15",
       "files": {
         "720": {
-          "src": "/sky-images/ring-nebula-arc/ring-nebula-arc-720.2263bacd.webp",
+          "src": "/sky-images/ring-nebula-arc/ring-nebula-arc-720.e08c0e3c.webp",
           "width": 720,
           "height": 405,
-          "bytes": 6082
+          "bytes": 8178
         }
       }
     },
@@ -128,22 +116,18 @@
       ],
       "levels": {
         "black": 8,
-        "white": 220,
+        "white": 255,
         "gamma": 0.9
       },
       "median": null,
       "strength": 0.8,
-      "ramp": [
-        "#060b15",
-        "#3a4a6b",
-        "#e8dfc9"
-      ],
+      "ground": "#060b15",
       "files": {
         "720": {
-          "src": "/sky-images/mystic-mountain/mystic-mountain-720.176b227d.webp",
+          "src": "/sky-images/mystic-mountain/mystic-mountain-720.f963f2f5.webp",
           "width": 720,
           "height": 405,
-          "bytes": 25330
+          "bytes": 28682
         }
       }
     }

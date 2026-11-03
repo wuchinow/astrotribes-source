@@ -1,5 +1,5 @@
 // The real sky (design system v21, The three motifs, item 3): telescope images used as backgrounds,
-// inked at build time so they read blue grey like Jane Kwan's ink wash on Night. This manifest is
+// cut at build time in their own color over night-900 (David, Oct 26: the blue grey ink is gone). This manifest is
 // what scripts/ink-sky.mjs cuts from ../reference and what the site renders from; the served files
 // and their credits land in public/sky-images/credits.json (not public/sky/: proxy.ts gates /sky). The Ring
 // Nebula behind the Oracle's hexagram card (1c, lifted in 1h), and one image on each of the landing's three
@@ -19,12 +19,12 @@ export interface SkyImage {
   /** The square or band that is cut, in source pixels. */
   crop: Box;
   /**
-   * Levels before inking: grey values at or below `black` map to night-900, at or above `white`
-   * to paper, with `gamma` applied between (below 1 lifts the mids).
+   * Levels on each channel before the photo is screened over night-900: values at or below `black`
+   * land on night-900, at or above `white` stay full, with `gamma` applied between (below 1 lifts the mids).
    */
   levels: { black: number; white: number; gamma: number };
   /**
-   * A median filter of this size (odd, in source pixels) before inking. It softens a dense star field
+   * A median filter of this size (odd, in source pixels) before the levels. It softens a dense star field
    * into a glow, which a star field needs to stay under budget: every star is noise to WebP.
    */
   median?: number;
@@ -54,12 +54,11 @@ export const SKY = {
     size: [1215, 1241],
     sha256: '32deff3be5da6069b97da8ec870981412aa7410be706838b9ce5a70d639dc01c',
     crop: [58, 30, 1100, 1100],
-    // 1h (U27): lifted so the ring reads through the hexagram card's frosted panel. More of the ring
-    // reaches the paper stop; the brightest pixel is the same, so the panel's worst case barely moves.
-    levels: { black: 4, white: 150, gamma: 0.65 },
+    // 1h (U27): lifted so the ring reads through the hexagram card's frosted panel.
+    levels: { black: 4, white: 255, gamma: 0.65 },
     strength: 0.6,
     widths: [1100, 720],
-    alt: 'The Ring Nebula, a glowing ring of gas around a darker center, in shades of blue grey',
+    alt: 'The Ring Nebula, a glowing ring of gas around a darker center, in its own colors',
     credit: 'The Hubble Heritage Team (AURA/STScI/NASA)',
     tinted: false,
     license: 'NASA and STScI release; not copyrighted in the United States',
@@ -75,11 +74,11 @@ export const SKY = {
     size: [7002, 5050],
     sha256: '9255bc5f7245f1da8c15b42575dbd8ce63056c9b5f89dad878cda051e75bd448',
     crop: [2140, 1985, 2800, 1575],
-    levels: { black: 14, white: 240, gamma: 1.1 },
+    levels: { black: 14, white: 255, gamma: 1.1 },
     median: 5,
     strength: 0.8,
     widths: [720],
-    alt: 'The crowded core of our galaxy, a soft glow of stars and dust in shades of blue grey',
+    alt: 'The crowded core of our galaxy, a soft glow of stars and dust in its own colors',
     credit: 'NASA/JPL-Caltech/S. Stolovy (Spitzer Science Center/Caltech)',
     tinted: false,
     license: 'NASA and JPL release; not copyrighted in the United States',
@@ -93,10 +92,10 @@ export const SKY = {
     size: [1215, 1241],
     sha256: '32deff3be5da6069b97da8ec870981412aa7410be706838b9ce5a70d639dc01c',
     crop: [0, 40, 1215, 683],
-    levels: { black: 4, white: 200, gamma: 0.85 },
+    levels: { black: 4, white: 255, gamma: 0.85 },
     strength: 0.8,
     widths: [720],
-    alt: 'The upper arc of the Ring Nebula, a pale ring of gas rising over a dark center, in blue grey',
+    alt: 'The upper arc of the Ring Nebula, a pale ring of gas rising over a dark center',
     credit: 'The Hubble Heritage Team (AURA/STScI/NASA)',
     tinted: false,
     license: 'NASA and STScI release; not copyrighted in the United States',
@@ -111,10 +110,10 @@ export const SKY = {
     size: [2104, 1937],
     sha256: '7aeac17246a70c88cd0f69a57872bec264f3ece247abf875142dac1a9e7794fe',
     crop: [0, 90, 2104, 1183],
-    levels: { black: 8, white: 220, gamma: 0.9 },
+    levels: { black: 8, white: 255, gamma: 0.9 },
     strength: 0.8,
     widths: [720],
-    alt: 'Pillars of gas and dust rising toward the top of the frame, in blue grey, with a few bright stars',
+    alt: 'Pillars of gas and dust rising toward the top of the frame, with a few bright stars',
     credit: 'NASA, ESA, Hubble 20th Anniversary Team, Mario Livio (STScI)',
     tinted: false,
     license: 'NASA release; not copyrighted in the United States',
@@ -124,9 +123,6 @@ export const SKY = {
 } as const satisfies Record<string, SkyImage>;
 
 export type SkyId = keyof typeof SKY;
-
-/** The three stops every sky image is inked through: night-900 (Night), a mid navy, and paper. */
-export const INK_STOPS = { mid: '#3a4a6b', light: '#e8dfc9' } as const;
 
 export const skyCredit = (image: SkyImage) => (image.tinted ? `${image.credit} (tinted)` : image.credit);
 

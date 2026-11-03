@@ -5,7 +5,7 @@ type Variant = 'lockup' | 'mark';
 
 /**
  * Approved tones: `mood` draws the crescent and wordmark in the logo token (deep plum on Paper,
- * gold on Night) and the rays in gold-500, so Night is all gold. `gold` is gold-300 for both,
+ * warm paper on Night, so the moon reads lighter than the gold rays) and the rays in gold-500. `gold` is gold-300 for both,
  * only on a night-900 ground (merch).
  */
 type Tone = 'mood' | 'gold';

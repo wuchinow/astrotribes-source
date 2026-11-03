@@ -16,9 +16,9 @@ import { KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
 import { PRIMARY_ACTION } from '@/lib/site';
 
 // The 12 Tribe pages (3a), from David's "warm community" direction (Oct 21), reworked after a UX
-// pass: every section is finished content today (the sign's signature, how the keys split a Tribe,
-// questions to bring, the element family), and what arrives with members is one band, said as a
-// promise rather than as empty placeholders. Static: no database.
+// pass: every section is finished content today (the sign's signature, with Dawa's shadow side under
+// its strengths; how the keys split a Tribe; questions to bring; the element family), and what
+// arrives with members is one band, said as a promise rather than as empty placeholders. Static: no database.
 //
 // Jane's art, one piece per region: the hero is the sign's own window of P2, wider than its card's
 // (so each Tribe has its own painting), the night band carries P8, the element family's cards their
@@ -111,6 +111,21 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
                 </li>
               ))}
             </ul>
+            <div className="mt-10">
+              <h3 className="type-label text-ink-500">{copy.signature.shadow.label}</h3>
+              <ul role="list" className="mt-2 flex max-w-[34rem] flex-wrap gap-x-5 gap-y-1">
+                {words.shadows.map((shadow) => (
+                  <li key={shadow} className="font-display text-[1.25rem] italic leading-snug text-ink-700 md:text-[1.375rem]">
+                    {shadow}
+                  </li>
+                ))}
+              </ul>
+              {copy.signature.shadow.note.map((line) => (
+                <p key={line} className="mt-3 max-w-[56ch] type-body-sm text-ink-500">
+                  {line}
+                </p>
+              ))}
+            </div>
             <figure className="mt-10 border-l-2 border-gold-500 pl-5">
               <figcaption className="type-label text-ink-500">{copy.signature.smileLabel}</figcaption>
               <blockquote className="mt-2 max-w-[40ch] font-display text-[1.375rem] italic leading-snug text-ink-900">

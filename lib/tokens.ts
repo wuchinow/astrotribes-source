@@ -96,7 +96,7 @@ export const COLOR_PAIRS: readonly ColorPair[] = [
   { fg: 'ink-900', bg: 'surface-000', min: 4.5, use: 'Text typed in a field' },
   { fg: 'ink-900', bg: 'cobalt-100', min: 4.5, use: 'The active place in the autocomplete list' },
   { fg: 'ink-900', bg: 'surface-200', min: 4.5, use: 'A place under the pointer in the autocomplete list' },
-  { fg: 'logo', bg: 'surface-100', min: 3, use: 'Logo on the page (graphic): deep plum on Paper, gold on Night' },
+  { fg: 'logo', bg: 'surface-100', min: 3, use: 'Logo on the page (graphic): deep plum on Paper, warm paper on Night' },
   { fg: 'logo', bg: 'surface-000', min: 3, use: 'Logo on a panel or the share card (graphic)' },
   { fg: 'gold-300', bg: 'night-900', min: 3, use: 'Gold logo on night-900, merch (graphic)' },
   // The Oracle (1c). The numeral sits on the frosted panel above the lines, never over them.
