@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { ChartWheel } from '@/components/ChartWheel';
 import { ChartReading } from '@/components/ChartReading';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
@@ -11,12 +12,14 @@ import { ShareButton } from '@/components/ShareButton';
 import { TintPanel } from '@/components/TintPanel';
 import { TribePainting } from '@/components/TribePainting';
 import { PLANET_PAGES, planetHref } from '@/content/planets';
+import { chartWheelCopy } from '@/content/chart-wheel';
 import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
+import { memberWheel } from '@/lib/your-wheel';
 
 export const metadata: Metadata = { title: yourChartCopy.title };
 
@@ -59,17 +62,34 @@ export default async function YourChartPage() {
     moon: { sign: (moon ?? sun).sign },
     rising: rising ? { sign: rising.sign } : null,
   };
+  // The wheel (3g): the member's own chart redrawn on the server from their birth details. Null on any failure.
+  const wheel = await memberWheel(supabase, user.id, { sun: sun.sign, moon: moon?.sign ?? null });
 
   return (
     <>
       <ArtWash piece="p9" top>
         <div className="mx-auto max-w-content px-4 pt-31 pb-12 md:px-6 md:pt-38 md:pb-16">
-          <div className="panel-frost max-w-[40rem] p-6 md:p-10">
-            <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>
-            <Headline as="h1" line={yourChartCopy.line} accent={yourChartCopy.accent} />
-            <Lede>{yourChartCopy.lede}</Lede>
-            {rising ? null : <p className="mt-3 type-body-sm text-ink-700">{yourChartCopy.noTime}</p>}
-          </div>
+          {/* The wheel leads the page (David, Nov 4); the plain introduction stands in only if it cannot be drawn. */}
+          {wheel ? (
+            <div className="panel-frost p-6 md:p-10">
+              <ChartWheel
+                wheel={wheel}
+                header={
+                  <>
+                    <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>
+                    <Headline as="h1" line={chartWheelCopy.line} accent={chartWheelCopy.accent} />
+                  </>
+                }
+              />
+            </div>
+          ) : (
+            <div className="panel-frost max-w-[40rem] p-6 md:p-10">
+              <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>
+              <Headline as="h1" line={yourChartCopy.line} accent={yourChartCopy.accent} />
+              <Lede>{yourChartCopy.lede}</Lede>
+              {rising ? null : <p className="mt-3 type-body-sm text-ink-700">{yourChartCopy.noTime}</p>}
+            </div>
+          )}
           <div className="mt-6 grid gap-6 md:grid-cols-3">
             {THREE.map((body) => {
               const row = byBody.get(body);
