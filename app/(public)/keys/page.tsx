@@ -74,7 +74,7 @@ function exampleCluster() {
 /**
  * Pictures between the groups, so the long list breaks up (David, Nov 4). Telescope images where the
  * group is about the sky itself (the Galactic Center, which is the Milky Way's core; Journey's Crab Nebula
- * came out on Nov 4 because it is part ESA, not public domain, until a public-domain image replaces it), credited under each; one of Jane's pieces where it is about people (the Generational
+ * came out on Nov 4 because it is part ESA, not public domain, until a public-domain image replaces it), credited in the footer; one of Jane's pieces where it is about people (the Generational
  * family), credited in the footer like all of hers. Never two in one screen: Identity and Healing,
  * the shortest groups, stay plain.
  */

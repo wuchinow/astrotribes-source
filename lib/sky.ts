@@ -3,7 +3,7 @@
 // what scripts/ink-sky.mjs cuts from ../reference and what the site renders from; the served files
 // and their credits land in public/sky-images/credits.json (not public/sky/: proxy.ts gates /sky). The Ring
 // Nebula behind the Oracle's hexagram card (1c, lifted in 1h), and one image on each of the landing's three
-// Keys cards (1h): the Milky Way's core on Sun, the Ring's upper arc on Moon, Mystic Mountain on Rising.
+// Keys cards (1h): the Milky Way's core on Sun, the Ring's upper arc on Moon, Earthrise on Rising (Mystic Mountain until Nov 4, when it came out for being part ESA).
 
 export type Box = readonly [x: number, y: number, width: number, height: number];
 
@@ -103,22 +103,23 @@ export const SKY = {
     released: '1999-01-06',
   },
   keysRising: {
-    stem: 'mystic-mountain',
-    subject: 'Mystic Mountain in the Carina Nebula',
-    // Misnamed in the Lovable export: Mystic Mountain, not the Earth.
-    source: 'nasa-earth-from-space.jpg',
-    size: [2104, 1937],
-    sha256: '7aeac17246a70c88cd0f69a57872bec264f3ece247abf875142dac1a9e7794fe',
-    crop: [0, 90, 2104, 1183],
-    levels: { black: 8, white: 255, gamma: 0.9 },
+    stem: 'earthrise',
+    subject: 'Earthrise, from Apollo 8',
+    // Nov 4 (David): pure NASA in place of Mystic Mountain, which was part ESA. Saved by the Claude
+    // extension from NASA's page into Drive (AstroTribes 2.0 / planet photos / rising-earthrise.jpg).
+    source: 'rising-earthrise.jpg',
+    size: [3000, 1971],
+    sha256: '71034e6ab962869b25d6ac1d5e548482e7b0129d45445e2d99078c1af5fdd68c',
+    crop: [300, 180, 2700, 1519],
+    levels: { black: 8, white: 255, gamma: 1 },
     strength: 0.8,
     widths: [720],
-    alt: 'Pillars of gas and dust rising toward the top of the frame, with a few bright stars',
-    credit: 'NASA, ESA, Hubble 20th Anniversary Team, Mario Livio (STScI)',
+    alt: 'Earth, half in sunlight, rising above the grey horizon of the Moon',
+    credit: 'NASA',
     tinted: false,
     license: 'NASA release; not copyrighted in the United States',
-    release: 'https://science.nasa.gov/asset/hubble/hubble-captures-view-of-mystic-mountain/',
-    released: '2010-04-22',
+    release: 'https://www.nasa.gov/image-detail/moon-landing-l-7-months-10-apollo-8-earthrise-photo-as08-14-2383',
+    released: '1968-12-24',
   },
   // Nov 4 (David): every picture its own image, cut sharp from the full-size originals (the Lovable
   // export, also in Drive). The landing's next step, Today's sky hero, and the 28 Keys page.
@@ -141,39 +142,43 @@ export const SKY = {
     released: '2003-12-10',
   },
   today: {
-    stem: 'galactic-center',
-    subject: 'The center of the Milky Way, from Hubble, Spitzer, and Chandra together',
-    // Misnamed in the Lovable export: the Great Observatories' galactic center (2009), not Andromeda.
-    source: 'nasa-andromeda.jpg',
-    size: [9725, 4862],
-    sha256: 'a0a1cad866d6e68f127a09d72bf53397049afd03211090529864d26794d80064',
-    crop: [4500, 862, 4000, 4000],
+    stem: 'saturn-eclipse',
+    subject: 'Saturn backlit by the Sun, from Cassini ("The Day the Earth Smiled")',
+    // Nov 4 (David): pure NASA in place of the Great Observatories' galactic center, which was part ESA.
+    // Saved by the Claude extension into Drive (planet photos / today-earth-smiled.jpg).
+    source: 'today-earth-smiled.jpg',
+    size: [9000, 3500],
+    sha256: '028f7cea0875a6aad90456d1a8a25b52d31f4f9013d5bb0920a7f8c68d431455',
+    crop: [2750, 0, 3500, 3500],
     levels: { black: 6, white: 255, gamma: 1 },
     strength: 0.9,
     widths: [1040, 640],
-    alt: 'The crowded heart of our galaxy, a bright white glow among red and gold clouds and blue starlight',
-    credit: 'NASA, ESA, SSC, CXC, and STScI',
+    alt: 'Saturn seen from its night side, a dark globe ringed with sunlight, its rings glowing gold and blue',
+    credit: 'NASA/JPL-Caltech/Space Science Institute',
     tinted: false,
     license: 'NASA release; not copyrighted in the United States',
-    release: 'https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories',
-    released: '2009-11-10',
+    release: 'https://science.nasa.gov/resource/the-day-the-earth-smiled',
+    released: '2013-11-12',
   },
   keysCenter: {
-    stem: 'galactic-center-arcs',
-    subject: 'Gas arcs near the center of the Milky Way, from Hubble, Spitzer, and Chandra together',
-    source: 'nasa-andromeda.jpg',
-    size: [9725, 4862],
-    sha256: 'a0a1cad866d6e68f127a09d72bf53397049afd03211090529864d26794d80064',
-    crop: [0, 300, 4500, 1800],
+    stem: 'chandra-galactic-center',
+    subject: 'The center of the Milky Way in X-rays, from Chandra',
+    // Nov 4 (David): pure NASA in place of the Great Observatories' arcs, which were part ESA. Saved by
+    // the Claude extension into Drive (planet photos / keys-galactic-center.jpg); cut inside the
+    // mosaic's zigzag edge.
+    source: 'keys-galactic-center.jpg',
+    size: [2987, 1158],
+    sha256: 'dfbb970e78a69c23c337a7b73a508efdcb13a60d206691e8000babf6ef1e9602',
+    crop: [400, 180, 2000, 800],
     levels: { black: 6, white: 255, gamma: 1 },
     strength: 0.9,
     widths: [1600, 800],
-    alt: 'Golden arcs of gas and a blue glow drifting through a field of red and violet stars',
-    credit: 'NASA, ESA, SSC, CXC, and STScI',
+    alt: 'The heart of our galaxy in X-rays, gold and red clouds scattered with bright points of light',
+    credit: 'NASA/UMass/D. Wang et al.',
     tinted: false,
     license: 'NASA release; not copyrighted in the United States',
-    release: 'https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories',
-    released: '2009-11-10',
+    release: 'https://science.nasa.gov/resource/chandra-x-ray-mosaic-of-galactic-center',
+    released: '2002-01-10',
   },
   // The Jupiter page's hero (David, Nov 4): Cassini's Jupiter, saved by David from the Photojournal
   // (file PIA04866.jpg, 1920x2400). Pure NASA, so public domain. Its release date waits on the catalog

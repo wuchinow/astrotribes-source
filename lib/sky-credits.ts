@@ -3,9 +3,14 @@ import { SKY_PAGES } from '@/lib/sky';
 
 // PLACEHOLDER: our words around NASA's credit lines, until Dawa's copy replaces them.
 export const skyCreditCopy = {
-  one: (credit: string) => `Space photo: ${credit}.`,
-  many: (credits: string) => `Space photos: ${credits}.`,
+  one: (credit: string) => `Space photo: ${sentence(credit)}`,
+  many: (credits: string) => `Space photos: ${sentence(credits)}`,
 };
+
+/** Ends a credit with one period, never two ("D. Wang et al."). */
+function sentence(text: string) {
+  return text.endsWith('.') ? text : `${text}.`;
+}
 
 /** The footer's credit line for each page with telescope images, each credit once, in page order. */
 export function skyCreditLines(): Record<string, string> {

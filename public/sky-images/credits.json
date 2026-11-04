@@ -101,33 +101,33 @@
       }
     },
     "keysRising": {
-      "subject": "Mystic Mountain in the Carina Nebula",
-      "credit": "NASA, ESA, Hubble 20th Anniversary Team, Mario Livio (STScI)",
+      "subject": "Earthrise, from Apollo 8",
+      "credit": "NASA",
       "tinted": false,
       "license": "NASA release; not copyrighted in the United States",
-      "release": "https://science.nasa.gov/asset/hubble/hubble-captures-view-of-mystic-mountain/",
-      "released": "2010-04-22",
-      "source": "reference/images/space images/nasa-earth-from-space.jpg (misnamed in the Lovable export)",
+      "release": "https://www.nasa.gov/image-detail/moon-landing-l-7-months-10-apollo-8-earthrise-photo-as08-14-2383",
+      "released": "1968-12-24",
+      "source": "reference/images/space images/rising-earthrise.jpg",
       "crop": [
-        0,
-        90,
-        2104,
-        1183
+        300,
+        180,
+        2700,
+        1519
       ],
       "levels": {
         "black": 8,
         "white": 255,
-        "gamma": 0.9
+        "gamma": 1
       },
       "median": null,
       "strength": 0.8,
       "ground": "#060b15",
       "files": {
         "720": {
-          "src": "/sky-images/mystic-mountain/mystic-mountain-720.f963f2f5.webp",
+          "src": "/sky-images/earthrise/earthrise-720.ee789d4e.webp",
           "width": 720,
           "height": 405,
-          "bytes": 28682
+          "bytes": 8852
         }
       }
     },
@@ -169,18 +169,18 @@
       }
     },
     "today": {
-      "subject": "The center of the Milky Way, from Hubble, Spitzer, and Chandra together",
-      "credit": "NASA, ESA, SSC, CXC, and STScI",
+      "subject": "Saturn backlit by the Sun, from Cassini (\"The Day the Earth Smiled\")",
+      "credit": "NASA/JPL-Caltech/Space Science Institute",
       "tinted": false,
       "license": "NASA release; not copyrighted in the United States",
-      "release": "https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories",
-      "released": "2009-11-10",
-      "source": "reference/images/space images/nasa-andromeda.jpg (misnamed in the Lovable export)",
+      "release": "https://science.nasa.gov/resource/the-day-the-earth-smiled",
+      "released": "2013-11-12",
+      "source": "reference/images/space images/today-earth-smiled.jpg",
       "crop": [
-        4500,
-        862,
-        4000,
-        4000
+        2750,
+        0,
+        3500,
+        3500
       ],
       "levels": {
         "black": 6,
@@ -192,32 +192,32 @@
       "ground": "#060b15",
       "files": {
         "640": {
-          "src": "/sky-images/galactic-center/galactic-center-640.892bd85d.webp",
+          "src": "/sky-images/saturn-eclipse/saturn-eclipse-640.f4b55136.webp",
           "width": 640,
           "height": 640,
-          "bytes": 64796
+          "bytes": 14218
         },
         "1040": {
-          "src": "/sky-images/galactic-center/galactic-center-1040.da9841b7.webp",
+          "src": "/sky-images/saturn-eclipse/saturn-eclipse-1040.08bb1fb2.webp",
           "width": 1040,
           "height": 1040,
-          "bytes": 144230
+          "bytes": 27854
         }
       }
     },
     "keysCenter": {
-      "subject": "Gas arcs near the center of the Milky Way, from Hubble, Spitzer, and Chandra together",
-      "credit": "NASA, ESA, SSC, CXC, and STScI",
+      "subject": "The center of the Milky Way in X-rays, from Chandra",
+      "credit": "NASA/UMass/D. Wang et al.",
       "tinted": false,
       "license": "NASA release; not copyrighted in the United States",
-      "release": "https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories",
-      "released": "2009-11-10",
-      "source": "reference/images/space images/nasa-andromeda.jpg (misnamed in the Lovable export)",
+      "release": "https://science.nasa.gov/resource/chandra-x-ray-mosaic-of-galactic-center",
+      "released": "2002-01-10",
+      "source": "reference/images/space images/keys-galactic-center.jpg",
       "crop": [
-        0,
-        300,
-        4500,
-        1800
+        400,
+        180,
+        2000,
+        800
       ],
       "levels": {
         "black": 6,
@@ -229,16 +229,16 @@
       "ground": "#060b15",
       "files": {
         "800": {
-          "src": "/sky-images/galactic-center-arcs/galactic-center-arcs-800.13150704.webp",
+          "src": "/sky-images/chandra-galactic-center/chandra-galactic-center-800.3c7ce27e.webp",
           "width": 800,
           "height": 320,
-          "bytes": 33720
+          "bytes": 16706
         },
         "1600": {
-          "src": "/sky-images/galactic-center-arcs/galactic-center-arcs-1600.78d85924.webp",
+          "src": "/sky-images/chandra-galactic-center/chandra-galactic-center-1600.97b70d4c.webp",
           "width": 1600,
           "height": 640,
-          "bytes": 99036
+          "bytes": 35578
         }
       }
     },
