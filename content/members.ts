@@ -23,7 +23,7 @@ export const membersCopy = {
   eyebrow: 'Members',
   line: 'Who shares',
   accent: 'your Keys.',
-  lede: 'Members who let you see their chart, and the Keys you have in common. The ones you share the most with come first.',
+  lede: 'Members who let you see their chart, and the Keys you have in common. The ones you have the most connection points with come first.',
   yourSetting: (label: string) => `Who can see your chart: ${label}.`,
   change: 'Change this',
   privateNote: "Other members can't see you here until you change it. You can still see the members who let you.",
@@ -35,6 +35,10 @@ export const membersCopy = {
   more: (count: number) => `and ${count} more`,
   open: (name: string) => `See the Keys you share with ${name}`,
 };
+
+/** "25 connection points" (3p). */
+export const pointsCount = (count: number): string =>
+  count === 1 ? '1 connection point' : `${count} connection points`;
 
 /** "3 Keys in common", or none. Generational keys are counted apart. */
 export const sharedCount = (count: number): string =>
@@ -52,4 +56,26 @@ export const memberCopy = {
   addTime: 'Add your birth time',
   noTimeTheirs: (name: string) => `House Keys need a birth time from both of you, and ${name} hasn't added one.`,
   back: 'All members',
+};
+
+/** "Sun and Moon", "Sun, Moon, and Rising". */
+const joinNames = (names: readonly string[]): string =>
+  names.length <= 2 ? names.join(' and ') : `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+
+// PLACEHOLDER: how the connection points add up, on one member's page (3p). Body names come from
+// lib/keys.ts (BODIES), and Key names reach the screen only through KeyChip.
+export const pointsCopy = {
+  heading: 'How your points add up',
+  intro:
+    'Every Key you share earns points, and so do a few ways your charts meet. These values are a first pass, and Dawa may tune them.',
+  keysHeading: 'Keys you share',
+  crossHeading: 'Where your charts meet',
+  bonusHeading: 'Rare combinations',
+  cross: (mine: string, theirs: string, where: string) => `Your ${mine} and their ${theirs}, both in ${where}`,
+  house: (roman: string) => `house ${roman}`,
+  bonus: (names: readonly string[]) => `The same ${joinNames(names)} signs`,
+  mirror: (northNode: string) => `Not counted: it always mirrors the ${northNode}.`,
+  points: (count: number) => (count === 0 ? '0' : `+${count}`),
+  total: 'Connection points',
+  noTime: 'House Keys and Rising need a birth time from both of you, so they are not counted here.',
 };

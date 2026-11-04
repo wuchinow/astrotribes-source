@@ -4,10 +4,11 @@ import { notFound, redirect } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline } from '@/components/Section';
 import { KeyChip } from '@/components/KeyChip';
+import { PointsBreakdown } from '@/components/PointsBreakdown';
 import { glossOnce } from '@/components/MemberCard';
 import { SharedKeys } from '@/components/SharedKeys';
 import { TribeBadge } from '@/components/TribeBadge';
-import { memberCopy, membersCopy } from '@/content/members';
+import { memberCopy, membersCopy, pointsCopy, pointsCount } from '@/content/members';
 import { SIGNS } from '@/lib/keys';
 import { ownPlacements, visibleMember } from '@/lib/members';
 import { hasBirthTime } from '@/lib/shared-keys';
@@ -20,8 +21,9 @@ export const metadata: Metadata = { title: membersCopy.title };
 const THREE_KEYS = ['sunSign', 'moonSign', 'risingSign'] as const;
 
 /**
- * One member's page (3g): their Sun, Moon, and rising sign as Keys, then every Key the two of you
- * share, in the six groups of the 28 Keys page, with the outer planets' sign keys apart. Read as the
+ * One member's page (3g): their Sun, Moon, and rising sign as Keys, then your connection points
+ * (3p) and every Key the two of you share, in the six groups of the 28 Keys page, with the outer
+ * planets' sign keys apart, then how the points add up. Read as the
  * viewer under RLS: a member the database does not let you see is a 404, the same as one who does
  * not exist, so the page never says which. Checks the session itself (invariant 5).
  */
@@ -70,6 +72,7 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
         <h2 id="shared-heading" className="type-display-lg max-w-[22ch] text-ink-900">
           {memberCopy.sharedHeading}
         </h2>
+        <p className="mt-3 type-heading-3 text-ink-900">{pointsCount(member.points.total)}</p>
         <SharedKeys
           shared={member.shared}
           firstTime={firstTime}
@@ -86,6 +89,15 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
             ) : null
           }
         />
+      </section>
+
+      <section aria-labelledby="points-heading" className="mt-12 border-t border-ink-200 pt-10">
+        <h2 id="points-heading" className="type-heading-2 text-ink-900">
+          {pointsCopy.heading}
+        </h2>
+        <div className="mt-6">
+          <PointsBreakdown points={member.points} firstTime={firstTime} noTime={!myTime || !theirTime} />
+        </div>
       </section>
 
       <div className="mt-12">

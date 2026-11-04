@@ -1,7 +1,7 @@
 // The Keys two members share (3g): the same body in the same sign (a sign key) or the same house
 // (a house key). Pure, with no database and no engine, so it is tested on its own.
 // Only signs and houses are compared. No member reads another member's degrees (0001's column
-// grant), so closeness by degree and the points score wait for layer 5 and Dawa's values (open 3).
+// grant), so closeness by degree waits for step 2 on the server. The points are lib/connection-points.ts.
 import {
   BODY_IDS,
   KEY_LIST,

@@ -14,7 +14,8 @@ export const metadata: Metadata = { title: membersCopy.title };
 
 /**
  * The members list (3g): every other member the database lets this member see, each with their
- * Tribe and the first few Keys the two of them share, with Dawa's gloss. Who appears is decided by
+ * Tribe, their connection points (3p, highest first), and the first few Keys the two of them share,
+ * with Dawa's gloss. Who appears is decided by
  * private.can_view_member alone (0001), never here. Checks the session itself (invariant 5) and
  * sends a member with no chart to the welcome steps. One region on the page tone, so no bands.
  */
@@ -69,6 +70,7 @@ export default async function MembersPage() {
               sun={member.placements.find((row) => row.body === 'sun')!.sign}
               top={topShared(member.shared)}
               personalCount={member.personalCount}
+              points={member.points.total}
               firstTime={firstTime}
             />
           ))}
