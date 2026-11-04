@@ -12,6 +12,7 @@ import { SkyWindow, type SkyWindowId } from '@/components/SkyWindow';
 import { TintPanel } from '@/components/TintPanel';
 import { EXAMPLE_CHART } from '@/content/keys-example';
 import { keysPage } from '@/content/keys-page';
+import { planetHref, planetPage, planetPageCopy } from '@/content/planets';
 import { cn } from '@/lib/cn';
 import { GLYPHS } from '@/lib/glyphs';
 import {
@@ -211,11 +212,19 @@ export default function KeysPage() {
                   {lede ? <p className="mt-2 max-w-measure text-ink-700">{lede}</p> : null}
                   <GroupPicture group={group.id} />
                   <ul role="list" className="mt-2">
-                    {bodiesIn(group.id).map((body) => (
-                      <li key={body} className="border-t border-ink-200 first:border-t-0">
-                        <KeyRow body={body} notes={keysPage.notes} missing={keysPage.noKey[body]} />
-                      </li>
-                    ))}
+                    {bodiesIn(group.id).map((body) => {
+                      const planet = planetPage(body);
+                      return (
+                        <li key={body} className="border-t border-ink-200 first:border-t-0">
+                          <KeyRow
+                            body={body}
+                            notes={keysPage.notes}
+                            missing={keysPage.noKey[body]}
+                            more={planet ? { href: planetHref(planet), label: planetPageCopy.more(BODIES[body].name) } : undefined}
+                          />
+                        </li>
+                      );
+                    })}
                   </ul>
                 </section>
               );

@@ -4,15 +4,17 @@ import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { ChartReading } from '@/components/ChartReading';
+import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { Quote } from '@/components/Quote';
 import { ShareButton } from '@/components/ShareButton';
 import { TintPanel } from '@/components/TintPanel';
 import { TribePainting } from '@/components/TribePainting';
+import { PLANET_PAGES, planetHref } from '@/content/planets';
 import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
-import { SIGNS, type SignId } from '@/lib/keys';
+import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
 
@@ -22,13 +24,16 @@ interface Row {
   body: string;
   sign: SignId;
   sign_alternate: SignId | null;
+  house: HouseNumber | null;
 }
 
 /**
  * The member's own chart (2c): their saved Sun, Moon, and Rising, read as the member under RLS by
  * named columns (never a degree, which the Data API does not grant). Where the member picked a sign
- * on a day it changed, it says so. The start of what 2d (the reveal) and 2e (Your Keys) grow into.
- * Checks the session itself (invariant 5).
+ * on a day it changed, it says so. Then Your Keys (2e, from Nov 4): each planet Dawa has written in
+ * full (content/planets.ts) as the member's own sign key and house key, with his line for each, and
+ * a link to that planet's page. A house key waits on a birth time. Checks the session itself
+ * (invariant 5).
  */
 export default async function YourChartPage() {
   if (!supabaseConfigured()) redirect('/sign-in?error=off');
@@ -39,9 +44,9 @@ export default async function YourChartPage() {
 
   const { data: rows } = await supabase
     .from('placements')
-    .select('body, sign, sign_alternate')
+    .select('body, sign, sign_alternate, house')
     .eq('user_id', user.id)
-    .in('body', [...THREE]);
+    .in('body', [...THREE, ...PLANET_PAGES.map((planet) => planet.body)]);
   const byBody = new Map((rows as Row[] | null)?.map((row) => [row.body, row]) ?? []);
   const sun = byBody.get('sun');
   if (!sun) redirect('/welcome');
@@ -82,6 +87,55 @@ export default async function YourChartPage() {
           </div>
         </div>
       </ArtWash>
+
+      <Section labelledBy="your-keys">
+        <Eyebrow>{yourChartCopy.keys.eyebrow}</Eyebrow>
+        <Headline id="your-keys" line={yourChartCopy.keys.line} accent={yourChartCopy.keys.accent} />
+        <Lede>{yourChartCopy.keys.lede}</Lede>
+        <div className="mt-8 grid gap-6">
+          {PLANET_PAGES.map((planet) => {
+            const row = byBody.get(planet.body);
+            if (!row) return null;
+            const name = BODIES[planet.body].name;
+            const signKey = keyFor(planet.body, 'sign')!;
+            const houseKey = keyFor(planet.body, 'house')!;
+            return (
+              <div
+                key={planet.body}
+                data-your-planet={planet.body}
+                className="grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-2 md:gap-8 md:p-8"
+              >
+                <div data-your-key={signKey.id}>
+                  <p className="mb-2 type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
+                  <KeyChip keyId={signKey.id} value={row.sign} showGloss />
+                  <p className="mt-3 text-ink-900">{planet.signs[row.sign]}</p>
+                </div>
+                <div data-your-key={houseKey.id} className="border-t border-ink-200 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8">
+                  {row.house ? (
+                    <>
+                      <p className="mb-2 type-label text-ink-500">
+                        {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
+                      </p>
+                      <KeyChip keyId={houseKey.id} value={row.house} showGloss />
+                      <p className="mt-3 text-ink-900">{planet.houses[row.house]}</p>
+                    </>
+                  ) : (
+                    <>
+                      <KeyChip keyId={houseKey.id} showGloss />
+                      <p className="mt-3 type-body-sm text-ink-700">{yourChartCopy.keys.noTime(houseKey.name)}</p>
+                    </>
+                  )}
+                </div>
+                <div className="md:col-span-2">
+                  <Button href={planetHref(planet)} variant="tertiary">
+                    {yourChartCopy.keys.more(name)}
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
 
       <Section band labelledBy="your-chart-next">
         <Eyebrow>{yourChartCopy.next.eyebrow}</Eyebrow>

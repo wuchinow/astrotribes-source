@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { GLYPHS } from '@/lib/glyphs';
 import { BODIES, isGenerational, keyFor, needsBirthTime, sourceLabel, type BodyId, type KeyDef } from '@/lib/keys';
 import { GlyphIcon } from './GlyphIcon';
@@ -9,6 +10,8 @@ interface KeyRowProps {
   notes: { birthTime: string; generational: string };
   /** For a body with one key (Rising, the Galactic Center): a line in place of the missing one. */
   missing?: string;
+  /** A link to the body's own page, where Dawa has written one (content/planets.ts). */
+  more?: { href: string; label: string };
 }
 
 function KeyCell({ keyDef, notes }: { keyDef: KeyDef; notes: KeyRowProps['notes'] }) {
@@ -33,7 +36,7 @@ function KeyCell({ keyDef, notes }: { keyDef: KeyDef; notes: KeyRowProps['notes'
  * quiet static chip. A stand-in glyph that is not Dawa's is never shown here: the row goes without.
  * From lg the row is three columns, body, sign key, house key; below it they stack in that order.
  */
-export function KeyRow({ body, notes, missing }: KeyRowProps) {
+export function KeyRow({ body, notes, missing, more }: KeyRowProps) {
   const sign = keyFor(body, 'sign');
   const house = keyFor(body, 'house');
   const byDawa = GLYPHS[body].credit !== null;
@@ -48,6 +51,15 @@ export function KeyRow({ body, notes, missing }: KeyRowProps) {
         <p data-body-line="" className="mt-1 max-w-[40ch] font-display text-[1.0625rem] leading-snug italic text-ink-700">
           {BODIES[body].line}
         </p>
+        {more ? (
+          <Link
+            href={more.href}
+            data-body-more=""
+            className="mt-1 inline-flex min-h-touch items-center type-body-sm text-cobalt-600 underline-offset-4 hover:underline"
+          >
+            {more.label}
+          </Link>
+        ) : null}
       </div>
       {sign ? <KeyCell keyDef={sign} notes={notes} /> : gap}
       {house ? <KeyCell keyDef={house} notes={notes} /> : gap}
