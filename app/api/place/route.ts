@@ -1,10 +1,13 @@
-// Birthplace autocomplete for the /chart form and the welcome steps. The browser posts the typed
-// text (never in our URL); the server asks Geoapify and answers {results: [{label, lat, lon}]}.
-// Nothing is kept or logged; errors are codes.
+// Birthplace autocomplete for the welcome steps. The browser posts the typed text (never in our
+// URL); the server asks Geoapify and answers {results: [{label, lat, lon}]}. Members only since
+// Nov 3, when the anonymous chart was retired: the route checks the session itself (invariant 5),
+// so nobody spends the Geoapify quota without an account. Nothing is kept or logged; errors are codes.
 import type { NextRequest } from 'next/server';
 import { cleanPlaceText, searchPlaces, type PlaceError } from '@/lib/geoapify';
 import { json, tooMany } from '@/lib/json';
 import { takeRateLimit } from '@/lib/rate-limit';
+import { supabaseConfigured } from '@/lib/supabase/env';
+import { requestClient } from '@/lib/supabase/server';
 
 const MAX_BODY = 512;
 
@@ -20,6 +23,10 @@ export async function POST(request: NextRequest) {
   try {
     const limit = takeRateLimit('place', request.headers);
     if (!limit.ok) return tooMany(limit.retryAfter);
+
+    if (!supabaseConfigured()) return json({ error: 'not_configured' }, 503);
+    const { data: auth } = await requestClient(request).auth.getUser();
+    if (!auth.user) return json({ error: 'signed_out' }, 401);
 
     if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY) {
       return json({ error: 'invalid_text' }, 413);

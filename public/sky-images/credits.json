@@ -130,6 +130,117 @@
           "bytes": 28682
         }
       }
+    },
+    "andromeda": {
+      "subject": "The Andromeda galaxy (M31) in ultraviolet",
+      "credit": "NASA/JPL/California Institute of Technology",
+      "tinted": false,
+      "license": "NASA and JPL release; not copyrighted in the United States",
+      "release": "https://www.jpl.nasa.gov/images/pia04921-andromeda-galaxy/",
+      "released": "2003-12-10",
+      "source": "reference/images/space images/nasa-horsehead-nebula.jpg (misnamed in the Lovable export)",
+      "crop": [
+        700,
+        700,
+        4800,
+        4800
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 0.9
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "720": {
+          "src": "/sky-images/andromeda/andromeda-720.407d86e0.webp",
+          "width": 720,
+          "height": 720,
+          "bytes": 63990
+        },
+        "1200": {
+          "src": "/sky-images/andromeda/andromeda-1200.0d0e9c98.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 166850
+        }
+      }
+    },
+    "today": {
+      "subject": "The center of the Milky Way, from Hubble, Spitzer, and Chandra together",
+      "credit": "NASA, ESA, SSC, CXC, and STScI",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories",
+      "released": "2009-11-10",
+      "source": "reference/images/space images/nasa-andromeda.jpg (misnamed in the Lovable export)",
+      "crop": [
+        4500,
+        862,
+        4000,
+        4000
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/galactic-center/galactic-center-640.892bd85d.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 64796
+        },
+        "1040": {
+          "src": "/sky-images/galactic-center/galactic-center-1040.da9841b7.webp",
+          "width": 1040,
+          "height": 1040,
+          "bytes": 144230
+        }
+      }
+    },
+    "keysCenter": {
+      "subject": "Gas arcs near the center of the Milky Way, from Hubble, Spitzer, and Chandra together",
+      "credit": "NASA, ESA, SSC, CXC, and STScI",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories",
+      "released": "2009-11-10",
+      "source": "reference/images/space images/nasa-andromeda.jpg (misnamed in the Lovable export)",
+      "crop": [
+        0,
+        300,
+        4500,
+        1800
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "800": {
+          "src": "/sky-images/galactic-center-arcs/galactic-center-arcs-800.13150704.webp",
+          "width": 800,
+          "height": 320,
+          "bytes": 33720
+        },
+        "1600": {
+          "src": "/sky-images/galactic-center-arcs/galactic-center-arcs-1600.78d85924.webp",
+          "width": 1600,
+          "height": 640,
+          "bytes": 99036
+        }
+      }
     }
   }
 }

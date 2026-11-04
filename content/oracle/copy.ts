@@ -6,6 +6,7 @@ export const oracleCopy = {
   metaTitle: 'Daily Oracle',
   description: 'One I Ching hexagram and one tarot card a day, the same for everyone.',
   heading: 'Daily Oracle',
+  quote: 'A thought for today',
   hexagram: 'Hexagram',
   above: 'Above',
   below: 'Below',

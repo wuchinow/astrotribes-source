@@ -1,8 +1,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ART, FRAMED, TEXTURE_CROPS, TRIBE_CROPS, WASHES, cutIsFree, marksCut, type ArtId, type Box } from '@/lib/art';
-import { SIGN_IDS } from '@/lib/keys';
+import { ART, FRAMED, TEXTURE_CROPS, WASHES, cutIsFree, marksCut, type ArtId, type Box } from '@/lib/art';
 import files from '@/lib/art-files.json';
 
 const root = process.cwd();
@@ -38,29 +37,9 @@ describe('the art manifest', () => {
       expect(cutIsFree(piece, cuts[piece.use.strip].box), `${piece.stem} strip`).toBe(true);
       expect(cutIsFree(piece, cuts[piece.use.thumb].box), `${piece.stem} thumbnail`).toBe(true);
     }
-    // P2 gives each Tribe card a window (TRIBE_CROPS) and P3 fills the next step's edge, cropped by cover.
+    // P2's served cut and P3, which fills a next step's edge, cropped by cover.
     expect(cutIsFree(FRAMED.p2, FRAMED.p2.cuts.crop.box)).toBe(true);
     expect(cutIsFree(FRAMED.p3, FRAMED.p3.cuts.crop.box)).toBe(true);
-  });
-
-  it('the 12 Tribe cards each show their own window of P2, inside its served cut and clear of any mark', () => {
-    const cut = FRAMED.p2.cuts.crop.box;
-    expect(Object.keys(TRIBE_CROPS).sort()).toEqual([...SIGN_IDS].sort());
-    const boxes = Object.entries(TRIBE_CROPS) as Array<[string, Box]>;
-    for (const [sign, box] of boxes) {
-      expect(within(box, [cut[0] + cut[2], cut[1] + cut[3]]), `${sign} inside P2`).toBe(true);
-      expect(box[2] / box[3], `${sign} is 2:1`).toBe(2);
-      expect(marksCut(FRAMED.p2, box).map((m) => m.label), sign).toEqual([]);
-    }
-    // Different windows: no two share more than a quarter of their area.
-    for (let i = 0; i < boxes.length; i++) {
-      for (let j = i + 1; j < boxes.length; j++) {
-        const [a, b] = [boxes[i][1], boxes[j][1]];
-        const w = Math.max(0, Math.min(a[0] + a[2], b[0] + b[2]) - Math.max(a[0], b[0]));
-        const h = Math.max(0, Math.min(a[1] + a[3], b[1] + b[3]) - Math.max(a[1], b[1]));
-        expect((w * h) / (a[2] * a[3]), `${boxes[i][0]} and ${boxes[j][0]}`).toBeLessThanOrEqual(0.25);
-      }
-    }
   });
 
   it('textures crop only mark-free cuts, and every texture crop covers its section', () => {

@@ -31,9 +31,9 @@ export async function saveDisplayName(form: FormData): Promise<void> {
 /** Deletes the auth user with the secret key; 0001's cascade removes profile, birth data, placements. */
 export async function deleteAccount(form: FormData): Promise<void> {
   const { supabase, user } = await signedInMember();
-  if (form.get('confirm') !== 'delete') redirect('/account?error=confirm');
+  if (form.get('confirm') !== 'delete') redirect('/account/delete?error=confirm');
   const { error } = await adminClient().auth.admin.deleteUser(user.id);
-  if (error) redirect('/account?error=delete');
+  if (error) redirect('/account/delete?error=delete');
   try {
     await supabase.auth.signOut({ scope: 'local' });
   } catch {

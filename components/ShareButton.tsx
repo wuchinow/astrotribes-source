@@ -5,7 +5,7 @@ import { resultCopy } from '@/content/chart';
 import { Button } from './Button';
 
 /** Shares a /share link (signs only) through the device's share sheet, or copies it. */
-export function ShareButton({ path }: { path: string }) {
+export function ShareButton({ path, variant }: { path: string; variant?: 'primary' | 'secondary' }) {
   const [copied, setCopied] = useState(false);
 
   const share = async () => {
@@ -24,7 +24,7 @@ export function ShareButton({ path }: { path: string }) {
 
   return (
     <span className="inline-flex items-center gap-3">
-      <Button onClick={share}>{resultCopy.share}</Button>
+      <Button onClick={share} variant={variant}>{resultCopy.share}</Button>
       <span role="status" className="type-body-sm text-ink-700">
         {copied ? resultCopy.copied : ''}
       </span>

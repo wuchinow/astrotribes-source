@@ -1,0 +1,26 @@
+{
+  "width": 966,
+  "height": 652,
+  "files": {
+    "480": {
+      "avif": {
+        "src": "/flammarion/flammarion-480.7e616a21.avif",
+        "bytes": 41278
+      },
+      "webp": {
+        "src": "/flammarion/flammarion-480.7d5d64a2.webp",
+        "bytes": 62180
+      }
+    },
+    "966": {
+      "avif": {
+        "src": "/flammarion/flammarion-966.987c19b0.avif",
+        "bytes": 122943
+      },
+      "webp": {
+        "src": "/flammarion/flammarion-966.32eac64a.webp",
+        "bytes": 207164
+      }
+    }
+  }
+}

@@ -98,6 +98,7 @@ export const shareCopy = {
   accent: 'one sky.',
   lede: 'Someone shared their Sun, Moon, and Rising with you.',
   cta: 'Get your own free chart',
+  ctaNote: 'Free with an account. No payment, no subscription.',
   imageAlt: (summary: string) => `${summary}, shared from AstroTribes`,
   /** "Sun in Leo, Moon in Taurus, Rising in Gemini"; Rising drops out when the time is unknown. */
   summary: (sun: string, moon: string, rising: string | null) =>

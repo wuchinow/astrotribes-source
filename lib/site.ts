@@ -24,6 +24,9 @@ export const PRIMARY_NAV: readonly NavLink[] = [
  */
 export const PRIMARY_ACTION: NavLink = { href: '/chart', label: 'Get your free chart' };
 
+/** The same button for a signed-in member (David, Nov 4): straight to their chart. */
+export const MEMBER_ACTION: NavLink = { href: '/your-chart', label: 'See your chart' };
+
 export const LEGAL_NAV: readonly NavLink[] = [
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },

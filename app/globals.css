@@ -170,21 +170,6 @@
    * window onto its part. --i is the card's place; --cols follows the grid's columns.
    */
   /*
-   * The 12 Tribe cards' images (1h): one P2 file for the grid, each card a window into it by
-   * background-position (TribeCard, TRIBE_CROPS). The small file under 40rem, the full one above.
-   */
-  .tribe-window {
-    background-image: var(--strip-sm);
-    background-repeat: no-repeat;
-  }
-
-  @media (width >= 40rem) {
-    .tribe-window {
-      background-image: var(--strip-lg);
-    }
-  }
-
-  /*
    * The landing's Keys cards (1h): a sky image in a night-900 window at the top of each card,
    * at its manifest strength scaled by the visitor's wash. The image fades out toward the bottom of
    * the window. On Paper the window is its own night and ends in a clean edge on the paper card; on
@@ -205,8 +190,19 @@
     mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
   }
 
+  /* The landing's next step (David, Nov 4): one sky image in a night-900 window beside the panel's text. */
+  .panel-sky-window {
+    background: var(--night-900);
+  }
+
+  .panel-sky {
+    opacity: calc(var(--sky-strength) * var(--wash) / var(--wash-art));
+  }
+
   html[data-art="none"] .keys-sky,
-  html[data-art="none"] .keys-credit {
+  html[data-art="none"] .keys-credit,
+  html[data-art="none"] .panel-sky,
+  html[data-art="none"] .panel-sky-credit {
     display: none;
   }
 
@@ -508,7 +504,7 @@
     }
   }
 
-  /* The hexagram card's column: the clearing (Paper) or the ring (Night) sits behind the card. */
+  /* The hexagram card's column: the clearing sits behind the card's header, in both moods. */
   .oracle-hex {
     --clear-r: 7rem;
     --clear-fade: 120px;
@@ -517,7 +513,7 @@
     position: relative;
   }
 
-  /* Paper, or a picked painting: the painting cleared behind the card's header, at every wash step. */
+  /* The painting cleared behind the card's header, at every wash step. */
   .oracle-clearing {
     position: absolute;
     left: 50%;
@@ -529,96 +525,6 @@
     border-radius: 50%;
     background: radial-gradient(closest-side, var(--surface-hero) var(--clear-r), transparent 100%);
     pointer-events: none;
-  }
-
-  /*
-   * Night, with each page's own painting: the Ring Nebula centred on the hexagram card's
-   * header, clipped to the card's column and the gap above it (never behind the headline or the
-   * tarot card), at wash-sky scaled by the visitor's wash (30% gives full wash-sky). A picked
-   * painting or None matches none of these rules, so the ring never shares a screen with a Jane
-   * wash, and a background only loads in the mood that shows it.
-   */
-  .sky-clip,
-  .sky-credit {
-    display: none;
-  }
-
-  html[data-theme="night"][data-art="page"] .oracle-stage > .wash-layer,
-  html[data-theme="night"][data-art="page"] .oracle-clearing {
-    display: none;
-    background-image: none;
-  }
-
-  html[data-theme="night"][data-art="page"] .sky-clip {
-    display: block;
-    position: absolute;
-    inset: -2.75rem 0 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-    /* No hard edge where the clip meets the headline's gap: the ring fades in over it. */
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 2.75rem);
-    mask-image: linear-gradient(to bottom, transparent, #000 2.75rem);
-  }
-
-  .sky-layer {
-    position: absolute;
-    left: 50%;
-    top: calc(2.75rem + var(--header-y));
-    width: min(40rem, 125%);
-    aspect-ratio: 1;
-    translate: -50% -50%;
-    background-image: var(--sky-sm);
-    background-size: 100% 100%;
-    /* The image's edge never shows: it fades out well inside its square. */
-    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
-    mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
-    opacity: calc(var(--sky-strength, var(--wash-sky)) * var(--wash) / var(--wash-art));
-  }
-
-  @media (width >= 64rem) {
-    .sky-layer {
-      background-image: var(--sky-lg);
-    }
-  }
-
-  /* The day's characters, faint in the ring's dark center (Night only; they sit inside the clip). */
-  .oracle-mark {
-    position: absolute;
-    left: 50%;
-    top: calc(2.75rem + var(--header-y));
-    translate: -50% -50%;
-    margin: 0;
-    font-family: var(--font-hanzi), serif;
-    font-weight: 700;
-    font-size: 7rem;
-    line-height: 1;
-    white-space: nowrap;
-    color: var(--ink-900);
-    /* 0.3 behind the card's frosted panel shows at about 6% (1h, U27); decorative, aria-hidden. */
-    opacity: 0.3;
-    user-select: none;
-  }
-
-  .oracle-mark-two {
-    font-size: 5rem;
-  }
-
-  /* The sky's credit, on the part of the image that shows above the card, on a small panel. */
-  html[data-theme="night"][data-art="page"] .sky-credit {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 0.5rem);
-    max-width: 100%;
-    margin: 0;
-    padding: 0.25rem 0.625rem;
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--surface-000) calc(var(--panel) * 100%), transparent);
-    font-family: var(--font-body);
-    font-size: calc(0.875rem + var(--text-step) * 0.125rem);
-    line-height: 1.4;
-    color: var(--ink-500);
   }
 
   /*

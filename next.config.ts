@@ -54,6 +54,8 @@ const nextConfig: NextConfig = {
       { source: '/sky-images/:stem/:file', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
       // Kirstie Connon's Tribe paintings, content-hashed by scripts/tribe-paintings.mjs.
       { source: '/tribe-paintings/:file', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+      // The Flammarion engraving, content-hashed by scripts/flammarion.mjs.
+      { source: '/flammarion/:file', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
     ];
   },
 };

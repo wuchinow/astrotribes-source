@@ -9,6 +9,9 @@
 // band it sits on, so the edge never shows. Writes one WebP per width, content-hashed, metadata
 // stripped, and public/sky-images/credits.json (with each image's strength).
 // With --staging <folder name> it also writes before and after cuts to ../staging/<folder name>/ for David.
+// With --only <id,id> it cuts those images and keeps the others and their credits as they are; with
+// --source <folder> it reads the sources from that folder instead of ../reference (the SHA-256 check
+// still holds them to the manifest).
 
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
@@ -18,7 +21,14 @@ import { createJiti } from 'jiti';
 import sharp from 'sharp';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const reference = path.join(root, '..', 'reference', 'images', 'space images');
+const arg = (flag) => {
+  const i = process.argv.indexOf(flag);
+  if (i === -1) return null;
+  if (!process.argv[i + 1]) throw new Error(`${flag} needs a value`);
+  return process.argv[i + 1];
+};
+const only = arg('--only')?.split(',') ?? null;
+const reference = arg('--source') ?? path.join(root, '..', 'reference', 'images', 'space images');
 // Not public/sky/: proxy.ts gates everything under /sky (the engine page), so a public image there
 // would send visitors to the passcode page.
 const out = path.join(root, 'public', 'sky-images');
@@ -46,11 +56,19 @@ function levels({ black, white, gamma }) {
 /** Screen over night-900: black lands on the night band, white stays white, color stays color. */
 const screen = (t, c) => Math.round(255 - (255 - NIGHT[c]) * (1 - t));
 
+for (const id of only ?? []) if (!(id in SKY)) throw new Error(`--only ${id}: no such image in lib/sky.ts`);
+const kept = only ? JSON.parse(await readFile(path.join(out, 'credits.json'), 'utf8')).images : {};
 const credits = {};
-await rm(out, { recursive: true, force: true });
+if (only) for (const id of only) await rm(path.join(out, SKY[id].stem), { recursive: true, force: true });
+else await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 
 for (const [id, image] of Object.entries(SKY)) {
+  if (only && !only.includes(id)) {
+    if (!kept[id]) throw new Error(`${id} has no cut yet; run without --only`);
+    credits[id] = kept[id];
+    continue;
+  }
   const file = path.join(reference, image.source);
   const source = await readFile(file);
   const sha = createHash('sha256').update(source).digest('hex');
@@ -96,7 +114,7 @@ for (const [id, image] of Object.entries(SKY)) {
     license: image.license,
     release: image.release,
     released: image.released,
-    source: `reference/images/space images/${image.source} (misnamed in the Lovable export)`,
+    source: `reference/images/space images/${image.source}${image.source.startsWith('nasa-') ? ' (misnamed in the Lovable export)' : ''}`,
     crop: image.crop,
     levels: image.levels,
     median: image.median ?? null,

@@ -1,40 +1,44 @@
 import Link from 'next/link';
-import type { CSSProperties } from 'react';
-import { FRAMED, TRIBE_CROPS } from '@/lib/art';
 import { SIGNS, signDates, type SignId } from '@/lib/keys';
+import { tribePaintingSet } from '@/lib/tribe-paintings';
 import { ElementDisc, TribeBadge } from './TribeBadge';
+
+/** The cards' widths: two a row on a phone, up to four on a wide screen. */
+const TRIBE_CARD_SIZES = '(width >= 75rem) 18rem, (width >= 64rem) 22rem, 50vw';
 
 const ELEMENT_NAME = { fire: 'Fire', earth: 'Earth', air: 'Air', water: 'Water' } as const;
 
-/** Where a window [x, y, w, h] sits in P2's cut, as CSS background size and position (percentages). */
-export function windowBoxStyle([x, y, w, h]: readonly [number, number, number, number]): CSSProperties {
-  const [, , cutW, cutH] = FRAMED.p2.cuts.crop.box;
-  return {
-    backgroundSize: `${(cutW / w) * 100}% auto`,
-    backgroundPosition: `${(x / (cutW - w)) * 100}% ${(y / (cutH - h)) * 100}%`,
-  };
-}
-
-/** The card's own window of P2. */
-const windowStyle = (sign: SignId): CSSProperties => windowBoxStyle(TRIBE_CROPS[sign]);
-
 /**
- * One of the 12 Tribes (1h): the top half its own window of Jane's P2 (TRIBE_CROPS, until her sign
- * paintings), the bottom half the name and dates, with the glyph above the element badge on the
- * right from 40rem, stacked under them on a phone. The painting's image set comes from
- * .tribe-cards on the list. No text touches the image.
+ * One of the 12 Tribes: Kirstie Connon's painting of the sign on top (David, Nov 4: her paintings
+ * belong to the Tribes, Jane's to the backgrounds), square so her glyph and signature stay whole,
+ * then the name and dates, with the glyph above the element badge on the right from 40rem, stacked
+ * under them on a phone. The image is decorative here (the link names the sign) and lazy; the list
+ * that holds the cards carries her credit. No text touches the image.
  */
 export function TribeCard({ sign }: { sign: SignId }) {
   const def = SIGNS[sign];
   const dates = signDates(sign);
   const element = ELEMENT_NAME[def.element];
+  const set = tribePaintingSet(sign);
   return (
     <Link
       href={`/tribes/${sign}`}
       aria-label={`${def.name}, ${element.toLowerCase()} sign, ${dates}`}
       className="group flex h-full flex-col overflow-hidden rounded-md border border-ink-200 bg-surface-200 no-underline shadow-rest transition-shadow duration-200 hover:shadow-warm"
     >
-      <div aria-hidden="true" className="tribe-window aspect-[2/1]" style={windowStyle(sign)} />
+      <picture className="block">
+        <source type="image/avif" srcSet={set.avif} sizes={TRIBE_CARD_SIZES} />
+        <source type="image/webp" srcSet={set.webp} sizes={TRIBE_CARD_SIZES} />
+        <img
+          src={set.fallback}
+          alt=""
+          width={set.size}
+          height={set.size}
+          loading="lazy"
+          decoding="async"
+          className="block aspect-square h-auto w-full"
+        />
+      </picture>
       <div className="flex flex-1 flex-col gap-3 p-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <h3 className="type-heading-3 text-cobalt-600 underline-offset-4 group-hover:underline">{def.name}</h3>

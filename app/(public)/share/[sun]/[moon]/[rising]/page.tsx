@@ -44,8 +44,9 @@ export default async function SharePage({ params }: PageProps<'/share/[sun]/[moo
           />
         ))}
       </div>
-      <div className="panel-frost mt-6 inline-flex p-4">
+      <div className="panel-frost mt-6 inline-flex flex-wrap items-center gap-x-4 gap-y-2 p-4">
         <Button href="/chart">{shareCopy.cta}</Button>
+        <p className="type-body-sm text-ink-700">{shareCopy.ctaNote}</p>
       </div>
     </div>
   );

@@ -97,8 +97,9 @@ export const humanHands = {
   title: 'Made by human hands.',
   items: [
     { title: "Dawa's glyphs", body: 'Every sign and planet, brushed in sumi ink.' },
-    // Jane's credit lives here and in the footer, not under each piece (David, Sep 25).
-    { title: "Jane's paintings", body: 'Paintings by Jane Kwan, the ground every page stands on.' },
+    // Jane's credit lives here and in the footer, not under each piece (David, Sep 25); Kirstie's
+    // joins it since her paintings became the Tribes' images (David, Nov 4).
+    { title: 'The paintings', body: "Jane Kwan's paintings are the ground every page stands on. Kirstie Connon painted the twelve Tribes." },
     {
       title: 'Your data is yours',
       body: 'Birth details are private. You choose who sees your chart.',
