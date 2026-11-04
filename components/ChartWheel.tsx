@@ -21,16 +21,22 @@ const BODY_GLYPH = 9.5;
 
 const f = (n: number) => n.toFixed(2);
 
-/** Dawa's glyph where he drew one; otherwise the plain standard symbol (never an image-tool stand-in). */
+/**
+ * Dawa's glyph where he drew one, and the brush stand-in where he has not yet (David, Nov 4:
+ * the wheel reads as one set). Only Rising, which the wheel draws as the horizon, has neither.
+ */
 function Glyph({ id, x, y, size, className }: { id: GlyphId; x: number; y: number; size: number; className: string }) {
   const def = GLYPHS[id];
   const turn = def.rotate ? `rotate(${def.rotate} ${f(x)} ${f(y)})` : undefined;
-  if (def.svg && def.credit) {
+  if (def.svg) {
     const s = size * (def.scale ?? 1);
+    // The turn sits on a group: a transform on a nested <svg> is SVG 2, and not every browser has it.
     return (
-      <svg x={f(x - s / 2)} y={f(y - s / 2)} width={f(s)} height={f(s)} viewBox="0 0 96 96" className={className} transform={turn}>
-        <use href={`${def.svg}#glyph`} />
-      </svg>
+      <g transform={turn}>
+        <svg x={f(x - s / 2)} y={f(y - s / 2)} width={f(s)} height={f(s)} viewBox="0 0 96 96" className={className}>
+          <use href={`${def.svg}#glyph`} />
+        </svg>
+      </g>
     );
   }
   const two = def.symbol.replace('︎', '').length > 1;
