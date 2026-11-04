@@ -35,9 +35,9 @@ describe('glyph registry', () => {
     for (const id of SIGN_IDS) expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id}.svg`);
   });
 
-  it("flags the image-tool placeholders and keeps them out of Dawa's credit", () => {
-    for (const id of ['uranus', 'pluto', 'chiron'] as const) {
-      expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id}.svg`);
+  it("flags the stand-ins and keeps them out of Dawa's credit", () => {
+    for (const id of ['uranus', 'pluto', 'chiron', 'northNode', 'southNode', 'galacticCenter'] as const) {
+      expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id === 'southNode' ? 'northNode' : id}.svg`);
       expect(GLYPHS[id].placeholder, id).toBe(true);
       expect(GLYPHS[id].reviewed, id).toBe(false);
       expect(GLYPHS[id].credit, id).toBeNull();

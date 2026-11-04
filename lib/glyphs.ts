@@ -1,7 +1,7 @@
 // Registry for the brush glyphs. Traced SVGs live in public/glyphs/ (made by
 // scripts/trace-glyphs.mjs, reviewed by Dawa one by one); a glyph without one
-// renders its text symbol. A few are placeholders made with an image tool, not
-// Dawa's: flagged here and never credited to him.
+// renders its text symbol. A few are stand-ins, not Dawa's: flagged here as
+// placeholders and never credited to him.
 
 import { BODIES, SIGN_IDS, SIGNS, type BodyId, type SignId } from './keys';
 
@@ -15,7 +15,7 @@ export interface GlyphDef {
   symbol: string;
   /** The traced SVG under public/, or null. */
   svg: string | null;
-  /** True for a stand-in made with an image tool (not Dawa's), until he brushes his own. */
+  /** True for a stand-in (not Dawa's), until he brushes his own. */
   placeholder: boolean;
   /** True once Dawa has approved this SVG. Flips one glyph at a time. */
   reviewed: boolean;
@@ -78,11 +78,25 @@ const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
   'neptune',
 ]);
 
-// Placeholders (Sep 24), made with an image tool and cleaned by Fable, until
-// Dawa brushes his own. Pluto uses the orb form; the PL form waits in staging.
-const PLACEHOLDERS: ReadonlySet<GlyphId> = new Set<GlyphId>(['uranus', 'pluto', 'chiron']);
+// Placeholders until Dawa brushes his own. Uranus, Pluto, and Chiron (Sep 24)
+// were made with an image tool and cleaned by Fable; Pluto uses the orb form,
+// and the PL form waits in staging. The North Node and the Galactic Center (a
+// spiral; there is no standard symbol) were drawn by scripts/brush-glyphs.py
+// in the manner of Dawa's set (David, Nov 4), and the South Node turns the
+// North Node's over, as its symbol does.
+const PLACEHOLDERS: ReadonlySet<GlyphId> = new Set<GlyphId>([
+  'uranus',
+  'pluto',
+  'chiron',
+  'northNode',
+  'southNode',
+  'galacticCenter',
+]);
 
-// The nodes, Rising, and the Galactic Center have no drawing yet.
+// Rising has no drawing: on the wheel it is the horizon line.
+
+/** The file each glyph is drawn from, where it is not its own. */
+const SHARED_FILE: Partial<Record<GlyphId, GlyphId>> = { southNode: 'northNode' };
 
 /** None is reviewed yet: Dawa approves each traced glyph on the contact sheet. */
 const REVIEWED: ReadonlySet<GlyphId> = new Set<GlyphId>();
@@ -90,7 +104,7 @@ const REVIEWED: ReadonlySet<GlyphId> = new Set<GlyphId>();
 function art(id: GlyphId) {
   const traced = BY_DAWA.has(id) || PLACEHOLDERS.has(id);
   return {
-    svg: traced ? `/glyphs/${id}.svg` : null,
+    svg: traced ? `/glyphs/${SHARED_FILE[id] ?? id}.svg` : null,
     placeholder: PLACEHOLDERS.has(id),
     reviewed: REVIEWED.has(id),
     credit: BY_DAWA.has(id) ? ('Lama Dawa' as const) : null,
