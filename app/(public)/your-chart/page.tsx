@@ -19,6 +19,7 @@ import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
+import { wheelDetails } from '@/lib/wheel-details';
 import { memberWheel } from '@/lib/your-wheel';
 
 export const metadata: Metadata = { title: yourChartCopy.title };
@@ -74,6 +75,7 @@ export default async function YourChartPage() {
             <div className="panel-frost p-6 md:p-10">
               <ChartWheel
                 wheel={wheel}
+                details={wheelDetails(wheel)}
                 header={
                   <>
                     <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>

@@ -52,3 +52,37 @@ describe('chart wheel geometry (3g)', () => {
     expect(layout.signs).toHaveLength(12);
   });
 });
+
+describe('chart wheel words and tap panel (3t)', () => {
+  it('writes degrees within the sign, and nothing when unknown', async () => {
+    const { degreeText } = await import('@/lib/chart-wheel');
+    expect(degreeText({ degree: 12, minute: 5 })).toBe('12°05′');
+    expect(degreeText({ degree: 0, minute: 0 })).toBe('0°00′');
+    expect(degreeText({ degree: null, minute: null })).toBeNull();
+    expect(degreeText({})).toBeNull();
+  });
+
+  it('marks planets retrograde, never the nodes', async () => {
+    const { showsRetrograde } = await import('@/lib/chart-wheel');
+    expect(showsRetrograde({ body: 'mercury', retrograde: true })).toBe(true);
+    expect(showsRetrograde({ body: 'mercury', retrograde: false })).toBe(false);
+    expect(showsRetrograde({ body: 'northNode', retrograde: true })).toBe(false);
+    expect(showsRetrograde({ body: 'southNode', retrograde: true })).toBe(false);
+  });
+
+  it("gives the panel Dawa's lines and the planet page, only where they exist", async () => {
+    const { wheelDetails } = await import('@/lib/wheel-details');
+    const details = wheelDetails({
+      bodies: [
+        { body: 'jupiter', longitude: 5, sign: 'aries', house: 9 },
+        { body: 'chiron', longitude: 40, sign: 'taurus', house: 2 },
+      ],
+      ascendant: 0,
+      midheaven: 270,
+      cusps: null,
+    });
+    expect(details.jupiter?.href).toBe('/keys/jupiter');
+    expect(details.jupiter?.signLine).toMatch(/Jupiter in Aries/);
+    expect(details.chiron).toBeUndefined();
+  });
+});

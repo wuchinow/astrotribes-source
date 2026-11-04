@@ -46,7 +46,7 @@ const longitudesOf = (chart: Chart, skip: (body: string) => boolean = () => fals
 const wheelOf = (chart: Chart): WheelInput => ({
   bodies: WHEEL_BODIES.map((body) => {
     const p = chart.placements[body];
-    return { body, longitude: p.longitude, sign: p.sign, house: p.house };
+    return { body, longitude: p.longitude, sign: p.sign, house: p.house, degree: p.degree, minute: p.minute, retrograde: p.retrograde };
   }),
   ascendant: chart.placements.rising?.longitude ?? null,
   midheaven: chart.midheaven?.longitude ?? null,
