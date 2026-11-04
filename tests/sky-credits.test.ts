@@ -34,7 +34,7 @@ describe('telescope credits in the footer', () => {
     const lines = skyCreditLines();
     for (const [path, ids] of Object.entries(SKY_PAGES)) {
       for (const id of ids) expect(lines[path], path).toContain(skyFiles.images[id].credit);
-      expect(lines[path]).not.toMatch(/[—!]/);
+      expect(lines[path]).not.toMatch(/[—!]|\.\.$/);
     }
   });
 

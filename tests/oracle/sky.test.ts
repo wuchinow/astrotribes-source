@@ -19,16 +19,19 @@ describe('the sky images', () => {
     expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter']);
     expect(credits.images.jupiter.credit).toBe('NASA/JPL/Space Science Institute');
     expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
-    expect(credits.images.today.credit).toBe('NASA, ESA, SSC, CXC, and STScI');
+    expect(credits.images.today.credit).toBe('NASA/JPL-Caltech/Space Science Institute');
+    expect(credits.images.keysCenter.credit).toBe('NASA/UMass/D. Wang et al.');
     expect(credits.images.ring.credit).toBe('The Hubble Heritage Team (AURA/STScI/NASA)');
     expect(credits.images.keysMoon.credit).toBe(credits.images.ring.credit);
     expect(credits.images.keysSun.credit).toBe('NASA/JPL-Caltech/S. Stolovy (Spitzer Science Center/Caltech)');
-    expect(credits.images.keysRising.credit).toBe('NASA, ESA, Hubble 20th Anniversary Team, Mario Livio (STScI)');
+    expect(credits.images.keysRising.credit).toBe('NASA');
     for (const id of IDS) {
       expect(skyCredit(SKY[id])).toBe(credits.images[id].credit);
       expect(credits.images[id].tinted, id).toBe(false);
-      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov|photojournal\.jpl\.nasa\.gov)\//);
-      // Public domain only (David, Nov 4): the Crab Nebula, part ESA, came out for that.
+      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov|www\.nasa\.gov|photojournal\.jpl\.nasa\.gov)\//);
+      // Public domain only (David, Nov 4): the Crab Nebula, Mystic Mountain, and the Great Observatories'
+      // galactic center, each part ESA, came out for that.
+      expect(credits.images[id].credit, id).not.toMatch(/ESA/);
       expect(credits.images[id].license, id).toMatch(/not copyrighted/);
     }
   });
