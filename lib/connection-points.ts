@@ -1,12 +1,14 @@
-// Connection points (3p): how strongly two members connect, step 1 of the plan of Nov 4
-// (claude.ai/artifact/MUmfZR6CBpX2KyirUYum88; David: "build step 1"). Pure, with no database and
-// no engine, and signs and houses only, the same rows lib/shared-keys.ts compares. Closeness by
-// degree is step 2 and needs the server, because no member reads a degree (0001's column grant).
+// Connection points (3p): how strongly two members connect, from the plan of Nov 4
+// (claude.ai/artifact/MUmfZR6CBpX2KyirUYum88; David: "build step 1", then "build step two"). Pure,
+// with no database and no engine. Step 1 scores signs and houses, the same rows lib/shared-keys.ts
+// compares. Step 2 (3q) adds closeness by degree: no member reads a degree (0001's column grant),
+// so the database works those out (0005, close_matches) and hands back only which placements sit
+// close and how; the points for them are here, with the rest.
 //
 // The values follow Dawa's "AstroTribes Point System" (Drive, edited Oct 23), with the plan's calls
 // where it is silent or overlaps; they are his to change (open 3), and every value is here, typed once.
 // Key names are never typed here: points are keyed by placement-based key id.
-import type { BodyId, Dimension, HouseNumber, KeyId, SignId } from './keys';
+import { BODY_IDS, type BodyId, type Dimension, type HouseNumber, type KeyId, type SignId } from './keys';
 import { sharedKeys, type PlacementRow, type SharedKey } from './shared-keys';
 
 /** Points for sharing a Key: the same body in the same sign, or the same house. */
@@ -59,6 +61,49 @@ export const PAIR_BONUS = 5;
 /** All three, on top of the three pair bonuses (call H). */
 export const ALL_THREE_BONUS = 7;
 
+/** Kinds of close match the database reports (0005). */
+export const CLOSE_KINDS = ['close', 'rising', 'node', 'newMoon', 'fullMoon'] as const;
+export type CloseKind = (typeof CLOSE_KINDS)[number];
+
+/** Points for each kind (Sep 28 list; the plan's call I gives the open 3 degree rule 3). */
+export const CLOSE_POINTS: Readonly<Record<CloseKind, number>> = {
+  // A personal placement of yours within 3 degrees of one of theirs.
+  close: 3,
+  // Your Sun or Moon within 2 degrees of their Rising, or the other way.
+  rising: 7,
+  // Your Sun or Moon within 2 degrees of their North or South Node, or the other way.
+  node: 7,
+  // Both born within 4 degrees of a new moon, or both of a full moon.
+  newMoon: 3,
+  fullMoon: 3,
+};
+
+/** One close match as the database reports it, from the viewer's side. */
+export interface CloseMatch {
+  mine: BodyId;
+  theirs: BodyId;
+  kind: CloseKind;
+}
+
+const isBody = (value: unknown): value is BodyId =>
+  typeof value === 'string' && (BODY_IDS as readonly string[]).includes(value);
+const isKind = (value: unknown): value is CloseKind =>
+  typeof value === 'string' && (CLOSE_KINDS as readonly string[]).includes(value);
+
+/** Rows from close_matches, checked and grouped by member: anything unknown is dropped. */
+export function toCloseMatches(
+  rows: readonly { member: unknown; mine: unknown; theirs: unknown; kind: unknown }[] | null,
+): Map<string, CloseMatch[]> {
+  const byMember = new Map<string, CloseMatch[]>();
+  for (const row of rows ?? []) {
+    if (typeof row.member !== 'string' || !isBody(row.mine) || !isBody(row.theirs) || !isKind(row.kind)) continue;
+    const list = byMember.get(row.member) ?? [];
+    list.push({ mine: row.mine, theirs: row.theirs, kind: row.kind });
+    byMember.set(row.member, list);
+  }
+  return byMember;
+}
+
 const LIGHTS = ['sun', 'moon', 'rising'] as const satisfies readonly BodyId[];
 /** Rising has no house: it is the first house's edge. */
 const HOUSED_LIGHTS = ['sun', 'moon'] as const satisfies readonly BodyId[];
@@ -83,23 +128,31 @@ export interface Bonus {
   points: number;
 }
 
+export interface ClosePoints {
+  match: CloseMatch;
+  points: number;
+}
+
 export interface ConnectionPoints {
   total: number;
   keys: KeyPoints[];
   cross: CrossMatch[];
   bonuses: Bonus[];
+  close: ClosePoints[];
 }
 
 /**
  * The points two charts share. The same both ways round: each cross match is checked from both
  * sides and every pairing counts once (call C). A house rule counts only when both charts have that
  * house, so with no birth time on either side the house rules and Rising drop out, never counted as
- * misses (call F). `shared` may be passed when the caller already has it.
+ * misses (call F). `shared` may be passed when the caller already has it. `close` is what the
+ * database reported for this pair (step 2); with none, the score is step 1's alone.
  */
 export function connectionPoints(
   mine: readonly PlacementRow[],
   theirs: readonly PlacementRow[],
   shared: readonly SharedKey[] = sharedKeys(mine, theirs),
+  closeMatches: readonly CloseMatch[] = [],
 ): ConnectionPoints {
   const a = new Map(mine.map((row) => [row.body, row]));
   const b = new Map(theirs.map((row) => [row.body, row]));
@@ -143,9 +196,12 @@ export function connectionPoints(
   for (const pair of pairs) if (pair.every((body) => same.has(body))) bonuses.push({ bodies: pair, points: PAIR_BONUS });
   if (LIGHTS.every((body) => same.has(body))) bonuses.push({ bodies: LIGHTS, points: ALL_THREE_BONUS });
 
+  const close = closeMatches.map((match) => ({ match, points: CLOSE_POINTS[match.kind] }));
+
   const total =
     keys.reduce((sum, k) => sum + k.points, 0) +
     cross.reduce((sum, c) => sum + c.points, 0) +
-    bonuses.reduce((sum, b) => sum + b.points, 0);
-  return { total, keys, cross, bonuses };
+    bonuses.reduce((sum, b) => sum + b.points, 0) +
+    close.reduce((sum, c) => sum + c.points, 0);
+  return { total, keys, cross, bonuses, close };
 }

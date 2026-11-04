@@ -4,7 +4,7 @@
 // degree, no minute (not granted), and never birth_data, which is the owner's alone.
 import 'server-only';
 import type { memberClient } from './supabase/server';
-import { connectionPoints, type ConnectionPoints } from './connection-points';
+import { connectionPoints, toCloseMatches, type CloseMatch, type ConnectionPoints } from './connection-points';
 import { sharedKeys, splitShared, toPlacements, type PlacementRow, type SharedKey } from './shared-keys';
 
 type Client = Awaited<ReturnType<typeof memberClient>>;
@@ -44,7 +44,25 @@ export async function ownPlacements(supabase: Client, userId: string): Promise<P
   return toPlacements(data);
 }
 
-const summarize = (profile: ProfileRow, rows: PlacementRow[], mine: PlacementRow[]): MemberSummary => {
+/**
+ * Which of the member's placements sit close to each other member's (3q), from the database's
+ * close_matches (0005), which reads the degrees no member may and answers only for members this
+ * one may see. An empty map when it fails or is not there yet, so the points fall back to signs
+ * and houses rather than the page failing.
+ */
+export async function closeMatches(supabase: Client, ids: readonly string[]): Promise<Map<string, CloseMatch[]>> {
+  if (ids.length === 0) return new Map();
+  const { data, error } = await supabase.rpc('close_matches', { others: [...ids] });
+  if (error) return new Map();
+  return toCloseMatches(data as { member: unknown; mine: unknown; theirs: unknown; kind: unknown }[] | null);
+}
+
+const summarize = (
+  profile: ProfileRow,
+  rows: PlacementRow[],
+  mine: PlacementRow[],
+  close: readonly CloseMatch[] = [],
+): MemberSummary => {
   const shared = sharedKeys(mine, rows);
   return {
     id: profile.id,
@@ -53,7 +71,7 @@ const summarize = (profile: ProfileRow, rows: PlacementRow[], mine: PlacementRow
     placements: rows,
     shared,
     personalCount: splitShared(shared).personal.length,
-    points: connectionPoints(mine, rows, shared),
+    points: connectionPoints(mine, rows, shared, close),
   };
 };
 
@@ -87,9 +105,13 @@ export async function visibleMembers(supabase: Client, userId: string, mine: Pla
     byMember.set(row.user_id, list);
   }
 
-  return people
-    .filter((p) => (byMember.get(p.id) ?? []).some((row) => row.body === 'sun'))
-    .map((p) => summarize(p, byMember.get(p.id) ?? [], mine))
+  const charted = people.filter((p) => (byMember.get(p.id) ?? []).some((row) => row.body === 'sun'));
+  const close = await closeMatches(
+    supabase,
+    charted.map((p) => p.id),
+  );
+  return charted
+    .map((p) => summarize(p, byMember.get(p.id) ?? [], mine, close.get(p.id)))
     .sort((a, b) => b.points.total - a.points.total || b.personalCount - a.personalCount || a.name.localeCompare(b.name));
 }
 
@@ -101,5 +123,6 @@ export async function visibleMember(supabase: Client, id: string, mine: Placemen
   const { data: rows } = await supabase.from('placements').select(PLACEMENT_COLUMNS).eq('user_id', id);
   const placements = toPlacements(rows);
   if (!placements.some((row) => row.body === 'sun')) return null;
-  return summarize(profile as ProfileRow, placements, mine);
+  const close = await closeMatches(supabase, [id]);
+  return summarize(profile as ProfileRow, placements, mine, close.get(id));
 }

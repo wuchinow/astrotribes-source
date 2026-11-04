@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import {
   ALL_THREE_BONUS,
+  CLOSE_POINTS,
   CROSS_POINTS,
   KEY_POINTS,
   NODE_CROSS_POINTS,
   PAIR_BONUS,
   connectionPoints,
+  toCloseMatches,
 } from '@/lib/connection-points';
 import { KEY_LIST, isGenerational } from '@/lib/keys';
 import { toPlacements, type PlacementRow } from '@/lib/shared-keys';
@@ -141,5 +143,39 @@ describe('connection points', () => {
       ['southNodeSign', 0],
     ]);
     expect(points.total).toBe(KEY_POINTS.northNodeSign);
+  });
+});
+
+describe('close matches (step 2)', () => {
+  const a = chart([['sun', 'leo', 5]]);
+  const b = chart([['sun', 'aries', 9]]);
+
+  it('adds the points for each close match the database reports', () => {
+    const points = connectionPoints(a, b, undefined, [
+      { mine: 'sun', theirs: 'rising', kind: 'rising' },
+      { mine: 'venus', theirs: 'mars', kind: 'close' },
+      { mine: 'moon', theirs: 'moon', kind: 'newMoon' },
+    ]);
+    expect(points.close.map((c) => c.points)).toEqual([CLOSE_POINTS.rising, CLOSE_POINTS.close, CLOSE_POINTS.newMoon]);
+    expect(points.total).toBe(7 + 3 + 3);
+  });
+
+  it('scores signs and houses alone when there are none', () => {
+    expect(connectionPoints(a, b).close).toEqual([]);
+  });
+
+  it('keeps only rows it knows, grouped by member', () => {
+    const map = toCloseMatches([
+      { member: 'm1', mine: 'sun', theirs: 'rising', kind: 'rising' },
+      { member: 'm1', mine: 'venus', theirs: 'mars', kind: 'close' },
+      { member: 'm2', mine: 'moon', theirs: 'moon', kind: 'fullMoon' },
+      { member: 'm2', mine: 'sun', theirs: 'moon', kind: 'degree' },
+      { member: 'm3', mine: 'planet9', theirs: 'sun', kind: 'close' },
+      { member: 4, mine: 'sun', theirs: 'sun', kind: 'close' },
+    ]);
+    expect([...map.keys()]).toEqual(['m1', 'm2']);
+    expect(map.get('m1')).toHaveLength(2);
+    expect(map.get('m2')).toEqual([{ mine: 'moon', theirs: 'moon', kind: 'fullMoon' }]);
+    expect(toCloseMatches(null).size).toBe(0);
   });
 });
