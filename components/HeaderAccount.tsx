@@ -97,7 +97,7 @@ const linkClass =
 /**
  * The header's account slot (2b, 2c). Signed out: Sign in, before the primary action. Signed in:
  * the member's photo (an initial when there is none) at the far right, a button that opens a small
- * menu: Your chart, Account, Sign out (David, Oct 22). `show` places each copy, so it renders only
+ * menu: Your chart, Members (3g), Account, Sign out (David, Oct 22). `show` places each copy, so it renders only
  * in its own state. `place="menu"` is the mobile menu's copy: the name, then the same three links.
  * The header's own is from lg up, because below it the header has no room beside the logo.
  */
@@ -149,6 +149,9 @@ function MenuLinks({ onNavigate, className }: { onNavigate?: () => void; classNa
     <>
       <Link href="/your-chart" onClick={onNavigate} className={cn(linkClass, className)}>
         {accountMenuCopy.chart}
+      </Link>
+      <Link href="/members" onClick={onNavigate} className={cn(linkClass, className)}>
+        {accountMenuCopy.members}
       </Link>
       <Link href="/account" onClick={onNavigate} className={cn(linkClass, className)}>
         {accountMenuCopy.account}

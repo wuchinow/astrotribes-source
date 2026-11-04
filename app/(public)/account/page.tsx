@@ -4,15 +4,17 @@ import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline } from '@/components/Section';
 import { accountCopy } from '@/content/account';
+import { visibilityCopy } from '@/content/members';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
-import { saveDisplayName } from './actions';
+import { DEFAULT_VISIBILITY, VISIBILITY_LEVELS, isVisibility } from '@/lib/visibility';
+import { saveDisplayName, saveVisibility } from './actions';
 
 export const metadata: Metadata = { title: accountCopy.title };
 
 /**
- * The account page (2b, 2c): the member's name (chosen first on the welcome steps, since Google's is
- * never used), their birth details and the way to change them, the Google email and Sign out,
+ * The account page (2b, 2c, 3g): the member's name (chosen first on the welcome steps, since Google's is
+ * never used), their birth details and the way to change them, who can see their chart (3g), the Google email and Sign out,
  * Export my data, and a link to delete the account (its own page), set apart at the end. After a name is saved it offers the
  * way on (the chart), so it needs no Done or Back button. It checks the
  * session itself (invariant 5). One region on the page tone, so no bands.
@@ -25,7 +27,7 @@ export default async function AccountPage({ searchParams }: PageProps<'/account'
   if (!user) redirect('/sign-in');
 
   const [{ data: profile }, { data: birth }] = await Promise.all([
-    supabase.from('profiles').select('display_name').eq('id', user.id).maybeSingle(),
+    supabase.from('profiles').select('display_name, visibility').eq('id', user.id).maybeSingle(),
     supabase.from('birth_data').select('birth_date, birth_time, place_label').eq('user_id', user.id).maybeSingle(),
   ]);
   const name = profile?.display_name ?? null;
@@ -34,6 +36,9 @@ export default async function AccountPage({ searchParams }: PageProps<'/account'
   const params = await searchParams;
   const error = typeof params.error === 'string' ? params.error : null;
   const saved = params.saved === 'name';
+  const visibility = isVisibility(profile?.visibility) ? profile.visibility : DEFAULT_VISIBILITY;
+  const visibilitySaved = params.saved === 'visibility';
+  const visibilityFailed = error === 'visibility';
 
   return (
     <div className="mx-auto max-w-content px-4 pt-31 pb-16 md:px-6 md:pt-38 md:pb-24">
@@ -107,6 +112,55 @@ export default async function AccountPage({ searchParams }: PageProps<'/account'
               </Button>
             ) : null}
           </div>
+        </section>
+
+        {/* 3g: who can see the chart. Three levels, checked by the database (can_view_member, 0001). */}
+        <section id="visibility" aria-labelledby="visibility-heading" className="scroll-mt-24">
+          <form action={saveVisibility}>
+            <fieldset className="grid gap-3" aria-describedby="visibility-what">
+              <legend id="visibility-heading" className="type-heading-3 text-ink-900">
+                {visibilityCopy.heading}
+              </legend>
+              <p id="visibility-what" className="type-body-sm text-ink-700">
+                {visibilityCopy.what}
+              </p>
+              {VISIBILITY_LEVELS.map((level) => (
+                <label
+                  key={level}
+                  className="flex min-h-touch cursor-pointer gap-3 rounded-sm border border-ink-200 p-4 text-ink-700 has-[:checked]:border-cobalt-600"
+                >
+                  <input
+                    type="radio"
+                    name="visibility"
+                    value={level}
+                    defaultChecked={level === visibility}
+                    className="mt-1 size-5 shrink-0 accent-cobalt-600"
+                  />
+                  <span>
+                    <span className="block font-semibold text-ink-900">{visibilityCopy.levels[level].label}</span>
+                    <span className="block type-body-sm">{visibilityCopy.levels[level].body}</span>
+                  </span>
+                </label>
+              ))}
+            </fieldset>
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <Button type="submit" variant="secondary">
+                {visibilityCopy.save}
+              </Button>
+              <Button href="/members" variant="tertiary">
+                {visibilityCopy.members}
+              </Button>
+            </div>
+            {visibilitySaved ? (
+              <p role="status" className="mt-2 type-body-sm text-ink-700">
+                {visibilityCopy.saved}
+              </p>
+            ) : visibilityFailed ? (
+              <p role="alert" className="mt-2 type-body-sm text-ember-500">
+                {visibilityCopy.failed}
+              </p>
+            ) : null}
+          </form>
         </section>
 
         <section aria-labelledby="signed-in-heading">

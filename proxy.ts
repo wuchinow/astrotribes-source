@@ -44,5 +44,6 @@ export const config = {
     '/welcome/:path*',
     '/your-chart/:path*',
     '/admin/:path*',
+    '/members/:path*',
   ],
 };

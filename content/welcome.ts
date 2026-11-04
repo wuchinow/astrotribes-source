@@ -85,6 +85,7 @@ export const yourChartCopy = {
       { href: '/keys', title: 'The 28 Keys', body: 'Every placement in your chart has a name and a meaning. Read them all.' },
       { href: '/oracle', title: 'The Daily Oracle', body: 'One hexagram and one card, new each day.' },
       { href: '/sky', title: "Today's sky", body: 'Where the Sun, the Moon, and every planet are right now.' },
+      { href: '/members', title: 'Members', body: 'Find the members who share your Keys.' },
     ],
     shareTitle: 'Share your three',
     shareBody: 'The link carries your three signs and nothing else: no date, no time, no place.',
@@ -98,6 +99,7 @@ export const accountMenuCopy = {
   /** The button's name for screen readers, with the member's name. */
   open: (name: string) => `${name}, account menu`,
   chart: 'Your chart',
+  members: 'Members',
   account: 'Account',
   signOut: 'Sign out',
 };

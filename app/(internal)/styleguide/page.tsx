@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { MemberCard, glossOnce } from '@/components/MemberCard';
+import { SharedKeys } from '@/components/SharedKeys';
+import { sharedKeys, splitShared, toPlacements, topShared } from '@/lib/shared-keys';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { ArtWash } from '@/components/ArtWash';
@@ -41,6 +44,24 @@ const TYPE_STYLES = [
   ['type-data', '14° 32′ Capricorn'],
   ['type-data-sm', 'Sep 23, 2026'],
 ] as const;
+
+
+// 3g: two made-up charts, signs and houses typed by hand (invariant 8), to show the members pages
+// on a preview without anyone opting in. Never a real member.
+const SAMPLE_ME = toPlacements(
+  ([
+    ['sun', 'leo', 5], ['moon', 'pisces', 12], ['rising', 'gemini', null], ['mercury', 'leo', 5],
+    ['venus', 'virgo', 6], ['mars', 'aries', 11], ['uranus', 'aquarius', 9], ['neptune', 'capricorn', 8],
+    ['pluto', 'scorpio', 6], ['chiron', 'cancer', 2], ['galacticCenter', 'sagittarius', 7],
+  ] as const).map(([body, sign, house]) => ({ body, sign, house })),
+);
+const SAMPLE_THEM = toPlacements(
+  ([
+    ['sun', 'leo', 2], ['moon', 'cancer', 12], ['rising', 'gemini', null], ['mercury', 'virgo', 5],
+    ['venus', 'virgo', 3], ['mars', 'taurus', 11], ['uranus', 'aquarius', 1], ['neptune', 'capricorn', 12],
+    ['pluto', 'scorpio', 10], ['chiron', 'cancer', 7], ['galacticCenter', 'sagittarius', 7],
+  ] as const).map(([body, sign, house]) => ({ body, sign, house })),
+);
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -340,6 +361,25 @@ export default function StyleguidePage() {
             <FramedArt key={id} id={id} sizes="200px" className="w-[200px]" />
           ))}
         </div>
+      </Section>
+
+      <Section title="Members (3g), with two made-up charts">
+        {(() => {
+          const shared = sharedKeys(SAMPLE_ME, SAMPLE_THEM);
+          const firstTime = glossOnce();
+          return (
+            <div className="grid gap-10">
+              <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <MemberCard name="Sample member" isDemo sun="leo" top={topShared(shared)} personalCount={splitShared(shared).personal.length} firstTime={firstTime} />
+                <MemberCard name="Another sample" isDemo sun="aries" top={[]} personalCount={0} firstTime={firstTime} />
+              </ul>
+              <div>
+                <h3 className="type-display-lg text-ink-900">Keys you share</h3>
+                <SharedKeys shared={shared} firstTime={glossOnce()} />
+              </div>
+            </div>
+          );
+        })()}
       </Section>
 
       <Section title="The 28 Keys">
