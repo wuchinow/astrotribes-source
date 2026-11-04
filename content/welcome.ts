@@ -35,6 +35,8 @@ export const welcomeCopy = {
   chooseNote: 'You can change this later, and a birth time settles it.',
   /** Shown when the last change was under an hour ago; `time` is the visitor's own clock. */
   waitNote: (time: string) => `You changed these less than an hour ago. You can change them again after ${time}.`,
+  /** Under a failed save: the step and the database's code, for support. No value from the form. */
+  errorRef: (ref: string) => `Reference for support: ${ref}`,
   errors: {
     invalid_body: "Something in the form didn't come through. Try again.",
     invalid_date: "That date isn't valid. Pick it from the calendar, or type it in full.",

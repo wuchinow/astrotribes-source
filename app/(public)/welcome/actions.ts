@@ -11,7 +11,14 @@ import { takeRateLimit } from '@/lib/rate-limit';
 import { adminClient } from '@/lib/supabase/admin';
 import { memberClient } from '@/lib/supabase/server';
 
-const fail = (code: Extract<BirthFormState, { status: 'error' }>['code']): BirthFormState => ({ status: 'error', code });
+const fail = (code: Extract<BirthFormState, { status: 'error' }>['code'], ref?: string): BirthFormState =>
+  ref ? { status: 'error', code, ref } : { status: 'error', code };
+// A failed step's reference for support: the step and the database's error code (a class like
+// 42501 or 23514), never its message, which can quote the row (Nov 4: saves failing unseen).
+const refOf = (step: string, error: unknown) => {
+  const code = typeof error === 'object' && error && 'code' in error ? String((error as { code: unknown }).code) : '';
+  return `${step}${/^[A-Za-z0-9_]{1,24}$/.test(code) ? `-${code}` : ''}`;
+};
 
 export async function saveBirthDetails(_previous: BirthFormState, form: FormData): Promise<BirthFormState> {
   if (!takeRateLimit('birth', await headers()).ok) return fail('limit');
@@ -32,7 +39,7 @@ export async function saveBirthDetails(_previous: BirthFormState, form: FormData
       if (error.code === 'out_of_range') return fail('out_of_range');
       if (error.code === 'invalid_input') return fail('invalid_date');
     }
-    return fail('failed');
+    return fail('failed', refOf('chart', error));
   }
 
   // A day the Sun or the Moon changed sign, with no time: nothing is saved until the member picks.
@@ -67,18 +74,23 @@ export async function saveBirthDetails(_previous: BirthFormState, form: FormData
   const { error: birthError } = unchanged
     ? { error: null }
     : await supabase.from('birth_data').upsert(row, { onConflict: 'user_id' });
-  if (birthError) return fail(birthError.message === 'birth_data_too_soon' ? 'too_soon' : 'failed');
+  if (birthError) return birthError.message === 'birth_data_too_soon' ? fail('too_soon') : fail('failed', refOf('birth', birthError));
 
   // Then the placements, for the verified id. One upsert replaces every row the chart has; without
   // a time there is no rising row, so an old one goes.
-  const admin = adminClient();
+  let admin;
+  try {
+    admin = adminClient();
+  } catch {
+    return fail('failed', 'admin');
+  }
   const { error: rowsError } = await admin
     .from('placements')
     .upsert(placementRows(chart, birth.picks, userId), { onConflict: 'user_id,body' });
-  if (rowsError) return fail('failed');
+  if (rowsError) return fail('failed', refOf('rows', rowsError));
   if (!chart.placements.rising) {
     const { error } = await admin.from('placements').delete().eq('user_id', userId).eq('body', 'rising');
-    if (error) return fail('failed');
+    if (error) return fail('failed', refOf('rising', error));
   }
 
   // The welcome steps decide what is next: the name if there is none yet, otherwise the chart.
