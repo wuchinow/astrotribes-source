@@ -11,7 +11,10 @@ import { Button } from './Button';
 import { browserClient } from '@/lib/supabase/browser';
 import { DISCLOSURE_EVENT } from './AppearancePanel';
 
-type Slot = { state: 'loading' } | { state: 'out' } | { state: 'in'; name: string | null; avatar: string | null };
+type Slot =
+  | { state: 'loading' }
+  | { state: 'out' }
+  | { state: 'in'; name: string | null; avatar: string | null; admin: boolean };
 
 /** Google's photo (David, Oct 22): its address from the session's metadata, shown, never copied to the profile. */
 function avatarOf(meta: Record<string, unknown> | undefined): string | null {
@@ -38,12 +41,17 @@ const start = () => {
   const read = async () => {
     const { data } = await supabase.auth.getUser();
     if (!data.user) return publish({ state: 'out' });
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('display_name')
-      .eq('id', data.user.id)
-      .maybeSingle();
-    publish({ state: 'in', name: profile?.display_name ?? null, avatar: avatarOf(data.user.user_metadata) });
+    // The admin check (0004) answers yes or no for this session only; any error reads as no.
+    const [{ data: profile }, { data: admin }] = await Promise.all([
+      supabase.from('profiles').select('display_name').eq('id', data.user.id).maybeSingle(),
+      supabase.rpc('is_admin'),
+    ]);
+    publish({
+      state: 'in',
+      name: profile?.display_name ?? null,
+      avatar: avatarOf(data.user.user_metadata),
+      admin: admin === true,
+    });
   };
   void read();
   supabase.auth.onAuthStateChange((event) => {
@@ -97,7 +105,7 @@ const linkClass =
 /**
  * The header's account slot (2b, 2c). Signed out: Sign in, before the primary action. Signed in:
  * the member's photo (an initial when there is none) at the far right, a button that opens a small
- * menu: Your chart, Members (3g), Account, Sign out (David, Oct 22). `show` places each copy, so it renders only
+ * menu: Your chart, Members (3g), Admin for an admin only (0004), Account, Sign out (David, Oct 22). `show` places each copy, so it renders only
  * in its own state. `place="menu"` is the mobile menu's copy: the name, then the same three links.
  * The header's own is from lg up, because below it the header has no room beside the logo.
  */
@@ -137,14 +145,18 @@ export function HeaderAccount({
           <Avatar url={slot.avatar} name={slot.name} />
           {name}
         </p>
-        <MenuLinks onNavigate={onNavigate} className="flex w-full text-[1.125rem]" />
+        <MenuLinks admin={slot.admin} onNavigate={onNavigate} className="flex w-full text-[1.125rem]" />
       </div>
     );
   }
   return <AccountMenu name={name} slot={slot} />;
 }
 
-function MenuLinks({ onNavigate, className }: { onNavigate?: () => void; className: string }) {
+/**
+ * The menu's links. Admin shows only when the database says this member is on the admin list
+ * (David, Nov 4); it is a convenience, not the gate: /admin checks the list itself.
+ */
+function MenuLinks({ admin, onNavigate, className }: { admin: boolean; onNavigate?: () => void; className: string }) {
   return (
     <>
       <Link href="/your-chart" onClick={onNavigate} className={cn(linkClass, className)}>
@@ -153,6 +165,11 @@ function MenuLinks({ onNavigate, className }: { onNavigate?: () => void; classNa
       <Link href="/members" onClick={onNavigate} className={cn(linkClass, className)}>
         {accountMenuCopy.members}
       </Link>
+      {admin ? (
+        <Link href="/admin" onClick={onNavigate} className={cn(linkClass, className)}>
+          {accountMenuCopy.admin}
+        </Link>
+      ) : null}
       <Link href="/account" onClick={onNavigate} className={cn(linkClass, className)}>
         {accountMenuCopy.account}
       </Link>
@@ -225,7 +242,7 @@ function AccountMenu({ name, slot }: { name: string; slot: Extract<Slot, { state
         hidden={!open}
         className="absolute right-0 top-full z-40 mt-2 grid min-w-[12rem] rounded-sm border border-ink-200 bg-surface-100 px-4 py-2 shadow-warm"
       >
-        <MenuLinks onNavigate={() => setOpen(false)} className="flex w-full text-[1rem]" />
+        <MenuLinks admin={slot.admin} onNavigate={() => setOpen(false)} className="flex w-full text-[1rem]" />
       </div>
     </div>
   );

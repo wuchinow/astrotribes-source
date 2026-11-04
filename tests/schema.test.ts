@@ -63,9 +63,9 @@ describe('the schema', () => {
     }
   });
 
-  it('serves one function, the admin door, as security invoker over a check in private (0003)', () => {
+  it('serves two functions, the admin door (0003) and the admin yes or no (0004), each security invoker over a check in private', () => {
     const served = [...migrations.matchAll(/create (?:or replace )?function public\.(\w+)/g)].map((m) => m[1]);
-    expect(served).toEqual(['admin_members']);
+    expect(served).toEqual(['admin_members', 'is_admin']);
     const door = /create function public\.admin_members\(\)[\s\S]*?return private\.admin_members\(\);/.exec(migrations)?.[0] ?? '';
     expect(door).toContain('security invoker');
     expect(door).not.toContain('security definer');
@@ -82,6 +82,19 @@ describe('the schema', () => {
     for (const column of ['birth_date', 'birth_time', 'place_label', 'latitude', 'longitude', 'timezone', 'degree', 'minute']) {
       expect(check, column).not.toMatch(new RegExp(`\\b${column}\\b`));
     }
+  });
+
+  it('answers only yes or no to the menu, about the caller only, and writes nothing (0004)', () => {
+    const door = /create function public\.is_admin\(\)[\s\S]*?return private\.is_admin\(\);/.exec(migrations)?.[0] ?? '';
+    expect(door).toContain('returns boolean');
+    expect(door).toContain('security invoker');
+    expect(door).not.toContain('security definer');
+    const check = /create function private\.is_admin\(\)[\s\S]*?\$\$[\s\S]*?\$\$/.exec(migrations)?.[0] ?? '';
+    expect(check).toContain('returns boolean');
+    expect(check).toContain('security definer');
+    expect(check).toContain('stable');
+    expect(check).toContain('auth.uid()');
+    expect(check).not.toMatch(/\binsert\b|\bupdate\b|\bdelete\b/);
   });
 
   it('never stores a key name: no .sql file under supabase/ types one', () => {

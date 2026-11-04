@@ -148,8 +148,8 @@ select is(
    from pg_proc p
    where p.pronamespace in ('public'::regnamespace, 'private'::regnamespace)
      and has_function_privilege('authenticated', p.oid, 'EXECUTE')),
-  array['admin_members()', 'private.admin_members()', 'private.can_view_member(uuid)', 'private.member_counts()'],
-  'members hold EXECUTE on four functions only: the policies'' and the view''s, and the admin door and its check (0003)');
+  array['admin_members()', 'is_admin()', 'private.admin_members()', 'private.can_view_member(uuid)', 'private.is_admin()', 'private.member_counts()'],
+  'members hold EXECUTE on six functions only: the policies'' and the view''s, the admin door and its check (0003), and the admin yes or no (0004)');
 select function_returns('private', 'can_view_member', array['uuid'], 'boolean',
   'the visibility function returns a yes or no, nothing else');
 select is(
