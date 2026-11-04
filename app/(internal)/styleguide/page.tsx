@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { MemberCard, glossOnce } from '@/components/MemberCard';
 import { SharedKeys } from '@/components/SharedKeys';
+import { PointsBreakdown } from '@/components/PointsBreakdown';
+import { pointsCopy } from '@/content/members';
+import { connectionPoints } from '@/lib/connection-points';
 import { sharedKeys, splitShared, toPlacements, topShared } from '@/lib/shared-keys';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -363,19 +366,26 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      <Section title="Members (3g), with two made-up charts">
+      <Section title="Members (3g) and connection points (3p), with two made-up charts">
         {(() => {
           const shared = sharedKeys(SAMPLE_ME, SAMPLE_THEM);
+          const points = connectionPoints(SAMPLE_ME, SAMPLE_THEM, shared);
           const firstTime = glossOnce();
           return (
             <div className="grid gap-10">
               <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <MemberCard name="Sample member" isDemo sun="leo" top={topShared(shared)} personalCount={splitShared(shared).personal.length} firstTime={firstTime} />
-                <MemberCard name="Another sample" isDemo sun="aries" top={[]} personalCount={0} firstTime={firstTime} />
+                <MemberCard name="Sample member" isDemo sun="leo" top={topShared(shared)} personalCount={splitShared(shared).personal.length} points={points.total} firstTime={firstTime} />
+                <MemberCard name="Another sample" isDemo sun="aries" top={[]} personalCount={0} points={0} firstTime={firstTime} />
               </ul>
               <div>
                 <h3 className="type-display-lg text-ink-900">Keys you share</h3>
-                <SharedKeys shared={shared} firstTime={glossOnce()} />
+                <SharedKeys shared={shared} firstTime={firstTime} />
+              </div>
+              <div>
+                <h3 className="type-heading-2 text-ink-900">{pointsCopy.heading}</h3>
+                <div className="mt-6">
+                  <PointsBreakdown points={points} firstTime={firstTime} noTime={false} />
+                </div>
               </div>
             </div>
           );

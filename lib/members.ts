@@ -4,6 +4,7 @@
 // degree, no minute (not granted), and never birth_data, which is the owner's alone.
 import 'server-only';
 import type { memberClient } from './supabase/server';
+import { connectionPoints, type ConnectionPoints } from './connection-points';
 import { sharedKeys, splitShared, toPlacements, type PlacementRow, type SharedKey } from './shared-keys';
 
 type Client = Awaited<ReturnType<typeof memberClient>>;
@@ -25,8 +26,10 @@ export interface MemberSummary {
   isDemo: boolean;
   placements: PlacementRow[];
   shared: SharedKey[];
-  /** Shared keys that are not generational: what the list sorts by. */
+  /** Shared keys that are not generational. */
   personalCount: number;
+  /** Connection points (3p): what the list sorts by. */
+  points: ConnectionPoints;
 }
 
 interface ProfileRow {
@@ -50,12 +53,13 @@ const summarize = (profile: ProfileRow, rows: PlacementRow[], mine: PlacementRow
     placements: rows,
     shared,
     personalCount: splitShared(shared).personal.length,
+    points: connectionPoints(mine, rows, shared),
   };
 };
 
 /**
- * Every other member the database lets this member see, with a name and a chart, sorted by how many
- * personal keys they share (then by name). `null` when the read itself failed.
+ * Every other member the database lets this member see, with a name and a chart, sorted by connection
+ * points, then by how many personal keys they share, then by name. `null` when the read itself failed.
  */
 export async function visibleMembers(supabase: Client, userId: string, mine: PlacementRow[]): Promise<MemberSummary[] | null> {
   const { data: profiles, error } = await supabase
@@ -86,7 +90,7 @@ export async function visibleMembers(supabase: Client, userId: string, mine: Pla
   return people
     .filter((p) => (byMember.get(p.id) ?? []).some((row) => row.body === 'sun'))
     .map((p) => summarize(p, byMember.get(p.id) ?? [], mine))
-    .sort((a, b) => b.personalCount - a.personalCount || a.name.localeCompare(b.name));
+    .sort((a, b) => b.points.total - a.points.total || b.personalCount - a.personalCount || a.name.localeCompare(b.name));
 }
 
 /** One member, or null when they do not exist, have no chart, or have not let this member see them. */
