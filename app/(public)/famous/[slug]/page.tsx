@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/Button';
+import { ChartWheel } from '@/components/ChartWheel';
 import { KeyChip } from '@/components/KeyChip';
 import { glossOnce } from '@/components/MemberCard';
 import { PointsBreakdown } from '@/components/PointsBreakdown';
@@ -60,6 +61,18 @@ export default async function FamousPersonPage({ params }: PageProps<'/famous/[s
       <div className="mt-6">
         <TribeBadge sign={sun} element={SIGNS[sun].element} label={SIGNS[sun].name} />
       </div>
+
+      <section aria-labelledby="their-wheel" className="panel-frost mt-10 p-6 md:p-10">
+        <ChartWheel
+          wheel={worked.wheel}
+          words={famousCopy.wheel(chart.name)}
+          header={
+            <h2 id="their-wheel" className="type-heading-2 text-ink-900">
+              {famousCopy.wheelHeading(chart.name)}
+            </h2>
+          }
+        />
+      </section>
 
       <section aria-labelledby="their-three" className="mt-10">
         <h2 id="their-three" className="type-heading-3 text-ink-900">

@@ -10,6 +10,7 @@ import { FAMOUS_CHARTS, type FamousChart } from '@/content/famous-charts';
 import { computeChart } from '@/lib/engine';
 import type { Chart } from '@/lib/engine';
 import type { memberClient } from './supabase/server';
+import { WHEEL_BODIES, type WheelInput } from './chart-wheel';
 import { BODY_IDS } from './keys';
 import { closeMatchesFrom, connectionPoints, type ConnectionPoints, type Longitudes } from './connection-points';
 import { ownPlacements } from './members';
@@ -23,6 +24,8 @@ export interface WorkedChart {
   chart: FamousChart;
   placements: PlacementRow[];
   longitudes: Longitudes;
+  /** Their chart wheel (3s). A public record, so it is drawn for anyone, as Your chart draws a member's own. */
+  wheel: WheelInput;
 }
 
 const rows = (chart: Chart): PlacementRow[] =>
@@ -40,13 +43,23 @@ const longitudesOf = (chart: Chart, skip: (body: string) => boolean = () => fals
   return out;
 };
 
+const wheelOf = (chart: Chart): WheelInput => ({
+  bodies: WHEEL_BODIES.map((body) => {
+    const p = chart.placements[body];
+    return { body, longitude: p.longitude, sign: p.sign, house: p.house };
+  }),
+  ascendant: chart.placements.rising?.longitude ?? null,
+  midheaven: chart.midheaven?.longitude ?? null,
+  cusps: chart.cusps,
+});
+
 let worked: WorkedChart[] | null = null;
 
 /** Every famous chart, worked out once. Each has a birth time, so each has a Rising and houses. */
 export function famousCharts(): WorkedChart[] {
   worked ??= FAMOUS_CHARTS.map((chart) => {
     const result = computeChart(chart.birth);
-    return { chart, placements: rows(result), longitudes: longitudesOf(result) };
+    return { chart, placements: rows(result), longitudes: longitudesOf(result), wheel: wheelOf(result) };
   });
   return worked;
 }
