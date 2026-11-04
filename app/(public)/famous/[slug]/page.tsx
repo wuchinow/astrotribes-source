@@ -13,6 +13,7 @@ import { famousCopy } from '@/content/famous';
 import { memberCopy, pointsCopy, pointsCount } from '@/content/members';
 import { famousChart, famousMatch, famousViewer } from '@/lib/famous';
 import { SIGNS } from '@/lib/keys';
+import { wheelDetails } from '@/lib/wheel-details';
 import { hasBirthTime } from '@/lib/shared-keys';
 import { PRIMARY_ACTION } from '@/lib/site';
 import { supabaseConfigured } from '@/lib/supabase/env';
@@ -65,6 +66,7 @@ export default async function FamousPersonPage({ params }: PageProps<'/famous/[s
       <section aria-labelledby="their-wheel" className="panel-frost mt-10 p-6 md:p-10">
         <ChartWheel
           wheel={worked.wheel}
+          details={wheelDetails(worked.wheel)}
           words={famousCopy.wheel(chart.name)}
           header={
             <h2 id="their-wheel" className="type-heading-2 text-ink-900">

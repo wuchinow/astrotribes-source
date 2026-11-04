@@ -31,7 +31,27 @@ export interface WheelBody {
   longitude: number;
   sign: SignId;
   house: HouseNumber | null;
+  /** Within the sign, 0 to 29 and 0 to 59, or null where the place is not known closely enough (3t). */
+  degree?: number | null;
+  minute?: number | null;
+  retrograde?: boolean;
 }
+
+/** What the tap panel shows beyond the Keys (3t): Dawa's lines and the planet's page, from the server. */
+export interface WheelDetail {
+  signLine?: string;
+  houseLine?: string;
+  href?: string;
+}
+export type WheelDetails = Partial<Record<WheelBodyId, WheelDetail>>;
+
+/** The nodes always move backward, and the Sun, Moon, and Galactic Center never do, so only planets and Chiron carry the mark. */
+export const showsRetrograde = (b: Pick<WheelBody, 'body' | 'retrograde'>): boolean =>
+  Boolean(b.retrograde) && b.body !== 'northNode' && b.body !== 'southNode';
+
+/** "12°05′" within the sign, or null. */
+export const degreeText = (b: Pick<WheelBody, 'degree' | 'minute'>): string | null =>
+  b.degree == null || b.minute == null ? null : `${b.degree}°${String(b.minute).padStart(2, '0')}′`;
 
 export interface WheelInput {
   bodies: WheelBody[];
@@ -43,7 +63,7 @@ export interface WheelInput {
 }
 
 /** The smallest gap between two glyphs on the planet ring, in degrees of the wheel. */
-export const MIN_GAP = 8;
+export const MIN_GAP = 10;
 
 export const norm = (deg: number) => ((deg % 360) + 360) % 360;
 

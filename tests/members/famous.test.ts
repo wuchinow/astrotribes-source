@@ -47,6 +47,7 @@ describe('the famous charts', () => {
       expect(wheel.ascendant, chart.name).not.toBeNull();
       expect(wheel.cusps, chart.name).toHaveLength(12);
       const sun = wheel.bodies.find((b) => b.body === 'sun');
+      expect(sun?.degree, chart.name).toBeTypeOf('number');
       expect(sun?.sign, chart.name).toBe(placements.find((row) => row.body === 'sun')?.sign);
     }
   });

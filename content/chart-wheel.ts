@@ -12,5 +12,12 @@ export const chartWheelCopy = {
     'Without a birth time there are no houses, and the planets sit where they were at midday, so the Moon may be a few degrees off.',
   listLabel: 'What the wheel shows',
   house: (roman: string) => `house ${roman}`,
+  /** The tap panel (3t). */
+  hint: 'Tap a planet on the wheel or in the list to see its Keys.',
+  close: 'Close',
+  retrogradeMark: 'retrograde',
+  retrograde: (name: string) => `${name} was retrograde: seen from Earth, it seemed to move backward through the signs.`,
+  noHouse: 'The house needs a birth time.',
+  more: (name: string) => `More about ${name}`,
   figure: 'Your chart as a wheel. The list beside it says the same in words.',
 };

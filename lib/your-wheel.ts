@@ -1,7 +1,8 @@
 // The member's own chart wheel (3g), server only. Reads the member's birth details as the member,
 // under RLS (invariant 2: the owner only), runs the engine on the server (invariant 4), and returns
-// longitudes for lib/chart-wheel.ts to place. Nothing is stored, logged, or sent anywhere: the
-// result is drawn into the owner's own page and discarded. On any failure the page shows no wheel.
+// longitudes for lib/chart-wheel.ts to place, with degrees for the list and the tap panel (3t, David,
+// Nov 4). Nothing is stored, logged, or sent anywhere: the result is drawn into the owner's own page
+// and discarded, and no other member's page ever shows a degree. On any failure the page shows no wheel.
 import 'server-only';
 import { computeChart, type Chart } from '@/lib/engine';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -44,7 +45,18 @@ export async function memberWheel(supabase: SupabaseClient, userId: string, save
       bodies: WHEEL_BODIES.map((body) => {
         const p = chart.placements[body];
         const sign = picked[body] ?? p.sign;
-        return { body, longitude: insideSign(p.longitude, sign), sign, house: p.house };
+        // The degree shows only where the engine's place is close enough to stand behind (3t, David,
+        // Nov 4: show degrees): not a Moon with no birth time, and not a body moved into a picked sign.
+        const exact = sign === p.sign && !p.signCandidates && !(body === 'moon' && !chart.timeKnown);
+        return {
+          body,
+          longitude: insideSign(p.longitude, sign),
+          sign,
+          house: p.house,
+          degree: exact ? p.degree : null,
+          minute: exact ? p.minute : null,
+          retrograde: p.retrograde,
+        };
       }),
       ascendant: chart.placements.rising?.longitude ?? null,
       midheaven: chart.midheaven?.longitude ?? null,
