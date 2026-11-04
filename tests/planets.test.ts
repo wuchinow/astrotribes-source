@@ -1,7 +1,7 @@
-// A planet's own page (Nov 4, from Dawa's Jupiter doc): every planet with a page carries his intro,
-// one line for each of the twelve signs and each of the twelve houses, in the copy rules; the page
-// renders all 24 under the planet's own sign key and house key from lib/keys.ts; and the 28 Keys
-// page links to it. This file types no key name.
+// A planet's own page (Nov 4, from Dawa's Jupiter doc): every planet from the Sun to Pluto has one,
+// with an introduction (his, or one drafted for him under a draft note) and his lines for the signs
+// and houses he has written, in the copy rules; the page renders each under the planet's own sign key
+// and house key from lib/keys.ts; and the 28 Keys page links to it. This file types no key name.
 
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -18,26 +18,40 @@ const text = (el: Element | null) => (el?.textContent ?? '').replace(/\s+/g, ' '
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 describe('planet pages', () => {
-  it('carry an intro and a line for every sign and every house, in the copy rules', () => {
-    expect(PLANET_PAGES.length).toBeGreaterThan(0);
+  it('cover the Sun to Pluto, each with an introduction and lines in the copy rules', () => {
+    expect(PLANET_PAGES.map((p) => p.body)).toEqual([
+      'sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto',
+    ]);
+    // Jupiter's is Dawa's alone; the rest carry a draft for him until he rewrites or approves it.
+    expect(PLANET_PAGES.find((p) => p.body === 'jupiter')!.draft).toEqual([]);
     const names = [...KEY_LIST.map((k) => k.name), ...RETIRED_KEY_NAMES].filter((name) => name !== 'Tribe');
     const typed = new RegExp(`\\b(?:${names.map(escape).join('|')})\\b`);
     for (const planet of PLANET_PAGES) {
       expect(keyFor(planet.body, 'sign'), planet.body).toBeDefined();
       expect(keyFor(planet.body, 'house'), planet.body).toBeDefined();
-      expect(planet.intro.length, planet.body).toBeGreaterThan(0);
-      expect(Object.keys(planet.signs).sort()).toEqual([...SIGN_IDS].sort());
-      expect(Object.keys(planet.houses).map(Number)).toEqual(HOUSES.map((h) => h.number));
-      const words = [...planet.intro, ...Object.values(planet.signs), ...Object.values(planet.houses)];
+      expect(planet.intro.length + planet.draft.length, planet.body).toBeGreaterThan(0);
+      for (const sign of Object.keys(planet.signs)) expect(SIGN_IDS, planet.body).toContain(sign);
+      for (const house of Object.keys(planet.houses)) expect(HOUSES.map((h) => String(h.number))).toContain(house);
+      const words = [
+        ...planet.intro,
+        ...planet.draft,
+        ...(Object.values(planet.signs) as string[]),
+        ...(Object.values(planet.houses) as string[]),
+      ];
       for (const line of words) {
         expect(line, planet.body).not.toMatch(/[—!]/);
         expect(line, planet.body).not.toMatch(typed);
       }
-      for (const sign of SIGN_IDS) expect(planet.signs[sign]).toContain(SIGNS[sign].name);
+    }
+    // Jupiter's lines each name their sign, and every sign has two qualities since Nov 4.
+    const jupiter = PLANET_PAGES.find((p) => p.body === 'jupiter')!;
+    for (const sign of SIGN_IDS) {
+      expect(jupiter.signs[sign]).toContain(SIGNS[sign].name);
+      expect(jupiter.signs[sign], sign).toMatch(/ and /);
     }
   });
 
-  it('render all twelve signs and all twelve houses under the planet’s own keys', async () => {
+  it('render every written sign and house under the planet’s own keys, and the draft under its note', async () => {
     const page = (await import('@/app/(public)/keys/[planet]/page')).default;
     for (const planet of PLANET_PAGES) {
       const document = await render(await page({ params: Promise.resolve({ planet: planet.slug }) } as never));
@@ -45,16 +59,21 @@ describe('planet pages', () => {
       const houseKey = keyFor(planet.body, 'house')!;
       const signs = [...document.querySelectorAll('[data-planet-sign]')];
       const houses = [...document.querySelectorAll('[data-planet-house]')];
-      expect(signs.map((li) => li.getAttribute('data-planet-sign'))).toEqual([...SIGN_IDS]);
-      expect(houses).toHaveLength(12);
+      const written = SIGN_IDS.filter((sign) => planet.signs[sign]);
+      const writtenHouses = HOUSES.filter((house) => planet.houses[house.number]);
+      expect(signs.map((li) => li.getAttribute('data-planet-sign'))).toEqual(written);
+      expect(houses.map((li) => Number(li.getAttribute('data-planet-house')))).toEqual(writtenHouses.map((h) => h.number));
       signs.forEach((li, i) => {
         expect(text(li)).toContain(signKey.name);
-        expect(text(li)).toContain(planet.signs[SIGN_IDS[i]]);
+        expect(text(li)).toContain(planet.signs[written[i]]);
       });
-      houses.forEach((li, i) => expect(text(li)).toContain(planet.houses[HOUSES[i].number]));
+      houses.forEach((li, i) => expect(text(li)).toContain(planet.houses[writtenHouses[i].number]));
       expect(text(document.body)).toContain(houseKey.name);
       expect(text(document.querySelector('h1'))).toContain(BODIES[planet.body].name);
       for (const paragraph of planet.intro) expect(text(document.querySelector('[data-planet-intro]'))).toContain(paragraph);
+      const draft = document.querySelector('[data-planet-draft]');
+      expect(draft === null, planet.body).toBe(planet.draft.length === 0);
+      for (const paragraph of planet.draft) expect(text(draft)).toContain(paragraph);
     }
   });
 
