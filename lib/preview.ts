@@ -12,7 +12,7 @@ export const PREVIEW_MAX_AGE = 60 * 60 * 24 * 30; // 30 days, in seconds
  * The member paths, open to anyone: proxy.ts refreshes the Supabase session on these. Its matcher
  * lists them (its config has to be a literal), and tests/preview/gate.test.ts checks that they agree.
  */
-export const MEMBER_PREFIXES = ['/sign-in', '/auth', '/account', '/api/account', '/welcome', '/your-chart'] as const;
+export const MEMBER_PREFIXES = ['/sign-in', '/auth', '/account', '/api/account', '/welcome', '/your-chart', '/admin'] as const;
 
 /** Where the passcode page may send someone back to: the home page only (no page is gated), never a full URL. */
 export const RETURN_PATHS = ['/'] as const;

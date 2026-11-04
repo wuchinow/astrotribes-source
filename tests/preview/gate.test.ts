@@ -57,7 +57,7 @@ describe('the proxy', () => {
   });
 
   it('lets the member paths through without a passcode, uncached', async () => {
-    for (const path of ['/sign-in', '/auth/callback?code=x', '/account', '/api/account/export', '/welcome', '/your-chart']) {
+    for (const path of ['/sign-in', '/auth/callback?code=x', '/account', '/api/account/export', '/welcome', '/your-chart', '/admin']) {
       const response = await proxy(req(path));
       expect(response.headers.get('x-middleware-next'), path).toBe('1');
       expect(response.headers.get('cache-control'), path).toBe('private, no-store');
