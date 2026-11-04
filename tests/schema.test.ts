@@ -53,12 +53,34 @@ describe('the schema', () => {
   });
 
   it('keeps every security definer function out of the served schema, with a fixed search path', () => {
-    const functions = [...migrations.matchAll(/create (?:or replace )?function (\w+)\.(\w+)[\s\S]*?\$\$/g)];
+    // A header ends at its quoted body ($$) or at a standard SQL body (0003's `return`).
+    const functions = [...migrations.matchAll(/create (?:or replace )?function (\w+)\.(\w+)[\s\S]*?(?:\$\$|\breturn\b)/g)];
     expect(functions.length).toBeGreaterThan(0);
     for (const [header, schema, name] of functions) {
       if (!/security definer/.test(header)) continue;
       expect(schema, name).toBe('private');
       expect(header, name).toContain("set search_path = ''");
+    }
+  });
+
+  it('serves one function, the admin door, as security invoker over a check in private (0003)', () => {
+    const served = [...migrations.matchAll(/create (?:or replace )?function public\.(\w+)/g)].map((m) => m[1]);
+    expect(served).toEqual(['admin_members']);
+    const door = /create function public\.admin_members\(\)[\s\S]*?return private\.admin_members\(\);/.exec(migrations)?.[0] ?? '';
+    expect(door).toContain('security invoker');
+    expect(door).not.toContain('security definer');
+    const check = /create function private\.admin_members\(\)[\s\S]*?\$\$[\s\S]*?\$\$/.exec(migrations)?.[0] ?? '';
+    expect(check).toContain('security definer');
+    // The admin list is checked, and the audit row written, before anything is read.
+    const refuse = check.indexOf("raise exception 'admin_only'");
+    const audit = check.indexOf('insert into private.admin_views');
+    const read = check.indexOf('from auth.users');
+    expect(refuse).toBeGreaterThan(0);
+    expect(audit).toBeGreaterThan(refuse);
+    expect(read).toBeGreaterThan(audit);
+    // Only whether birth details exist leaves it, never a column of them (invariant 2).
+    for (const column of ['birth_date', 'birth_time', 'place_label', 'latitude', 'longitude', 'timezone', 'degree', 'minute']) {
+      expect(check, column).not.toMatch(new RegExp(`\\b${column}\\b`));
     }
   });
 

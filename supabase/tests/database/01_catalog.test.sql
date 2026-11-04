@@ -87,10 +87,11 @@ select ok(not has_any_column_privilege('service_role', 'public.birth_data', 'SEL
   'the secret key has no column privilege on birth_data');
 select ok(not has_table_privilege('service_role', 'public.profiles', 'SELECT'), 'the secret key cannot read profiles');
 
--- Functions: none in the served schema; every definer function is in private with a fixed path.
+-- Functions: one in the served schema, the admin page's door (0003), and it is not a definer;
+-- every definer function is in private with a fixed path.
 select is(
-  (select count(*) from pg_proc where pronamespace = 'public'::regnamespace),
-  0::bigint, 'public holds no functions');
+  (select array_agg(proname::text || ':' || prosecdef::text) from pg_proc where pronamespace = 'public'::regnamespace),
+  array['admin_members:false'], 'public holds one function, admin_members, and it is security invoker');
 select is(
   (select count(*) from pg_proc
    where prosecdef and pronamespace = 'private'::regnamespace

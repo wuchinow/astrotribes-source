@@ -92,6 +92,13 @@ export const privacy = {
             photo shows beside your name at the top of the page while you are signed in, loaded
             from Google.
           </p>
+          {/* PLACEHOLDER (Nov 4): the admin members page, for Kevin to review. */}
+          <p>
+            <strong>Who on our team sees it.</strong> A small number of people on the AstroTribes
+            team can see a list of members: the name you chose, your email address, when you joined
+            and last signed in, and whether you have added your birth details. They never see the
+            details themselves. Each time someone opens that list, we record who looked and when.
+          </p>
           <p>
             <strong>Your birth details.</strong> When you save them, we keep your birth date, your
             birth time if you give one, your birthplace as you picked it, its map coordinates, and

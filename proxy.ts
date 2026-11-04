@@ -43,5 +43,6 @@ export const config = {
     '/api/account/:path*',
     '/welcome/:path*',
     '/your-chart/:path*',
+    '/admin/:path*',
   ],
 };
