@@ -33,6 +33,11 @@ describe('the members pages', () => {
     }
   });
 
+  it('learn closeness by degree only from the database function, never a degree', () => {
+    const source = text('lib/members.ts');
+    expect(source.match(/\.rpc\(\s*'([a-z_]+)'/g)).toEqual([".rpc('close_matches'"]);
+  });
+
   it('check the session themselves', () => {
     for (const file of files.slice(1)) expect(text(file), file).toMatch(/auth\.getUser\(\)/);
   });

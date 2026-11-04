@@ -366,10 +366,14 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      <Section title="Members (3g) and connection points (3p), with two made-up charts">
+      <Section title="Members (3g) and connection points (3p, 3q), with two made-up charts">
         {(() => {
           const shared = sharedKeys(SAMPLE_ME, SAMPLE_THEM);
-          const points = connectionPoints(SAMPLE_ME, SAMPLE_THEM, shared);
+          const points = connectionPoints(SAMPLE_ME, SAMPLE_THEM, shared, [
+            { mine: 'sun', theirs: 'rising', kind: 'rising' },
+            { mine: 'venus', theirs: 'mars', kind: 'close' },
+            { mine: 'moon', theirs: 'moon', kind: 'fullMoon' },
+          ]);
           const firstTime = glossOnce();
           return (
             <div className="grid gap-10">

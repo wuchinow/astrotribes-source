@@ -63,9 +63,9 @@ describe('the schema', () => {
     }
   });
 
-  it('serves two functions, the admin door (0003) and the admin yes or no (0004), each security invoker over a check in private', () => {
+  it('serves three functions, the admin door (0003), the admin yes or no (0004), and close matches (0005), each security invoker over a check in private', () => {
     const served = [...migrations.matchAll(/create (?:or replace )?function public\.(\w+)/g)].map((m) => m[1]);
-    expect(served).toEqual(['admin_members', 'is_admin']);
+    expect(served).toEqual(['admin_members', 'is_admin', 'close_matches']);
     const door = /create function public\.admin_members\(\)[\s\S]*?return private\.admin_members\(\);/.exec(migrations)?.[0] ?? '';
     expect(door).toContain('security invoker');
     expect(door).not.toContain('security definer');
@@ -82,6 +82,24 @@ describe('the schema', () => {
     for (const column of ['birth_date', 'birth_time', 'place_label', 'latitude', 'longitude', 'timezone', 'degree', 'minute']) {
       expect(check, column).not.toMatch(new RegExp(`\\b${column}\\b`));
     }
+  });
+
+  it('tells a member which placements sit close, only for members they may see, never a degree (0005)', () => {
+    const door = /create function public\.close_matches\(others uuid\[\]\)[\s\S]*?end;/.exec(migrations)?.[0] ?? '';
+    expect(door).toContain('security invoker');
+    expect(door).not.toContain('security definer');
+    expect(door).toContain('from private.close_matches(others)');
+    const work = /create function private\.close_matches\(others uuid\[\]\)[\s\S]*?\$\$[\s\S]*?\$\$/.exec(migrations)?.[0] ?? '';
+    expect(work).toContain('security definer');
+    expect(work).toContain('returns table (member uuid, mine text, theirs text, kind text)');
+    // Every other member passes the same visibility check the policies use, and never the viewer.
+    expect(work).toContain('private.can_view_member(o)');
+    expect(work).toContain('o <> viewer.id');
+    // It writes nothing.
+    expect(work).not.toMatch(/\b(insert|update|delete)\b/i);
+    for (const grant of [door, work]) expect(grant).not.toMatch(/grant execute[^;]*\b(anon|service_role)\b/);
+    expect(migrations).toMatch(/grant execute on function public\.close_matches\(uuid\[\]\) to authenticated;/);
+    expect(migrations).not.toMatch(/grant execute on function (public|private)\.close_matches\(uuid\[\]\) to [^;]*\b(anon|service_role)\b/);
   });
 
   it('answers only yes or no to the menu, about the caller only, and writes nothing (0004)', () => {
