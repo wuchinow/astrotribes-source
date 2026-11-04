@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { CONTACT_EMAIL, LEGAL_NAV, PRIMARY_NAV, type NavLink } from '@/lib/site';
+import { skyCreditLines } from '@/lib/sky-credits';
 import { FramedArt } from './FramedArt';
 import { Logo } from './Logo';
 import { MoodToggle } from './MoodToggle';
+import { SkyCredit } from './SkyCredit';
 
 function LinkList({ label, links }: { label: string; links: readonly NavLink[] }) {
   return (
@@ -27,7 +29,7 @@ function LinkList({ label, links }: { label: string; links: readonly NavLink[] }
  * The footer (1h), on the band tone where the page's rhythm ends. Desktop: the logo left, Jane's enso
  * collage centred, the main nav repeated (0d) beside the legal links and the address on the right,
  * the credit lines under the logo, top-aligned with the enso so they never hang below it (David, Nov 4) (the art is wallpaper, so its credit lives here, and in What stays
- * true), then a bottom row with the year and the mood toggle as an icon, with its name on hover and
+ * true; the page's telescope images are credited here too, David, Nov 4), then a bottom row with the year and the mood toggle as an icon, with its name on hover and
  * focus. On a phone the same parts stack, the enso centred.
  */
 export function SiteFooter() {
@@ -52,6 +54,7 @@ export function SiteFooter() {
         <div className="max-w-measure md:col-start-1 md:row-start-2 md:self-start">
           <p className="type-body-sm text-ink-700">All art on AstroTribes is made by human hands.</p>
           <p className="mt-1 type-caption text-ink-500">Glyphs by Lama Dawa. Art by Jane Kwan. Tribe paintings by Kirstie Connon.</p>
+          <SkyCredit lines={skyCreditLines()} />
         </div>
       </div>
       <div className="border-t border-ink-200">

@@ -17,7 +17,7 @@ const files = (id: SkyId) => Object.values(credits.images[id].files) as { src: s
 describe('the sky images', () => {
   it("ship the Oracle's ring, the three Keys cards' images, and the pictures of Nov 4, credited as released, no \"(tinted)\" since none asks", () => {
     expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter']);
-    expect(credits.images.jupiter.credit).toBe('NASA/JPL/University of Arizona');
+    expect(credits.images.jupiter.credit).toBe('NASA/JPL/Space Science Institute');
     expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
     expect(credits.images.today.credit).toBe('NASA, ESA, SSC, CXC, and STScI');
     expect(credits.images.ring.credit).toBe('The Hubble Heritage Team (AURA/STScI/NASA)');

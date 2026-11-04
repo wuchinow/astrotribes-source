@@ -174,7 +174,7 @@
    * at its manifest strength scaled by the visitor's wash. The image fades out toward the bottom of
    * the window. On Paper the window is its own night and ends in a clean edge on the paper card; on
    * Night the window's ground itself turns into the card's surface-200 over its last part, so there
-   * is no edge. None hides the image and its credit.
+   * is no edge. None hides the image.
    */
   .keys-window {
     background: var(--night-900);
@@ -200,7 +200,6 @@
   }
 
   html[data-art="none"] .keys-sky,
-  html[data-art="none"] .keys-credit,
   html[data-art="none"] .panel-sky,
   html[data-art="none"] .panel-sky-credit {
     display: none;
