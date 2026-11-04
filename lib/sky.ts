@@ -175,6 +175,26 @@ export const SKY = {
     release: 'https://science.nasa.gov/asset/hubble/views-of-the-galactic-center-region-from-nasas-great-observatories',
     released: '2009-11-10',
   },
+  // The Jupiter page's hero (David, Nov 4): Cassini's Jupiter, saved by David from the Photojournal
+  // (file PIA04866.jpg, 1920x2400). Pure NASA, so public domain. Its release date waits on the catalog
+  // page; December 2000 is when Cassini took it on the way past Jupiter.
+  jupiter: {
+    stem: 'cassini-jupiter',
+    subject: 'Jupiter from the Cassini spacecraft, with the Great Red Spot',
+    source: 'cassini-jupiter-PIA04866.jpg',
+    size: [1920, 2400],
+    sha256: 'bcd8549b7bbcc0041309d0a35673a2329ee78dcecc4f06bfc86488434132f3cd',
+    crop: [0, 0, 1920, 2400],
+    levels: { black: 6, white: 255, gamma: 1 },
+    strength: 0.9,
+    widths: [1200, 640],
+    alt: 'Jupiter half in shadow, its cream and rust cloud bands swirling around the Great Red Spot',
+    credit: 'NASA/JPL/University of Arizona',
+    tinted: false,
+    license: 'NASA release; not copyrighted in the United States',
+    release: 'https://photojournal.jpl.nasa.gov/catalog/PIA04866',
+    released: '2000-12',
+  },
 } as const satisfies Record<string, SkyImage>;
 
 export type SkyId = keyof typeof SKY;

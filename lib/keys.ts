@@ -60,7 +60,7 @@ export interface KeyDef {
   gloss: string;
   /** The Core Five: the Sun's and Moon's sign and house keys, and the rising sign's. */
   core: boolean;
-  /** False while Dawa has not confirmed a key: every key whose name differs from his Sept 18 list. */
+  /** False while Dawa has not confirmed a key: every key whose name differs from his Sept 18 list, until he confirms it. */
   settled: boolean;
 }
 
@@ -167,12 +167,14 @@ export const KEYS = {
   },
   jupiterSign: {
     id: 'jupiterSign',
-    name: 'Abundance',
+    // Gift (Dawa's Jupiter doc, Nov 3: "the (hopefully) final, final, FINAL version"). His word
+    // confirms both of Jupiter's keys, so both are settled though they differ from Sept 18.
+    name: 'Gift',
     body: 'jupiter',
     dimension: 'sign',
     gloss: "Jupiter's sign; what is presented as resource and inspiration",
     core: false,
-    settled: false,
+    settled: true,
   },
   jupiterHouse: {
     id: 'jupiterHouse',
@@ -181,7 +183,7 @@ export const KEYS = {
     dimension: 'house',
     gloss: 'your place of growth, depth, and expansion',
     core: false,
-    settled: false,
+    settled: true,
   },
   saturnSign: {
     id: 'saturnSign',
@@ -328,7 +330,7 @@ export const KEY_LIST: readonly KeyDef[] = Object.values(KEYS);
  * edits replaced, and the two Sep 28 names his Sep 29 edit dropped. Typed here so the lint guard
  * (eslint.config.ts) can keep them out of copy too; CLAUDE.md lists the same set. Kingdom, Hearth,
  * and Leap are current again (Sep 29), and so are the Sept 18 names for Saturn's house and
- * Neptune's sign (Sep 30).
+ * Neptune's sign (Sep 30), and Gift for Jupiter's sign (Dawa, Nov 3), which retires Abundance.
  */
 export const RETIRED_KEY_NAMES: readonly string[] = [
   // Before Sept 18: the Sept 17 doc and the pitch deck.
@@ -347,7 +349,6 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   'Haven',
   'Curiosity',
   'Delight',
-  'Gift',
   'Reset',
   'Lens',
   'Healing',
@@ -355,6 +356,8 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   // Sep 28 names the Sep 29 edit dropped.
   'Limitation',
   'Ethos',
+  // Jupiter's sign from Sep 29 until Dawa's Nov 3 Jupiter doc made it Gift again.
+  'Abundance',
 ];
 
 /** Keys that need a birth time: every house key, and Vibe (the rising sign). */

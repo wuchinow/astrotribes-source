@@ -101,15 +101,13 @@ describe('the 28 Keys', () => {
     }
   });
 
-  it("leaves unsettled only the keys whose names differ from Dawa's Sept 18 list (David, Sep 30)", () => {
+  it("leaves unsettled only the keys whose names differ from Dawa's Sept 18 list (David, Sep 30), less the two Dawa confirmed for Jupiter (Nov 3)", () => {
     // Ids, not names: this file types no key name. The Sept 18 list is the 0a commit of lib/keys.ts.
     const changedSinceSept18 = [
       'sunHouse',
       'moonHouse',
       'mercuryHouse',
       'venusHouse',
-      'jupiterSign',
-      'jupiterHouse',
       'uranusSign',
       'neptuneHouse',
       'chironSign',

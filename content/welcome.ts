@@ -60,6 +60,20 @@ export const yourChartCopy = {
   /** On a picked sign: "You chose Leo. Virgo is the other one it could be." */
   picked: (chosen: string, other: string) => `You chose ${chosen}. ${other} is the other sign it could be.`,
   noTime: 'You saved your chart without a birth time, so Rising and the houses wait on one.',
+  // PLACEHOLDER: the member's own Keys, one planet at a time as Dawa writes each in full
+  // (content/planets.ts). Key names arrive as arguments.
+  keys: {
+    eyebrow: 'Your Keys',
+    line: 'Your planets,',
+    accent: 'in your own words.',
+    lede: 'Each planet in your chart gives you two Keys: one from its sign and one from its house.',
+    /** "Jupiter in Leo" */
+    inSign: (planet: string, sign: string) => `${planet} in ${sign}`,
+    /** "Jupiter in house X, Achievement" */
+    inHouse: (planet: string, roman: string, name: string) => `${planet} in house ${roman}, ${name}`,
+    noTime: (keyName: string) => `Your ${keyName} needs your birth time. Add it and it appears here.`,
+    more: (planet: string) => `All of ${planet}'s Keys`,
+  },
   next: {
     eyebrow: 'What comes next',
     line: 'Your chart is the start.',

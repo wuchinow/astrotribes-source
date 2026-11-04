@@ -241,6 +241,43 @@
           "bytes": 99036
         }
       }
+    },
+    "jupiter": {
+      "subject": "Jupiter from the Cassini spacecraft, with the Great Red Spot",
+      "credit": "NASA/JPL/University of Arizona",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://photojournal.jpl.nasa.gov/catalog/PIA04866",
+      "released": "2000-12",
+      "source": "reference/images/space images/cassini-jupiter-PIA04866.jpg",
+      "crop": [
+        0,
+        0,
+        1920,
+        2400
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/cassini-jupiter/cassini-jupiter-640.a337e861.webp",
+          "width": 640,
+          "height": 800,
+          "bytes": 14074
+        },
+        "1200": {
+          "src": "/sky-images/cassini-jupiter/cassini-jupiter-1200.7973c267.webp",
+          "width": 1200,
+          "height": 1500,
+          "bytes": 35480
+        }
+      }
     }
   }
 }

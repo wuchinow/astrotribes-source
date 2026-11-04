@@ -16,7 +16,8 @@ const files = (id: SkyId) => Object.values(credits.images[id].files) as { src: s
 
 describe('the sky images', () => {
   it("ship the Oracle's ring, the three Keys cards' images, and the pictures of Nov 4, credited as released, no \"(tinted)\" since none asks", () => {
-    expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter']);
+    expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter']);
+    expect(credits.images.jupiter.credit).toBe('NASA/JPL/University of Arizona');
     expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
     expect(credits.images.today.credit).toBe('NASA, ESA, SSC, CXC, and STScI');
     expect(credits.images.ring.credit).toBe('The Hubble Heritage Team (AURA/STScI/NASA)');
@@ -26,7 +27,7 @@ describe('the sky images', () => {
     for (const id of IDS) {
       expect(skyCredit(SKY[id])).toBe(credits.images[id].credit);
       expect(credits.images[id].tinted, id).toBe(false);
-      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov)\//);
+      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov|photojournal\.jpl\.nasa\.gov)\//);
       // Public domain only (David, Nov 4): the Crab Nebula, part ESA, came out for that.
       expect(credits.images[id].license, id).toMatch(/not copyrighted/);
     }
@@ -35,7 +36,7 @@ describe('the sky images', () => {
   it('carry the strength the manifest gives them (1h: the ring lifted to 0.6, the Keys cards at 0.8; the Nov 4 pictures at 0.9)', () => {
     expect(credits.images.ring.strength).toBe(0.6);
     for (const id of ['keysSun', 'keysMoon', 'keysRising'] as const) expect(credits.images[id].strength).toBe(0.8);
-    for (const id of ['andromeda', 'today', 'keysCenter'] as const) expect(credits.images[id].strength).toBe(0.9);
+    for (const id of ['andromeda', 'today', 'keysCenter', 'jupiter'] as const) expect(credits.images[id].strength).toBe(0.9);
   });
 
   it('every picture on a page is its own image: no two places share one (David, Nov 4)', () => {
