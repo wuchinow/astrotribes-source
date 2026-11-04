@@ -131,19 +131,20 @@ export const KEYS = {
   },
   venusSign: {
     id: 'venusSign',
-    name: 'Resonance',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    name: 'Muse',
     body: 'venus',
     dimension: 'sign',
     gloss: "Venus' sign; what you harmonize with",
     core: false,
-    settled: true,
+    settled: false,
   },
   venusHouse: {
     id: 'venusHouse',
     name: 'Attraction',
     body: 'venus',
     dimension: 'house',
-    gloss: 'where you find harmony and beauty',
+    gloss: "Venus' house; where you are drawn to seek love, beauty, and pleasure",
     core: false,
     settled: false,
   },
@@ -223,30 +224,34 @@ export const KEYS = {
   },
   neptuneSign: {
     id: 'neptuneSign',
-    name: 'Ideals',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    // His line offers collective vision or collective sensibility; sensibility fits Ethos (picked Nov 4, Dawa to confirm).
+    name: 'Ethos',
     body: 'neptune',
     dimension: 'sign',
-    gloss: "Neptune's sign; your generation's collective vision",
+    gloss: "Neptune's sign; your generation's collective sensibility",
     core: false,
-    settled: true,
+    settled: false,
   },
   neptuneHouse: {
     id: 'neptuneHouse',
-    name: 'Inspiration',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    name: 'Enchantment',
     body: 'neptune',
     dimension: 'house',
-    gloss: 'where you receive the collective signal and embody it',
+    gloss: "Neptune's house; where you experience wonder, spiritual longing, and the interplay of inspiration and illusion",
     core: false,
     settled: false,
   },
   plutoSign: {
     id: 'plutoSign',
-    name: 'Alchemy',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    name: 'Transformation',
     body: 'pluto',
     dimension: 'sign',
     gloss: "Pluto's sign; your generation's deep transformation",
     core: false,
-    settled: true,
+    settled: false,
   },
   plutoHouse: {
     id: 'plutoHouse',
@@ -295,25 +300,29 @@ export const KEYS = {
   },
   chironSign: {
     id: 'chironSign',
-    name: 'Wound',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    name: 'Vulnerability',
     body: 'chiron',
     dimension: 'sign',
-    gloss: "Chiron's sign; the energy of healing that our inner child requires",
+    gloss: "Chiron's sign; the nature of your sensitivity and vulnerability",
     core: false,
     settled: false,
   },
   chironHouse: {
     id: 'chironHouse',
-    name: 'Scar',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    // Wound was Chiron's house on Sept 18, so it is settled by the rule.
+    name: 'Wound',
     body: 'chiron',
     dimension: 'house',
-    gloss: "Chiron's house; the area where growth and healing occurs",
+    gloss: "Chiron's house; where vulnerability can become painful and invite growth and healing",
     core: false,
-    settled: false,
+    settled: true,
   },
   galacticCenterHouse: {
     id: 'galacticCenterHouse',
-    name: 'Alignment',
+    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
+    name: 'Portal',
     body: 'galacticCenter',
     dimension: 'house',
     gloss:
@@ -330,7 +339,8 @@ export const KEY_LIST: readonly KeyDef[] = Object.values(KEYS);
  * edits replaced, and the two Sep 28 names his Sep 29 edit dropped. Typed here so the lint guard
  * (eslint.config.ts) can keep them out of copy too; CLAUDE.md lists the same set. Kingdom, Hearth,
  * and Leap are current again (Sep 29), and so are the Sept 18 names for Saturn's house and
- * Neptune's sign (Sep 30), and Gift for Jupiter's sign (Dawa, Nov 3), which retires Abundance.
+ * Neptune's sign (Sep 30), and Gift for Jupiter's sign (Dawa, Nov 3), which retires Abundance. Dawa's
+ * Oct 31 doc brings back Ethos (Neptune's sign) and Wound (now Chiron's house only) (David, Nov 4).
  */
 export const RETIRED_KEY_NAMES: readonly string[] = [
   // Before Sept 18: the Sept 17 doc and the pitch deck.
@@ -355,9 +365,15 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   'Signal',
   // Sep 28 names the Sep 29 edit dropped.
   'Limitation',
-  'Ethos',
   // Jupiter's sign from Sep 29 until Dawa's Nov 3 Jupiter doc made it Gift again.
   'Abundance',
+  // Replaced by Dawa's Oct 31 doc (David, Nov 4).
+  'Resonance',
+  'Ideals',
+  'Inspiration',
+  'Alchemy',
+  'Scar',
+  'Alignment',
 ];
 
 /** Keys that need a birth time: every house key, and Vibe (the rising sign). */
@@ -505,11 +521,11 @@ export const HOUSES: readonly HouseDef[] = [
   { number: 5, roman: 'V', name: 'Creativity', question: 'What can I bring forth?', line: 'How you express your unique gifts' },
   { number: 6, roman: 'VI', name: 'Service', question: 'How can I contribute?', line: 'How you contribute through training' },
   { number: 7, roman: 'VII', name: 'Partnership', question: 'Where is my synergy?', line: 'How you grow through relationship' },
-  { number: 8, roman: 'VIII', name: 'Depth', question: 'What lies beneath the surface?', line: 'What draws you deep' },
-  { number: 9, roman: 'IX', name: 'Expansion', question: 'How do I discover more?', line: 'How you expand your horizons' },
+  { number: 8, roman: 'VIII', name: 'Intrigue', question: 'What lies beneath the surface?', line: 'What draws you deep' },
+  { number: 9, roman: 'IX', name: 'Exploration', question: 'How do I discover more?', line: 'How you expand your horizons' },
   { number: 10, roman: 'X', name: 'Achievement', question: 'What can I accomplish?', line: 'Your accomplishments in the world' },
-  { number: 11, roman: 'XI', name: 'Vision', question: 'What future do I envision?', line: 'Shared hopes and dreams' },
-  { number: 12, roman: 'XII', name: 'Assimilation', question: 'How do I become whole?', line: 'Finding wholeness' },
+  { number: 11, roman: 'XI', name: 'Possibility', question: 'What future do I envision?', line: 'Shared hopes and dreams' },
+  { number: 12, roman: 'XII', name: 'Integration', question: 'How do I become whole?', line: 'Finding wholeness' },
 ];
 
 export const houseOf = (number: HouseNumber): HouseDef => HOUSES[number - 1];
