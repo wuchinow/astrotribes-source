@@ -27,7 +27,8 @@ export type BirthErrorCode =
 
 export type BirthFormState =
   | { status: 'idle' }
-  | { status: 'error'; code: BirthErrorCode }
+  /** `ref` names the step that failed and the database's own error code, never a value (support only). */
+  | { status: 'error'; code: BirthErrorCode; ref?: string }
   | { status: 'choose'; choices: Choices };
 
 const MAX_LABEL = 200;

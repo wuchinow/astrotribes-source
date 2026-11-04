@@ -184,6 +184,9 @@ export function BirthDetailsForm({ initial, edit = false }: { initial: BirthInit
       {errorCode && !fieldError ? (
         <p role="alert" className="text-ember-500">
           {welcomeCopy.errors[errorCode]}
+          {state.status === 'error' && state.ref ? (
+            <span className="mt-1 block type-caption text-ink-500">{welcomeCopy.errorRef(state.ref)}</span>
+          ) : null}
         </p>
       ) : null}
       {fieldError ? (
