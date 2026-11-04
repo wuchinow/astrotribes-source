@@ -102,8 +102,8 @@ export default function HomePage() {
             />
             <Quote quote={quote('as-above')} size="lg" className="mt-8" />
           </div>
-          {/* The Flammarion engraving (David, Nov 4): the section's one picture, credited under it. */}
-          <figure className="w-full" style={{ maxWidth: `${FLAMMARION.width / 2}px` }}>
+          {/* The Flammarion engraving (David, Nov 4): the section's one picture; its credit is in the footer. */}
+          <div className="w-full" style={{ maxWidth: `${FLAMMARION.width / 2}px` }}>
             <picture className="block">
               <source type="image/avif" srcSet={flammarionSet.avif} sizes="(width >= 48rem) 30rem, calc(100vw - 2rem)" />
               <source type="image/webp" srcSet={flammarionSet.webp} sizes="(width >= 48rem) 30rem, calc(100vw - 2rem)" />
@@ -117,8 +117,7 @@ export default function HomePage() {
                 className="block h-auto w-full rounded-md border border-ink-200 shadow-rest"
               />
             </picture>
-            <figcaption className="mt-3 type-caption text-ink-500">{FLAMMARION.credit}</figcaption>
-          </figure>
+          </div>
         </div>
       </Section>
 

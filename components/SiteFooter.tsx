@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { CONTACT_EMAIL, LEGAL_NAV, PRIMARY_NAV, type NavLink } from '@/lib/site';
-import { skyCreditLines } from '@/lib/sky-credits';
+import { pictureCreditLines, skyCreditLines } from '@/lib/sky-credits';
 import { FramedArt } from './FramedArt';
 import { Logo } from './Logo';
 import { MoodToggle } from './MoodToggle';
@@ -55,6 +55,7 @@ export function SiteFooter() {
           <p className="type-body-sm text-ink-700">All art on AstroTribes is made by human hands.</p>
           <p className="mt-1 type-caption text-ink-500">Glyphs by Lama Dawa. Art by Jane Kwan. Tribe paintings by Kirstie Connon.</p>
           <SkyCredit lines={skyCreditLines()} />
+          <SkyCredit lines={pictureCreditLines} sky={false} />
         </div>
       </div>
       <div className="border-t border-ink-200">

@@ -39,64 +39,64 @@
       }
     },
     "keysSun": {
-      "subject": "The center of the Milky Way in infrared",
-      "credit": "NASA/JPL-Caltech/S. Stolovy (Spitzer Science Center/Caltech)",
+      "subject": "The Sun from the Solar Dynamics Observatory, its upper limb",
+      "credit": "NASA/GSFC/Solar Dynamics Observatory",
       "tinted": false,
-      "license": "NASA and JPL release; not copyrighted in the United States",
-      "release": "https://www.spitzer.caltech.edu/image/ssc2006-02a1-spitzer-view-of-the-center-of-the-milky-way",
-      "released": "2006-01-10",
-      "source": "reference/images/space images/nasa-helix-nebula.jpg (misnamed in the Lovable export)",
-      "crop": [
-        2140,
-        1985,
-        2800,
-        1575
-      ],
-      "levels": {
-        "black": 14,
-        "white": 255,
-        "gamma": 1.1
-      },
-      "median": 5,
-      "strength": 0.8,
-      "ground": "#060b15",
-      "files": {
-        "720": {
-          "src": "/sky-images/milky-way-core/milky-way-core-720.2f4a7cc5.webp",
-          "width": 720,
-          "height": 405,
-          "bytes": 27922
-        }
-      }
-    },
-    "keysMoon": {
-      "subject": "The Ring Nebula (M57), its upper arc",
-      "credit": "The Hubble Heritage Team (AURA/STScI/NASA)",
-      "tinted": false,
-      "license": "NASA and STScI release; not copyrighted in the United States",
-      "release": "https://science.nasa.gov/image-detail/hubble-ringnebula-1999-stsci-01evvfqsn9vs4r6nbd4t4x6j5g/",
-      "released": "1999-01-06",
-      "source": "reference/images/space images/nasa-galaxy-cluster.jpg (misnamed in the Lovable export)",
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/image-of-sun-from-nasas-solar-dynamics-observatory/",
+      "released": "2025-09-15",
+      "source": "reference/images/space images/sun.jpg",
       "crop": [
         0,
-        40,
-        1215,
-        683
+        0,
+        4096,
+        2304
       ],
       "levels": {
-        "black": 4,
+        "black": 6,
         "white": 255,
-        "gamma": 0.85
+        "gamma": 1
       },
       "median": null,
       "strength": 0.8,
       "ground": "#060b15",
       "files": {
         "720": {
-          "src": "/sky-images/ring-nebula-arc/ring-nebula-arc-720.e08c0e3c.webp",
+          "src": "/sky-images/sdo-sun-limb/sdo-sun-limb-720.d91b5fa4.webp",
           "width": 720,
           "height": 405,
-          "bytes": 8178
+          "bytes": 24196
+        }
+      }
+    },
+    "keysMoon": {
+      "subject": "The near side of the Moon from the Lunar Reconnaissance Orbiter, its upper half",
+      "credit": "NASA/GSFC/Arizona State University",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/mission/lro/",
+      "released": "2010-12",
+      "source": "reference/images/space images/moon.jpg",
+      "crop": [
+        0,
+        0,
+        1400,
+        788
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": 3,
+      "strength": 0.8,
+      "ground": "#060b15",
+      "files": {
+        "720": {
+          "src": "/sky-images/lroc-moon-limb/lroc-moon-limb-720.0241d742.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 21754
         }
       }
     },

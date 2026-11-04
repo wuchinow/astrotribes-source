@@ -8,7 +8,8 @@ import { describe, expect, it } from 'vitest';
 import { PLANET_PAGES, planetHref } from '@/content/planets';
 import skyFiles from '@/public/sky-images/credits.json';
 import { SKY_PAGES } from '@/lib/sky';
-import { skyCreditLines } from '@/lib/sky-credits';
+import { FLAMMARION } from '@/lib/flammarion';
+import { pictureCreditLines, skyCreditLines } from '@/lib/sky-credits';
 
 const PAGE_FILES: Record<string, string> = {
   '/': 'app/(public)/page.tsx',
@@ -30,12 +31,21 @@ describe('telescope credits in the footer', () => {
     );
   });
 
-  it('give each page one line naming every image’s credit', () => {
+  it('give each page one short line, NASA only, with every full credit kept in the manifest (David, Nov 4)', () => {
     const lines = skyCreditLines();
     for (const [path, ids] of Object.entries(SKY_PAGES)) {
-      for (const id of ids) expect(lines[path], path).toContain(skyFiles.images[id].credit);
-      expect(lines[path]).not.toMatch(/[—!]|\.\.$/);
+      expect(lines[path], path).toBe(ids.length === 1 ? 'Space photo: NASA.' : 'Space photos: NASA.');
+      for (const id of ids) {
+        expect(skyFiles.images[id].credit, id).toMatch(/NASA/);
+        expect(skyFiles.images[id].license, id).toMatch(/not copyrighted/);
+      }
     }
+  });
+
+  it('credit the Flammarion engraving in the landing page footer, not under the picture', () => {
+    expect(pictureCreditLines['/']).toBe(`${FLAMMARION.credit}.`);
+    const landing = readFileSync('app/(public)/page.tsx', 'utf8');
+    expect(landing).not.toMatch(/figcaption|FLAMMARION\.credit/);
   });
 
   it('leave no caption under a picture', () => {
