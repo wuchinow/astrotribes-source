@@ -189,15 +189,27 @@ export const SKY = {
     strength: 0.9,
     widths: [1200, 640],
     alt: 'Jupiter half in shadow, its cream and rust cloud bands swirling around the Great Red Spot',
-    credit: 'NASA/JPL/University of Arizona',
+    credit: 'NASA/JPL/Space Science Institute',
     tinted: false,
     license: 'NASA release; not copyrighted in the United States',
-    release: 'https://photojournal.jpl.nasa.gov/catalog/PIA04866',
+    release: 'https://science.nasa.gov/photojournal/cassini-jupiter-portrait/',
     released: '2000-12',
   },
 } as const satisfies Record<string, SkyImage>;
 
 export type SkyId = keyof typeof SKY;
+
+/**
+ * Which page shows which telescope images, so the footer can credit them (David, Nov 4: the credits
+ * go in the footer, like the art, and nothing sits under a picture). tests/sky-credits.test.ts holds
+ * this to the pages' own code, so an image added to a page without its entry here fails the tests.
+ */
+export const SKY_PAGES: Readonly<Record<string, readonly SkyId[]>> = {
+  '/': ['keysSun', 'keysMoon', 'keysRising', 'andromeda'],
+  '/sky': ['today'],
+  '/keys': ['keysCenter'],
+  '/keys/jupiter': ['jupiter'],
+};
 
 export const skyCredit = (image: SkyImage) => (image.tinted ? `${image.credit} (tinted)` : image.credit);
 

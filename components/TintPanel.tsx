@@ -16,7 +16,7 @@ interface TintPanelProps {
   /**
    * A sky edge instead (David, Nov 4, on the landing's next step): a telescope image in a night-900
    * window on the same side, at its manifest strength scaled by the visitor's wash, never under text,
-   * with its credit as a caption at the foot of the panel. None hides the image and the credit.
+   * credited in the footer like the art (David, Nov 4). None hides the image.
    */
   sky?: keyof typeof skyFiles.images;
 }
@@ -52,7 +52,6 @@ export function TintPanel({ children, className, art, sky }: TintPanelProps) {
         </div>
         <div className="p-6 md:p-8">
           {children}
-          <p className="panel-sky-credit mt-6 type-caption text-ink-500">Image: {image.credit}</p>
         </div>
       </div>
     );

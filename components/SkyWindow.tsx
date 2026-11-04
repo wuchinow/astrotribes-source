@@ -20,8 +20,8 @@ interface SkyWindowProps {
 /**
  * One telescope image as a picture of its own (David, Nov 4: the Today's sky hero, the 28 Keys page):
  * a night-900 window, the image at its manifest strength scaled by the visitor's wash, no text on
- * it, and its credit as a caption under it. None hides the image and the credit; the window stays as
- * plain night. Every cut by scripts/ink-sky.mjs in a srcset, so a phone takes the small one and a wide screen the sharp one.
+ * it. Its credit is in the footer (David, Nov 4, like the art), so nothing sits under it. None hides
+ * the image; the window stays as plain night. Every cut by scripts/ink-sky.mjs in a srcset, so a phone takes the small one and a wide screen the sharp one.
  */
 export function SkyWindow({ sky, aspect = 'aspect-video', className, eager = false, sizes = '100vw' }: SkyWindowProps) {
   const image = skyFiles.images[sky];
@@ -44,7 +44,6 @@ export function SkyWindow({ sky, aspect = 'aspect-video', className, eager = fal
           style={{ '--sky-strength': image.strength } as CSSProperties}
         />
       </div>
-      <figcaption className="panel-sky-credit mt-3 type-caption text-ink-500">Image: {image.credit}</figcaption>
     </figure>
   );
 }

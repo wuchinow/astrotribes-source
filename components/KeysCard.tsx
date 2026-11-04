@@ -19,8 +19,8 @@ interface KeysCardProps {
  * image in a night-900 window at the top, Dawa's Sun or Moon glyph (none on Rising), the body's name,
  * and its keys with their one-line meanings. On Paper the window is its own night with a clean
  * edge; on Night it fades into the card. The image loads lazily, at its manifest strength scaled by
- * the visitor's wash; None hides it and its credit, and the window stays as plain night. No text sits
- * on the image (David, Nov 3): its credit is a caption at the foot of the card.
+ * the visitor's wash; None hides it, and the window stays as plain night. No text sits on the image
+ * (David, Nov 3), and its credit is in the footer (David, Nov 4, like the art).
  */
 export function KeysCard({ body, keys, sky }: KeysCardProps) {
   const image = SKY[sky];
@@ -53,7 +53,6 @@ export function KeysCard({ body, keys, sky }: KeysCardProps) {
             </li>
           ))}
         </ul>
-        <p className="keys-credit mt-auto pt-6 type-caption text-ink-500">Image: {skyFiles.images[sky].credit}</p>
       </div>
     </article>
   );
