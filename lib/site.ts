@@ -8,12 +8,15 @@ export interface NavLink {
 // The main nav (1h, from the Sep 27 UX audit): How it works only jumps down the landing. Keys is its
 // own page since 1k; Tribes still jumps down the landing until the Tribe pages have an index. The
 // labels name each count, and the Oracle is the Daily Oracle everywhere it shows (David, Oct 21); its
-// address stays /oracle. Today's sky came back once it was public (1d, David, Oct 27).
+// address stays /oracle. Today's sky came back once it was public (1d, David, Oct 27). Learn holds
+// Dawa's articles (David, Nov 4).
 export const PRIMARY_NAV: readonly NavLink[] = [
   { href: '/#tribes', label: '12 Tribes' },
   { href: '/keys', label: '28 Keys' },
   { href: '/oracle', label: 'Daily Oracle' },
   { href: '/sky', label: "Today's sky" },
+  // Dawa's articles, and his videos to come (David, Nov 4).
+  { href: '/learn', label: 'Learn' },
 ];
 
 /**
