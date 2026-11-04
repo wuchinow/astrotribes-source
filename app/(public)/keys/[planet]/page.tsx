@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DraftNote } from '@/components/DraftNote';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
@@ -27,13 +28,14 @@ export async function generateMetadata({ params }: PageProps<'/keys/[planet]'>):
 const linkClass = 'inline-flex min-h-touch items-center type-ui text-cobalt-600 underline-offset-4 hover:underline';
 
 /**
- * One planet's Keys in full (David, Nov 4, from Dawa's Jupiter doc): Dawa's introduction, then the
- * planet in all twelve signs under its sign key and in all twelve houses under its house key. Static
+ * One planet's Keys in full (David, Nov 4, from Dawa's Jupiter doc): Dawa's introduction (and any
+ * introduction drafted for him, under a draft note), then the planet in each sign under its sign key
+ * and in each house under its house key, wherever he has written the line. Static
  * and public like the 28 Keys page; no engine, no data. Names, glosses, signs, and houses come from
  * lib/keys.ts and Dawa's words from content/planets.ts, so a rename lands here too. The hero is the
- * words beside a telescope picture of the planet in a night window, its credit under it (David, Nov 4,
- * the Today's sky pattern), so the page carries no Jane wash; below it the page is one region on the
- * page tone.
+ * words beside a telescope picture of the planet in a night window (David, Nov 4, the Today's sky
+ * pattern; its credit is in the footer), so the page carries no Jane wash; below it the page is one
+ * region on the page tone.
  */
 export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>) {
   const planet = find((await params).planet);
@@ -41,6 +43,9 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
   const body = BODIES[planet.body];
   const signKey = keyFor(planet.body, 'sign')!;
   const houseKey = keyFor(planet.body, 'house')!;
+  // Only the signs and houses Dawa has written a line for (Pluto's run from Leo, the Sun's are to come).
+  const signs = SIGN_IDS.filter((sign) => planet.signs[sign]);
+  const houses = HOUSES.filter((house) => planet.houses[house.number]);
 
   return (
     <>
@@ -61,7 +66,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
           </div>
           <SkyWindow
             sky={planet.sky}
-            aspect="aspect-[4/5]"
+            aspect={planet.aspect}
             eager
             sizes="(width >= 64rem) 26rem, (width >= 48rem) 22rem, calc(100vw - 2rem)"
             className="max-w-[26rem]"
@@ -84,6 +89,17 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                 {paragraph}
               </p>
             ))}
+            {planet.draft.length > 0 ? (
+              <div data-planet-draft="" className="mt-6">
+                <DraftNote label={copy.draftLabel}>
+                  {planet.draft.map((paragraph) => (
+                    <p key={paragraph.slice(0, 32)} className="mt-3 first:mt-0">
+                      {paragraph}
+                    </p>
+                  ))}
+                </DraftNote>
+              </div>
+            ) : null}
           </section>
 
           <section aria-labelledby="planet-signs" className="mt-14 border-t border-ink-200 pt-10">
@@ -91,8 +107,9 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
               {copy.signsTitle(body.name)}
             </h2>
             <Lede className="mt-2">{copy.signsLede(signKey.name, body.name)}</Lede>
-            <ul role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 sm:grid-cols-2">
-              {SIGN_IDS.map((sign) => (
+            {signs.length === 0 ? <p className="mt-6 type-body-sm text-ink-700">{copy.signsComing(body.name)}</p> : null}
+            <ul role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 empty:hidden sm:grid-cols-2">
+              {signs.map((sign) => (
                 <li key={sign} data-planet-sign={sign} className="grid gap-3 border-t border-ink-200 py-5">
                   <div className="flex items-center gap-3">
                     {GLYPHS[sign].credit !== null ? <GlyphIcon glyph={sign} size={24} className="text-ink-900" /> : null}
@@ -109,8 +126,9 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
               {copy.housesTitle(body.name)}
             </h2>
             <Lede className="mt-2">{copy.housesLede(houseKey.name, body.name)}</Lede>
-            <ol role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 sm:grid-cols-2">
-              {HOUSES.map((house) => (
+            {houses.length === 0 ? <p className="mt-6 type-body-sm text-ink-700">{copy.housesComing(body.name)}</p> : null}
+            <ol role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 empty:hidden sm:grid-cols-2">
+              {houses.map((house) => (
                 <li
                   key={house.number}
                   data-planet-house={house.number}

@@ -16,7 +16,10 @@ const files = (id: SkyId) => Object.values(credits.images[id].files) as { src: s
 
 describe('the sky images', () => {
   it("ship the Oracle's ring, the three Keys cards' images, and the pictures of Nov 4, credited as released, no \"(tinted)\" since none asks", () => {
-    expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter']);
+    expect(IDS).toEqual([
+      'ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter',
+      'sun', 'moon', 'mercury', 'venus', 'mars', 'saturn', 'uranus', 'neptune', 'pluto',
+    ]);
     expect(credits.images.jupiter.credit).toBe('NASA/JPL/Space Science Institute');
     expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
     expect(credits.images.today.credit).toBe('NASA/JPL-Caltech/Space Science Institute');
@@ -36,10 +39,10 @@ describe('the sky images', () => {
     }
   });
 
-  it('carry the strength the manifest gives them (1h: the ring lifted to 0.6, the Keys cards at 0.8; the Nov 4 pictures at 0.9)', () => {
+  it('carry the strength the manifest gives them (1h: the ring lifted to 0.6, the Keys cards at 0.8; the Nov 4 pictures, the planets included, at 0.9)', () => {
     expect(credits.images.ring.strength).toBe(0.6);
     for (const id of ['keysSun', 'keysMoon', 'keysRising'] as const) expect(credits.images[id].strength).toBe(0.8);
-    for (const id of ['andromeda', 'today', 'keysCenter', 'jupiter'] as const) expect(credits.images[id].strength).toBe(0.9);
+    for (const id of IDS.slice(4)) expect(credits.images[id].strength, id).toBe(0.9);
   });
 
   it('every picture on a page is its own image: no two places share one (David, Nov 4)', () => {
@@ -66,7 +69,11 @@ describe('the sky images', () => {
       const { data } = await sharp(path.join(process.cwd(), 'public', Object.values(credits.images[id].files)[0].src)).removeAlpha().raw().toBuffer({ resolveWithObject: true });
       let chroma = 0;
       for (let i = 0; i < data.length; i += 3) chroma = Math.max(chroma, Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]));
-      expect(chroma, id).toBeGreaterThan(60);
+      // Some planets are nearly colorless in their own right, and their cuts stay that way: the Moon's
+      // photo is black and white (grey, under 30), Venus is pale cloud tops with a faint tan, and
+      // Uranus a pale blue green (both above 20).
+      if (id === 'moon') expect(chroma, id).toBeLessThan(30);
+      else expect(chroma, id).toBeGreaterThan(id === 'venus' || id === 'uranus' ? 20 : 60);
     }
   });
 

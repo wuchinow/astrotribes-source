@@ -128,7 +128,7 @@ export default async function YourChartPage() {
                 <div data-your-key={signKey.id}>
                   <p className="mb-2 type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
                   <KeyChip keyId={signKey.id} value={row.sign} showGloss />
-                  <p className="mt-3 text-ink-900">{planet.signs[row.sign]}</p>
+                  {planet.signs[row.sign] ? <p className="mt-3 text-ink-900">{planet.signs[row.sign]}</p> : null}
                 </div>
                 <div data-your-key={houseKey.id} className="border-t border-ink-200 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8">
                   {row.house ? (
@@ -137,7 +137,7 @@ export default async function YourChartPage() {
                         {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
                       </p>
                       <KeyChip keyId={houseKey.id} value={row.house} showGloss />
-                      <p className="mt-3 text-ink-900">{planet.houses[row.house]}</p>
+                      {planet.houses[row.house] ? <p className="mt-3 text-ink-900">{planet.houses[row.house]}</p> : null}
                     </>
                   ) : (
                     <>

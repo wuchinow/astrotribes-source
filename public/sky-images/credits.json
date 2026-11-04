@@ -278,6 +278,333 @@
           "bytes": 35480
         }
       }
+    },
+    "sun": {
+      "subject": "The Sun from the Solar Dynamics Observatory",
+      "credit": "NASA/GSFC/Solar Dynamics Observatory",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/image-of-sun-from-nasas-solar-dynamics-observatory/",
+      "released": "2025-09-15",
+      "source": "reference/images/space images/sun.jpg",
+      "crop": [
+        148,
+        0,
+        3800,
+        3800
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/sdo-sun/sdo-sun-640.e0b4e615.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 36368
+        },
+        "1200": {
+          "src": "/sky-images/sdo-sun/sdo-sun-1200.00149f7e.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 94456
+        }
+      }
+    },
+    "moon": {
+      "subject": "The near side of the Moon from the Lunar Reconnaissance Orbiter",
+      "credit": "NASA/GSFC/Arizona State University",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/mission/lro/",
+      "released": "2010-12",
+      "source": "reference/images/space images/moon.jpg",
+      "crop": [
+        0,
+        0,
+        1400,
+        1330
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/lroc-moon/lroc-moon-640.6a1bcc58.webp",
+          "width": 640,
+          "height": 608,
+          "bytes": 75086
+        },
+        "1040": {
+          "src": "/sky-images/lroc-moon/lroc-moon-1040.1d5f0442.webp",
+          "width": 1040,
+          "height": 988,
+          "bytes": 196858
+        }
+      }
+    },
+    "mercury": {
+      "subject": "Mercury in enhanced color from MESSENGER",
+      "credit": "NASA/Johns Hopkins University Applied Physics Laboratory/Smithsonian Institution/Carnegie Institution of Washington",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/a-global-view-of-mercurys-surface/",
+      "released": "2009-05-12",
+      "source": "reference/images/space images/mercury.jpg",
+      "crop": [
+        0,
+        0,
+        683,
+        683
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/messenger-mercury/messenger-mercury-640.71ca4168.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 47552
+        }
+      }
+    },
+    "venus": {
+      "subject": "Venus from Mariner 10",
+      "credit": "NASA/JPL-Caltech",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/venus-from-mariner-10/",
+      "released": "2020-06-08",
+      "source": "reference/images/space images/venus.jpg",
+      "crop": [
+        0,
+        0,
+        1096,
+        1096
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/mariner-venus/mariner-venus-640.d5004e6b.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 5808
+        },
+        "1040": {
+          "src": "/sky-images/mariner-venus/mariner-venus-1040.c77ef63f.webp",
+          "width": 1040,
+          "height": 1040,
+          "bytes": 11356
+        }
+      }
+    },
+    "mars": {
+      "subject": "Mars from the Viking orbiters",
+      "credit": "NASA/JPL/USGS",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/global-color-views-of-mars/",
+      "released": "1998-06-08",
+      "source": "reference/images/space images/mars.jpg",
+      "crop": [
+        0,
+        0,
+        6787,
+        6787
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/viking-mars/viking-mars-640.3c7f2edc.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 39014
+        },
+        "1200": {
+          "src": "/sky-images/viking-mars/viking-mars-1200.44abfd97.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 124218
+        }
+      }
+    },
+    "saturn": {
+      "subject": "Saturn and its rings from Cassini",
+      "credit": "NASA/JPL/Space Science Institute",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/the-greatest-saturn-portrait-yet/",
+      "released": "2005-02-24",
+      "source": "reference/images/space images/saturn.jpg",
+      "crop": [
+        472,
+        372,
+        7700,
+        3850
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/cassini-saturn/cassini-saturn-640.2203b37a.webp",
+          "width": 640,
+          "height": 320,
+          "bytes": 5640
+        },
+        "1200": {
+          "src": "/sky-images/cassini-saturn/cassini-saturn-1200.1d8e1950.webp",
+          "width": 1200,
+          "height": 600,
+          "bytes": 13752
+        }
+      }
+    },
+    "uranus": {
+      "subject": "Uranus from Voyager 2",
+      "credit": "NASA/JPL-Caltech",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/uranus-as-seen-by-nasas-voyager-2/",
+      "released": "1986-12-18",
+      "source": "reference/images/space images/uranus.jpg",
+      "crop": [
+        0,
+        0,
+        1720,
+        1720
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/voyager-uranus/voyager-uranus-640.91605faf.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 4308
+        },
+        "1200": {
+          "src": "/sky-images/voyager-uranus/voyager-uranus-1200.3ecaf33c.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 10470
+        }
+      }
+    },
+    "neptune": {
+      "subject": "Neptune from Voyager 2",
+      "credit": "NASA/JPL",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/neptune-full-disk-view/",
+      "released": "1998-10-30",
+      "source": "reference/images/space images/neptune.jpg",
+      "crop": [
+        0,
+        0,
+        2185,
+        2185
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/voyager-neptune/voyager-neptune-640.2ff4aec1.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 7288
+        },
+        "1200": {
+          "src": "/sky-images/voyager-neptune/voyager-neptune-1200.a5b838cb.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 32162
+        }
+      }
+    },
+    "pluto": {
+      "subject": "Pluto in enhanced color from New Horizons",
+      "credit": "NASA/Johns Hopkins University Applied Physics Laboratory/Southwest Research Institute",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/photojournal/the-rich-color-variations-of-pluto/",
+      "released": "2015-09-24",
+      "source": "reference/images/space images/pluto.jpg",
+      "crop": [
+        0,
+        0,
+        5000,
+        5000
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/new-horizons-pluto/new-horizons-pluto-640.83f21530.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 39352
+        },
+        "1200": {
+          "src": "/sky-images/new-horizons-pluto/new-horizons-pluto-1200.8fdcfcf7.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 140294
+        }
+      }
     }
   }
 }
