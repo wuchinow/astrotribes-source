@@ -1,19 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { CSSProperties } from 'react';
 import { Button } from '@/components/Button';
 import { KeyChip } from '@/components/KeyChip';
 import { NightBand } from '@/components/NightBand';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeBadge } from '@/components/TribeBadge';
-import { TribeCard, windowBoxStyle } from '@/components/TribeCard';
+import { TribeCard } from '@/components/TribeCard';
 import { TribePainting } from '@/components/TribePainting';
+import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
-import { FRAMED, TRIBE_CROPS } from '@/lib/art';
-import { imageSet } from '@/lib/art-assets';
 import { KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
+import { GuestOnly, PrimaryAction } from '@/components/HeaderAccount';
 import { PRIMARY_ACTION } from '@/lib/site';
 
 // The 12 Tribe pages (3a), from David's "warm community" direction (Oct 21), reworked after a UX
@@ -21,15 +20,14 @@ import { PRIMARY_ACTION } from '@/lib/site';
 // its strengths; how the keys split a Tribe; questions to bring; the element family), and what
 // arrives with members is one band, said as a promise rather than as empty placeholders. Static: no database.
 //
-// Jane's art, one piece per region: the hero is the sign's own window of P2, wider than its card's
-// (so each Tribe has its own painting), the night band carries P8, the element family's cards their
-// P2 windows, and the next step's painted edge P4. Kirstie Connon's painting of the sign stands
-// under the facts in the signature section, framed and credited (David, Nov 3, from Dawa's Oct 28
-// ask): below the facts, so it never shares the first screen with the hero's window of Jane's P2.
-// Members' gallery art comes with layer 3.
+// Art (David, Nov 4): Kirstie Connon's paintings belong to the Tribes, Jane's to the backgrounds. The
+// hero carries Kirstie's painting of the sign, framed and credited under it, the one painting in the
+// first screen; the element family's cards carry hers too, credited under the list. Jane's stay as
+// background: the night band's P8 and the next step's painted edge P4. Members' gallery art comes
+// with layer 3.
 //
-// Rhythm: the hero on surface-hero, then the page tone and the band alternating. No textures: the
-// hero's painting is a window of P2, which has no texture cut.
+// Rhythm: the hero on surface-hero, then the page tone and the band alternating. No textures:
+// Kirstie's paintings have no texture cut.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -43,15 +41,6 @@ export async function generateMetadata({ params }: PageProps<'/tribes/[sign]'>):
   if (!isSign(sign)) return {};
   const name = SIGNS[sign].name;
   return { title: copy.metaTitle(name), description: copy.description(name) };
-}
-
-/** The hero's window: a 3:2 cut of P2 around the sign's card window, kept inside the painting. */
-function heroWindow(sign: SignId): readonly [number, number, number, number] {
-  const [, , cutW, cutH] = FRAMED.p2.cuts.crop.box;
-  const [x, y, w, h] = TRIBE_CROPS[sign];
-  const [W, H] = [450, 300];
-  const clamp = (v: number, max: number) => Math.min(Math.max(v, 0), max);
-  return [clamp(x + w / 2 - W / 2, cutW - W), clamp(y + h / 2 - H / 2, cutH - H), W, H];
 }
 
 const textLink = 'inline-flex min-h-touch items-center gap-2 type-ui text-cobalt-600 underline-offset-4 hover:underline';
@@ -69,10 +58,6 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
   const next = SIGN_IDS[(index + 1) % 12];
   const family = SIGN_IDS.filter((s) => SIGNS[s].element === def.element);
   const others = family.filter((s) => s !== sign).map((s) => SIGNS[s].name);
-  const strips = {
-    '--strip-sm': imageSet('p2', 'crop', 512),
-    '--strip-lg': imageSet('p2', 'crop', 1024),
-  } as CSSProperties;
 
   return (
     <>
@@ -88,16 +73,17 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
               <TribeBadge sign={sign} element={def.element} label={`${element} · ${words.symbol}`} />
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
-              <Button href={PRIMARY_ACTION.href} size="lg">
-                {PRIMARY_ACTION.label}
-              </Button>
+              <PrimaryAction size="lg" />
+              <GuestOnly>
               <p className="type-caption text-ink-500">{copy.hero.note}</p>
+            </GuestOnly>
             </div>
           </div>
-          <div
-            aria-hidden="true"
-            className="tribe-window aspect-[3/2] w-full max-w-full rounded-md border border-ink-200 shadow-rest"
-            style={{ ...strips, ...windowBoxStyle(heroWindow(sign)) }}
+          <TribePainting
+            sign={sign}
+            sizes="(min-width: 48rem) 26rem, calc(100vw - 2rem)"
+            priority
+            className="mx-auto md:mx-0 md:justify-self-end"
           />
         </div>
       </div>
@@ -157,7 +143,16 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
                 </dd>
               </div>
             </dl>
-            <TribePainting sign={sign} sizes="(min-width: 64rem) 24rem, calc(100vw - 2rem)" />
+            <div>
+              <h3 className="type-label text-ink-500">{copy.signature.famous(name)}</h3>
+              <ul role="list" className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
+                {TRIBE_FAMOUS[sign].map((person) => (
+                  <li key={person} className="type-body-sm text-ink-900">
+                    {person}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </Section>
@@ -211,7 +206,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         <Eyebrow>{copy.family.eyebrow(element)}</Eyebrow>
         <Headline id="family-title" line={copy.family.line} accent={copy.family.accent} />
         <Lede>{copy.family.lede(name, element, others.join(copy.family.and))}</Lede>
-        <ul role="list" className="mt-8 grid max-w-[44rem] grid-cols-2 gap-3 md:gap-4" style={strips}>
+        <ul role="list" className="mt-8 grid max-w-[44rem] grid-cols-2 gap-3 md:gap-4">
           {family.filter((s) => s !== sign).map((s) => (
             <li key={s}>
               <TribeCard sign={s} />
@@ -240,7 +235,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
           </h2>
           <p className="mt-2 max-w-[56ch] text-ink-700">{copy.nextStep.body}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button href={PRIMARY_ACTION.href}>{PRIMARY_ACTION.label}</Button>
+            <PrimaryAction />
             <Button href={copy.nextStep.secondary.href} variant="secondary">
               {copy.nextStep.secondary.label}
             </Button>

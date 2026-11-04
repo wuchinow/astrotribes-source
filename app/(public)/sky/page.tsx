@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { ArtWash } from '@/components/ArtWash';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
+import { SkyWindow } from '@/components/SkyWindow';
 import { LocalWhen } from '@/components/sky/LocalWhen';
 import { MoonDisc } from '@/components/sky/MoonDisc';
 import { MoonStrip } from '@/components/sky/MoonStrip';
@@ -67,8 +67,8 @@ function changeText(change: Change) {
  * days, then where every planet is, then what changes in the next seven days. Every fact comes from
  * skyNow through lib/today-sky.ts. Public since 1d: it no longer sits behind the passcode.
  *
- * Art: Jane's P10 behind the hero for now. The inked Milky Way (design system v21) replaces it once
- * its full-page cut exists, and then the page carries no Jane wash.
+ * Art: a telescope image beside the hero's words (David, Nov 4), the Milky Way's core in a night
+ * window with its credit under it. The page carries no Jane wash.
  */
 export default function SkyPage() {
   const sky = todaySky(new Date());
@@ -76,9 +76,9 @@ export default function SkyPage() {
 
   return (
     <>
-      <ArtWash piece="p10" top>
-        <div className="mx-auto max-w-content px-4 pt-31 pb-12 md:px-6 md:pt-38 md:pb-16">
-          <div className="panel-frost max-w-[36rem] p-6 md:p-10">
+      <div className="bg-surface-hero">
+        <div className="mx-auto grid max-w-content items-center gap-10 px-4 pt-31 pb-12 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:gap-14 md:px-6 md:pt-38 md:pb-16">
+          <div className="min-w-0">
             <Eyebrow>{skyCopy.eyebrow}</Eyebrow>
             <Headline as="h1" line={skyCopy.headline.line} accent={skyCopy.headline.accent} />
             <Lede>{skyCopy.lede}</Lede>
@@ -86,8 +86,9 @@ export default function SkyPage() {
               {skyCopy.updated} <LocalWhen at={sky.at} />, {skyCopy.updatedNote}
             </p>
           </div>
+          <SkyWindow sky="today" aspect="aspect-square" eager sizes="(width >= 48rem) 26rem, calc(100vw - 2rem)" className="max-w-[26rem]" />
         </div>
-      </ArtWash>
+      </div>
 
       <div className="border-t border-ink-200">
         <div className="mx-auto grid max-w-content gap-14 px-4 py-14 md:px-6 md:py-16">

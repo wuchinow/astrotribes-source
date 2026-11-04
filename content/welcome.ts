@@ -7,8 +7,13 @@ export const welcomeCopy = {
   eyebrow: 'Welcome',
   /** The steps, shown as "Step 2 of 2". */
   step: (n: number) => `Step ${n} of 2`,
-  birthLine: 'Now, your birth.',
-  birthAccent: 'Date, time, and place.',
+  /** The name comes second (David, Nov 3), so the chart is already saved when it is asked. */
+  nameLine: 'Your chart is ready.',
+  nameAccent: 'What should we call you?',
+  nameSave: 'See my chart',
+  redraw: 'Your details are saved, but your chart was not drawn. Check them and save once more.',
+  birthLine: 'Your chart starts',
+  birthAccent: 'with your birth.',
   editEyebrow: 'Your account',
   editLine: 'Your birth details,',
   editAccent: 'to change.',
@@ -55,8 +60,18 @@ export const yourChartCopy = {
   noTime: 'You saved your chart without a birth time, so Rising and the houses wait on one.',
   next: {
     eyebrow: 'What comes next',
-    tribe: 'Meet your Tribe',
-    keys: 'About the 28 Keys',
+    line: 'Your chart is the start.',
+    accent: 'Here is where it leads.',
+    /** "Meet the Leo Tribe" */
+    tribe: (sign: string) => `Meet the ${sign} Tribe`,
+    tribeBody: 'Your Sun sign is your Tribe: the people who share it, and what you have in common.',
+    cards: [
+      { href: '/keys', title: 'The 28 Keys', body: 'Every placement in your chart has a name and a meaning. Read them all.' },
+      { href: '/oracle', title: 'The Daily Oracle', body: 'One hexagram and one card, new each day.' },
+      { href: '/sky', title: "Today's sky", body: 'Where the Sun, the Moon, and every planet are right now.' },
+    ],
+    shareTitle: 'Share your three',
+    shareBody: 'The link carries your three signs and nothing else: no date, no time, no place.',
     edit: 'Change your birth details',
     addTime: 'Add your birth time',
   },

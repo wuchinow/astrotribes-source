@@ -14,8 +14,9 @@ import { saveDisplayName } from '../account/actions';
 export const metadata: Metadata = { title: welcomeCopy.title };
 
 /**
- * The welcome steps (2c): the name (Google's is never used), then birth details, then the member's
- * own chart. It shows whichever step is still missing, so a member who leaves halfway picks up
+ * The welcome steps (2c): birth details, then the name (Google's is never used), then the member's
+ * own chart. Birth details come first since Nov 3 (David), so the name is asked once the chart is
+ * already saved. It shows whichever step is still missing, so a member who leaves halfway picks up
  * where they were; `?edit=birth` reopens the birth step from the account page. Checks the
  * session itself (invariant 5). The member's own birth details are read under RLS, for the
  * form only, on a page that is never cached.
@@ -28,24 +29,30 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
   if (!user) redirect('/sign-in');
 
   const params = await searchParams;
-  const [{ data: profile }, { data: birth }] = await Promise.all([
+  const [{ data: profile }, { data: birth }, { data: sun }] = await Promise.all([
     supabase.from('profiles').select('display_name').eq('id', user.id).maybeSingle(),
     supabase
       .from('birth_data')
       .select('birth_date, birth_time, place_label, latitude, longitude, updated_at')
       .eq('user_id', user.id)
       .maybeSingle(),
+    // Named columns only: never a degree (the Data API does not grant one).
+    supabase.from('placements').select('body').eq('user_id', user.id).eq('body', 'sun').maybeSingle(),
   ]);
   const name = profile?.display_name ?? null;
-  const edit = params.edit === 'birth' && Boolean(birth);
-  if (name && birth && !edit) redirect('/your-chart');
+  // Birth details saved but no chart rows (a save that stopped halfway): the birth step again, filled
+  // in, so one press redraws the chart. Without this, /your-chart and this page send the member to each
+  // other and the page stays blank (David, Nov 4).
+  const redraw = Boolean(birth && !sun);
+  const edit = (params.edit === 'birth' && Boolean(birth)) || redraw;
+  if (name && birth && sun && !edit) redirect('/your-chart');
 
-  if (!name) {
+  if (birth && !name && !edit) {
     const error = params.error === 'name';
     return (
       <Shell>
-        <Eyebrow>{welcomeCopy.step(1)}</Eyebrow>
-        <Headline as="h1" line={accountCopy.firstLine} accent={accountCopy.firstAccent} />
+        <Eyebrow>{welcomeCopy.step(2)}</Eyebrow>
+        <Headline as="h1" line={welcomeCopy.nameLine} accent={welcomeCopy.nameAccent} />
         <Lede>{accountCopy.nameNeeded}</Lede>
         <form action={saveDisplayName} className="mt-8 grid gap-2">
           <input type="hidden" name="next" value="welcome" />
@@ -74,7 +81,7 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
           </p>
           <div className="mt-4">
             <Button type="submit" size="lg">
-              {accountCopy.firstSave}
+              {welcomeCopy.nameSave}
             </Button>
           </div>
         </form>
@@ -92,14 +99,15 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
 
   return (
     <Shell>
-      <Eyebrow>{edit ? welcomeCopy.editEyebrow : welcomeCopy.step(2)}</Eyebrow>
+      <Eyebrow>{edit ? welcomeCopy.editEyebrow : welcomeCopy.step(1)}</Eyebrow>
       <Headline
         as="h1"
         line={edit ? welcomeCopy.editLine : welcomeCopy.birthLine}
         accent={edit ? welcomeCopy.editAccent : welcomeCopy.birthAccent}
       />
       <Lede>{welcomeCopy.lede}</Lede>
-      {edit && birth ? <WaitNote changedAt={birth.updated_at} /> : null}
+      {redraw ? <p className="mt-3 type-body-sm text-ink-700">{welcomeCopy.redraw}</p> : null}
+      {edit && birth && !redraw ? <WaitNote changedAt={birth.updated_at} /> : null}
       <BirthDetailsForm initial={initial} edit={edit} />
     </Shell>
   );

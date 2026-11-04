@@ -1,10 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, useSyncExternalStore, type ComponentProps, type ReactNode } from 'react';
+import { startGoogleSignIn } from '@/app/(public)/sign-in/actions';
 import { accountSlotCopy } from '@/content/account';
 import { accountMenuCopy } from '@/content/welcome';
 import { cn } from '@/lib/cn';
+import { MEMBER_ACTION, PRIMARY_ACTION } from '@/lib/site';
+import { Button } from './Button';
 import { browserClient } from '@/lib/supabase/browser';
 import { DISCLOSURE_EVENT } from './AppearancePanel';
 
@@ -74,6 +77,20 @@ export function GuestOnly({ children }: { children: ReactNode }) {
   return useMember().state === 'in' ? null : <>{children}</>;
 }
 
+/**
+ * The primary button everywhere (David, Nov 4): "Get your free chart" for a visitor, "See your chart"
+ * for a member, straight to it. A client island, so the public pages stay static; a member may see
+ * the visitor's words for a moment while the session is read.
+ */
+export function PrimaryAction(props: Omit<ComponentProps<typeof Button>, 'href' | 'children'>) {
+  const action = useMember().state === 'in' ? MEMBER_ACTION : PRIMARY_ACTION;
+  return (
+    <Button {...props} href={action.href}>
+      {action.label}
+    </Button>
+  );
+}
+
 const linkClass =
   'min-h-touch items-center gap-2 whitespace-nowrap font-semibold text-cobalt-600 hover:underline hover:decoration-gold-500 hover:decoration-2 hover:underline-offset-4';
 
@@ -98,14 +115,17 @@ export function HeaderAccount({
   if (show !== 'both' && slot.state !== show) return null;
 
   if (slot.state === 'out') {
+    // One click to Google (David, Nov 4): the link posts straight to the action that starts sign-in,
+    // with no stop on /sign-in. When email sign-in arrives this can open a small menu of the two.
     return (
-      <Link
-        href="/sign-in"
-        onClick={onNavigate}
-        className={cn(linkClass, place === 'header' ? 'hidden px-2 text-[1rem] lg:inline-flex' : 'flex w-full text-[1.125rem]')}
-      >
-        {accountSlotCopy.signIn}
-      </Link>
+      <form action={startGoogleSignIn} className={place === 'header' ? 'hidden lg:inline-flex' : 'flex w-full'}>
+        <button
+          type="submit"
+          className={cn(linkClass, 'cursor-pointer', place === 'header' ? 'inline-flex px-2 text-[1rem]' : 'flex w-full text-[1.125rem]')}
+        >
+          {accountSlotCopy.signIn}
+        </button>
+      </form>
     );
   }
 

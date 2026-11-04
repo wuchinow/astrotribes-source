@@ -6,14 +6,14 @@ import { Eyebrow, Headline } from '@/components/Section';
 import { accountCopy } from '@/content/account';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
-import { deleteAccount, saveDisplayName } from './actions';
+import { saveDisplayName } from './actions';
 
 export const metadata: Metadata = { title: accountCopy.title };
 
 /**
  * The account page (2b, 2c): the member's name (chosen first on the welcome steps, since Google's is
  * never used), their birth details and the way to change them, the Google email and Sign out,
- * Export my data, and Delete my account, set apart at the end. After a name is saved it offers the
+ * Export my data, and a link to delete the account (its own page), set apart at the end. After a name is saved it offers the
  * way on (the chart), so it needs no Done or Back button. It checks the
  * session itself (invariant 5). One region on the page tone, so no bands.
  */
@@ -135,37 +135,17 @@ export default async function AccountPage({ searchParams }: PageProps<'/account'
           </div>
         </section>
 
-        {/* Set apart at the end: the one step that cannot be undone. */}
+        {/* Set apart at the end, one click away (David, Nov 4): the confirm is a page of its own. */}
         <section aria-labelledby="delete-heading" className="border-t border-ink-200 pt-10">
-          <h2 id="delete-heading" className="type-heading-3 text-ink-900">
+          <h2 id="delete-heading" className="sr-only">
             {accountCopy.deleteHeading}
           </h2>
-          <p className="mt-2 type-body text-ink-700">{accountCopy.deleteBody}</p>
-          <form action={deleteAccount} className="mt-4 grid gap-2">
-            <label htmlFor="confirm" className="font-semibold text-[1rem] text-ink-900">
-              {accountCopy.deleteLabel}
-            </label>
-            <input
-              id="confirm"
-              name="confirm"
-              type="text"
-              required
-              autoComplete="off"
-              className="field-input max-w-[16rem]"
-              aria-invalid={error === 'confirm' || undefined}
-              aria-describedby={error === 'confirm' || error === 'delete' ? 'confirm-error' : undefined}
-            />
-            {error === 'confirm' || error === 'delete' ? (
-              <p id="confirm-error" role="alert" className="type-body-sm text-ember-500">
-                {error === 'confirm' ? accountCopy.deleteInvalid : accountCopy.deleteFailed}
-              </p>
-            ) : null}
-            <div className="mt-2">
-              <Button type="submit" variant="danger">
-                {accountCopy.deleteButton}
-              </Button>
-            </div>
-          </form>
+          <Link
+            href="/account/delete"
+            className="inline-flex min-h-touch items-center type-ui text-cobalt-600 underline-offset-4 hover:underline"
+          >
+            {accountCopy.deleteHeading}
+          </Link>
         </section>
       </div>
     </div>

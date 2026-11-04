@@ -2,11 +2,16 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
 import { ChartReading } from '@/components/ChartReading';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
+import { Quote } from '@/components/Quote';
+import { ShareButton } from '@/components/ShareButton';
 import { TintPanel } from '@/components/TintPanel';
+import { TribePainting } from '@/components/TribePainting';
+import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
-import { THREE } from '@/lib/free-chart';
+import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { SIGNS, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
@@ -41,6 +46,14 @@ export default async function YourChartPage() {
   const sun = byBody.get('sun');
   if (!sun) redirect('/welcome');
   const rising = byBody.get('rising') ?? null;
+  const moon = byBody.get('moon');
+  // The share link carries the three signs and nothing else (the member's own choice to send it).
+  const shared: FreeChart = {
+    timeKnown: Boolean(rising),
+    sun: { sign: sun.sign },
+    moon: { sign: (moon ?? sun).sign },
+    rising: rising ? { sign: rising.sign } : null,
+  };
 
   return (
     <>
@@ -70,27 +83,37 @@ export default async function YourChartPage() {
         </div>
       </ArtWash>
 
-      <Section band>
-        <TintPanel>
-          <Eyebrow>{yourChartCopy.next.eyebrow}</Eyebrow>
-          <ul className="flex flex-wrap gap-4">
-            <li>
-              <Button href={`/tribes/${sun.sign}`} variant="secondary">
-                {yourChartCopy.next.tribe}
-              </Button>
-            </li>
-            <li>
-              <Button href="/keys" variant="secondary">
-                {yourChartCopy.next.keys}
-              </Button>
-            </li>
-            <li>
+      <Section band labelledBy="your-chart-next">
+        <Eyebrow>{yourChartCopy.next.eyebrow}</Eyebrow>
+        <Headline id="your-chart-next" line={yourChartCopy.next.line} accent={yourChartCopy.next.accent} />
+        {/* Dawa's own words on reading a chart (from David's quotes page). */}
+        <Quote quote={quote('dawa-inner-world')} wide className="mt-6" />
+        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-12">
+          <div className="grid content-start gap-4">
+            <TribePainting sign={sun.sign} sizes="(width >= 64rem) 20rem, (width >= 40rem) 20rem, 100vw" className="max-w-[20rem]" />
+            <p className="text-ink-700">{yourChartCopy.next.tribeBody}</p>
+            <div>
+              <Button href={`/tribes/${sun.sign}`}>{yourChartCopy.next.tribe(SIGNS[sun.sign].name)}</Button>
+            </div>
+          </div>
+          <div className="grid content-start gap-4 sm:grid-cols-2">
+            {yourChartCopy.next.cards.map((card) => (
+              <Card key={card.href} href={card.href} title={card.title}>
+                {card.body}
+              </Card>
+            ))}
+            <TintPanel className="sm:col-span-2">
+              <h3 className="type-heading-3 text-ink-900">{yourChartCopy.next.shareTitle}</h3>
+              <p className="mt-2 mb-4 type-body-sm text-ink-700">{yourChartCopy.next.shareBody}</p>
+              <ShareButton path={sharePath(shared)} variant="secondary" />
+            </TintPanel>
+            <div className="sm:col-span-2">
               <Button href="/welcome?edit=birth" variant="tertiary">
                 {rising ? yourChartCopy.next.edit : yourChartCopy.next.addTime}
               </Button>
-            </li>
-          </ul>
-        </TintPanel>
+            </div>
+          </div>
+        </div>
       </Section>
     </>
   );

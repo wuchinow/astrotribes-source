@@ -2,11 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
+import { FramedArt } from '@/components/FramedArt';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { KeyRow } from '@/components/KeyRow';
 import { NightBand } from '@/components/NightBand';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
+import { SkyWindow, type SkyWindowId } from '@/components/SkyWindow';
 import { TintPanel } from '@/components/TintPanel';
 import { EXAMPLE_CHART } from '@/content/keys-example';
 import { keysPage } from '@/content/keys-page';
@@ -26,7 +28,8 @@ import {
   type BodyGroup,
   type HouseNumber,
 } from '@/lib/keys';
-import { PRIMARY_ACTION } from '@/lib/site';
+import type { FramedId } from '@/lib/art';
+import { PrimaryAction } from '@/components/HeaderAccount';
 
 export const metadata: Metadata = { title: keysPage.metaTitle, description: keysPage.description };
 
@@ -67,6 +70,27 @@ function exampleCluster() {
  * with a contents list that stays in view at desktop widths, as on the legal pages. Two framed
  * pieces below: P1 in the night band, P3 on the next step's painted edge.
  */
+/**
+ * Pictures between the groups, so the long list breaks up (David, Nov 4). Telescope images where the
+ * group is about the sky itself (the Galactic Center, which is the Milky Way's core; Journey's Crab Nebula
+ * came out on Nov 4 because it is part ESA, not public domain, until a public-domain image replaces it), credited under each; one of Jane's pieces where it is about people (the Generational
+ * family), credited in the footer like all of hers. Never two in one screen: Identity and Healing,
+ * the shortest groups, stay plain.
+ */
+const GROUP_PICTURES: Partial<Record<BodyGroup, { sky: SkyWindowId } | { art: FramedId }>> = {
+  galacticCenter: { sky: 'keysCenter' },
+};
+
+function GroupPicture({ group }: { group: BodyGroup }) {
+  const picture = GROUP_PICTURES[group];
+  if (!picture) return null;
+  return 'sky' in picture ? (
+    <SkyWindow sky={picture.sky} aspect="aspect-[5/2]" sizes="(width >= 64rem) 50rem, calc(100vw - 2rem)" className="mt-6 mb-4" />
+  ) : (
+    <FramedArt id={picture.art} sizes="(width >= 40rem) 20rem, calc(100vw - 2rem)" className="mt-6 mb-4 w-full max-w-[20rem]" />
+  );
+}
+
 export default function KeysPage() {
   const withTime = KEY_LIST.filter(needsBirthTime).length;
   const sections = [
@@ -185,6 +209,7 @@ export default function KeysPage() {
                     {group.name}
                   </h2>
                   {lede ? <p className="mt-2 max-w-measure text-ink-700">{lede}</p> : null}
+                  <GroupPicture group={group.id} />
                   <ul role="list" className="mt-2">
                     {bodiesIn(group.id).map((body) => (
                       <li key={body} className="border-t border-ink-200 first:border-t-0">
@@ -315,7 +340,7 @@ export default function KeysPage() {
               <h2 className="type-heading-2 font-normal text-ink-900">{keysPage.nextStep.title}</h2>
               <p className="mt-2 max-w-[56ch] text-ink-700">{keysPage.nextStep.body}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Button href={PRIMARY_ACTION.href}>{PRIMARY_ACTION.label}</Button>
+                <PrimaryAction />
                 <Button href={keysPage.nextStep.secondary.href} variant="secondary">
                   {keysPage.nextStep.secondary.label}
                 </Button>

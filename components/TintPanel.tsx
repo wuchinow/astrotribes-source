@@ -1,7 +1,9 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import skyFiles from '@/public/sky-images/credits.json';
 import type { FramedId } from '@/lib/art';
 import { framed, srcSets } from '@/lib/art-assets';
 import { cn } from '@/lib/cn';
+import { SKY } from '@/lib/sky';
 
 interface TintPanelProps {
   children: ReactNode;
@@ -11,10 +13,50 @@ interface TintPanelProps {
    * phone), with no text over it. No caption: Jane's credit lives in the footer (1h).
    */
   art?: FramedId;
+  /**
+   * A sky edge instead (David, Nov 4, on the landing's next step): a telescope image in a night-900
+   * window on the same side, at its manifest strength scaled by the visitor's wash, never under text,
+   * with its credit as a caption at the foot of the panel. None hides the image and the credit.
+   */
+  sky?: keyof typeof skyFiles.images;
 }
 
 /** The pale surface-200 panel that holds a page's next step. */
-export function TintPanel({ children, className, art }: TintPanelProps) {
+export function TintPanel({ children, className, art, sky }: TintPanelProps) {
+  if (sky) {
+    const image = skyFiles.images[sky];
+    const files = Object.values(image.files) as Array<{ src: string; width: number; height: number }>;
+    const file = files.reduce((a, b) => (b.width > a.width ? b : a));
+    return (
+      <div
+        className={cn(
+          'grid overflow-hidden rounded-[12px] border border-ink-200 bg-surface-200 md:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]',
+          className,
+        )}
+      >
+        <div className="panel-sky-window relative order-first h-40 md:order-last md:h-auto md:min-h-64">
+          {/* WebP cuts by scripts/ink-sky.mjs; lazy like the Keys cards' images. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={file.src}
+            srcSet={files.map((f) => `${f.src} ${f.width}w`).join(', ')}
+            sizes="(width >= 48rem) 24rem, 100vw"
+            width={file.width}
+            height={file.height}
+            alt={SKY[sky].alt}
+            loading="lazy"
+            decoding="async"
+            className="panel-sky absolute inset-0 size-full object-cover"
+            style={{ '--sky-strength': image.strength } as CSSProperties}
+          />
+        </div>
+        <div className="p-6 md:p-8">
+          {children}
+          <p className="panel-sky-credit mt-6 type-caption text-ink-500">Image: {image.credit}</p>
+        </div>
+      </div>
+    );
+  }
   if (!art) {
     return (
       <div className={cn('rounded-[12px] border border-ink-200 bg-surface-200 p-6 md:p-8', className)}>{children}</div>

@@ -37,9 +37,6 @@ export const accountCopy = {
   nameSaved: 'Saved.',
   /** After a save: the way on, so the page needs no Done or Back button. */
   nameNext: 'See your chart',
-  firstLine: 'Welcome.',
-  firstAccent: 'What should we call you?',
-  firstSave: 'Continue',
   nameInvalid: 'Use 1 to 40 characters.',
   birthHeading: 'Your birth details',
   /** Shown to the owner only, on their own account page. */
@@ -56,6 +53,9 @@ export const accountCopy = {
   exportBody: 'Download everything we hold about you as one file: your profile, your birth details, and your placements.',
   exportButton: 'Export my data',
   deleteHeading: 'Delete your account',
+  deleteLine: 'Delete your account?',
+  deleteAccent: 'This is for good.',
+  deleteCancel: 'Keep my account',
   deleteBody: 'This removes your profile, your birth details, and your placements for good. It cannot be undone.',
   deleteLabel: 'Type delete to confirm',
   deleteButton: 'Delete my account',

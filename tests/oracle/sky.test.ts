@@ -15,8 +15,10 @@ const IDS = Object.keys(SKY) as SkyId[];
 const files = (id: SkyId) => Object.values(credits.images[id].files) as { src: string; width: number }[];
 
 describe('the sky images', () => {
-  it("ship the Oracle's ring and the three Keys cards' images, credited as released, no \"(tinted)\" since none asks", () => {
-    expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising']);
+  it("ship the Oracle's ring, the three Keys cards' images, and the pictures of Nov 4, credited as released, no \"(tinted)\" since none asks", () => {
+    expect(IDS).toEqual(['ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter']);
+    expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
+    expect(credits.images.today.credit).toBe('NASA, ESA, SSC, CXC, and STScI');
     expect(credits.images.ring.credit).toBe('The Hubble Heritage Team (AURA/STScI/NASA)');
     expect(credits.images.keysMoon.credit).toBe(credits.images.ring.credit);
     expect(credits.images.keysSun.credit).toBe('NASA/JPL-Caltech/S. Stolovy (Spitzer Science Center/Caltech)');
@@ -24,14 +26,21 @@ describe('the sky images', () => {
     for (const id of IDS) {
       expect(skyCredit(SKY[id])).toBe(credits.images[id].credit);
       expect(credits.images[id].tinted, id).toBe(false);
-      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu)\//);
+      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov)\//);
+      // Public domain only (David, Nov 4): the Crab Nebula, part ESA, came out for that.
       expect(credits.images[id].license, id).toMatch(/not copyrighted/);
     }
   });
 
-  it('carry the strength the manifest gives them (1h: the ring lifted to 0.6, the Keys cards at 0.8)', () => {
+  it('carry the strength the manifest gives them (1h: the ring lifted to 0.6, the Keys cards at 0.8; the Nov 4 pictures at 0.9)', () => {
     expect(credits.images.ring.strength).toBe(0.6);
     for (const id of ['keysSun', 'keysMoon', 'keysRising'] as const) expect(credits.images[id].strength).toBe(0.8);
+    for (const id of ['andromeda', 'today', 'keysCenter'] as const) expect(credits.images[id].strength).toBe(0.9);
+  });
+
+  it('every picture on a page is its own image: no two places share one (David, Nov 4)', () => {
+    const subjects = IDS.map((id) => SKY[id].stem);
+    expect(new Set(subjects).size).toBe(subjects.length);
   });
 
   it('crop inside the source and serve WebP files under 250 KB (the Keys cards under 30 KB each)', () => {
@@ -42,7 +51,7 @@ describe('the sky images', () => {
       for (const file of files(id)) {
         expect(file.src).toMatch(new RegExp(`^/sky-images/${SKY[id].stem}/${SKY[id].stem}-\\d+\\.[0-9a-f]{8}\\.webp$`));
         const bytes = statSync(path.join(process.cwd(), 'public', file.src)).size;
-        expect(bytes, file.src).toBeLessThan(id === 'ring' ? 250_000 : 30_000);
+        expect(bytes, file.src).toBeLessThan(['keysSun', 'keysMoon', 'keysRising'].includes(id) ? 30_000 : 250_000);
       }
     }
   });
@@ -50,7 +59,7 @@ describe('the sky images', () => {
   it('are screened over night-900 (Night) in their own color, never inked to one hue', async () => {
     for (const id of IDS) {
       expect(credits.images[id].ground, id).toBe(tokens.night['night-900'].toLowerCase());
-      const { data } = await sharp(path.join(process.cwd(), 'public', credits.images[id].files['720'].src)).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+      const { data } = await sharp(path.join(process.cwd(), 'public', Object.values(credits.images[id].files)[0].src)).removeAlpha().raw().toBuffer({ resolveWithObject: true });
       let chroma = 0;
       for (let i = 0; i < data.length; i += 3) chroma = Math.max(chroma, Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]));
       expect(chroma, id).toBeGreaterThan(60);

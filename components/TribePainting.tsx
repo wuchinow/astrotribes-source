@@ -1,5 +1,5 @@
 import type { SignId } from '@/lib/keys';
-import { TRIBE_PAINTINGS, TRIBE_PAINTING_CREDIT, TRIBE_PAINTING_YEAR, tribePaintingSet } from '@/lib/tribe-paintings';
+import { TRIBE_PAINTINGS, tribePaintingSet } from '@/lib/tribe-paintings';
 import { cn } from '@/lib/cn';
 
 interface TribePaintingProps {
@@ -7,14 +7,16 @@ interface TribePaintingProps {
   /** The CSS width it renders at, for the browser's pick from the srcset. */
   sizes: string;
   className?: string;
+  /** In the first screen (a Tribe page's hero): loaded at once, not lazily. */
+  priority?: boolean;
 }
 
 /**
  * Kirstie Connon's painting for one Tribe, framed as the subject: whole, full strength, never hidden
- * by None, lazy-loaded, and credited under the image, because it is the subject (the art rule). Never
- * wider than its own pixels at 2x.
+ * by None, lazy-loaded unless it is in the first screen, never wider than its own pixels at 2x. Her
+ * credit lives in the footer only, like Jane's, not under each image (David, Nov 4).
  */
-export function TribePainting({ sign, sizes, className }: TribePaintingProps) {
+export function TribePainting({ sign, sizes, className, priority = false }: TribePaintingProps) {
   const painting = TRIBE_PAINTINGS[sign];
   const set = tribePaintingSet(sign);
   return (
@@ -27,14 +29,12 @@ export function TribePainting({ sign, sizes, className }: TribePaintingProps) {
           alt={painting.alt}
           width={set.size}
           height={set.size}
-          loading="lazy"
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
           decoding="async"
           className="block aspect-square h-auto w-full rounded-md border border-ink-200 shadow-rest"
         />
       </picture>
-      <figcaption className="mt-3 type-caption text-ink-500">
-        Painting by {TRIBE_PAINTING_CREDIT}, {TRIBE_PAINTING_YEAR}
-      </figcaption>
     </figure>
   );
 }

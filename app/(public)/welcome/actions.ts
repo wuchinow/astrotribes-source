@@ -40,19 +40,33 @@ export async function saveBirthDetails(_previous: BirthFormState, form: FormData
   if (Object.keys(choices).length > 0) return { status: 'choose', choices };
 
   // First the member's own row, which 0002 lets change once an hour: the gate on everything after.
-  const { error: birthError } = await supabase.from('birth_data').upsert(
-    {
-      user_id: userId,
-      birth_date: birth.date,
-      birth_time: birth.time,
-      time_known: birth.time !== null,
-      place_label: birth.label,
-      latitude: birth.lat,
-      longitude: birth.lon,
-      timezone: birthZone(birth.lat, birth.lon),
-    },
-    { onConflict: 'user_id' },
-  );
+  // Unchanged details are not written again, so a save that stopped before the placements can be
+  // finished at once instead of hitting the hour.
+  const row = {
+    user_id: userId,
+    birth_date: birth.date,
+    birth_time: birth.time,
+    time_known: birth.time !== null,
+    place_label: birth.label,
+    latitude: birth.lat,
+    longitude: birth.lon,
+    timezone: birthZone(birth.lat, birth.lon),
+  };
+  const { data: saved } = await supabase
+    .from('birth_data')
+    .select('birth_date, birth_time, place_label, latitude, longitude')
+    .eq('user_id', userId)
+    .maybeSingle();
+  const unchanged =
+    saved !== null &&
+    saved.birth_date === row.birth_date &&
+    (saved.birth_time?.slice(0, 5) ?? null) === (row.birth_time?.slice(0, 5) ?? null) &&
+    saved.place_label === row.place_label &&
+    Number(saved.latitude) === row.latitude &&
+    Number(saved.longitude) === row.longitude;
+  const { error: birthError } = unchanged
+    ? { error: null }
+    : await supabase.from('birth_data').upsert(row, { onConflict: 'user_id' });
   if (birthError) return fail(birthError.message === 'birth_data_too_soon' ? 'too_soon' : 'failed');
 
   // Then the placements, for the verified id. One upsert replaces every row the chart has; without
@@ -67,5 +81,6 @@ export async function saveBirthDetails(_previous: BirthFormState, form: FormData
     if (error) return fail('failed');
   }
 
-  redirect('/your-chart');
+  // The welcome steps decide what is next: the name if there is none yet, otherwise the chart.
+  redirect('/welcome');
 }

@@ -11,6 +11,16 @@ import { resetRateLimits } from '@/lib/rate-limit';
 // chart is free with an account); the welcome steps' own save is covered in tests/birth-details. The same canaries are searched
 // for in the preview deployment's runtime logs (docs/ASSESSMENT.md, 1b).
 
+// The place search is for members only (Nov 3): the session is stubbed here, signed in unless a
+// test says otherwise.
+let signedIn = true;
+vi.mock('@/lib/supabase/env', () => ({ supabaseConfigured: () => true }));
+vi.mock('@/lib/supabase/server', () => ({
+  requestClient: () => ({
+    auth: { getUser: async () => ({ data: { user: signedIn ? { id: '00000000-0000-4000-8000-000000000000' } : null } }) },
+  }),
+}));
+
 const CANARY = {
   date: '1911-11-11',
   time: '11:11',
@@ -116,6 +126,21 @@ describe('/api/place never logs or echoes the typed place', () => {
     expectNoCanary('not configured', await run(placePOST(post('/api/place', placeBody))));
     expectNoCanary('bad json', await run(placePOST(post('/api/place', `{"text":"${CANARY.place}",`))));
     expectNoCanary('no cookie', await run(placePOST(post('/api/place', placeBody, false))));
+  });
+
+  it('refuses a visitor who is not signed in, before anything reaches Geoapify', async () => {
+    const upstream = vi.fn(async () => Response.json({ results: [] }));
+    vi.stubGlobal('fetch', upstream);
+    signedIn = false;
+    try {
+      const text = await run(placePOST(post('/api/place', placeBody)));
+      expect(text).toMatch(/^401 /);
+      expect(text).toContain('"error":"signed_out"');
+      expect(upstream).not.toHaveBeenCalled();
+      expectNoCanary('signed out', text);
+    } finally {
+      signedIn = true;
+    }
   });
 });
 

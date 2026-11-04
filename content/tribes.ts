@@ -224,7 +224,7 @@ export const tribePage = {
     eyebrow: 'Your Tribe',
     line: 'Welcome home,',
     accent: (sign: string) => `${sign}.`,
-    note: 'Free, and nothing is saved.',
+    note: 'Free with an account. No payment.',
   },
 
   signature: {
@@ -240,6 +240,7 @@ export const tribePage = {
         'But keep in mind, the shadow is as valid as the Tribe’s more traditionally positive qualities. The shadow exists because of the Sun’s light. There cannot be one without the other. To fully understand a zodiac sign’s energy, you must know all aspects of each sign.',
       ],
     },
+    famous: (sign: string) => `Well-known members of the ${sign} Tribe`,
     facts: { dates: 'Sun dates', element: 'Element', mode: 'Mode', symbol: 'Symbol', ruler: 'Ruling planet' },
     traditional: (name: string) => `${name} is the traditional ruler.`,
   },
@@ -270,7 +271,7 @@ export const tribePage = {
       { title: 'Conversations', body: `Questions, wins, and advice, between people who share your Sun.` },
       { title: `Meet your fellow ${fellows.toLowerCase()}`, body: 'A directory by birthday or by the day they joined, showing only what each member shares.' },
       { title: 'The gallery', body: `Room for three pieces of art from every member, with ${article(sign)} ${sign} piece in the spotlight each month.` },
-      { title: `${sign} through the years`, body: 'Well-known members of the Tribe and their stories, oldest first.' },
+      { title: `${sign} through the years`, body: 'The stories behind the well-known members, oldest first.' },
     ],
   },
 

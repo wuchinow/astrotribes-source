@@ -7,9 +7,11 @@ import { OracleDaySync } from '@/components/oracle/OracleDaySync';
 import { HexagramSky, OracleStage } from '@/components/oracle/OracleStage';
 import { TarotCard } from '@/components/oracle/TarotCard';
 import { Eyebrow, Headline } from '@/components/Section';
+import { Quote } from '@/components/Quote';
 import { TintPanel } from '@/components/TintPanel';
+import { quoteForDay } from '@/content/quotes';
 import { oracleCopy } from '@/content/oracle/copy';
-import { TRIGRAMS, WINDOW_REACH, dateLabel, hexagram, oracleWindow, type OracleDay } from '@/lib/oracle';
+import { TRIGRAMS, WINDOW_REACH, dateLabel, dayIndex, hexagram, oracleWindow, type OracleDay } from '@/lib/oracle';
 import { oracleDayCss, oracleDayScript } from '@/lib/oracle-head';
 
 export const metadata: Metadata = { title: oracleCopy.metaTitle, description: oracleCopy.description };
@@ -43,7 +45,7 @@ function Day({ day }: { day: OracleDay }) {
       <Headline as="h1" line={oracleCopy.headline.line} accent={oracleCopy.headline.accent}/>
       <div className="oracle-pair">
         <div className="oracle-hex">
-          <HexagramSky chinese={h.chinese} />
+          <HexagramSky />
           <article aria-labelledby={headingId} className="oracle-card panel-frost">
             <HexagramFrame
               hexagram={h}
@@ -63,6 +65,11 @@ function Day({ day }: { day: OracleDay }) {
           </article>
         </div>
         <TarotCard id={day.card} headingId={`card-${day.date}`} />
+      </div>
+      {/* A thought for the day (David, Nov 4): the quotes in turn, one a day. On a panel, over the stage. */}
+      <div className="panel-frost mt-8 p-6 md:p-8">
+        <p className="mb-3 type-label text-ink-500">{oracleCopy.quote}</p>
+        <Quote quote={quoteForDay(dayIndex(day.date))} />
       </div>
     </div>
   );

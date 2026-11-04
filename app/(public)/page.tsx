@@ -11,7 +11,6 @@ import { TintPanel } from '@/components/TintPanel';
 import { TribeCard } from '@/components/TribeCard';
 import { TribeWheel } from '@/components/TribeWheel';
 import { cn } from '@/lib/cn';
-import { imageSet } from '@/lib/art-assets';
 import {
   contrast,
   hero,
@@ -23,8 +22,10 @@ import {
   tribes,
 } from '@/content/landing';
 import { SIGN_IDS, sunSeasonSign } from '@/lib/keys';
-import { PRIMARY_ACTION } from '@/lib/site';
-import type { CSSProperties } from 'react';
+import { FLAMMARION, flammarionSet } from '@/lib/flammarion';
+import { GuestOnly, PrimaryAction } from '@/components/HeaderAccount';
+import { Quote } from '@/components/Quote';
+import { quote } from '@/content/quotes';
 
 // Rebuilt daily, so the Tribes pin shows the sign of the Sun's season (1h).
 export const revalidate = 86400;
@@ -32,10 +33,10 @@ export const revalidate = 86400;
 // The landing page, in the order of the brief's MVP row and the design system's
 // Section card: one headline and at most one primary action per section.
 //
-// Jane's art, one piece per region, art and quiet sections alternating: the hero's wash (IMG_9821),
-// the Tribe cards' windows (P2), the night band's framed piece (P1), and the next step's painted edge
-// (P3); P5 sits in the footer. The Keys cards carry the sky instead: one telescope image per
-// card (1h, design system v23's card-grid exception).
+// Jane's art is the background (David, Nov 4): the hero's wash (IMG_9821) and the night band's framed
+// piece (P1); P5 sits in the footer. The Tribe cards carry Kirstie Connon's paintings, credited in the
+// footer. The Keys cards carry the sky: one telescope image per card (1h, design system v23's
+// card-grid exception), and the next step one more of its own, Andromeda beside its text (David, Nov 4).
 //
 // Rhythm (1f, design system v20): below the hero, sections alternate the page tone and the band,
 // starting on the page, and the footer ends on the band. How it works carries a texture of the
@@ -59,10 +60,10 @@ export default function HomePage() {
                 </span>
               ))}
             </Lede>
-            <Button href={PRIMARY_ACTION.href} size="lg" className="mt-8">
-              {PRIMARY_ACTION.label}
-            </Button>
-            <p className="mt-3 type-caption text-ink-500">{hero.note}</p>
+            <PrimaryAction size="lg" className="mt-8" />
+            <GuestOnly>
+              <p className="mt-3 type-caption text-ink-500">{hero.note}</p>
+            </GuestOnly>
           </div>
           {/* Bottom-aligned with the panel from md (1h). From lg the wheel of the 12 Tribes takes the
               right side (1l) and does the Tribe pin's job, so only the Oracle pin stays, under it. The column
@@ -90,13 +91,35 @@ export default function HomePage() {
       </ArtWash>
 
       <Section labelledBy="contrast-title">
-        <Eyebrow>{contrast.eyebrow}</Eyebrow>
-        <Headline
-          id="contrast-title"
-          line={contrast.line}
-          accent={contrast.accent}
-          className="max-w-[26ch]"
-        />
+        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] md:gap-14">
+          <div className="min-w-0">
+            <Eyebrow>{contrast.eyebrow}</Eyebrow>
+            <Headline
+              id="contrast-title"
+              line={contrast.line}
+              accent={contrast.accent}
+              className="max-w-[26ch]"
+            />
+            <Quote quote={quote('as-above')} size="lg" className="mt-8" />
+          </div>
+          {/* The Flammarion engraving (David, Nov 4): the section's one picture, credited under it. */}
+          <figure className="w-full" style={{ maxWidth: `${FLAMMARION.width / 2}px` }}>
+            <picture className="block">
+              <source type="image/avif" srcSet={flammarionSet.avif} sizes="(width >= 48rem) 30rem, calc(100vw - 2rem)" />
+              <source type="image/webp" srcSet={flammarionSet.webp} sizes="(width >= 48rem) 30rem, calc(100vw - 2rem)" />
+              <img
+                src={flammarionSet.fallback}
+                alt={FLAMMARION.alt}
+                width={FLAMMARION.width}
+                height={FLAMMARION.height}
+                loading="lazy"
+                decoding="async"
+                className="block h-auto w-full rounded-md border border-ink-200 shadow-rest"
+              />
+            </picture>
+            <figcaption className="mt-3 type-caption text-ink-500">{FLAMMARION.credit}</figcaption>
+          </figure>
+        </div>
       </Section>
 
       <Section id="how-it-works" labelledBy="how-it-works-title" band texture={{ piece: 'h', crop: 'a' }}>
@@ -112,15 +135,7 @@ export default function HomePage() {
         {/* Two cards a row with the text stacked under the image, then side by side from 40rem;
             three from 64rem and four from 75rem, where a card is wide enough for "Sagittarius" beside
             its badge. */}
-        <ul
-          className="mt-8 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 min-[75rem]:grid-cols-4"
-          style={
-            {
-              '--strip-sm': imageSet('p2', 'crop', 512),
-              '--strip-lg': imageSet('p2', 'crop', 1024),
-            } as CSSProperties
-          }
-        >
+        <ul className="mt-8 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 min-[75rem]:grid-cols-4">
           {SIGN_IDS.map((sign) => (
             <li key={sign}>
               <TribeCard sign={sign} />
@@ -129,7 +144,7 @@ export default function HomePage() {
         </ul>
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
           <p className="type-body text-ink-700">{tribes.closing}</p>
-          <Button href={PRIMARY_ACTION.href}>{PRIMARY_ACTION.label}</Button>
+          <PrimaryAction />
         </div>
       </Section>
 
@@ -171,14 +186,14 @@ export default function HomePage() {
       </Section>
 
       <Section labelledBy="next-step-title">
-        <TintPanel art="p3">
+        <TintPanel sky="andromeda">
           <Eyebrow>{nextStep.eyebrow}</Eyebrow>
           <h2 id="next-step-title" className="type-heading-2 font-normal text-ink-900">
             {nextStep.title}
           </h2>
           <p className="mt-2 max-w-[56ch] text-ink-700">{nextStep.body}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button href={PRIMARY_ACTION.href}>{PRIMARY_ACTION.label}</Button>
+            <PrimaryAction />
             <Button href={nextStep.secondary.href} variant="secondary">
               {nextStep.secondary.label}
             </Button>

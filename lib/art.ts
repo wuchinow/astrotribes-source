@@ -9,7 +9,6 @@
 // with its caption. None is approved to appear yet (open decision 6), so every piece is a flagged
 // placeholder on the noindex site.
 
-import type { SignId } from './keys';
 
 export type Box = readonly [x: number, y: number, width: number, height: number];
 
@@ -301,27 +300,6 @@ export const FRAMED = {
     maxCssWidth: 226,
   },
 } as const satisfies Record<string, FramedPiece>;
-
-/**
- * The 12 Tribe cards' images (1h): each a 2:1 window into P2's served cut (1024 by 493), a different
- * window per card, until Jane's sign paintings arrive. One file for all twelve, shown by
- * background-position, so the grid adds no bytes. P2 has no seal or signature; tests/art-crop.test.ts
- * still checks every window against its marks and that no two windows share more than a quarter.
- */
-export const TRIBE_CROPS = {
-  aries: [0, 300, 256, 128],
-  taurus: [220, 290, 256, 128],
-  gemini: [560, 0, 256, 128],
-  cancer: [768, 170, 256, 128],
-  leo: [290, 0, 256, 128],
-  virgo: [768, 365, 256, 128],
-  libra: [520, 200, 256, 128],
-  scorpio: [330, 140, 256, 128],
-  sagittarius: [0, 40, 256, 128],
-  capricorn: [90, 170, 256, 128],
-  aquarius: [768, 0, 256, 128],
-  pisces: [512, 365, 256, 128],
-} as const satisfies Record<SignId, Box>;
 
 export type WashId = keyof typeof WASHES;
 export type FramedId = keyof typeof FRAMED;
