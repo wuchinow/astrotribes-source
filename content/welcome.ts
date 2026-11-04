@@ -100,6 +100,8 @@ export const accountMenuCopy = {
   open: (name: string) => `${name}, account menu`,
   chart: 'Your chart',
   members: 'Members',
+  /** Only for someone on the admin list (0004). */
+  admin: 'Admin',
   account: 'Account',
   signOut: 'Sign out',
 };

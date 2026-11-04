@@ -2,9 +2,9 @@
 // write: our own, kept plain. Copy rules still apply (no exclamation marks, no em-dashes).
 
 export const adminCopy = {
-  title: 'Members',
-  eyebrow: 'Admin',
-  line: 'Members',
+  title: 'Admin',
+  eyebrow: 'Team only',
+  line: 'Admin',
   accent: 'Who has joined.',
   note: 'Only people on the admin list can open this page, and each visit is recorded. Demo accounts are flagged and left out of the numbers. Times are Eastern.',
   stats: {
