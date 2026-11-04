@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { MemberCard, glossOnce } from '@/components/MemberCard';
+import { famousCopy } from '@/content/famous';
 import { membersCopy, visibilityCopy } from '@/content/members';
 import { ownPlacements, visibleMembers } from '@/lib/members';
 import { topShared } from '@/lib/shared-keys';
@@ -47,6 +48,13 @@ export default async function MembersPage() {
         {visibility === 'private' ? `${membersCopy.privateNote} ` : null}
         <Link href="/account#visibility" className="font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4">
           {membersCopy.change}
+        </Link>
+      </p>
+
+      <p className="mt-3 max-w-[56ch] type-body-sm text-ink-700">
+        {famousCopy.membersLink}{' '}
+        <Link href="/famous" className="font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4">
+          {famousCopy.membersLinkLabel}
         </Link>
       </p>
 

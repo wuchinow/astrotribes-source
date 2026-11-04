@@ -171,8 +171,13 @@ export default async function YourChartPage() {
             </div>
           </div>
           <div className="grid content-start gap-4 sm:grid-cols-2">
-            {yourChartCopy.next.cards.map((card) => (
-              <Card key={card.href} href={card.href} title={card.title}>
+            {yourChartCopy.next.cards.map((card, i, all) => (
+              <Card
+                key={card.href}
+                href={card.href}
+                title={card.title}
+                className={all.length % 2 === 1 && i === all.length - 1 ? 'sm:col-span-2' : undefined}
+              >
                 {card.body}
               </Card>
             ))}
