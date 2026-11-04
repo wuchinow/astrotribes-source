@@ -11,12 +11,13 @@ accepted here.
 
 The licence covers the code. These are all rights reserved, and are not included or licensed here:
 
-- Jane Kwan's paintings, Dawa's glyphs, and the AstroTribes name, logo, and icons.
+- Jane Kwan's paintings, Kirstie Connon's Tribe paintings, Dawa's glyphs, and the AstroTribes name, logo,
+  and icons. The hand-colored Flammarion engraving on the home page is not included either.
 - The words of the site: the names and descriptions of the 28 Keys, and the site copy in `content/`
   and `lib/keys.ts`, which the code needs in order to run.
 
 The tarot card images are scans of the 1909 Rider-Waite-Smith deck, which is in the public domain. The
-sky images are from NASA, ESA, and partner observatories, each credited in `public/sky-images/credits.json`.
+sky images are NASA releases, not copyrighted in the United States, each credited in `public/sky-images/credits.json`.
 The I Ching text is James Legge's 1882 translation, and the tarot text is A. E. Waite's 1911
 *Pictorial Key to the Tarot*. Both are in the public domain.
 
