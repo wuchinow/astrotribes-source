@@ -6,9 +6,9 @@ import type { Visibility } from '@/lib/visibility';
 export const visibilityCopy = {
   heading: 'Who can see your chart',
   levels: {
-    private: { label: 'Only you', body: 'No other member sees your chart. Everyone starts here.' },
+    private: { label: 'Only you', body: 'No other member sees your chart.' },
     tribe: { label: 'Your Tribe', body: 'Members who share your Sun sign.' },
-    everyone: { label: 'All members', body: 'Anyone signed in to AstroTribes.' },
+    everyone: { label: 'All members', body: 'Anyone signed in to AstroTribes. Everyone starts here for now.' },
   } satisfies Record<Visibility, { label: string; body: string }>,
   what: 'Members who can see you see your name, the signs and houses in your chart, the Keys you share, and which of your placements sit within a few degrees of theirs. They never see your birth date, time, place, or degrees. Signs, houses, and close placements together can hint at when you were born, so choose what feels right.',
   save: 'Save',
@@ -29,7 +29,7 @@ export const membersCopy = {
   privateNote: "Other members can't see you here until you change it. You can still see the members who let you.",
   emptyHeading: 'No one to show yet',
   emptyBody:
-    'Members appear here once they let others see their chart. Ask a friend to choose All members on their account page.',
+    'Members appear here once they save their chart and let others see it. Ask a friend to join.',
   failed: "We couldn't load members just now. Try again in a minute.",
   demo: 'Demo',
   more: (count: number) => `and ${count} more`,
