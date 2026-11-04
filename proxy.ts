@@ -45,5 +45,6 @@ export const config = {
     '/your-chart/:path*',
     '/admin/:path*',
     '/members/:path*',
+    '/famous/:path*',
   ],
 };

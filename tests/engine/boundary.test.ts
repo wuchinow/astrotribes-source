@@ -27,7 +27,7 @@ describe('engine boundary', () => {
     expect(offenders.map((f) => path.relative(root, f))).toEqual([]);
   });
 
-  it('is imported only by the birth details save (S4), Today\'s sky (1d), and the chart wheel (3g)', () => {
+  it('is imported only by the birth details save (S4), Today\'s sky (1d), the chart wheel (3g), and famous charts (3r)', () => {
     const sources = ['app', 'components', 'content', 'lib'].flatMap((dir) => walk(path.join(root, dir)));
     const importers = sources
       .filter((file) => !file.startsWith(path.join(root, 'lib/engine')))
@@ -36,7 +36,8 @@ describe('engine boundary', () => {
     // Saving birth details (2c) and Today's sky (1d; skyNow only, no birth details). The anonymous
     // /api/chart was retired on Nov 3, when the free chart moved behind sign-in. The chart wheel
     // (3g) redraws the member's own chart from their birth details, read as the member under RLS.
-    expect(importers.sort()).toEqual(['app/(public)/welcome/actions.ts', 'lib/today-sky.ts', 'lib/your-wheel.ts']);
+    // Famous charts (3r) work out public birth records of people who have died.
+    expect(importers.sort()).toEqual(['app/(public)/welcome/actions.ts', 'lib/famous.ts', 'lib/today-sky.ts', 'lib/your-wheel.ts']);
   });
 
   it('never reaches the public share page', () => {

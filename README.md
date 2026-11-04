@@ -18,7 +18,8 @@ The licence covers the code. These are all rights reserved, and are not included
 
 The tarot card images are scans of the 1909 Rider-Waite-Smith deck, which is in the public domain. The
 sky images are NASA releases, not copyrighted in the United States, each credited in `public/sky-images/credits.json`.
-The I Ching text is James Legge's 1882 translation, and the tarot text is A. E. Waite's 1911
+The famous people's birth dates, times, and places in `content/famous-charts.ts` are public facts from published birth records,
+listed for fun; they are not offered under the licence. The I Ching text is James Legge's 1882 translation, and the tarot text is A. E. Waite's 1911
 *Pictorial Key to the Tarot*. Both are in the public domain.
 
 ## Running it

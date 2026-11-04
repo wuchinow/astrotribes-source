@@ -9,6 +9,7 @@ import { TintPanel } from '@/components/TintPanel';
 import { TribeBadge } from '@/components/TribeBadge';
 import { TribeCard } from '@/components/TribeCard';
 import { TribePainting } from '@/components/TribePainting';
+import { famousByName } from '@/content/famous-charts';
 import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
 import { KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
@@ -146,11 +147,23 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
             <div>
               <h3 className="type-label text-ink-500">{copy.signature.famous(name)}</h3>
               <ul role="list" className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-                {TRIBE_FAMOUS[sign].map((person) => (
-                  <li key={person} className="type-body-sm text-ink-900">
-                    {person}
-                  </li>
-                ))}
+                {TRIBE_FAMOUS[sign].map((person) => {
+                  const chart = famousByName(person);
+                  return (
+                    <li key={person} className="type-body-sm text-ink-900">
+                      {chart ? (
+                        <Link
+                          href={`/famous/${chart.slug}`}
+                          className="text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+                        >
+                          {person}
+                        </Link>
+                      ) : (
+                        person
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>

@@ -86,6 +86,7 @@ export const yourChartCopy = {
       { href: '/oracle', title: 'The Daily Oracle', body: 'One hexagram and one card, new each day.' },
       { href: '/sky', title: "Today's sky", body: 'Where the Sun, the Moon, and every planet are right now.' },
       { href: '/members', title: 'Members', body: 'Find the members who share your Keys.' },
+      { href: '/famous', title: 'Famous charts', body: 'See how your chart meets the charts of famous people from history.' },
     ],
     shareTitle: 'Share your three',
     shareBody: 'The link carries your three signs and nothing else: no date, no time, no place.',

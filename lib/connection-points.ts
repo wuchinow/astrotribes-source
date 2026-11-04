@@ -205,3 +205,44 @@ export function connectionPoints(
     close.reduce((sum, c) => sum + c.points, 0);
   return { total, keys, cross, bonuses, close };
 }
+
+/** Ecliptic longitudes, 0 to 360, for the placements a close match may use. */
+export type Longitudes = Partial<Record<BodyId, number>>;
+
+const PERSONAL = ['sun', 'moon', 'rising', 'mercury', 'venus', 'mars', 'jupiter', 'saturn'] as const satisfies readonly BodyId[];
+const NODES = ['northNode', 'southNode'] as const satisfies readonly BodyId[];
+const isIn = (list: readonly BodyId[], body: BodyId): boolean => list.includes(body);
+const gap = (x: number, y: number): number => {
+  const d = Math.abs(x - y) % 360;
+  return Math.min(d, 360 - d);
+};
+
+/**
+ * The same close matches as 0005's close_matches, worked out here for a chart the server already
+ * holds whole: the famous charts (3r), which are public records, against the member's own chart,
+ * which only the member reads. The rules are 0005's, one for one; tests hold them to it. Leave out
+ * a Moon with no birth time, and any placement whose sign the member picked, before calling.
+ */
+export function closeMatchesFrom(mine: Longitudes, theirs: Longitudes): CloseMatch[] {
+  const out: CloseMatch[] = [];
+  const bodies = (l: Longitudes): BodyId[] => BODY_IDS.filter((body) => typeof l[body] === 'number');
+  for (const m of bodies(mine)) {
+    for (const t of bodies(theirs)) {
+      const g = gap(mine[m]!, theirs[t]!);
+      const lights = (isIn(HOUSED_LIGHTS, m) && t === 'rising') || (m === 'rising' && isIn(HOUSED_LIGHTS, t));
+      if (lights && g <= 2) out.push({ mine: m, theirs: t, kind: 'rising' });
+      else if (isIn(PERSONAL, m) && isIn(PERSONAL, t) && g <= 3) out.push({ mine: m, theirs: t, kind: 'close' });
+      const node = (isIn(HOUSED_LIGHTS, m) && isIn(NODES, t)) || (isIn(NODES, m) && isIn(HOUSED_LIGHTS, t));
+      if (node && g <= 2) out.push({ mine: m, theirs: t, kind: 'node' });
+    }
+  }
+  const phase = (l: Longitudes): number | null =>
+    typeof l.sun === 'number' && typeof l.moon === 'number' ? gap(l.sun, l.moon) : null;
+  const a = phase(mine);
+  const b = phase(theirs);
+  if (a !== null && b !== null) {
+    if (a <= 4 && b <= 4) out.push({ mine: 'moon', theirs: 'moon', kind: 'newMoon' });
+    else if (a >= 176 && b >= 176) out.push({ mine: 'moon', theirs: 'moon', kind: 'fullMoon' });
+  }
+  return out;
+}
