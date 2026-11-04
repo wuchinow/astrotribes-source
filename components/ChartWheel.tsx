@@ -63,7 +63,10 @@ const line = (r0: number, r1: number, deg: number) => {
 };
 
 /** `header` is the page's own eyebrow and headline: on Your chart the wheel leads the page (David, Nov 4). */
-export function ChartWheel({ wheel, header }: { wheel: WheelInput; header: ReactNode }) {
+/** The words beside the wheel. Your chart's by default; a famous chart (3s) passes its own. */
+export type WheelWords = Pick<typeof chartWheelCopy, 'body' | 'houses' | 'noTime' | 'figure'>;
+
+export function ChartWheel({ wheel, header, words = chartWheelCopy }: { wheel: WheelInput; header: ReactNode; words?: WheelWords }) {
   const layout = wheelLayout(wheel);
   const timeKnown = layout.cusps.length > 0;
   const axes = new Set([1, 4, 7, 10]);
@@ -148,12 +151,12 @@ export function ChartWheel({ wheel, header }: { wheel: WheelInput; header: React
             return <Glyph key={b.body} id={b.body} x={x} y={y} size={BODY_GLYPH} className="fill-ink-900" />;
           })}
         </svg>
-        <figcaption className="sr-only">{chartWheelCopy.figure}</figcaption>
+        <figcaption className="sr-only">{words.figure}</figcaption>
       </figure>
 
       <div className="lg:col-start-2 lg:row-start-2">
-        <p className="text-ink-700">{chartWheelCopy.body}</p>
-        <p className="mt-2 type-body-sm text-ink-700">{timeKnown ? chartWheelCopy.houses : chartWheelCopy.noTime}</p>
+        <p className="text-ink-700">{words.body}</p>
+        <p className="mt-2 type-body-sm text-ink-700">{timeKnown ? words.houses : words.noTime}</p>
         <ul aria-label={chartWheelCopy.listLabel} className="mt-5 grid gap-x-4 gap-y-2 sm:grid-cols-3 sm:gap-y-3 lg:grid-cols-2">
           {layout.bodies.map((b) => (
             <li key={b.body} className="flex items-start gap-2.5 type-body-sm text-ink-700">

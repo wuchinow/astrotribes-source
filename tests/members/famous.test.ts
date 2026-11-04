@@ -6,6 +6,7 @@ import { FAMOUS_CHARTS, famousByName } from '@/content/famous-charts';
 import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { closeMatchesFrom, type Longitudes } from '@/lib/connection-points';
 import { famousChart, famousCharts, famousMatch } from '@/lib/famous';
+import { WHEEL_BODIES } from '@/lib/chart-wheel';
 import { SIGN_IDS } from '@/lib/keys';
 
 // Famous charts (3r): deceased historical figures only (invariant 8's exception, David, Sep 24),
@@ -37,6 +38,16 @@ describe('the famous charts', () => {
       expect(sun?.sign, chart.name).toBe(chart.tribe);
       expect(placements.some((row) => row.body === 'rising'), chart.name).toBe(true);
       expect(sun?.house, chart.name).not.toBeNull();
+    }
+  });
+
+  it('each draw a full wheel, with every body, a Rising, and twelve houses (3s)', () => {
+    for (const { chart, wheel, placements } of famousCharts()) {
+      expect(wheel.bodies.map((b) => b.body), chart.name).toEqual([...WHEEL_BODIES]);
+      expect(wheel.ascendant, chart.name).not.toBeNull();
+      expect(wheel.cusps, chart.name).toHaveLength(12);
+      const sun = wheel.bodies.find((b) => b.body === 'sun');
+      expect(sun?.sign, chart.name).toBe(placements.find((row) => row.body === 'sun')?.sign);
     }
   });
 

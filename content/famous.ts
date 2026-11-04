@@ -41,6 +41,14 @@ export const famousCopy = {
   notMember: (name: string) => `Just for fun: ${name} was never a member of AstroTribes.`,
   visitorPerson: (name: string) => `Get your free chart to see the Keys you share with ${name}, and your connection points.`,
   noChartPerson: (name: string) => `Add your birth details to see the Keys you share with ${name}, and your connection points.`,
+  /** Beside their chart wheel (3s). */
+  wheelHeading: (name: string) => `${name}'s sky, the moment they were born`,
+  wheel: (name: string) => ({
+    body: `Where the Sun, the Moon, and every planet stood when ${name} was born, set around the twelve signs.`,
+    houses: 'The lines inside mark the twelve houses, counted from the Rising at the left.',
+    noTime: '',
+    figure: `${name}'s chart as a wheel. The list beside it says the same in words.`,
+  }),
   threeHeading: (name: string) => `${name}'s Sun, Moon, and rising`,
   back: 'All famous charts',
   /** On the members list and Your chart. */
