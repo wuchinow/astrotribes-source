@@ -17,17 +17,19 @@ import { NavLinks } from './NavLinks';
  * system v3.2): it takes no height and sits on the top of the hero, over the art, or on plain paper
  * where a page has none. Not sticky; the footer repeats the nav. About 20px above the logo on a
  * phone and 32px on desktop (1h); each page's top padding clears it. From 1024px the logo sits a little
- * left of the content edge, its rays in the margin, with more air before the nav (David, Oct 27).
+ * left of the content edge, its rays in the margin, with more air before the nav (David, Oct 27). With
+ * Learn in the nav (Nov 4) the logo is a little smaller from 1024px to 1279px, and the links a little
+ * closer, so the primary action still fits at 1024px.
  */
 export function SiteHeader() {
   return (
     <header className="absolute inset-x-0 top-0 z-30">
       <div className="relative mx-auto flex max-w-content items-center justify-between gap-2 px-4 pt-5 pb-2 md:gap-4 md:px-6 md:pt-8">
         <Link href="/" className="inline-flex min-h-touch shrink-0 items-center lg:-ml-3 xl:-ml-8">
-          <Logo className="w-[120px] min-[24rem]:w-[164px] md:w-[280px] lg:w-[248px] xl:w-[340px]" label="AstroTribes, home" />
+          <Logo className="w-[120px] min-[24rem]:w-[164px] md:w-[280px] lg:w-[212px] xl:w-[340px]" label="AstroTribes, home" />
         </Link>
-        <nav aria-label="Main" className="hidden lg:ml-5 lg:block xl:ml-10">
-          <NavLinks tone="ink" className="flex items-center gap-4 xl:gap-6" />
+        <nav aria-label="Main" className="hidden lg:ml-3 lg:block xl:ml-10">
+          <NavLinks tone="ink" className="flex items-center gap-3 xl:gap-5" />
         </nav>
         <div className="flex items-center gap-2 lg:gap-3">
           <div className="hidden items-center lg:flex">

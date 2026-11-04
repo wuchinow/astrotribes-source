@@ -6,6 +6,7 @@ import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SkyWindow } from '@/components/SkyWindow';
+import { articleFor, learnCopy } from '@/content/articles';
 import { PLANET_PAGES, planetPageCopy as copy, type PlanetContent } from '@/content/planets';
 import { GLYPHS } from '@/lib/glyphs';
 import { BODIES, HOUSES, SIGN_IDS, keyFor } from '@/lib/keys';
@@ -46,6 +47,8 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
   // Only the signs and houses Dawa has written a line for (Pluto's run from Leo, the Sun's are to come).
   const signs = SIGN_IDS.filter((sign) => planet.signs[sign]);
   const houses = HOUSES.filter((house) => planet.houses[house.number]);
+  // Dawa's Substack article on this planet, where he has written one (Learn, David, Nov 4).
+  const article = articleFor(planet.body);
 
   return (
     <>
@@ -99,6 +102,13 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                   ))}
                 </DraftNote>
               </div>
+            ) : null}
+            {article ? (
+              <p className="mt-6">
+                <a href={article.url} data-planet-article="" className={linkClass}>
+                  {learnCopy.planetLink(body.name)}
+                </a>
+              </p>
             ) : null}
           </section>
 
