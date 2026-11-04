@@ -1,14 +1,15 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/cn';
 
 /**
- * The footer's line for the telescope images on this page (David, Nov 4: credits in the footer, like
- * the art, so nothing sits under a picture). The footer is shared by every page, so it picks the line
- * by path; the lines are worked out on the server (`skyCreditLines` in lib/sky-credits.ts) and arrive
- * as plain text. A page with no telescope image shows nothing. None hides it with the images.
+ * A footer credit line picked by path (David, Nov 4: credits in the footer, like the art, so nothing
+ * sits under a picture). The footer is shared by every page, so the lines are worked out on the server
+ * (lib/sky-credits.ts) and arrive as plain text; a page with no entry shows nothing. `sky` marks the
+ * telescope line, which None hides with the images.
  */
-export function SkyCredit({ lines }: { lines: Readonly<Record<string, string>> }) {
+export function SkyCredit({ lines, sky = true }: { lines: Readonly<Record<string, string>>; sky?: boolean }) {
   const line = lines[usePathname()];
-  return line ? <p className="panel-sky-credit mt-1 type-caption text-ink-500">{line}</p> : null;
+  return line ? <p className={cn(sky && 'panel-sky-credit', 'mt-1 type-caption text-ink-500')}>{line}</p> : null;
 }

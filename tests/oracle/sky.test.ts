@@ -25,8 +25,9 @@ describe('the sky images', () => {
     expect(credits.images.today.credit).toBe('NASA/JPL-Caltech/Space Science Institute');
     expect(credits.images.keysCenter.credit).toBe('NASA/UMass/D. Wang et al.');
     expect(credits.images.ring.credit).toBe('The Hubble Heritage Team (AURA/STScI/NASA)');
-    expect(credits.images.keysMoon.credit).toBe(credits.images.ring.credit);
-    expect(credits.images.keysSun.credit).toBe('NASA/JPL-Caltech/S. Stolovy (Spitzer Science Center/Caltech)');
+    // Nov 4 (David): the Sun and Moon cards show the Sun and the Moon, other cuts of their planet pages' photos.
+    expect(credits.images.keysSun.credit).toBe(credits.images.sun.credit);
+    expect(credits.images.keysMoon.credit).toBe(credits.images.moon.credit);
     expect(credits.images.keysRising.credit).toBe('NASA');
     for (const id of IDS) {
       expect(skyCredit(SKY[id])).toBe(credits.images[id].credit);
@@ -45,7 +46,7 @@ describe('the sky images', () => {
     for (const id of IDS.slice(4)) expect(credits.images[id].strength, id).toBe(0.9);
   });
 
-  it('every picture on a page is its own image: no two places share one (David, Nov 4)', () => {
+  it('every picture on a page is its own cut: no two places share one (David, Nov 4; the Sun and Moon cards are other crops of their pages\' photos)', () => {
     const subjects = IDS.map((id) => SKY[id].stem);
     expect(new Set(subjects).size).toBe(subjects.length);
   });
@@ -72,7 +73,7 @@ describe('the sky images', () => {
       // Some planets are nearly colorless in their own right, and their cuts stay that way: the Moon's
       // photo is black and white (grey, under 30), Venus is pale cloud tops with a faint tan, and
       // Uranus a pale blue green (both above 20).
-      if (id === 'moon') expect(chroma, id).toBeLessThan(30);
+      if (id === 'moon' || id === 'keysMoon') expect(chroma, id).toBeLessThan(30);
       else expect(chroma, id).toBeGreaterThan(id === 'venus' || id === 'uranus' ? 20 : 60);
     }
   });
