@@ -6,8 +6,11 @@
 export const VISIBILITY_LEVELS = ['private', 'tribe', 'everyone'] as const;
 export type Visibility = (typeof VISIBILITY_LEVELS)[number];
 
-/** Every profile starts private (0001's default), so nobody appears to anyone until they choose. */
-export const DEFAULT_VISIBILITY: Visibility = 'private';
+/**
+ * Every profile starts visible to all members during the team alpha (0006; 0001 started them
+ * private). Before beta a new migration sets it back to private, and this with it (U54).
+ */
+export const DEFAULT_VISIBILITY: Visibility = 'everyone';
 
 export const isVisibility = (value: unknown): value is Visibility =>
   typeof value === 'string' && (VISIBILITY_LEVELS as readonly string[]).includes(value);

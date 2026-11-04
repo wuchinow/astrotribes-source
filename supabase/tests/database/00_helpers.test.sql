@@ -21,7 +21,8 @@ declare
 begin
   insert into auth.users (id, email, raw_user_meta_data)
   values (uid, label || '-' || uid || '@example.test', meta);
-  update public.profiles set is_demo = true where id = uid;
+  -- Test users start private, as 0001 did, so each visibility test names the level it checks.
+  update public.profiles set is_demo = true, visibility = 'private' where id = uid;
   perform set_config('tests.' || label, uid::text, true);
   return uid;
 end;

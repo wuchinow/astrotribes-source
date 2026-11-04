@@ -105,8 +105,9 @@ export const privacy = {
             its time zone. Only you can read them. No other member ever sees them. From them our
             server works out your placements, the sign and house of each body in your chart, and
             keeps those too. Other members never see a degree. Signs and houses can narrow down
-            when and where someone was born, so they follow the visibility you choose, and they
-            start private.
+            when and where someone was born, so they follow the visibility you choose. For now they
+            start visible to all signed-in members, and you can make them private on your account
+            page at any time.
           </p>
           <p>
             You can change your birth details once an hour. You can download everything we hold

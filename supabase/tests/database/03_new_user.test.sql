@@ -26,8 +26,8 @@ reset role;
 select is((select count(*) from public.profiles
            where id in (tests.id('plain'), tests.id('named'), tests.id('google'), tests.id('long'), tests.id('blank'))),
   5::bigint, 'every new user has a profile');
-select is((select visibility from public.profiles where id = tests.id('plain')), 'private',
-  'a new profile is private');
+select is((select visibility from public.profiles where id = tests.id('plain')), 'everyone',
+  'a new profile is visible to all members (0006, the team alpha)');
 select is((select is_demo from public.profiles where id = tests.id('plain')), false,
   'a new profile is not a demo member');
 select is((select display_name from public.profiles where id = tests.id('plain')), null,
