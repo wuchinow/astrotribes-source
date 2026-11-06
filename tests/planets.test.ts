@@ -1,5 +1,5 @@
 // A planet's own page (Nov 4, from Dawa's Jupiter doc): every planet from the Sun to Pluto has one,
-// with an introduction (his, or one drafted for him under a draft note) and his lines for the signs
+// with an introduction (his, or one drafted for him, unmarked since Nov 6) and his lines for the signs
 // and houses he has written, in the copy rules; the page renders each under the planet's own sign key
 // and house key from lib/keys.ts; and the 28 Keys page links to it. The Galactic Center's page (Nov 6)
 // has its house key and house lines only. A line or note may run to paragraphs. This file types no key name.
@@ -25,8 +25,15 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 describe('planet pages', () => {
   it('cover the Sun to Pluto and the Galactic Center, each with an introduction and lines in the copy rules', () => {
     expect(PLANET_PAGES.map((p) => p.body)).toEqual([
-      'sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto', 'galacticCenter',
+      'sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto',
+      'northNode', 'southNode', 'chiron', 'galacticCenter',
     ]);
+    // Since Nov 6 (David) every body with Keys has all twelve lines for each of its keys: Dawa's, or
+    // drafted in his voice for him to review (content/planet-drafts.ts).
+    for (const planet of PLANET_PAGES) {
+      if (planet.body !== 'galacticCenter') expect(Object.keys(planet.signs), planet.body).toHaveLength(12);
+      expect(Object.keys(planet.houses), planet.body).toHaveLength(12);
+    }
     // Jupiter's is Dawa's alone; the rest carry a draft for him until he rewrites or approves it.
     expect(PLANET_PAGES.find((p) => p.body === 'jupiter')!.draft).toEqual([]);
     const names = [...KEY_LIST.map((k) => k.name), ...RETIRED_KEY_NAMES].filter((name) => name !== 'Tribe');
@@ -58,7 +65,7 @@ describe('planet pages', () => {
     }
   });
 
-  it('render every written sign and house under the planet’s own keys, and the draft under its note', async () => {
+  it('render every written sign and house under the planet’s own keys, and any drafted introduction', async () => {
     const page = (await import('@/app/(public)/keys/[planet]/page')).default;
     for (const planet of PLANET_PAGES) {
       const document = await render(await page({ params: Promise.resolve({ planet: planet.slug }) } as never));
@@ -92,6 +99,7 @@ describe('planet pages', () => {
     const page = (await import('@/app/(public)/keys/page')).default;
     const document = await render(createElement(page));
     const links = [...document.querySelectorAll('[data-body-more]')].map((a) => a.getAttribute('href'));
-    expect(links).toEqual(PLANET_PAGES.map(planetHref));
+    // In the page's group order (the Nodes come under Journey, after the Moon), so compared as a set.
+    expect([...links].sort()).toEqual(PLANET_PAGES.map(planetHref).sort());
   });
 });

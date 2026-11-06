@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { DraftNote } from '@/components/DraftNote';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
@@ -34,7 +33,7 @@ const linkClass = 'inline-flex min-h-touch items-center type-ui text-cobalt-600 
 
 /**
  * One planet's Keys in full (David, Nov 4, from Dawa's Jupiter doc): Dawa's introduction (and any
- * introduction drafted for him, under a draft note), then the planet in each sign under its sign key
+ * introduction drafted for him, shown the same way since Nov 6), then the planet in each sign under its sign key
  * and in each house under its house key, wherever he has written the line. Static
  * and public like the 28 Keys page; no engine, no data. Names, glosses, signs, and houses come from
  * lib/keys.ts and Dawa's words from content/planets.ts, so a rename lands here too. The hero is the
@@ -58,7 +57,13 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
   return (
     <>
       <div className="bg-surface-hero">
-        <div className="mx-auto grid max-w-content items-center gap-10 px-4 pt-31 pb-12 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] md:gap-14 md:px-6 md:pt-38 md:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
+        <div
+          className={
+            planet.sky
+              ? 'mx-auto grid max-w-content items-center gap-10 px-4 pt-31 pb-12 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] md:gap-14 md:px-6 md:pt-38 md:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]'
+              : 'mx-auto max-w-content px-4 pt-31 pb-12 md:px-6 md:pt-38 md:pb-16'
+          }
+        >
           <div className="min-w-0">
             <Eyebrow>{copy.eyebrow}</Eyebrow>
             <div className="flex items-center gap-4">
@@ -72,13 +77,15 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
               <KeyChip keyId={houseKey.id} showGloss />
             </div>
           </div>
-          <SkyWindow
-            sky={planet.sky}
-            aspect={planet.aspect}
-            eager
-            sizes="(width >= 64rem) 26rem, (width >= 48rem) 22rem, calc(100vw - 2rem)"
-            className="max-w-[26rem]"
-          />
+          {planet.sky ? (
+            <SkyWindow
+              sky={planet.sky}
+              aspect={planet.aspect ?? 'aspect-square'}
+              eager
+              sizes="(width >= 64rem) 26rem, (width >= 48rem) 22rem, calc(100vw - 2rem)"
+              className="max-w-[26rem]"
+            />
+          ) : null}
         </div>
       </div>
 
@@ -97,15 +104,14 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                 {paragraph}
               </p>
             ))}
+            {/* Drafted for Dawa (content/planets.ts); shown like his own since Nov 6 (David). */}
             {planet.draft.length > 0 ? (
-              <div data-planet-draft="" className="mt-6">
-                <DraftNote label={copy.draftLabel}>
-                  {planet.draft.map((paragraph) => (
-                    <p key={paragraph.slice(0, 32)} className="mt-3 first:mt-0">
-                      {paragraph}
-                    </p>
-                  ))}
-                </DraftNote>
+              <div data-planet-draft="">
+                {planet.draft.map((paragraph) => (
+                  <p key={paragraph.slice(0, 32)} className="mt-4 text-ink-700">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             ) : null}
             {article ? (
@@ -165,7 +171,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
             </ol>
           </section>
 
-          <p className="mt-10 type-caption text-ink-500">{planet.source}</p>
+          {planet.source ? <p className="mt-10 type-caption text-ink-500">{planet.source}</p> : null}
           <div className="mt-4 flex flex-wrap gap-x-8">
             <Link href={copy.yourChart.href} className={linkClass}>
               {copy.yourChart.label}
