@@ -15,22 +15,28 @@
 // Oct 23), where he has written them, fitted to the copy rules the same way, with a key name in his
 // text lowercased (the lint keeps key names to lib/keys.ts); and an introduction drafted in the
 // style of his Jupiter one, in `draft`, shown under a draft note until he rewrites or approves it.
-// Mars keeps his own opening paragraph as its `intro`. The Sun and Uranus have no lines from him yet.
+// Mars keeps his own opening paragraph as its `intro`.
+//
+// Nov 6 (David): everything still missing is drafted in his voice in content/planet-drafts.ts, merged
+// in below (`withDrafts`) and shown like his own words, with no draft mark on the site; the list for
+// Dawa to review is a Notion page. Chiron and the two Nodes have pages from that day, all drafts.
 
 import type { BodyId, HouseNumber, SignId } from '@/lib/keys';
 import type { SkyId } from '@/lib/sky';
+import { PLANET_DRAFTS } from './planet-drafts';
 
 export interface PlanetContent {
   body: BodyId;
   /** The path segment under /keys. A body id, never a key name. */
   slug: string;
-  /** The telescope picture beside the hero's words (lib/sky.ts), credited in the footer. */
-  sky: SkyId;
+  /** The telescope picture beside the hero's words (lib/sky.ts), credited in the footer. None for
+   * Chiron and the Nodes, which have no NASA photo of their own. */
+  sky?: SkyId;
   /** The picture's window, a Tailwind aspect class typed whole so Tailwind sees it. */
-  aspect: 'aspect-[4/5]' | 'aspect-square' | 'aspect-[2/1]';
+  aspect?: 'aspect-[4/5]' | 'aspect-square' | 'aspect-[2/1]';
   /** Dawa's introduction, one string per paragraph. */
   intro: readonly string[];
-  /** PLACEHOLDER: an introduction drafted for Dawa to rewrite or approve, shown under a draft note. */
+  /** PLACEHOLDER: an introduction drafted for Dawa to rewrite or approve, shown after his own (no mark since Nov 6). */
   draft: readonly string[];
   /** His line for the planet in each sign, where he has written one. */
   signs: Readonly<Partial<Record<SignId, string>>>;
@@ -39,7 +45,7 @@ export interface PlanetContent {
   /** His words over the signs or the houses as a whole, where he has written them (paragraphs split by a blank line). */
   signsNote?: string;
   housesNote?: string;
-  /** Where the words come from, for the foot of the page. */
+  /** Who wrote Dawa's words, for the foot of the page; empty where it is all drafted. Never says draft (David, Nov 6). */
   source: string;
   reviewed: boolean;
 }
@@ -85,7 +91,7 @@ const jupiter: PlanetContent = {
     12: 'Jupiter in the 12th brings opportunity through intuition and reflection.',
   },
   draft: [],
-  source: 'Words by Dawa',
+  source: 'The introduction and the first line for each sign and house by Dawa.',
   reviewed: false,
 };
 
@@ -129,7 +135,7 @@ const sun: PlanetContent = {
     12: 'The twelfth house is the “last” house and brings a cycle of unfolding to its conclusion. It is about integrating the experiences of incarnation, and preparation for a new beginning: spiritual rebirth. It is also where we face the challenges of letting go of past or unhealthy patterns and habits: relinquishment and surrender. The twelfth is the realm of the unconscious: the unaddressed, the unacknowledged, the subconscious mind, the realm of dreams.',
   },
   housesNote: 'If your Sun is in a house, that house is strongly emphasized as integral to your core identity. It is how you most deeply manifest your tribe’s energy. Whichever planet or point is in a house, it is expressed through that house’s meaning.',
-  source: 'Sign lines by Dawa (The twelve signs, Nov 5) and house lines by Dawa (The Houses, Nov 5). The introduction is a draft for him.',
+  source: 'Sign lines by Dawa (The twelve signs, Nov 5) and house lines by Dawa (The Houses, Nov 5).',
   reviewed: false,
 };
 
@@ -173,7 +179,7 @@ const moon: PlanetContent = {
     11: 'People with an 11th house moon have strong principles and beliefs and often lofty or idealistic goals. If your hearth is in the 11th house you probably like to surround yourself with others who share and reinforce your beliefs. You think more in terms of what the future could or should look like. You may be a bit disappointed with how things are in the present because you see the potential that is yet to come.',
     12: 'The moon in the 12th house is deep, private, and often hidden to oneself. There is a strong intuition and active subconscious life that can feel out of place in the “real world”. People with their hearth in the 12th house often have profound and very realistic dreams that may be messages from their unfinished business. There may be unwanted experiences from the past that remain unacknowledged.',
   },
-  source: 'Sign lines by Dawa (his summary paragraphs for each sign, Nov 6) and house lines by Dawa (The Moon’s 12 houses). The introduction is a draft for him.',
+  source: 'Sign lines by Dawa (his summary paragraphs for each sign, Nov 6) and house lines by Dawa (The Moon’s 12 houses).',
   reviewed: false,
 };
 
@@ -216,7 +222,7 @@ const mercury: PlanetContent = {
     11: 'Mercury’s voice in the 11th house finds one speaking for groups. There is an affinity for sharing ideas and mapping out strategies and plans for the future. Mercury in the 11th is good at thinking grandly, with interesting ideas and beliefs that may not be quite “mainstream”.',
     12: 'Mercury’s voice in the 12th house is often muted: one keeps a lot of one’s inner dialog under wraps and not spoken out loud. There is a sense of the importance of one’s privacy and protecting one’s personal inner space. Sometimes one feels isolated or separated from others. Dreams are often quite vivid and meaningful when Mercury is in this house.',
   },
-  source: 'Sign and house lines by Dawa. The introduction is a draft for him.',
+  source: 'Sign and house lines by Dawa.',
   reviewed: false,
 };
 
@@ -259,7 +265,7 @@ const venus: PlanetContent = {
     11: 'Venus in the 11th is attracted to shared hopes and dreams. This is the house of vision, and when Venus is in this house one focuses on future ideals, dreams, and beliefs. The 11th house is where we have ideals and idealism and believe they are achievable: it’s where we stand up for what is possible, not what is practical, but what could make a better, brighter future. Venus here is also attracted to finding others, partners and teammates, who share one’s beliefs and values so there can be a synergy that supports us in working to make those dreams reality.',
     12: 'Venus in the 12th house is attracted to finishing unfinished business. This is the realm of the unconscious, where unresolved issues and karma want to bubble up from wherever they are locked up. Venus in the 12th is drawn into situations of isolation or solitude, even in the midst of others. Dreams, deep meditative states, and buried karmic patterns live in the 12th and Venus can allow us to make friends with these patterns and states of mind. There is usually some sort of spiritual attraction when Venus is found in this house, or we find ourselves drawn to self-help or psychological guidance.',
   },
-  source: 'Sign and house lines by Dawa. The introduction is a draft for him.',
+  source: 'Sign and house lines by Dawa.',
   reviewed: false,
 };
 
@@ -303,7 +309,7 @@ const mars: PlanetContent = {
     11: 'Mars in the 11th house puts energy into group endeavors, especially those involved in some idealistic dream or goal. The 11th house is often interested in politics or other types of social goals and movements that have the potential to create a better future for society, the environment, and the world.',
     12: 'Mars in this house is often hidden and behind the scenes. This is a place where one’s energy is directed inward and expresses the subconscious or spiritual from a place of solitude or introspection. You might find that your impulses are sabotaged or blocked by seemingly karmic forces.',
   },
-  source: 'Sign and house lines and the first paragraph by Dawa. The rest of the introduction is a draft for him.',
+  source: 'Sign and house lines and the first paragraph of the introduction by Dawa.',
   reviewed: false,
 };
 
@@ -346,7 +352,7 @@ const saturn: PlanetContent = {
     11: 'The lesson Saturn in the 11th house teaches is cooperation and grounding.',
     12: 'The lesson Saturn in the 12th house teaches is integration.',
   },
-  source: 'Sign and house lines by Dawa. The introduction is a draft for him.',
+  source: 'The first line for each sign and house by Dawa.',
   reviewed: false,
 };
 
@@ -389,7 +395,7 @@ const uranus: PlanetContent = {
     11: 'Uranus in the 11th is the frontier where you dream the future into being.',
     12: 'Uranus in the 12th is the subconscious frontier where you follow your dreams and pursue your path.',
   },
-  source: 'Sign and house lines by Dawa (Uranus in Signs and Houses, Oct 6). The introduction is a draft for him.',
+  source: 'Sign and house lines by Dawa (Uranus in Signs and Houses, Oct 6).',
   reviewed: false,
 };
 
@@ -432,7 +438,7 @@ const neptune: PlanetContent = {
     11: 'Neptune in the 11th inspires vision.',
     12: 'Neptune in the 12th thins veils.',
   },
-  source: 'Sign and house lines by Dawa. The introduction is a draft for him.',
+  source: 'The first line for each sign and house by Dawa.',
   reviewed: false,
 };
 
@@ -471,7 +477,7 @@ const pluto: PlanetContent = {
     11: 'Pluto in the 11th: joining new groups and shared beliefs.',
     12: 'Pluto in the 12th: rebirth through processing unconscious patterns.',
   },
-  source: 'Sign lines (Leo to Pisces, the generations from 1937 on) and house lines by Dawa. The introduction is a draft for him.',
+  source: 'The first line for Leo to Pisces and for each house by Dawa.',
   reviewed: false,
 };
 
@@ -514,10 +520,42 @@ const galacticCenter: PlanetContent = {
   reviewed: false,
 };
 
-/** The planets with a page, in the order of lib/keys.ts. */
+// Chiron and the Nodes (Nov 6): every word drafted in Dawa's voice (content/planet-drafts.ts).
+const drafted = (body: BodyId, slug: string): PlanetContent => ({
+  body,
+  slug,
+  intro: [],
+  draft: PLANET_DRAFTS[body]?.intro ?? [],
+  signs: {},
+  houses: {},
+  source: '',
+  reviewed: false,
+});
+const northNode = drafted('northNode', 'north-node');
+const southNode = drafted('southNode', 'south-node');
+const chiron = drafted('chiron', 'chiron');
+
+/** Dawa's line, then the line drafted for him; or the draft alone where he has none. */
+const joined = (his: string | undefined, ours: string | undefined) => (his && ours ? `${his}\n\n${ours}` : (his ?? ours));
+
+/** A planet with its drafted lines (content/planet-drafts.ts) merged into its signs and houses. */
+function withDrafts(planet: PlanetContent): PlanetContent {
+  const drafts = PLANET_DRAFTS[planet.body];
+  if (!drafts) return planet;
+  const signs: Partial<Record<SignId, string>> = { ...planet.signs };
+  for (const [sign, line] of Object.entries(drafts.signs ?? {}) as [SignId, string][]) signs[sign] = joined(planet.signs[sign], line);
+  const houses: Partial<Record<HouseNumber, string>> = { ...planet.houses };
+  for (const [key, line] of Object.entries(drafts.houses ?? {})) {
+    const house = Number(key) as HouseNumber;
+    houses[house] = joined(planet.houses[house], line);
+  }
+  return { ...planet, signs, houses };
+}
+
+/** The planets with a page, in the order of lib/keys.ts, with their drafted lines merged in. */
 export const PLANET_PAGES: readonly PlanetContent[] = [
-  sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto, galacticCenter,
-];
+  sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto, northNode, southNode, chiron, galacticCenter,
+].map(withDrafts);
 
 export const planetPage = (body: BodyId): PlanetContent | undefined => PLANET_PAGES.find((p) => p.body === body);
 
@@ -532,11 +570,15 @@ export const paragraphs = (text: string): string[] => text.split('\n\n');
 /** A line for the chart's tap panel: its first paragraph, cut to two sentences when that runs long. */
 export const panelLine = (text: string | undefined): string | undefined => {
   if (!text) return undefined;
-  const first = paragraphs(text)[0];
-  if (first.length <= 320) return first;
-  const sentences = first.match(/[^.?]+[.?]+(?:[”’)]+)?(?:\s+|$)/g) ?? [first];
-  return sentences.slice(0, 2).join('').trim();
+  const [first, second] = paragraphs(text);
+  // A one-line key (Jupiter's, Saturn's) takes the start of the paragraph after it (Dawa, Nov 5: "very brief").
+  if (first.length < 160 && second) return `${first} ${cut(second, 2)}`;
+  return first.length <= 320 ? first : cut(first, 2);
 };
+
+/** The first sentences of a paragraph. */
+const cut = (paragraph: string, count: number) =>
+  (paragraph.match(/[^.?]+[.?]+(?:[”’)]+)?(?:\s+|$)/g) ?? [paragraph]).slice(0, count).join('').trim();
 
 // PLACEHOLDER: the planet page's own words around Dawa's. A key name arrives as an argument.
 export const planetPageCopy = {
@@ -552,8 +594,6 @@ export const planetPageCopy = {
   housesLede: (keyName: string, planet: string) =>
     `Your ${keyName} is the house ${the(planet)} was in. It needs your birth time.`,
   houseLabel: (roman: string, name: string) => `House ${roman}, ${name}`,
-  /** Over an introduction drafted for Dawa. */
-  draftLabel: 'Draft for Dawa to revise',
   /** Where Dawa has not yet written the lines for a section. */
   signsComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each sign are still to come.`,
   housesComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each house are still to come.`,

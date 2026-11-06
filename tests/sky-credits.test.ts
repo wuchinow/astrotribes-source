@@ -25,10 +25,11 @@ describe('telescope credits in the footer', () => {
     for (const [path, file] of Object.entries(PAGE_FILES)) {
       expect([...(SKY_PAGES[path] ?? [])].sort(), path).toEqual(skyIdsIn(file).sort());
     }
-    for (const planet of PLANET_PAGES) expect(SKY_PAGES[planetHref(planet)]).toEqual([planet.sky]);
-    expect(Object.keys(SKY_PAGES).sort()).toEqual(
-      [...Object.keys(PAGE_FILES), ...PLANET_PAGES.map(planetHref)].sort(),
-    );
+    // Chiron and the Nodes have no NASA photo of their own, so no picture and no credit (Nov 6).
+    const pictured = PLANET_PAGES.filter((planet) => planet.sky);
+    for (const planet of pictured) expect(SKY_PAGES[planetHref(planet)]).toEqual([planet.sky]);
+    for (const planet of PLANET_PAGES.filter((p) => !p.sky)) expect(SKY_PAGES[planetHref(planet)]).toBeUndefined();
+    expect(Object.keys(SKY_PAGES).sort()).toEqual([...Object.keys(PAGE_FILES), ...pictured.map(planetHref)].sort());
   });
 
   it('give each page one short line, NASA only, with every full credit kept in the manifest (David, Nov 4)', () => {

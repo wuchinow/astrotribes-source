@@ -83,7 +83,11 @@ describe('chart wheel words and tap panel (3t)', () => {
     });
     expect(details.jupiter?.href).toBe('/keys/jupiter');
     expect(details.jupiter?.signLine).toMatch(/Jupiter in Aries/);
-    expect(details.chiron).toBeUndefined();
+    // Since Nov 6 Chiron has lines too (drafted for Dawa), and a one-line key takes the start of the
+    // paragraph drafted after it.
+    expect(details.chiron?.href).toBe('/keys/chiron');
+    expect(details.chiron?.signLine).toMatch(/Chiron in Taurus/);
+    expect(details.jupiter?.signLine).toMatch(/enthusiasm and courage\. Jupiter here grows by doing\./);
   });
 });
 
