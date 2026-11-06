@@ -11,7 +11,8 @@ import { Quote } from '@/components/Quote';
 import { ShareButton } from '@/components/ShareButton';
 import { TintPanel } from '@/components/TintPanel';
 import { TribePainting } from '@/components/TribePainting';
-import { PLANET_PAGES, planetHref } from '@/content/planets';
+import { WelcomeGuide } from '@/components/WelcomeGuide';
+import { PLANET_PAGES, paragraphs, planetHref } from '@/content/planets';
 import { chartWheelCopy } from '@/content/chart-wheel';
 import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
@@ -119,7 +120,8 @@ export default async function YourChartPage() {
             const row = byBody.get(planet.body);
             if (!row) return null;
             const name = BODIES[planet.body].name;
-            const signKey = keyFor(planet.body, 'sign')!;
+            // The Galactic Center has a house key only (it sits at the same degree for everyone).
+            const signKey = keyFor(planet.body, 'sign');
             const houseKey = keyFor(planet.body, 'house')!;
             return (
               <div
@@ -127,19 +129,24 @@ export default async function YourChartPage() {
                 data-your-planet={planet.body}
                 className="grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-2 md:gap-8 md:p-8"
               >
-                <div data-your-key={signKey.id}>
-                  <p className="mb-2 type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
-                  <KeyChip keyId={signKey.id} value={row.sign} showGloss />
-                  {planet.signs[row.sign] ? <p className="mt-3 text-ink-900">{planet.signs[row.sign]}</p> : null}
-                </div>
-                <div data-your-key={houseKey.id} className="border-t border-ink-200 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8">
+                {signKey ? (
+                  <div data-your-key={signKey.id}>
+                    <p className="mb-2 type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
+                    <KeyChip keyId={signKey.id} value={row.sign} showGloss />
+                    <Lines text={planet.signs[row.sign]} />
+                  </div>
+                ) : null}
+                <div
+                  data-your-key={houseKey.id}
+                  className={signKey ? 'border-t border-ink-200 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8' : 'md:col-span-2'}
+                >
                   {row.house ? (
                     <>
                       <p className="mb-2 type-label text-ink-500">
                         {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
                       </p>
                       <KeyChip keyId={houseKey.id} value={row.house} showGloss />
-                      {planet.houses[row.house] ? <p className="mt-3 text-ink-900">{planet.houses[row.house]}</p> : null}
+                      <Lines text={planet.houses[row.house]} />
                     </>
                   ) : (
                     <>
@@ -188,14 +195,30 @@ export default async function YourChartPage() {
               <p className="mt-2 mb-4 type-body-sm text-ink-700">{yourChartCopy.next.shareBody}</p>
               <ShareButton path={sharePath(shared)} variant="secondary" />
             </TintPanel>
-            <div className="sm:col-span-2">
+            <div className="flex flex-wrap gap-x-4 gap-y-2 sm:col-span-2">
               <Button href="/welcome?edit=birth" variant="tertiary">
                 {rising ? yourChartCopy.next.edit : yourChartCopy.next.addTime}
               </Button>
+              {/* The first-visit guide (David, Nov 4): opens itself once, and this button opens it again. */}
+              <WelcomeGuide />
             </div>
           </div>
         </div>
       </Section>
+    </>
+  );
+}
+
+/** Dawa's line for this member's placement, a paragraph at a time, where he has written one. */
+function Lines({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <>
+      {paragraphs(text).map((paragraph) => (
+        <p key={paragraph.slice(0, 32)} className="mt-3 text-ink-900">
+          {paragraph}
+        </p>
+      ))}
     </>
   );
 }

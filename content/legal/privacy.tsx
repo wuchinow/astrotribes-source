@@ -61,6 +61,13 @@ export const privacy = {
               you.
             </li>
             <li>
+              <strong>One note in your browser, once you sign in.</strong> A note called{' '}
+              <code className="type-data-sm">at-welcome-seen</code>, kept in your browser&apos;s
+              local storage, remembers that you have seen the welcome guide on your chart, so it does
+              not open again. It holds only the number 1, never leaves your browser, and says nothing
+              about you.
+            </li>
+            <li>
               <strong>Our host&apos;s request logs.</strong> Vercel, which hosts the site, keeps
               short logs of each request, including your IP address and the page you asked for, to
               run the site and protect it from abuse. Your birth details travel in the body of the

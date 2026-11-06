@@ -605,6 +605,11 @@
     }
   }
 
+  /* The welcome guide on Your chart: the Oracle's modal, narrower, for a few lines a step. */
+  .welcome-modal {
+    width: min(34rem, calc(100% - 2rem));
+  }
+
   html:has(.oracle-modal[open]) {
     overflow: hidden;
   }
