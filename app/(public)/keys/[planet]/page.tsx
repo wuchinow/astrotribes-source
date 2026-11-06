@@ -7,7 +7,7 @@ import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SkyWindow } from '@/components/SkyWindow';
 import { articleFor, learnCopy } from '@/content/articles';
-import { PLANET_PAGES, planetPageCopy as copy, type PlanetContent } from '@/content/planets';
+import { PLANET_PAGES, paragraphs, planetPageCopy as copy, type PlanetContent } from '@/content/planets';
 import { GLYPHS } from '@/lib/glyphs';
 import { BODIES, HOUSES, SIGN_IDS, keyFor } from '@/lib/keys';
 
@@ -36,13 +36,14 @@ const linkClass = 'inline-flex min-h-touch items-center type-ui text-cobalt-600 
  * lib/keys.ts and Dawa's words from content/planets.ts, so a rename lands here too. The hero is the
  * words beside a telescope picture of the planet in a night window (David, Nov 4, the Today's sky
  * pattern; its credit is in the footer), so the page carries no Jane wash; below it the page is one
- * region on the page tone.
+ * region on the page tone. The Galactic Center sits at the same degree for everyone, so its page has
+ * a house key and house lines only (3x, Nov 6). A line or note can run to several paragraphs.
  */
 export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>) {
   const planet = find((await params).planet);
   if (!planet) notFound();
   const body = BODIES[planet.body];
-  const signKey = keyFor(planet.body, 'sign')!;
+  const signKey = keyFor(planet.body, 'sign');
   const houseKey = keyFor(planet.body, 'house')!;
   // Only the signs and houses Dawa has written a line for (Pluto's run from Leo, the Sun's are to come).
   const signs = SIGN_IDS.filter((sign) => planet.signs[sign]);
@@ -63,7 +64,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
               <Headline as="h1" line={`${body.name},`} accent={body.line.charAt(0).toLowerCase() + body.line.slice(1)} className="mb-0" />
             </div>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              <KeyChip keyId={signKey.id} showGloss />
+              {signKey ? <KeyChip keyId={signKey.id} showGloss /> : null}
               <KeyChip keyId={houseKey.id} showGloss />
             </div>
           </div>
@@ -112,30 +113,34 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
             ) : null}
           </section>
 
-          <section aria-labelledby="planet-signs" className="mt-14 border-t border-ink-200 pt-10">
-            <h2 id="planet-signs" className="type-heading-2 text-ink-900">
-              {copy.signsTitle(body.name)}
-            </h2>
-            <Lede className="mt-2">{copy.signsLede(signKey.name, body.name)}</Lede>
-            {signs.length === 0 ? <p className="mt-6 type-body-sm text-ink-700">{copy.signsComing(body.name)}</p> : null}
-            <ul role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 empty:hidden sm:grid-cols-2">
-              {signs.map((sign) => (
-                <li key={sign} data-planet-sign={sign} className="grid gap-3 border-t border-ink-200 py-5">
-                  <div className="flex items-center gap-3">
-                    {GLYPHS[sign].credit !== null ? <GlyphIcon glyph={sign} size={24} className="text-ink-900" /> : null}
-                    <KeyChip keyId={signKey.id} value={sign} />
-                  </div>
-                  <p className="type-body-sm text-ink-700">{planet.signs[sign]}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {signKey ? (
+            <section aria-labelledby="planet-signs" className="mt-14 border-t border-ink-200 pt-10">
+              <h2 id="planet-signs" className="type-heading-2 text-ink-900">
+                {copy.signsTitle(body.name)}
+              </h2>
+              <Lede className="mt-2">{copy.signsLede(signKey.name, body.name)}</Lede>
+              <Note text={planet.signsNote} />
+              {signs.length === 0 ? <p className="mt-6 type-body-sm text-ink-700">{copy.signsComing(body.name)}</p> : null}
+              <ul role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 empty:hidden sm:grid-cols-2">
+                {signs.map((sign) => (
+                  <li key={sign} data-planet-sign={sign} className="grid gap-3 border-t border-ink-200 py-5">
+                    <div className="flex items-center gap-3">
+                      {GLYPHS[sign].credit !== null ? <GlyphIcon glyph={sign} size={24} className="text-ink-900" /> : null}
+                      <KeyChip keyId={signKey.id} value={sign} />
+                    </div>
+                    <Lines text={planet.signs[sign]!} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <section aria-labelledby="planet-houses" className="mt-14 border-t border-ink-200 pt-10">
             <h2 id="planet-houses" className="type-heading-2 text-ink-900">
               {copy.housesTitle(body.name)}
             </h2>
             <Lede className="mt-2">{copy.housesLede(houseKey.name, body.name)}</Lede>
+            <Note text={planet.housesNote} />
             {houses.length === 0 ? <p className="mt-6 type-body-sm text-ink-700">{copy.housesComing(body.name)}</p> : null}
             <ol role="list" className="mt-6 grid gap-x-8 border-b border-ink-200 empty:hidden sm:grid-cols-2">
               {houses.map((house) => (
@@ -149,7 +154,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                   </span>
                   <div className="grid gap-2">
                     <p className="type-label text-ink-500">{copy.houseLabel(house.roman, house.name)}</p>
-                    <p className="type-body-sm text-ink-700">{planet.houses[house.number]}</p>
+                    <Lines text={planet.houses[house.number]!} />
                   </div>
                 </li>
               ))}
@@ -168,5 +173,32 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
         </div>
       </div>
     </>
+  );
+}
+
+/** Dawa's note on a whole section (the Moon's signs, the Sun's houses), a paragraph at a time. */
+function Note({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <div data-planet-note="" className="mt-4 max-w-measure">
+      {paragraphs(text).map((paragraph) => (
+        <p key={paragraph.slice(0, 32)} className="mt-3 text-ink-700 first:mt-0">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+/** One sign's or house's line, a paragraph at a time. */
+function Lines({ text }: { text: string }) {
+  return (
+    <div className="grid gap-2">
+      {paragraphs(text).map((paragraph) => (
+        <p key={paragraph.slice(0, 32)} className="type-body-sm text-ink-700">
+          {paragraph}
+        </p>
+      ))}
+    </div>
   );
 }

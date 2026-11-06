@@ -19,7 +19,10 @@ describe('the sky images', () => {
     expect(IDS).toEqual([
       'ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter',
       'sun', 'moon', 'mercury', 'venus', 'mars', 'saturn', 'uranus', 'neptune', 'pluto',
+      'galacticCenter',
     ]);
+    // Nov 6: the Galactic Center's page has its own square cut of the 28 Keys card's Chandra mosaic.
+    expect(credits.images.galacticCenter.credit).toBe(credits.images.keysCenter.credit);
     expect(credits.images.jupiter.credit).toBe('NASA/JPL/Space Science Institute');
     expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
     expect(credits.images.today.credit).toBe('NASA/JPL-Caltech/Space Science Institute');

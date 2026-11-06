@@ -69,7 +69,7 @@ export const yourChartCopy = {
     lede: 'Each planet in your chart gives you two Keys: one from its sign and one from its house.',
     /** "Jupiter in Leo" */
     inSign: (planet: string, sign: string) => `${planet} in ${sign}`,
-    /** "Jupiter in house X, Achievement" */
+    /** "Jupiter in house X, Accomplishment" */
     inHouse: (planet: string, roman: string, name: string) => `${planet} in house ${roman}, ${name}`,
     noTime: (keyName: string) => `Your ${keyName} needs your birth time. Add it and it appears here.`,
     more: (planet: string) => `All of ${planet}'s Keys`,
@@ -105,4 +105,66 @@ export const accountMenuCopy = {
   admin: 'Admin',
   account: 'Account',
   signOut: 'Sign out',
+};
+
+// PLACEHOLDER: the first-visit welcome guide on Your chart (David, Nov 4: "the welcome you propose
+// sounds good"). Four short steps, shown once, skippable. Our words in Dawa's register until his copy
+// replaces them. No key name is typed here.
+export const welcomeGuideCopy = {
+  /** The dialog's name for screen readers. */
+  label: 'Welcome to AstroTribes',
+  /** "Welcome, 1 of 4" */
+  eyebrow: (n: number, total: number) => `Welcome, ${n} of ${total}`,
+  steps: [
+    {
+      id: 'birth',
+      line: 'Your chart starts',
+      accent: 'with your birth.',
+      body: [
+        'Your birth date, time, and place draw everything you see here. Only you ever see them.',
+        'To fix a detail or add a birth time later, open Account in the menu at the top of any page.',
+      ],
+      links: [],
+    },
+    {
+      id: 'chart',
+      line: 'Your chart',
+      accent: 'and your Tribe.',
+      body: [
+        'The wheel on this page is the sky at the moment you were born. Tap any planet to see its two Keys, one from its sign and one from its house, and what they say about you.',
+        'Your Sun sign is your Tribe. Further down the page you can meet the people who share it.',
+      ],
+      links: [],
+    },
+    {
+      id: 'members',
+      line: 'Find',
+      accent: 'your people.',
+      body: [
+        'Members shows the people who share Keys with you, the closest connections first.',
+        'For now every member can see every other member. You choose who sees your chart in Account. No one ever sees your birth date, time, or place.',
+      ],
+      links: [{ href: '/members', label: 'See members' }],
+    },
+    {
+      id: 'more',
+      line: 'Go further',
+      accent: 'when you like.',
+      body: [
+        'Famous charts sets your chart beside well-known people from history, and shows what you share.',
+        'Learn holds Dawa’s articles on the planets, one at a time, in fresh words for today.',
+      ],
+      links: [
+        { href: '/famous', label: 'Famous charts' },
+        { href: '/learn', label: 'Learn' },
+      ],
+    },
+  ],
+  skip: 'Skip',
+  back: 'Back',
+  next: 'Next',
+  done: 'Done',
+  close: 'Close',
+  /** On Your chart, to open the guide again. */
+  again: 'Take the welcome tour again',
 };

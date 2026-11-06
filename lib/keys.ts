@@ -76,7 +76,8 @@ export const KEYS = {
   },
   sunHouse: {
     id: 'sunHouse',
-    name: 'Kingdom',
+    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
+    name: 'Realm',
     body: 'sun',
     dimension: 'house',
     gloss:
@@ -131,8 +132,8 @@ export const KEYS = {
   },
   venusSign: {
     id: 'venusSign',
-    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
-    name: 'Muse',
+    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
+    name: 'Goddess',
     body: 'venus',
     dimension: 'sign',
     gloss: "Venus' sign; what you harmonize with",
@@ -141,7 +142,8 @@ export const KEYS = {
   },
   venusHouse: {
     id: 'venusHouse',
-    name: 'Attraction',
+    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
+    name: 'Temple',
     body: 'venus',
     dimension: 'house',
     gloss: "Venus' house; where you are drawn to seek love, beauty, and pleasure",
@@ -188,12 +190,13 @@ export const KEYS = {
   },
   saturnSign: {
     id: 'saturnSign',
-    name: 'Challenge',
+    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
+    name: 'Test',
     body: 'saturn',
     dimension: 'sign',
     gloss: "Saturn's sign; how you learn and grow",
     core: false,
-    settled: true,
+    settled: false,
   },
   saturnHouse: {
     id: 'saturnHouse',
@@ -235,8 +238,8 @@ export const KEYS = {
   },
   neptuneHouse: {
     id: 'neptuneHouse',
-    // Dawa's "AstroTribes' 28 Keys" doc, "Updated October 31, 2026" (David, Nov 4: make the call for now).
-    name: 'Enchantment',
+    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
+    name: 'Channel',
     body: 'neptune',
     dimension: 'house',
     gloss: "Neptune's house; where you experience wonder, spiritual longing, and the interplay of inspiration and illusion",
@@ -351,7 +354,6 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   'Oasis',
   'Classroom',
   'Jolt',
-  'Channel',
   'Pyre',
   'Magnet',
   // The Sept 18 names changed on Sep 28 and still replaced after the Sep 29 edit.
@@ -374,6 +376,13 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   'Alchemy',
   'Scar',
   'Alignment',
+  // Replaced by Dawa's Keys and Houses doc (Nov 5; David, Nov 6: go with the newest). Channel came back
+  // from the pre-Sept 18 list as Neptune's house key.
+  'Kingdom',
+  'Muse',
+  'Attraction',
+  'Challenge',
+  'Enchantment',
 ];
 
 /** Keys that need a birth time: every house key, and Vibe (the rising sign). */
@@ -516,16 +525,16 @@ export interface HouseDef {
 export const HOUSES: readonly HouseDef[] = [
   { number: 1, roman: 'I', name: 'Identity', question: 'Who am I?', line: 'How you show up in the world' },
   { number: 2, roman: 'II', name: 'Resources', question: 'What supports me?', line: 'What you value and rely on' },
-  { number: 3, roman: 'III', name: 'Engagement', question: 'How do I connect?', line: 'How you engage with your world' },
+  { number: 3, roman: 'III', name: 'Awareness', question: 'How do I connect?', line: 'How you engage with your world' },
   { number: 4, roman: 'IV', name: 'Roots', question: 'Where do I come from?', line: 'Where you find your foundation' },
   { number: 5, roman: 'V', name: 'Creativity', question: 'What can I bring forth?', line: 'How you express your unique gifts' },
   { number: 6, roman: 'VI', name: 'Service', question: 'How can I contribute?', line: 'How you contribute through training' },
   { number: 7, roman: 'VII', name: 'Partnership', question: 'Where is my synergy?', line: 'How you grow through relationship' },
   { number: 8, roman: 'VIII', name: 'Intrigue', question: 'What lies beneath the surface?', line: 'What draws you deep' },
   { number: 9, roman: 'IX', name: 'Exploration', question: 'How do I discover more?', line: 'How you expand your horizons' },
-  { number: 10, roman: 'X', name: 'Achievement', question: 'What can I accomplish?', line: 'Your accomplishments in the world' },
-  { number: 11, roman: 'XI', name: 'Possibility', question: 'What future do I envision?', line: 'Shared hopes and dreams' },
-  { number: 12, roman: 'XII', name: 'Integration', question: 'How do I become whole?', line: 'Finding wholeness' },
+  { number: 10, roman: 'X', name: 'Accomplishment', question: 'What can I accomplish?', line: 'Your accomplishments in the world' },
+  { number: 11, roman: 'XI', name: 'Aspiration', question: 'What future do I envision?', line: 'Shared hopes and dreams' },
+  { number: 12, roman: 'XII', name: 'Completeness', question: 'How do I become whole?', line: 'Finding wholeness' },
 ];
 
 export const houseOf = (number: HouseNumber): HouseDef => HOUSES[number - 1];

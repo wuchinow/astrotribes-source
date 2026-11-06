@@ -605,6 +605,43 @@
           "bytes": 140294
         }
       }
+    },
+    "galacticCenter": {
+      "subject": "The heart of the Milky Way in X-rays, from Chandra",
+      "credit": "NASA/UMass/D. Wang et al.",
+      "tinted": false,
+      "license": "NASA release; not copyrighted in the United States",
+      "release": "https://science.nasa.gov/resource/chandra-x-ray-mosaic-of-galactic-center",
+      "released": "2002-01-10",
+      "source": "reference/images/space images/keys-galactic-center.jpg",
+      "crop": [
+        1060,
+        190,
+        720,
+        720
+      ],
+      "levels": {
+        "black": 6,
+        "white": 255,
+        "gamma": 1
+      },
+      "median": null,
+      "strength": 0.9,
+      "ground": "#060b15",
+      "files": {
+        "640": {
+          "src": "/sky-images/chandra-galactic-heart/chandra-galactic-heart-640.36c18811.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 15108
+        },
+        "720": {
+          "src": "/sky-images/chandra-galactic-heart/chandra-galactic-heart-720.af77f699.webp",
+          "width": 720,
+          "height": 720,
+          "bytes": 17452
+        }
+      }
     }
   }
 }

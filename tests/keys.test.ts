@@ -101,7 +101,7 @@ describe('the 28 Keys', () => {
     }
   });
 
-  it("leaves unsettled only the keys whose names differ from Dawa's Sept 18 list (David, Sep 30), less the two Dawa confirmed for Jupiter (Nov 3), with his Oct 31 doc (Nov 4)", () => {
+  it("leaves unsettled only the keys whose names differ from Dawa's Sept 18 list (David, Sep 30), less the two Dawa confirmed for Jupiter (Nov 3), with his Oct 31 doc (Nov 4) and his Keys and Houses doc (Nov 6)", () => {
     // Ids, not names: this file types no key name. The Sept 18 list is the 0a commit of lib/keys.ts.
     // Chiron's house is back on its Sept 18 name since the Oct 31 doc, so it is settled by the rule.
     const changedSinceSept18 = [
@@ -111,6 +111,7 @@ describe('the 28 Keys', () => {
       'venusSign',
       'venusHouse',
       'uranusSign',
+      'saturnSign',
       'neptuneSign',
       'neptuneHouse',
       'plutoSign',

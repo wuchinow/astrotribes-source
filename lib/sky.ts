@@ -365,6 +365,25 @@ export const SKY = {
     release: 'https://science.nasa.gov/photojournal/the-rich-color-variations-of-pluto/',
     released: '2015-09-24',
   },
+  // The Galactic Center's page (3x, Nov 6): a square closer in on the same Chandra mosaic as the 28
+  // Keys page's band, centered on the galaxy's heart (Sagittarius A*), so the two places are two cuts.
+  galacticCenter: {
+    stem: 'chandra-galactic-heart',
+    subject: 'The heart of the Milky Way in X-rays, from Chandra',
+    source: 'keys-galactic-center.jpg',
+    size: [2987, 1158],
+    sha256: 'dfbb970e78a69c23c337a7b73a508efdcb13a60d206691e8000babf6ef1e9602',
+    crop: [1060, 190, 720, 720],
+    levels: { black: 6, white: 255, gamma: 1 },
+    strength: 0.9,
+    widths: [720, 640],
+    alt: 'The center of our galaxy in X-rays, a bright white point inside glowing gold and red clouds',
+    credit: 'NASA/UMass/D. Wang et al.',
+    tinted: false,
+    license: 'NASA release; not copyrighted in the United States',
+    release: 'https://science.nasa.gov/resource/chandra-x-ray-mosaic-of-galactic-center',
+    released: '2002-01-10',
+  },
 } as const satisfies Record<string, SkyImage>;
 
 export type SkyId = keyof typeof SKY;
@@ -388,6 +407,7 @@ export const SKY_PAGES: Readonly<Record<string, readonly SkyId[]>> = {
   '/keys/uranus': ['uranus'],
   '/keys/neptune': ['neptune'],
   '/keys/pluto': ['pluto'],
+  '/keys/galactic-center': ['galacticCenter'],
 };
 
 export const skyCredit = (image: SkyImage) => (image.tinted ? `${image.credit} (tinted)` : image.credit);

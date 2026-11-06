@@ -36,6 +36,9 @@ export interface PlanetContent {
   signs: Readonly<Partial<Record<SignId, string>>>;
   /** His line for the planet in each house, where he has written one. */
   houses: Readonly<Partial<Record<HouseNumber, string>>>;
+  /** His words over the signs or the houses as a whole, where he has written them (paragraphs split by a blank line). */
+  signsNote?: string;
+  housesNote?: string;
   /** Where the words come from, for the foot of the page. */
   source: string;
   reviewed: boolean;
@@ -97,9 +100,36 @@ const sun: PlanetContent = {
     'Astrologically the Sun is the heart of the chart: your core identity and the qualities you naturally express. It moves through all twelve signs in a year, spending about a month in each, which is why most people know their Sun sign before anything else in their chart. It is the “ruler” of Leo, the sign of warmth, confidence, and generosity.',
     'Every year, on or near your birthday, the Sun comes back to the exact place it held when you were born. Astrologers call this your solar return, and many treat it as a personal new year. The ancient Greeks called the Sun Helios, and the Romans called it Sol.',
   ],
-  signs: {},
-  houses: {},
-  source: 'Introduction drafted for Dawa. His lines for the Sun in each sign and house are still to come.',
+  signs: {
+    aries: 'Aries is the first sign of the zodiac, and is quite literally where things start. Aries is the beginning of spring, when life energy is awakening and stirring. As an Aries one must learn to trust one’s instincts. The thing to learn is how to stay mindful. Mindfulness is our biggest need, because if we can combine our best qualities, our pioneering spirit and our undaunted courage to leap into the unknown, and infuse them with mindfulness and self-awareness, then hopefully we can land on our feet and point a way forward that others might be too cautious to try. This is the way to prevent accidents and other Aries mishaps and missteps.\n\nImpulsive, intuitive, bold, and undaunted by warnings or cautions, Aries needs to charge forward, initiating and leading the charge. Our tribe is the purest embodiment of raw fire: burning bridges and starting anew. Aries is sometimes challenging for others, but for ourselves it means being true to ourselves and boldly carrying forth our own truth, no matter the consequences. And yes, we are known for our impatience. We often don’t stick around long enough to see the fruits of our endeavors, because our cosmic job is to start new things, not necessarily to finish them.\n\nOur exact opposite is the super careful, ever cautious Libra, weighing each choice before acting. Aries embodies the self, the soul’s emergence into the world, while Libra embodies the “us”: shared truth, always considering consequences and the effect our choices have on others. Aries often burns bridges while Libra strives to build and maintain them.',
+    taurus: 'Taurus is fixed earth. Taurus needs to embrace her strength, which is steadiness and a sense of presence. Taurean presence is firmly grounded in the here and now. This is the practical spiritual strength, or superpower, of Taurus.\n\nTaurus must have nature. This is an essential nutrient for all members of the Taurean tribe: both the physical world of nature and animals as well. Taurus’ challenge and opportunity is to learn flexibility and the ability to pivot when things invariably change. Taurus can change, but only after careful consideration, and then it is done with full commitment to the new plan. This careful consideration is what relates the Taurus tribe with the Libra tribe, since both tribes are strongly tied to the planet Venus. Venusian energy is primarily about harmony, balance, and gracefulness, and tends to avoid impulsiveness and rash behavior.\n\nTaurus holds on to things, beliefs, values, items. Taurus is the most loyal, reliable, and trustworthy of signs. Taurus tribe members are often set in their ways: when something works we like to stick with it. Predictability and consistency are our core values. Taurus tribe members are often physically strong and hard working. We are often very good at construction, building things, and saving money. Our allies are the other earth signs, Virgo and Capricorn. We also resonate with the other “fixed” modalities: Leo, Scorpio, and Aquarius.',
+    gemini: 'Ah, the fleeting immediacy of experience. The poetry of constant motion, entertainment, light, quick, clever. Good with hands and with the gift of gab, the Gemini twins are all about interaction. Talking, joking, storytelling. Changing. Changing a lot. Frequently changing. Constantly changing. Unpredictable, unreliable. Innocent. “What, me worry?” The life of the party. Hard to keep up with.\n\nGemini is air, the realm of thought, constantly noticing things, interacting, and flexible: fun, not too serious, and light-hearted. Did we say changing?',
+    cancer: 'Cancer is the embodiment of the mother. The mother is kindness, warmth, caring, and the wetness of feelings, emotions, vulnerability, and protection (defense). Members of the Cancer tribe have the spiritual opportunity to work on learning how to become more objective about things, circumstances, situations, and people. Safety and trust are key words that resonate with Cancer tribe people. Cancers spend more time looking inward than most other tribes. They also prefer to avoid conflict, rather than initiate it.\n\nThe symbolism of crabs is appropriate: they have a hard shell for protection. This is a great metaphor. Avoidance of conflict is important, for Cancers are acutely aware of their vulnerability (crabs and lobsters and other crustaceans tend to be delicious targets to many). Sidestepping or dancing away from conflict or confrontation is the human version of how crabs walk: they go forward mostly by going sideways. Water is their home. Fun fact: a preponderance of this tribe (all genders) avidly seek out and indulge in hot baths and hot springs.\n\nCancer’s opposite is Capricorn, the mountain goat and pragmatist with the fish tail and body. Cancer and Capricorn are a yin and yang duality. Cancer naturally aligns with the other two water signs, Scorpio and especially Pisces, with whom it feels safest and understood. The Cancer tribe is governed by the Moon and will be strongly influenced by the monthly lunar phases and cycles, conjunctions, eclipses, and so on.',
+    leo: 'Leo is the outward lion, full of confidence, different talents, self-assuredness, and a big heart. The lion’s blind spot may be acknowledging or looking at one’s own wounds. The Sun’s radiance always shines outward. The lion’s spiritual job is to always keep the heart pure and one’s actions clean. If one does so, then the universe smiles on you. There’s good reason a family or tribe of lions is called a pride.\n\nOpposite Leo is the cool detachment of Aquarius. Cats are amazing at landing on their feet, and Leos often have a popular and seemingly charmed life. Because of their Sun-like gifts, Leos often have an innate understanding of the solar beauty in others.',
+    virgo: 'Virgo is the broom, the sweeper away of all that is dirty, dusty, or out of place. Virgo pays close attention to details: to fixing the problem, but first to identify the problem. Careful observation and precision in most things: these are Virgo’s superpowers.\n\nVirgo’s big challenge is learning how to drop their judgments and opinions of others, especially when they see the flaws and shortcomings of others. Virgo’s spiritual opportunity is learning tolerance and humility. Opposite Pisces, the boundary-less fish.',
+    libra: 'The tightrope walker, the balancer, the peacemaker, the artist. Children of Venus, muse and source of beauty, elegance, style. Yet often indecisive and insecure: the gift and curse of seeing both sides, weighing, weighing. Sometimes (often) unable to decide, and often spending a lot of time fence sitting. But always charming, considerate, and social.',
+    scorpio: 'There is always a deeper meaning, a deeper layer: something underneath, not said, not revealed. Scorpio wants to find out. Scorpio wants to know. Knowing equals power. The undercover agent. The competitor. The comparer.\n\nScorpio and the next sign, Sagittarius, are both explorers, but Scorpio’s explorations tend to be more inward, the realms of human motivation and behavior, while Sagittarius’s explorations tend to be more outward directed, as in literally traveling and having adventures. Scorpio is also the inward expression of the planet Mars, while Aries is the more outward expression of Martian energy. Scorpio also has the added connection with Pluto, the outermost planet of hidden mysteries and a symbol of death and spiritual rebirth.\n\nScorpio can fixate on the mysteries of existence, starting with what makes people tick. Scorpio often cares a lot about intention. Scorpio also deals with the paradox of how and when to hold on and when to let go. Its opposite is Taurus, which is more challenged when it comes to letting go, whereas Scorpio is about transcendence. Taurus is stand your ground and stay in your lane; stay where you are. Scorpio is about letting go. Letting go gracefully, without resentment or worse, is the spiritual letting go. Attachments can make this very difficult indeed.\n\nTaurus is fixed earth and Scorpio is fixed water. Water is the element associated with the sphere of the emotions. Fixed or harnessed water becomes extremely powerful. Scorpio’s shadow side is that when it perceives threats or aggression or unfairness, it can hold on to strong resentment, even to the point of plotting revenge or paybacks. The stinger of the scorpion is always ready to defend itself, and keeps a calculated and cautious, healthy distance between oneself and potentially dangerous adversaries. This distance is good for examining and evaluating but not so great for true intimacy.',
+    sagittarius: 'Fun and adventure is the name of the game for the centaur’s tribe. Exploration and open-minded camaraderie are gifts of the galloping horse; optimism and joyful celebration are driving forces guided by a positive outlook. This is the realm of Jupiter, the planet symbolic of expansion. The Sag tribe loves parties and is a gregarious and welcoming group. Sagittarians also enjoy travel and any opportunity to experience something new. Up for fun. Up for learning. Up for trying anything new, for new circumstances add to the rich vein of experiences that the tribe embraces. As might be guessed, Sagittarians are often willing or eager gamblers, using their optimism and willingness to take risks.\n\nThe bow’s arrow travels far and fast, covering ground in an instant. This is not a warrior’s arrow but the symbol of the explorer, adventurer, traveler, or philosopher. The Sagittarian does not appreciate constraints or limits, but needs to learn how to appropriately rein in one’s high spirit when called for, for not all people, circumstances, and events are ready for such high, unfiltered energy.',
+    capricorn: 'The goat-fish is one of the least understood signs of the zodiac, yet the Capricorn tribe is often appreciated for their willingness to do the hard jobs that no one else is up for. Determination and pragmatism are hallmarks of this sign, which has the most unusual and awkward combination of symbols in the entire zodiac. The sea-goat is a paradox and a mystery, since goats are not made for swimming and fish are not made for mountain climbing. The result of this mythological hybrid creature is the symbolism for working hard. The front goat half is great at scaling mountains but has to paddle hard to keep afloat, while the fish tail is great for propelling through water but is out of its element when trying to ascend rocky ground. As a result the sea-goat must work extra hard and stay determined to succeed, whether in the mountains of the workplace and career (materialism) or in the watery environment of the emotions and interpersonal relationships.\n\nSaturn, the planet of seriousness, hard work, discipline, and boundaries, is the planet traditionally associated with Capricorn. Capricorn is truly an often misunderstood sign: serious, hard-working, responsible, and ultimately often successful at meeting her goals. One of Capricorn’s life lessons is to learn how to “lighten up” and laugh at oneself. Sometimes you have to stop and smell the roses; life can otherwise seem like an endless struggle of trying too hard to achieve “success”.',
+    aquarius: 'The water bearer is often thought to be a water sign, but is actually an air sign (along with the Gemini and Libra tribes). The symbol is the conveyor of water, the necessary element for growing and supporting life, pouring out of a large jug, urn, or originally, a hollowed-out gourd: one of the first tools invented and crafted by early humanity at the dawn of our species. So Aquarius is appropriately associated with technology, as well as the universal gift of giving.\n\nAquarians are often accused of being too heady, somewhat aloof in their views and ideals. Aquarians tend to be big thinkers and proponents of forward or progressive thinking. Uranus is the planet of eccentricity and innovation and has the strongest direct connection with the water bearer. This is the sign that will be underlying and influencing the next two thousand plus years of humanity’s journey. Advanced technology such as AI will rapidly continue to insinuate itself into virtually every aspect of human life, changing everything we now think of as “normal”. Many members of the Aquarian tribe will be leaders, visionaries, and architects of the various revolutions that will be emerging in the years to come.',
+    pisces: 'You cannot remove fish from their watery environment and expect them to thrive or even live long; they are basically inseparable from their surroundings. Astrologically the energy of Pisces is similar: there is little or no separation between the environment and its inhabitants. Members of the Pisces tribe are immersed in their environment. The people you interact with, your immediate environment, the vibes: everything merges together, and occasionally perspective and boundaries are blurred or lost entirely. Pisces tribe members tend to embody varying degrees of “flow states” and usually operate by default from a place of intuition or “gut feelings” rather than relying on logic or analytical reasoning.\n\nNeptune is the associated planet of Pisces, and is symbolic of intuitive, non-physical realms of knowing, including what are often called “psychic” phenomena. The highest use of Neptunian energy resonates with the energetic principle that we call “compassion”. The lower vibratory energy of Neptune causes confusion, delusion, and illusion. Beware of negative compulsions that can lead to self-harm, such as alcohol and drug use.',
+  },
+  houses: {
+    1: 'The first house is where you begin. It is where you establish your identity, your sense of a “self”. This is the “I”: your place in the world. It is influenced by the sign on the ascendant (the cusp of the first house).',
+    2: 'The second house is what you value. It is your resources; it is what belongs to you. The second house relates you to your world, your environment, to physical reality.',
+    3: 'The third house is how you interact with your environment. It is what you notice. It is the people and places and events in your immediate vicinity; it is how you communicate and intersect with your siblings, friends, and acquaintances. The third house is how you are wired, and how you think and express yourself.',
+    4: 'The fourth house is your roots. It is your family, your genetic and cultural heritages, and your sense of belonging: feeling a part of something that relates to security and safety.',
+    5: 'The fifth house is where you express yourself creatively. It is your area of expertise, your gift, your artistic self. It is how and what you create in this world, including your children (if you have any).',
+    6: 'The sixth house is associated with our life’s work in service or helping others. It is where we find ourselves learning life skills, including cooking, nutrition, health, nursing, and even accounting, bookkeeping, organizing, and other ways to assist others.',
+    7: 'The seventh house is all about partnerships. It is the “we” counterpoint to the “I” of the first house (the first and seventh houses are opposite each other). It is indicative of our “significant other” and can refer to a marriage or life partner as well as a best friend or even a business partner.',
+    8: 'The eighth house is where we explore the emotional waters of relationship (the previous house). This house is a key to how we do transformation, letting go, compromise, and cooperation. The dark side of our relationship with relationships can lead to competition, resentment, envy, and jealousy. Here is where we distill our experiences and hopefully learn how to elevate our consciousness as an outcome of our relationships. This is also a house of mysteries that often leads one into questions and quests (the ninth house).',
+    9: 'There’s more to being here than just killing time and taking up space. There are questions to be answered, explorations to be taken, investigations, looking, questioning, seeking. This is the essence of the ninth house: the quest, the journey. This is where we expand ourselves, from the physical (pushing ourselves in sports, yoga, gymnastics, travel, and so on) to philosophy, metaphysics, and spiritual growth.',
+    10: 'The tenth house marks the pinnacle of the chart, what is often called the “midheaven”. It is the summit of our social and societal roles. The tenth house governs our careers, our standing or place in our social circles or larger community. Professionals of all kinds, teachers, business people, actors, and others who stand out in a crowd are associated with the tenth house.',
+    11: 'The eleventh house is all about looking ahead. It is the future, and our vision or dreams about it. This is the place where dreaming, strategizing, planning, organizing, and mobilizing occur. This is the area of group thinking and collective vision. It is a place of co-creating a better world.',
+    12: 'The twelfth house is the “last” house and brings a cycle of unfolding to its conclusion. It is about integrating the experiences of incarnation, and preparation for a new beginning: spiritual rebirth. It is also where we face the challenges of letting go of past or unhealthy patterns and habits: relinquishment and surrender. The twelfth is the realm of the unconscious: the unaddressed, the unacknowledged, the subconscious mind, the realm of dreams.',
+  },
+  housesNote: 'If your Sun is in a house, that house is strongly emphasized as integral to your core identity. It is how you most deeply manifest your tribe’s energy. Whichever planet or point is in a house, it is expressed through that house’s meaning.',
+  source: 'Sign lines by Dawa (The twelve signs, Nov 5) and house lines by Dawa (The Houses, Nov 5). The introduction is a draft for him.',
   reviewed: false,
 };
 
@@ -114,7 +144,21 @@ const moon: PlanetContent = {
     'Astrologically the Moon is your emotional nature: how you respond, what comforts you, and what you reach for when things feel uncertain. It is the fastest mover in the chart, passing through all twelve signs in about 27 days and spending roughly two and a half days in each. It is the “ruler” of Cancer, the sign of home and belonging.',
     'From new Moon to full and back again takes about 29 and a half days, a rhythm people have kept time by for as long as there have been calendars. In July 1969 Apollo 11 put the first people on its surface, and twelve astronauts in all have walked there. The Greeks called the Moon Selene, and the Romans called her Luna.',
   ],
-  signs: {},
+  signs: {
+    aries: 'Having the Moon in Aries generally means that a person’s emotional nature can be volatile, spontaneous, independent, and intuitive. Aries moons can be impatient and often anticipate questions and situations. There may be an impulsive aspect to your decision making. Emotions tend to be felt intensely and passionately. Aries moon people often like excitement and are willing to encounter new places, experiences, and situations.',
+    taurus: 'The emotional quality associated with the Moon in Taurus is grounded, consistent, steady, calm, and often predictable or reliable. Taurus energy likes comfort and familiarity and is appreciative of good food, nature, and sensory pleasures. People with a Taurus moon are often capable of taking their time making decisions, based on practical considerations rather than immediate gratification. This placement of the Moon also helps people finish tasks, and most Taurus moon people are loyal and dependable. They can be hard working, especially with physical tasks. On the negative side there can be a tendency to be stubborn or resistant to change.',
+    gemini: 'Members of the Gemini clan tend to have a lively and curious emotional nature. Gemini moons generally enjoy mental stimulation, exchanging ideas, and communicating with others. Your clanmates are typically open-minded and adaptable, and can enjoy different points of view, often at the same time. Gemini moons like variety and are quick on the draw. Many of your clanmates are very good at expressing feelings through words and connect with others through shared experiences, common interests, and an open-minded curiosity. People with Gemini moons often have many friends, and are often quite chatty.',
+    cancer: 'The Moon is most at home in Cancer. Where it is in your chart (your hearth) tells you a lot about your emotional desires and where you seek fulfillment. The Cancer clan is characterized by being naturally nurturing, empathetic, and very sensitive to the vibes of others. People with the Moon in Cancer typically have a strong intuition and an awareness of the intentions of others, as well as the ability to perceive threats or ill will. Cancer seeks safety and protection, often with a strong cherishing of one’s home and personal space. Cancer is often drawn to water, and many Cancer people (tribe and clan) like to swim, take baths, and perhaps visit hot springs.',
+    leo: 'People in the Leo clan tend to have a warm, expressive, and dramatic emotional nature. Leo often (unconsciously) craves recognition and appreciation for who they are and what they do. People with a Leo moon are typically emotionally generous, freely giving support, protection, and affection to their friends and loved ones. The Leo clan also has a lot of creativity, particularly in art, dance, theatre, music, and other crafts. Leo moon people often have a strong flair for the dramatic.',
+    virgo: 'Virgo clan members share an analytical and practical approach to their emotions and relationships. Virgo is well known for being helpful and of service, as well as paying close attention to the details of daily life. Virgo clanmates often like things to be neat, clean, and orderly. You can be more modest and reserved (cautious) in expressing feelings, and show care through practical or thoughtful gestures and actions. Virgo moon people often desire emotional clarity and predictability, and can sometimes be critical of those who disappoint them or don’t live up to their standards.',
+    libra: 'People with the Moon in Libra often have an emotional need for harmony, balance, peace, and connection in their relationships. You are quite good at being diplomatic and always strive to create a harmonious and peaceful environment. Conflict and strife in general are distasteful for the Libra clan. Instead, you are sensitive to the emotional needs of others and strive to comfort others and bring fairness, cooperation, and mutual understanding to relationships, whether romantic or platonic. Many members of the Libra clan struggle with decision making or asserting themselves because they always want to appear fair. Librans are typically quite social and gracious, and are attentive to the needs of others.',
+    scorpio: 'The Scorpio clan is full of people who tend to experience their emotions with great intensity, depth, and passion. Scorpio moon people often have a powerful emotional presence and are often highly intuitive, looking at others to get a read on their motivations and “where they are coming from”. Your clan typically really values emotional honesty and sharing. On the other hand, Scorpio moon individuals often keep their own emotions somewhat concealed or private, sensing there is power in the hidden. The Scorpio clan is renowned for its sarcasm and ability to cut through the bull and get to the core of the matter. If your Moon is in Scorpio, find your hearth (the Moon’s house) to find what area of your life is full of buried treasure or emotional triggers. This is also the area of your life that can be transformed through finding the emotional strength to let go of the need for control.',
+    sagittarius: 'Your clan is characterized by an adventurous, optimistic, and fun-loving spirit. The Moon in Sagittarius indicates a need for freedom and spontaneity, and a love of exploring new places as well as ideas. Sagittarian moon people tend to be open-minded and enthusiastic, often have a great sense of humor, and really enjoy themselves when the opportunity presents itself. Sagittarian moon people are often gregarious, enjoying social events, sports, travel, studying, and reading.',
+    capricorn: 'People in your clan often have a well-developed sense of responsibility and a grounded and practical approach to life and to dealing with their emotions. Your clanmates value stability and like to have predictability and some control over their surroundings. Capricorn moon people operate by evaluating the possible outcomes of situations, interactions, and personal relationships. Capricorns are hard-working, disciplined, and reliable, and are typically quite goal oriented: once they set their sights on something they tend to be quite persistent until they have accomplished their goal.',
+    aquarius: 'People with the Moon in Aquarius tend to have an emotionally independent nature. You can also appear unconventional or unusual to mainstream society. Your clan values freedom and fairness: justice for all.\n\nYour clanmates are often drawn to social causes or movements, and there is typically a strong sense of community, with a need for sharing ideals, beliefs, and a common vision. Aquarian moon people are sometimes characterized as “aloof” or detached, but you actually care about humanity more than most signs. Your clan’s identity comes from being part of something bigger. Aquarian energy is emerging faster and faster, and your clan might have insights that resonate with the larger cosmic cycle we know as “the Age of Aquarius”. People of the Aquarius clan can help us understand and navigate this emerging astrological new age.',
+    pisces: 'This clan is the most empathetic and sensitive of all moon signs. Pisces moon people are also intuitive and can be quite psychic as well. Pisces moons are less grounded than the other clans, which allows you to travel through intuitive channels. Often your clan shows strong feelings of compassion and a desire to be of service and help to others. The spiritual life and the world of imagination, dreams, and visionary symbolism are richly abundant in many of your clanmates. Pisces moons can have very loose or seemingly nonexistent boundaries, and can become emotionally lost if there are no other grounding influences in the horoscope. Pisces moon clan members may get confused or deceived by others because of their naive and trusting nature.',
+  },
+  signsNote: 'The Moon is traditionally thought of as the indicator of your emotional (watery) world. It is intuition, visceral (knee jerk) responses, emotions, vulnerability, and relationship dynamics; also family, origins, roots, safety, and comfort.\n\nYour clan is also influenced by your tribe, just as the Moon, as we see it from Earth, reflects the light of the Sun. For example, a person with a Leo Moon and an Aries Sun is very different from a Leo Moon person with a Capricorn Sun.\n\nThe other main thing to keep in mind when exploring your clan is your hearth, the house your Moon is in. It tells what part of your life is most triggered when your emotional buttons are pressed.',
   houses: {
     1: 'The moon here finds ease and comfort in self expression. One spontaneously expresses the qualities of the clan when challenged or threatened.',
     2: 'The moon here reacts to experiences with a strong sense of the clan’s values and resources.',
@@ -129,7 +173,7 @@ const moon: PlanetContent = {
     11: 'People with an 11th house moon have strong principles and beliefs and often lofty or idealistic goals. If your hearth is in the 11th house you probably like to surround yourself with others who share and reinforce your beliefs. You think more in terms of what the future could or should look like. You may be a bit disappointed with how things are in the present because you see the potential that is yet to come.',
     12: 'The moon in the 12th house is deep, private, and often hidden to oneself. There is a strong intuition and active subconscious life that can feel out of place in the “real world”. People with their hearth in the 12th house often have profound and very realistic dreams that may be messages from their unfinished business. There may be unwanted experiences from the past that remain unacknowledged.',
   },
-  source: 'House lines by Dawa (The Moon’s 12 houses). The introduction is a draft for him; his lines for the Moon in each sign are still to come.',
+  source: 'Sign lines by Dawa (his summary paragraphs for each sign, Nov 6) and house lines by Dawa (The Moon’s 12 houses). The introduction is a draft for him.',
   reviewed: false,
 };
 
@@ -317,9 +361,35 @@ const uranus: PlanetContent = {
     'Uranus is tipped on its side, so it rolls around the Sun like a ball rather than spinning like a top. Each of its poles gets about 42 years of sunlight followed by 42 years of darkness. Only one spacecraft has ever visited: Voyager 2, in 1986.',
     'Uranus takes about 84 years to go around the Sun and spends about seven years in each sign, so everyone born within a few years of you shares its sign: it marks your generation’s leap. It is the “ruler” of Aquarius, the sign of invention and the unexpected. The planet is named for Ouranos, the Greek god of the sky.',
   ],
-  signs: {},
-  houses: {},
-  source: 'Introduction drafted for Dawa. His lines for Uranus in each sign and house are still to come.',
+  signs: {
+    aries: 'The Uranus in Aries generation initiates an entire new 84 year cycle.',
+    taurus: 'The Uranus in Taurus generation: a leap in how we relate to the natural world.',
+    gemini: 'The Uranus in Gemini generation: a leap in communication, media, and information.',
+    cancer: 'The Uranus in Cancer generation: a leap in traditional home values.',
+    leo: 'The Uranus in Leo generation: a leap in self-actualization and creativity.',
+    virgo: 'The Uranus in Virgo generation: a leap in health, nutrition, healing, and technology.',
+    libra: 'The Uranus in Libra generation: a leap in gender roles and equality.',
+    scorpio: 'The Uranus in Scorpio generation: a leap in drug use and sexuality, and in skepticism.',
+    sagittarius: 'The Uranus in Sagittarius generation: a leap in risk taking, extreme sports, and play.',
+    capricorn: 'The Uranus in Capricorn generation: a leap in corporate and societal traditions.',
+    aquarius: 'The Uranus in Aquarius generation: a leap in tech and networking.',
+    pisces: 'The Uranus in Pisces generation: a leap in dissolving old boundaries; the loss of traditional identities and roles.',
+  },
+  houses: {
+    1: 'Uranus in the 1st is your frontier of creating a new identity.',
+    2: 'Uranus in the 2nd is your frontier with resources.',
+    3: 'Uranus in the 3rd is your frontier of how you uniquely communicate and interact.',
+    4: 'Uranus in the 4th is the frontier where you question and challenge your roots.',
+    5: 'Uranus in the 5th is the frontier where you create newness.',
+    6: 'Uranus in the 6th is the frontier of your unique contribution to helping others.',
+    7: 'Uranus in the 7th is your frontier of how you do relationships on your own terms.',
+    8: 'Uranus in the 8th is the frontier where you relate to others from a place of independence.',
+    9: 'Uranus in the 9th is the frontier where you develop your own unique understanding and philosophy of life.',
+    10: 'Uranus in the 10th is the frontier where you fit into society and your community.',
+    11: 'Uranus in the 11th is the frontier where you dream the future into being.',
+    12: 'Uranus in the 12th is the subconscious frontier where you follow your dreams and pursue your path.',
+  },
+  source: 'Sign and house lines by Dawa (Uranus in Signs and Houses, Oct 6). The introduction is a draft for him.',
   reviewed: false,
 };
 
@@ -405,12 +475,68 @@ const pluto: PlanetContent = {
   reviewed: false,
 };
 
+// The Galactic Center (3x, Nov 6): a point, not a planet, at about 27 degrees Sagittarius for everyone,
+// so it has one key, its house, and no lines for the signs. Dawa's introduction and house lines from
+// "Galactic Heart Point" (Drive, April 25, 2025), the newer of his two versions (the other is "Galactic
+// Center Point", April 8, 2025; the house lines match), fitted to the copy rules; his "GH" is written
+// out as the Galactic Center, the name the site uses.
+const galacticCenter: PlanetContent = {
+  body: 'galacticCenter',
+  slug: 'galactic-center',
+  sky: 'galacticCenter',
+  aspect: 'aspect-square',
+  intro: [
+    'The precise center, or heart, of our galaxy is located at 27 degrees Sagittarius. This is the actual rotational center of the Milky Way galaxy, which our solar system revolves around.',
+    'Our solar system (the Sun, the planets and their moons, the asteroid belt, and various other objects) takes approximately 225 to 250 million years to go once around this vast spinning island of stars called our galaxy. This trip by our solar system around the galaxy is known as a galactic year.',
+    'This heart center point directs us to the ultimate source of the Milky Way’s cosmic energy, representing inspiration, transformation, spiritual insights, and higher consciousness, as well as direct insight into the universe’s mysteries.',
+    'It could be called the Godhead. The heart of the galaxy. The galactic third eye (wisdom). Whatever it is, when you find the location of 27 degrees Sagittarius in your horoscope, that house indicates a genuine opportunity for true cosmic energy or wisdom to flow through you.',
+    'This is a “blessing” energy: whichever house 27 degrees Sagittarius falls in is in some way blessed by this point. Planets near the Galactic Center can indicate a person with a strong sense of intuition and a drive to seek deeper spiritual truths, and can lead to a unique perspective on personal growth and collective evolution. Generally things flow and manifest well in that house.',
+    'In some natal charts the location of the Galactic Center by house may manifest as an urge to contribute to something greater than oneself, and can inspire individuals to explore philosophical or spiritual paths in a quest for truth.',
+    'The center of our home galaxy may point us in the direction where the secrets of the universe lie. This is the source of all, the cosmic furnace, the source of love. It is also the point in our horoscope that aligns with this energy, and is represented as the third eye of wisdom and divine inspiration.',
+  ],
+  draft: [],
+  signs: {},
+  houses: {
+    1: 'The Galactic Center in the 1st house: your appearance reflects cosmic consciousness. Looks matter.',
+    2: 'The Galactic Center in the 2nd house: your connection with the natural and material world needs to be in harmony with the greater good. Saving the environment, protecting nature, and using your resources (money and so on) are a positive focus for you.',
+    3: 'The Galactic Center in the 3rd house: your gift of communication is important. Writing, translating, poetry, and other art forms are all ways you can channel messages of divine love and wisdom.',
+    4: 'The Galactic Center in the 4th house: your family and home of origin are important contributors to your sense of “place” in the cosmos.',
+    5: 'The Galactic Center in the 5th house: you can channel cosmic and divine inspiration through art, creativity, and love.',
+    6: 'The Galactic Center in the 6th house: cleaning, nursing, and helping others are all ways to be in service to the divine. Karma yoga.',
+    7: 'The Galactic Center in the 7th house: relationships can be a doorway to the sacred. Honor your partner.',
+    8: 'The Galactic Center in the 8th house: intimacy and sharing are gateways to the universal energy. Meditation on death, rebirth, sexual energy, and relationship are all keys to wisdom.',
+    9: 'The Galactic Center in the 9th house: a thirst or hunger for truth and wisdom. Travel might be irresistible.',
+    10: 'The Galactic Center in the 10th house: your career, your role within your community, your status and standing are all important ways for you to “channel” the universal wisdom and message for humanity.',
+    11: 'The Galactic Center in the 11th house: you can help support and foster the universal messages for humanity by working with existing organizations or groups.',
+    12: 'The Galactic Center in the 12th house: deep messages of divine inspiration, help, and wisdom are buried deep within your subconscious or universal mind. Dreams and meditation can help unlock important messages.',
+  },
+  source: 'Introduction and house lines by Dawa (Galactic Heart Point).',
+  reviewed: false,
+};
+
 /** The planets with a page, in the order of lib/keys.ts. */
-export const PLANET_PAGES: readonly PlanetContent[] = [sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto];
+export const PLANET_PAGES: readonly PlanetContent[] = [
+  sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto, galacticCenter,
+];
 
 export const planetPage = (body: BodyId): PlanetContent | undefined => PLANET_PAGES.find((p) => p.body === body);
 
 export const planetHref = (planet: PlanetContent) => `/keys/${planet.slug}`;
+
+/** "the Sun", "the Moon", "the Galactic Center", "Jupiter": the article Dawa asked for (Nov 5). */
+export const the = (name: string) => (['Sun', 'Moon', 'Galactic Center'].includes(name) ? `the ${name}` : name);
+
+/** Paragraphs of a line or note, split by a blank line. */
+export const paragraphs = (text: string): string[] => text.split('\n\n');
+
+/** A line for the chart's tap panel: its first paragraph, cut to two sentences when that runs long. */
+export const panelLine = (text: string | undefined): string | undefined => {
+  if (!text) return undefined;
+  const first = paragraphs(text)[0];
+  if (first.length <= 320) return first;
+  const sentences = first.match(/[^.?]+[.?]+(?:[”’)]+)?(?:\s+|$)/g) ?? [first];
+  return sentences.slice(0, 2).join('').trim();
+};
 
 // PLACEHOLDER: the planet page's own words around Dawa's. A key name arrives as an argument.
 export const planetPageCopy = {
@@ -418,19 +544,19 @@ export const planetPageCopy = {
   /** The page title: "Jupiter, its two Keys" */
   metaTitle: (planet: string) => `${planet}, its two Keys`,
   description: (planet: string) => `${planet} in each of the twelve signs and each of the twelve houses.`,
-  introTitle: (planet: string) => `About ${planet}`,
+  introTitle: (planet: string) => `About ${the(planet)}`,
   signsTitle: (planet: string) => `${planet} in the signs`,
   housesTitle: (planet: string) => `${planet} in the houses`,
   /** "Your Gift is the sign Jupiter was in when you were born." */
-  signsLede: (keyName: string, planet: string) => `Your ${keyName} is the sign ${planet} was in when you were born.`,
+  signsLede: (keyName: string, planet: string) => `Your ${keyName} is the sign ${the(planet)} was in when you were born.`,
   housesLede: (keyName: string, planet: string) =>
-    `Your ${keyName} is the house ${planet} was in. It needs your birth time.`,
+    `Your ${keyName} is the house ${the(planet)} was in. It needs your birth time.`,
   houseLabel: (roman: string, name: string) => `House ${roman}, ${name}`,
   /** Over an introduction drafted for Dawa. */
   draftLabel: 'Draft for Dawa to revise',
   /** Where Dawa has not yet written the lines for a section. */
-  signsComing: (planet: string) => `Dawa’s lines for ${planet} in each sign are still to come.`,
-  housesComing: (planet: string) => `Dawa’s lines for ${planet} in each house are still to come.`,
+  signsComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each sign are still to come.`,
+  housesComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each house are still to come.`,
   back: 'All 28 Keys',
   more: (planet: string) => `More about ${planet}`,
   yourChart: { href: '/your-chart', label: 'See yours on Your chart' },
