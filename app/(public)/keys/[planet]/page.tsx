@@ -6,12 +6,16 @@ import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SkyWindow } from '@/components/SkyWindow';
-import { articleFor, learnCopy } from '@/content/articles';
+import { learnCopy } from '@/content/articles';
 import { PLANET_PAGES, paragraphs, planetPageCopy as copy, type PlanetContent } from '@/content/planets';
 import { GLYPHS } from '@/lib/glyphs';
 import { BODIES, HOUSES, SIGN_IDS, keyFor } from '@/lib/keys';
+import { learnArticleFor } from '@/lib/substack';
 
 export const dynamicParams = false;
+
+// The link to Dawa's article follows his Substack feed, read again at most once an hour (3y).
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return PLANET_PAGES.map((planet) => ({ planet: planet.slug }));
@@ -49,7 +53,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
   const signs = SIGN_IDS.filter((sign) => planet.signs[sign]);
   const houses = HOUSES.filter((house) => planet.houses[house.number]);
   // Dawa's Substack article on this planet, where he has written one (Learn, David, Nov 4).
-  const article = articleFor(planet.body);
+  const article = await learnArticleFor(planet.body);
 
   return (
     <>

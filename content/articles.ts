@@ -7,7 +7,9 @@
 // key names to lib/keys.ts). Two posts are left out: "Coming soon" (Feb 16, a placeholder) and "Calm
 // Before the Storm" (Mar 26, AstroTribes news from before the rebuild).
 //
-// A new post is one entry here, newest first within its list.
+// Since 3y (Nov 6) the Learn page reads his Substack feed by itself (lib/substack.ts): new posts and
+// edited titles arrive within the hour. These entries are the fallback when the feed cannot be read,
+// and they keep what the feed cannot say: the series' part titles, its excerpts, and each planet.
 
 import type { BodyId } from '@/lib/keys';
 
