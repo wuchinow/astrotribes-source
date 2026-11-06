@@ -99,6 +99,12 @@ export function PointsBreakdown({
         <span className="type-body font-semibold text-ink-900">{pointsCopy.total}</span>
         <span className="font-mono text-[1.0625rem] font-semibold text-ink-900 tabular-nums">{total}</span>
       </div>
+      <div data-points-odds="">
+        <h3 className="type-label text-ink-500">{pointsCopy.oddsHeading}</h3>
+        <p className="mt-1 type-body-sm text-ink-700">
+          {pointsCopy.odds(BODIES.sun.name, BODIES.moon.name, BODIES.rising.name)}
+        </p>
+      </div>
     </div>
   );
 }

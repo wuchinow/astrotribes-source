@@ -17,6 +17,7 @@ import { chartWheelCopy } from '@/content/chart-wheel';
 import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
+import { chineseSign } from '@/lib/chinese-zodiac';
 import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
@@ -64,6 +65,10 @@ export default async function YourChartPage() {
     moon: { sign: (moon ?? sun).sign },
     rising: rising ? { sign: rising.sign } : null,
   };
+  // The Chinese zodiac sign (3y) from the member's own birth date, read as the member under RLS; only
+  // the animal, element, and that year's Lunar New Year reach the page.
+  const { data: birth } = await supabase.from('birth_data').select('birth_date').eq('user_id', user.id).maybeSingle();
+  const chinese = birth?.birth_date ? chineseSign(String(birth.birth_date)) : null;
   // The wheel (3g): the member's own chart redrawn on the server from their birth details. Null on any failure.
   const wheel = await memberWheel(supabase, user.id, { sun: sun.sign, moon: moon?.sign ?? null });
 
@@ -164,6 +169,17 @@ export default async function YourChartPage() {
             );
           })}
         </div>
+        {chinese ? (
+          <div data-your-chinese="" className="mt-8">
+            <TintPanel>
+              <h3 className="type-heading-3 text-ink-900">{yourChartCopy.chinese.title}</h3>
+              <p className="mt-2 type-heading-2 italic text-highlight">
+                {yourChartCopy.chinese.name(chinese.element, chinese.animal)}
+              </p>
+              <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
+            </TintPanel>
+          </div>
+        ) : null}
       </Section>
 
       <Section band labelledBy="your-chart-next">
@@ -222,3 +238,7 @@ function Lines({ text }: { text?: string }) {
     </>
   );
 }
+
+/** "1966-01-21" as "January 21, 1966", read as a calendar date. */
+const longDate = (date: string) =>
+  new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });

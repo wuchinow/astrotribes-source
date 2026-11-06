@@ -74,6 +74,15 @@ export const yourChartCopy = {
     noTime: (keyName: string) => `Your ${keyName} needs your birth time. Add it and it appears here.`,
     more: (planet: string) => `All of ${planet}'s Keys`,
   },
+  // The Chinese zodiac sign (3y, admin to-do): a small panel under Your Keys. PLACEHOLDER words for Dawa.
+  chinese: {
+    title: 'Your Chinese zodiac sign',
+    /** "Fire Horse" */
+    name: (element: string, animal: string) => `${element} ${animal}`,
+    /** "February 17, 1966" */
+    body: (newYear: string) =>
+      `It comes from the Chinese calendar, a tradition separate from your Western chart. Your Chinese year began at Lunar New Year, ${newYear}, and each year pairs one of twelve animals with one of five elements.`,
+  },
   next: {
     eyebrow: 'What comes next',
     line: 'Your chart is the start.',

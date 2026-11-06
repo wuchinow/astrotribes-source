@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
-import { ARTICLES, SERIES, SERIES_TITLE, SUBSTACK_URL, VIDEOS, learnCopy as copy, type Article } from '@/content/articles';
+import { SERIES_TITLE, SUBSTACK_URL, VIDEOS, learnCopy as copy, type Article } from '@/content/articles';
 import { longDate } from '@/content/famous';
+import { learnArticles } from '@/lib/substack';
+
+// Dawa's Substack feed is read again at most once an hour (3y).
+export const revalidate = 3600;
 
 export const metadata: Metadata = { title: copy.title, description: copy.description };
 
@@ -17,7 +21,7 @@ function ArticleCard({ article, eyebrow }: { article: Article; eyebrow?: string 
       >
         {eyebrow ? <p className="type-label text-ink-500">{eyebrow}</p> : null}
         <h3 className="mt-1 type-heading-3 text-ink-900">{article.title}</h3>
-        <p className="mt-2 type-body-sm">{article.excerpt}</p>
+        {article.excerpt ? <p className="mt-2 type-body-sm">{article.excerpt}</p> : null}
         <p className="mt-auto flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 pt-4">
           <time dateTime={article.date} className="type-caption text-ink-500">
             {longDate(article.date)}
@@ -31,11 +35,13 @@ function ArticleCard({ article, eyebrow }: { article: Article; eyebrow?: string 
 
 /**
  * Learn (David, Nov 4): Dawa's articles, each a card that opens on his Substack, with no full text
- * copied here, and a place for his videos once they exist. Static and public, no data. The hero is
+ * copied here, and a place for his videos once they exist. Public, no member data. The articles come
+ * from his Substack feed, read again at most once an hour (3y, lib/substack.ts). The hero is
  * words only, so the page carries no art and no sky image; below it the sections alternate the page
  * tone and the band.
  */
-export default function LearnPage() {
+export default async function LearnPage() {
+  const { series: SERIES, articles: ARTICLES } = await learnArticles();
   return (
     <>
       <div className="bg-surface-hero">

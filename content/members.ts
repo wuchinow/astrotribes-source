@@ -83,4 +83,8 @@ export const pointsCopy = {
   points: (count: number) => (count === 0 ? '0' : `+${count}`),
   total: 'Connection points',
   noTime: 'House Keys and Rising need a birth time from both of you, so they are not counted here.',
+  // How rare a match is (3y, admin to-do: 12, 144, 1,728). PLACEHOLDER words for Dawa.
+  oddsHeading: 'How rare a match is',
+  odds: (sun: string, moon: string, rising: string) =>
+    `About 1 in 12 people share your ${sun} sign. About 1 in 144 share your ${sun} and ${moon} signs, and about 1 in 1,728 share your ${sun}, ${moon}, and ${rising} signs. The odds are rough, since some signs last longer than others.`,
 };
