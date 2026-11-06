@@ -14,6 +14,13 @@ export const chartWheelCopy = {
   house: (roman: string) => `house ${roman}`,
   /** The tap panel (3t). */
   hint: 'Tap a planet on the wheel or in the list to see its Keys.',
+  /** With a birth time (3z, Dawa, Nov 5: the house degrees on hover or tap, not printed). */
+  hintHouses: 'Tap a planet on the wheel or in the list to see its Keys, or a house line to see where it begins.',
+  /** "House IV, Roots" */
+  houseTitle: (roman: string, name: string) => `House ${roman}, ${name}`,
+  /** "Begins at 12°05′ Leo" */
+  cuspAt: (degrees: string, sign: string) => `Begins at ${degrees} ${sign}`,
+  housesLabel: 'Where each house begins',
   close: 'Close',
   retrogradeMark: 'retrograde',
   retrograde: (name: string) => `${name} was retrograde: seen from Earth, it seemed to move backward through the signs.`,

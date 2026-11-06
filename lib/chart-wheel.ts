@@ -62,6 +62,16 @@ export interface WheelInput {
   cusps: readonly number[] | null;
 }
 
+/** Drawn smaller on a ring of their own inside the planets (3z, Dawa, Nov 5). */
+export const ON_INNER_RING: ReadonlySet<WheelBodyId> = new Set<WheelBodyId>(['northNode', 'southNode']);
+
+/** Where a house begins: its sign, and the degree and minute within it (3z, Dawa, Nov 5). */
+export function cuspPlace(longitude: number): { sign: SignId; degree: number; minute: number } {
+  const lon = norm(longitude);
+  const total = Math.floor(lon * 60 + 1e-6);
+  return { sign: SIGN_IDS[Math.floor(total / 1800) % 12], degree: Math.floor((total % 1800) / 60), minute: total % 60 };
+}
+
 /** The smallest gap between two glyphs on the planet ring, in degrees of the wheel. */
 export const MIN_GAP = 10;
 
@@ -131,7 +141,7 @@ export function spread(angles: readonly number[], gap = MIN_GAP): number[] {
 export interface WheelLayout {
   signs: { sign: SignId; start: number; mid: number }[];
   /** Screen angles of the 12 cusps (house I first), or empty. */
-  cusps: { house: HouseNumber; angle: number; mid: number }[];
+  cusps: { house: HouseNumber; angle: number; mid: number; longitude: number }[];
   ascendant: number | null;
   midheaven: number | null;
   bodies: (WheelBody & { angle: number; placed: number })[];
@@ -148,11 +158,18 @@ export function wheelLayout(input: WheelInput): WheelLayout {
     ? input.cusps.map((c, i) => {
         const next = input.cusps![(i + 1) % 12];
         const width = norm(next - c);
-        return { house: (i + 1) as HouseNumber, angle: screenAngle(c, asc), mid: screenAngle(c + width / 2, asc) };
+        return { house: (i + 1) as HouseNumber, angle: screenAngle(c, asc), mid: screenAngle(c + width / 2, asc), longitude: c };
       })
     : [];
   const angles = input.bodies.map((b) => screenAngle(b.longitude, asc));
-  const placed = spread(angles);
+  // Each ring spreads its own glyphs: the nodes, on the inner ring, never push a planet aside.
+  const placed = new Array<number>(angles.length);
+  for (const inner of [false, true]) {
+    const idx = input.bodies.flatMap((b, i) => (ON_INNER_RING.has(b.body) === inner ? [i] : []));
+    spread(idx.map((i) => angles[i])).forEach((a, k) => {
+      placed[idx[k]] = a;
+    });
+  }
   return {
     signs,
     cusps,
