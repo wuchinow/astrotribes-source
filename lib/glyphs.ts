@@ -65,9 +65,13 @@ const BODY_SYMBOLS: Record<BodyId, string> = {
 
 const withText = (symbol: string) => (symbol.length === 1 ? symbol + TEXT : symbol);
 
-// Dawa's glyphs traced so far (0b, Sep 23): all 12 signs and 8 planets.
+// Dawa's glyphs traced so far (0b, Sep 23): all 12 signs and 8 planets. Libra is
+// his drawing thickened by scripts/bold-glyph.py (Nov 4) to the weight of the rest, as he
+// asked, until his own bolder Libra file arrives.
 const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
   ...SIGN_IDS,
+  // His Sun, closed and thickened by scripts/sun-standin.py (Nov 6, his Nov 5
+  // note: too light, and the gap is confusing) until he repaints it.
   'sun',
   'moon',
   'mercury',
@@ -80,10 +84,12 @@ const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
 
 // Placeholders until Dawa brushes his own. Uranus, Pluto, and Chiron (Sep 24)
 // were made with an image tool and cleaned by Fable; Pluto uses the orb form,
-// and the PL form waits in staging. The North Node and the Galactic Center (a
-// spiral; there is no standard symbol) were drawn by scripts/brush-glyphs.py
-// in the manner of Dawa's set (David, Nov 4), and the South Node turns the
-// North Node's over, as its symbol does.
+// and the PL form waits in staging. The North Node was drawn by
+// scripts/brush-glyphs.py in the manner of Dawa's set (David, Nov 4), and the
+// South Node turns the North Node's over, as its symbol does. The Galactic
+// Center is traced from the brushed starburst on the old Lovable site (Nov 6,
+// asked for at the Nov 4 call). Best guess it is Dawa's, but nobody has said
+// so, so it stays a placeholder and uncredited until he confirms.
 const PLACEHOLDERS: ReadonlySet<GlyphId> = new Set<GlyphId>([
   'uranus',
   'pluto',

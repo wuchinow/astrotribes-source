@@ -144,7 +144,9 @@ SEED = 7  # the drawing in public/glyphs/, picked from a contact sheet (Nov 4)
 if __name__ == '__main__':
     out = sys.argv[1] if len(sys.argv) > 1 else 'public/glyphs'
     seed = int(sys.argv[2]) if len(sys.argv) > 2 else SEED
-    for name, fn in (('northNode', north_node), ('galacticCenter', galactic_center)):
+    # The Galactic Center's spiral is retired: public/glyphs/galacticCenter.svg is now traced from
+    # the starburst on the old Lovable site (Nov 6), so only the North Node is drawn here.
+    for name, fn in (('northNode', north_node),):
         with open(f'{out}/{name}.svg', 'w') as fh:
             fh.write(to_svg(fit(fn(seed))))
         print(f'{out}/{name}.svg')

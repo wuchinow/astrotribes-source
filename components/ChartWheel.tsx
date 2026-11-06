@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useId, useRef, useState, type ReactNode } from 'react';
 import { chartWheelCopy } from '@/content/chart-wheel';
 import {
+  ON_INNER_RING,
+  cuspPlace,
   degreeText,
   pointAt,
   showsRetrograde,
@@ -14,7 +16,7 @@ import {
 } from '@/lib/chart-wheel';
 import { cn } from '@/lib/cn';
 import { GLYPHS, type GlyphId } from '@/lib/glyphs';
-import { BODIES, HOUSES, SIGNS, keyFor } from '@/lib/keys';
+import { BODIES, HOUSES, SIGNS, keyFor, type HouseNumber } from '@/lib/keys';
 import { KeyChip } from './KeyChip';
 
 // A chart as a line-drawn wheel (3g, David, Nov 4): thin rings in ink, the twelve sign glyphs on an
@@ -25,15 +27,20 @@ import { KeyChip } from './KeyChip';
 // page. Planets are cobalt because they are clickable. Degrees and the retrograde mark show in the list
 // and the panel (David, Nov 4: "I say we turn it on"); the wheel itself stays uncluttered.
 // The drawing is aria-hidden; the list's buttons carry the same in words and open the same panel.
+// Nov 5 (Dawa, 3z): the house lines are darker, and pointing at one (or tapping it) shows where the
+// house begins, in the panel and as a tooltip, with nothing more printed on the chart; the nodes are
+// drawn smaller on a ring of their own inside the planets.
 
 const R_OUT = 99;
 const R_SIGN = 84;
 const R_SIGN_GLYPH = (R_OUT + R_SIGN) / 2;
 const R_BODY = 71;
+const R_NODE = 57;
 const R_INNER = 46;
 const R_HOUSE_NUM = 38;
 const SIGN_GLYPH = 9.5;
 const BODY_GLYPH = 12;
+const NODE_GLYPH = 8;
 
 const f = (n: number) => n.toFixed(2);
 
@@ -107,11 +114,14 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
   const axes = new Set([1, 4, 7, 10]);
   const name = (body: WheelBodyId) => BODIES[body].name;
   const [selected, setSelected] = useState<WheelBodyId | null>(null);
+  const [house, setHouse] = useState<HouseNumber | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
   const chosen = layout.bodies.find((b) => b.body === selected) ?? null;
+  const chosenCusp = layout.cusps.find((c) => c.house === house) ?? null;
 
   const pick = (body: WheelBodyId, fromList: boolean) => {
+    setHouse(null);
     setSelected((current) => (current === body ? null : body));
     // From the list on a phone the panel sits above, out of sight: bring it into view.
     if (fromList) requestAnimationFrame(() => panelRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
@@ -154,8 +164,8 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                 {layout.cusps.map((c) => (
                   <g
                     key={c.house}
-                    className={axes.has(c.house) ? 'stroke-ink-700' : 'stroke-ink-200'}
-                    strokeWidth={axes.has(c.house) ? 0.8 : 0.4}
+                    className={c.house === house ? 'stroke-cobalt-600' : axes.has(c.house) ? 'stroke-ink-900' : 'stroke-ink-500'}
+                    strokeWidth={axes.has(c.house) || c.house === house ? 0.9 : 0.6}
                   >
                     {/* Broken around the planet ring, so the glyphs stand clear of the lines. */}
                     <line {...line(R_INNER, R_BODY - 8.5, c.angle)} />
@@ -171,9 +181,9 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                       y={f(y)}
                       textAnchor="middle"
                       dominantBaseline="central"
-                      fontSize="5.5"
+                      fontSize="6"
                       fontFamily="var(--font-body)"
-                      className="fill-ink-500"
+                      className="fill-ink-700"
                     >
                       {HOUSES[c.house - 1].roman}
                     </text>
@@ -186,7 +196,8 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
             <g className="stroke-ink-700" strokeWidth="0.5">
               {layout.bodies.map((b) => {
                 const [tx, ty] = pointAt(R_SIGN - 4, b.angle);
-                const [gx, gy] = pointAt(R_BODY + BODY_GLYPH * 0.55, b.placed);
+                const inner = ON_INNER_RING.has(b.body);
+                const [gx, gy] = pointAt(inner ? R_NODE + NODE_GLYPH * 0.55 : R_BODY + BODY_GLYPH * 0.55, b.placed);
                 return (
                   <g key={b.body}>
                     <line {...line(R_SIGN - 3.5, R_SIGN, b.angle)} />
@@ -198,7 +209,8 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
               })}
             </g>
             {layout.bodies.map((b) => {
-              const [x, y] = pointAt(R_BODY, b.placed);
+              const inner = ON_INNER_RING.has(b.body);
+              const [x, y] = pointAt(inner ? R_NODE : R_BODY, b.placed);
               const on = b.body === selected;
               return (
                 <g key={b.body} onClick={() => pick(b.body, false)} className="cursor-pointer">
@@ -206,11 +218,11 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                   <circle
                     cx={f(x)}
                     cy={f(y)}
-                    r={7.5}
+                    r={inner ? 5.5 : 7.5}
                     className={on ? 'fill-cobalt-100 stroke-cobalt-600' : 'fill-transparent'}
                     strokeWidth={on ? 0.6 : 0}
                   />
-                  <Glyph id={b.body} x={x} y={y} size={BODY_GLYPH} className="fill-cobalt-600" />
+                  <Glyph id={b.body} x={x} y={y} size={inner ? NODE_GLYPH : BODY_GLYPH} className="fill-cobalt-600" />
                   {showsRetrograde(b) ? (
                     <text
                       x={f(x + 6.2)}
@@ -227,13 +239,38 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                 </g>
               );
             })}
+
+            {/* Last, so they sit on top: a wide, invisible target along each house line, with its start as a tooltip. */}
+            {layout.cusps.map((c) => {
+              const at = cuspPlace(c.longitude);
+              return (
+                <line
+                  key={c.house}
+                  {...line(R_INNER, R_SIGN, c.angle)}
+                  stroke="transparent"
+                  strokeWidth={5}
+                  pointerEvents="stroke"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSelected(null);
+                    setHouse((current) => (current === c.house ? null : c.house));
+                  }}
+                >
+                  <title>{`${chartWheelCopy.houseTitle(HOUSES[c.house - 1].roman, HOUSES[c.house - 1].name)}. ${chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}`}</title>
+                </line>
+              );
+            })}
           </svg>
           <figcaption className="sr-only">{words.figure}</figcaption>
         </figure>
 
         <div ref={panelRef} id={panelId} aria-live="polite" className="mt-4 scroll-mt-28">
-          {chosen ? <WheelPanel body={chosen} detail={details[chosen.body]} onClose={() => setSelected(null)} /> : (
-            <p className="text-center type-body-sm text-ink-500">{chartWheelCopy.hint}</p>
+          {chosen ? (
+            <WheelPanel body={chosen} detail={details[chosen.body]} onClose={() => setSelected(null)} />
+          ) : chosenCusp ? (
+            <HousePanel house={chosenCusp.house} longitude={chosenCusp.longitude} onClose={() => setHouse(null)} />
+          ) : (
+            <p className="text-center type-body-sm text-ink-500">{timeKnown ? chartWheelCopy.hintHouses : chartWheelCopy.hint}</p>
           )}
         </div>
       </div>
@@ -278,7 +315,46 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
             );
           })}
         </ul>
+        {/* For screen readers, the house starts the wheel shows on tap. */}
+        {timeKnown ? (
+          <ul aria-label={chartWheelCopy.housesLabel} className="sr-only">
+            {layout.cusps.map((c) => {
+              const at = cuspPlace(c.longitude);
+              return (
+                <li key={c.house}>
+                  {chartWheelCopy.houseTitle(HOUSES[c.house - 1].roman, HOUSES[c.house - 1].name)}.{' '}
+                  {chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
       </div>
+    </div>
+  );
+}
+
+/** One house, chosen on the wheel (3z): where it begins, and Dawa's question and line for it. */
+function HousePanel({ house, longitude, onClose }: { house: HouseNumber; longitude: number; onClose: () => void }) {
+  const def = HOUSES[house - 1];
+  const at = cuspPlace(longitude);
+  return (
+    <div data-wheel-house={house} className="rounded-md border border-ink-200 bg-surface-200 p-4 shadow-rest md:p-6">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="type-heading-3 text-ink-900">{chartWheelCopy.houseTitle(def.roman, def.name)}</h3>
+          <p className="mt-1 type-body-sm text-ink-700">{chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}</p>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="inline-flex min-h-touch shrink-0 items-center px-2 type-ui font-semibold text-cobalt-600 underline-offset-4 hover:underline"
+        >
+          {chartWheelCopy.close}
+        </button>
+      </div>
+      <p className="mt-3 text-ink-900">{def.question}</p>
+      <p className="mt-1 type-body-sm text-ink-700">{def.line}</p>
     </div>
   );
 }

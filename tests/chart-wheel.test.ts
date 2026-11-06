@@ -86,3 +86,36 @@ describe('chart wheel words and tap panel (3t)', () => {
     expect(details.chiron).toBeUndefined();
   });
 });
+
+describe('chart wheel house degrees and inner ring (3z)', () => {
+  it('names where each house begins, by sign, degree and minute', async () => {
+    const { cuspPlace } = await import('@/lib/chart-wheel');
+    expect(cuspPlace(132.0833)).toEqual({ sign: 'leo', degree: 12, minute: 4 });
+    expect(cuspPlace(0)).toEqual({ sign: 'aries', degree: 0, minute: 0 });
+    expect(cuspPlace(359.99)).toEqual({ sign: 'pisces', degree: 29, minute: 59 });
+    expect(cuspPlace(-30)).toEqual({ sign: 'pisces', degree: 0, minute: 0 });
+    const { chartWheelCopy } = await import('@/content/chart-wheel');
+    expect(chartWheelCopy.cuspAt('12°05′', 'Leo')).toBe('Begins at 12°05′ Leo');
+    expect(chartWheelCopy.houseTitle('IV', 'Roots')).toBe('House IV, Roots');
+  });
+
+  it('keeps each cusp longitude, for the hover and tap', () => {
+    const cusps = Array.from({ length: 12 }, (_, i) => norm(5 + i * 30));
+    const layout = wheelLayout({ bodies: [], ascendant: 5, midheaven: 275, cusps });
+    expect(layout.cusps.map((c) => c.longitude)).toEqual(cusps);
+  });
+
+  it('spreads the nodes on their own ring, never pushing a planet aside', async () => {
+    const { ON_INNER_RING } = await import('@/lib/chart-wheel');
+    expect([...ON_INNER_RING].sort()).toEqual(['northNode', 'southNode']);
+    const bodies = [
+      { body: 'sun' as const, longitude: 100, sign: 'cancer' as const, house: null },
+      { body: 'northNode' as const, longitude: 101, sign: 'cancer' as const, house: null },
+      { body: 'moon' as const, longitude: 200, sign: 'libra' as const, house: null },
+      { body: 'southNode' as const, longitude: 281, sign: 'capricorn' as const, house: null },
+    ];
+    const placed = wheelLayout({ bodies, ascendant: null, midheaven: null, cusps: null }).bodies;
+    // Alone on its ring, each keeps its true angle, though the Sun and the North Node are a degree apart.
+    for (const b of placed) expect(b.placed).toBeCloseTo(b.angle, 9);
+  });
+});
