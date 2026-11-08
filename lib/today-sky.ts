@@ -6,7 +6,7 @@ import 'server-only';
 import { skyNow, type MoonPhase, type Sky, type SkyBody, type SkyBodyId } from '@/lib/engine';
 import { SIGN_IDS, type SignId } from '@/lib/keys';
 
-export type { MoonPhase, SkyBody } from '@/lib/engine';
+export type { MoonPhase, SkyBody, SkyBodyId } from '@/lib/engine';
 
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;

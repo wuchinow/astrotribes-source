@@ -59,7 +59,7 @@ function band(start: number) {
 
 /**
  * Dawa's glyph where he drew one, and the brush stand-in where he has not yet (David, Nov 4:
- * the wheel reads as one set). Only Rising, which the wheel draws as the horizon, has neither.
+ * the wheel reads as one set). The wheel draws Rising as the horizon line, not as a glyph.
  */
 function Glyph({ id, x, y, size, className }: { id: GlyphId; x: number; y: number; size: number; className: string }) {
   const def = GLYPHS[id];

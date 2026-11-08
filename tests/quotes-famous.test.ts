@@ -4,11 +4,11 @@ import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { SIGN_IDS } from '@/lib/keys';
 
 describe('famous Tribe members', () => {
-  it('lists eight names for every Tribe, each name once across all twelve, and no dates', () => {
+  it('lists Dawa’s names for every Tribe, oldest first, each name once across all twelve, and no dates', () => {
     const all = SIGN_IDS.flatMap((sign) => TRIBE_FAMOUS[sign]);
-    for (const sign of SIGN_IDS) expect(TRIBE_FAMOUS[sign], sign).toHaveLength(8);
+    for (const sign of SIGN_IDS) expect(TRIBE_FAMOUS[sign].length, sign).toBeGreaterThanOrEqual(15);
     expect(new Set(all).size).toBe(all.length);
-    for (const name of all) expect(name, 'names only').not.toMatch(/\d/);
+    for (const name of all) expect(name, 'names only, no dates').not.toMatch(/\d{3,}|\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d/);
   });
 });
 

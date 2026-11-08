@@ -199,8 +199,6 @@
   --font-body: var(--font-nunito-sans), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-nunito-sans), "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-plex-mono), "SF Mono", Menlo, monospace;
-  /* The homepage's "Find your Keys" only (4d). */
-  --font-woodtype: var(--font-rye), Rockwell, "Courier New", serif;
 }
 
 /* night:hidden, night:block, and so on */

@@ -5,34 +5,28 @@
 // are examples until members can join (layer 3 fills them from the database).
 
 import type { SignId } from '@/lib/keys';
-import { The } from './the';
+import { The, the } from './the';
+import { skyCopy } from './sky';
 
 export interface TribeWords {
   /** The sign's symbol, in sentence case: "The ram". */
   symbol: string;
   /** What members call each other, plural: "Rams". */
   fellows: string;
-  /** One line under the hero headline. */
-  tagline: string;
-  /** Four qualities for the signature chips. */
-  traits: readonly [string, string, string, string];
   /** The ruling planet and what it stands for. A second ruler is the traditional one. */
   ruler: { name: string; line: string; traditional?: string };
   /** Three questions for the Tribe to talk over. */
   prompts: readonly [string, string, string];
   /** A light line the Tribe would recognize. */
   smile: string;
-  /** The sign's shadow side: Dawa's words (Tribe Shadows doc, Oct 26), reviewed. */
-  shadows: readonly string[];
 }
 
-// PLACEHOLDER: every sign's words except `shadows`, which are Dawa's. reviewed: false until he approves the rest.
+// PLACEHOLDER: ours, for Dawa to review. His own words for each Tribe (hello, traits, shadows, facts,
+// slogans) are in content/tribe-dawa.ts, and his story paragraphs in content/sun-stories.ts.
 export const TRIBE_WORDS: Record<SignId, TribeWords> = {
   aries: {
     symbol: 'The ram',
     fellows: 'Rams',
-    tagline: 'Your spark. Your people. Your place in the circle.',
-    traits: ['Courage', 'Initiative', 'Independence', 'Enthusiasm'],
     ruler: { name: 'Mars', line: 'Mars stands for action, drive, and the way you go after what matters.' },
     prompts: [
       'What have you had the courage to begin?',
@@ -40,13 +34,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'What did you start this year?',
     ],
     smile: '“I’m working on my patience. How long does that take?”',
-    shadows: ['Impatience', 'Impulsiveness', 'Tactlessness', 'Recklessness', 'Anger'],
   },
   taurus: {
     symbol: 'The bull',
     fellows: 'Bulls',
-    tagline: 'Steady ground. Good company. A place to stay a while.',
-    traits: ['Patience', 'Loyalty', 'Comfort', 'Persistence'],
     ruler: { name: 'Venus', line: 'Venus stands for love, beauty, and what you value enough to keep.' },
     prompts: [
       'What are you building slowly?',
@@ -54,13 +45,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you handle change you did not choose?',
     ],
     smile: '“I’m open to new ideas, as long as nothing changes.”',
-    shadows: ['Stubborn', 'Predictable'],
   },
   gemini: {
     symbol: 'The twins',
     fellows: 'Twins',
-    tagline: 'Two minds, many questions, and a room full of people who get it.',
-    traits: ['Wit', 'Versatility', 'Questions', 'Connection'],
     ruler: { name: 'Mercury', line: 'Mercury stands for thought, words, and the way ideas travel.' },
     prompts: [
       'What are you curious about this week?',
@@ -68,13 +56,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The best conversation you had lately',
     ],
     smile: '“I have two moods and both of them have opinions.”',
-    shadows: ['Flighty', 'Forgetful', 'Fickle', 'Distracted'],
   },
   cancer: {
     symbol: 'The crab',
     fellows: 'Crabs',
-    tagline: 'A soft place to land, among people who remember.',
-    traits: ['Care', 'Memory', 'Protection', 'Intuition'],
     ruler: { name: 'Moon', line: 'The Moon stands for feeling, home, and the way you look after people.' },
     prompts: [
       'Where do you feel most at home?',
@@ -82,13 +67,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you take care of yourself, not just everyone else?',
     ],
     smile: '“I’m not crying, I’m remembering something from 2009.”',
-    shadows: ['Insecure', 'Indirect', 'Evasive', 'Defensive'],
   },
   leo: {
     symbol: 'The lion',
     fellows: 'Lions',
-    tagline: 'Warmth, light, and a circle that cheers you on.',
-    traits: ['Warmth', 'Generosity', 'Pride', 'Play'],
     ruler: { name: 'Sun', line: 'The Sun stands for the self, vitality, and the light you bring to a room.' },
     prompts: [
       'What lights you up right now?',
@@ -96,13 +78,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you share the spotlight?',
     ],
     smile: '“I don’t need attention. I just like it when it finds me.”',
-    shadows: ['Vain', 'Melodramatic', 'Domineering'],
   },
   virgo: {
     symbol: 'The maiden',
     fellows: 'Virgos',
-    tagline: 'Care in the details, and people who notice them too.',
-    traits: ['Care', 'Precision', 'Service', 'Discernment'],
     ruler: { name: 'Mercury', line: 'Mercury stands for thought, words, and the way you sort and improve things.' },
     prompts: [
       'A small habit that changed a lot',
@@ -110,13 +89,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Something useful you learned this month',
     ],
     smile: '“I’m relaxed. I made a list of ways to relax.”',
-    shadows: ['Judgmental', 'Rigid', 'Nitpicky'],
   },
   libra: {
     symbol: 'The scales',
     fellows: 'Librans',
-    tagline: 'Balance, beauty, and good company to share them with.',
-    traits: ['Harmony', 'Fairness', 'Grace', 'Partnership'],
     ruler: { name: 'Venus', line: 'Venus stands for love, beauty, and the way you bring people together.' },
     prompts: [
       'What does a fair outcome look like to you?',
@@ -124,13 +100,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you decide when both sides are right?',
     ],
     smile: '“I can’t decide whether this is funny. What do you think?”',
-    shadows: ['Noncommittal', 'Indecisive', 'Evasive'],
   },
   scorpio: {
     symbol: 'The scorpion',
     fellows: 'Scorpios',
-    tagline: 'Depth, trust, and people who go all the way in.',
-    traits: ['Depth', 'Loyalty', 'Intensity', 'Renewal'],
     ruler: {
       name: 'Pluto',
       traditional: 'Mars',
@@ -142,13 +115,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The question you keep coming back to',
     ],
     smile: '“I’ll tell you how I feel. Eventually. Maybe.”',
-    shadows: ['Suspicious', 'Secretive', 'Vindictive'],
   },
   sagittarius: {
     symbol: 'The archer',
     fellows: 'Archers',
-    tagline: 'Wide horizons, big questions, and friends for the road.',
-    traits: ['Optimism', 'Freedom', 'Honesty', 'Adventure'],
     ruler: { name: 'Jupiter', line: 'Jupiter stands for growth, faith, and the urge to see more.' },
     prompts: [
       'Where do you want to go next?',
@@ -156,13 +126,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The best thing a stranger taught you',
     ],
     smile: '“I’m not late. I took the scenic route through three other plans.”',
-    shadows: ['Naive', 'Reckless', 'Restless'],
   },
   capricorn: {
     symbol: 'The sea goat',
     fellows: 'Goats',
-    tagline: 'Steady climbing, good footing, and people who respect the work.',
-    traits: ['Discipline', 'Ambition', 'Responsibility', 'Endurance'],
     ruler: { name: 'Saturn', line: 'Saturn stands for structure, time, and what you build to last.' },
     prompts: [
       'What are you working toward this year?',
@@ -170,13 +137,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Advice you would give your younger self',
     ],
     smile: '“I scheduled some spontaneity for Thursday.”',
-    shadows: ['Rigid', 'Uptight', 'Compulsive'],
   },
   aquarius: {
     symbol: 'The water bearer',
     fellows: 'Water bearers',
-    tagline: 'Fresh ideas, a common cause, and room to be yourself.',
-    traits: ['Originality', 'Friendship', 'Vision', 'Independence'],
     ruler: {
       name: 'Uranus',
       traditional: 'Saturn',
@@ -188,13 +152,10 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The community that shaped you',
     ],
     smile: '“I’m a team player. The team just hasn’t caught up yet.”',
-    shadows: ['Dogmatic', 'Fanatical', 'Impersonal'],
   },
   pisces: {
     symbol: 'The fish',
     fellows: 'Fish',
-    tagline: 'Dreams, compassion, and a current that carries you home.',
-    traits: ['Compassion', 'Imagination', 'Intuition', 'Empathy'],
     ruler: {
       name: 'Neptune',
       traditional: 'Jupiter',
@@ -206,7 +167,6 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Something that moved you this week',
     ],
     smile: '“I didn’t forget. I was somewhere else for a minute.”',
-    shadows: ['Passive', 'Impressionable', 'Ungrounded'],
   },
 };
 
@@ -221,11 +181,19 @@ export const tribePage = {
   metaTitle: (sign: string) => `The ${sign} Tribe`,
   description: (sign: string) => `Your Tribe home on AstroTribes: what ${sign} shares, and the people who share it.`,
 
+  // Dawa (Oct 23 Tribe page doc): "Welcome Home!!" and "Because you are unique, but never alone".
   hero: {
     eyebrow: 'Your Tribe',
     line: 'Welcome home,',
-    accent: (sign: string) => `${sign}.`,
+    accent: (sign: string) => `${sign}!`,
+    lede: 'Because you are unique, but never alone.',
     note: 'Free with an account. No payment.',
+  },
+
+  // Dawa's "Hello" and story paragraphs (content/tribe-dawa.ts, content/sun-stories.ts).
+  hello: {
+    eyebrow: (sign: string) => `Hello, ${sign}`,
+    story: 'Your Tribe’s story',
   },
 
   signature: {
@@ -242,9 +210,47 @@ export const tribePage = {
         'But keep in mind, the shadow is as valid as the Tribe’s more traditionally positive qualities. The shadow exists because of the Sun’s light. There cannot be one without the other. To fully understand a zodiac sign’s energy, you must know all aspects of each sign.',
       ],
     },
-    famous: (sign: string) => `Well-known members of the ${sign} Tribe`,
-    facts: { dates: 'Sun dates', element: 'Element', mode: 'Mode', symbol: 'Symbol', ruler: 'Ruling planet' },
+    facts: {
+      dates: 'Sun dates',
+      latin: 'The name',
+      element: 'Element',
+      mode: 'Mode',
+      symbol: 'Symbol',
+      ruler: 'Ruling planet',
+      house: 'House affinity',
+      season: 'Season',
+      stars: 'Key stars',
+    },
+    traits: 'Traits',
+    didYouKnow: 'Did you know?',
     traditional: (name: string) => `${The(name)} is the traditional ruler.`,
+  },
+
+  famous: {
+    eyebrow: 'Tribe celebrities',
+    title: (sign: string) => `Well-known members of the ${sign} Tribe`,
+    lede: 'Oldest first. A name in blue opens their chart.',
+  },
+
+  // Filled from Today's sky (lib/tribe-news.ts) until Dawa's monthly news arrives.
+  news: {
+    eyebrow: 'News flash',
+    title: (sign: string) => `This week in the ${sign} sky`,
+    ruler: (planet: string, sign: string, retrograde: boolean) =>
+      `Your ruling planet, ${The(planet)}, is in ${sign}${retrograde ? ', and retrograde' : ''}.`,
+    visiting: (bodies: string[], sign: string) => {
+      const names = bodies.map((b, i) => (i === 0 ? The(b) : the(b)));
+      const list = names.length > 2 ? `${names.slice(0, -1).join(', ')}, and ${names.at(-1)}` : names.join(' and ');
+      return `${list} ${names.length > 1 ? 'are' : 'is'} in ${sign} now.`;
+    },
+    nobody: (sign: string) => `No planet is in ${sign} right now.`,
+    moonVisit: (sign: string) => `The Moon visits ${sign} on`,
+    lunation: { full: (sign: string) => `Full Moon in ${sign}:`, new: (sign: string) => `New Moon in ${sign}:` },
+    ingress: skyCopy.soon.ingress,
+    leaves: (body: string, sign: string) => `${The(body)} leaves for ${sign}`,
+    retrograde: skyCopy.soon.retrograde,
+    direct: skyCopy.soon.direct,
+    more: { href: '/sky', label: 'See all of today’s sky' },
   },
 
   // Key names come from lib/keys.ts: the counts are written around them.

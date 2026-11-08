@@ -11,8 +11,12 @@ import { TribeCard } from '@/components/TribeCard';
 import { TribePainting } from '@/components/TribePainting';
 import { famousByName } from '@/content/famous-charts';
 import { TRIBE_FAMOUS } from '@/content/tribe-famous';
+import { SUN_STORIES } from '@/content/sun-stories';
+import { TRIBE_DAWA, starList } from '@/content/tribe-dawa';
 import { TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
-import { KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
+import { TribeNewsFlash } from '@/components/TribeNewsFlash';
+import { tribeNews } from '@/lib/tribe-news';
+import { houseOf, KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
 import { GuestOnly, PrimaryAction } from '@/components/HeaderAccount';
 import { PRIMARY_ACTION } from '@/lib/site';
 
@@ -30,6 +34,9 @@ import { PRIMARY_ACTION } from '@/lib/site';
 // Rhythm: the hero on surface-hero, then the page tone and the band alternating. No textures:
 // Kirstie's paintings have no texture cut.
 export const dynamicParams = false;
+
+// The News Flash reads Today's sky: rebuilt hourly, like /sky.
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return SIGN_IDS.map((sign) => ({ sign }));
@@ -52,6 +59,9 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
 
   const def = SIGNS[sign];
   const words = TRIBE_WORDS[sign];
+  const dawa = TRIBE_DAWA[sign];
+  const house = houseOf(dawa.house);
+  const news = tribeNews(sign);
   const name = def.name;
   const element = copy.element[def.element];
   const index = SIGN_IDS.indexOf(sign);
@@ -63,48 +73,123 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
   return (
     <>
       <div className="bg-surface-hero">
-        <div className="mx-auto grid max-w-content items-center gap-10 px-4 pt-31 pb-14 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:gap-14 md:px-6 md:pt-38 md:pb-20">
+        <div className="mx-auto grid max-w-content items-center gap-10 px-4 pt-31 pb-14 md:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] md:gap-12 md:px-6 md:pt-38 md:pb-20">
           <div className="min-w-0">
             <Eyebrow>
               {copy.hero.eyebrow} · {signDates(sign)}
             </Eyebrow>
-            <Headline as="h1" size="xl" line={copy.hero.line} accent={copy.hero.accent(name)} />
-            <Lede>{words.tagline}</Lede>
+            <p className="mb-3 type-poster text-[1.5rem] leading-tight text-highlight md:text-[1.875rem]">
+              {dawa.slogans.join(' · ')}
+            </p>
+            <Headline
+              as="h1"
+              size="xl"
+              line={copy.hero.line}
+              accent={copy.hero.accent(name)}
+              className="text-[clamp(2.75rem,1.6rem+4vw,5rem)]!"
+            />
+            <Lede>{copy.hero.lede}</Lede>
             <div className="mt-6">
               <TribeBadge sign={sign} element={def.element} label={`${element} · ${words.symbol}`} />
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
               <PrimaryAction size="lg" />
               <GuestOnly>
-              <p className="type-caption text-ink-500">{copy.hero.note}</p>
-            </GuestOnly>
+                <p className="type-caption text-ink-500">{copy.hero.note}</p>
+              </GuestOnly>
             </div>
           </div>
           <TribePainting
             sign={sign}
-            sizes="(min-width: 48rem) 26rem, calc(100vw - 2rem)"
+            sizes="(min-width: 48rem) 24rem, calc(100vw - 2rem)"
             priority
             className="mx-auto md:mx-0 md:justify-self-end"
           />
         </div>
       </div>
 
-      <Section labelledBy="signature-title">
+      <Section labelledBy="hello-title">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16">
+          <div className="min-w-0">
+            <h2 id="hello-title" className="mb-4 type-label text-ink-500">
+              {copy.hello.eyebrow(name)}
+            </h2>
+            <p className="max-w-[34ch] font-display text-[1.5rem] leading-snug text-ink-900 md:text-[1.875rem]">
+              {dawa.hello}
+            </p>
+            <h3 className="mt-10 type-label text-ink-500">{copy.hello.story}</h3>
+            {SUN_STORIES[sign].split('\n\n').map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} className="mt-3 max-w-[65ch] type-body text-ink-700">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          <div className="grid content-start gap-10">
+            <dl className="grid content-start border-b border-ink-200">
+              {[
+                [copy.signature.facts.dates, signDates(sign)],
+                [copy.signature.facts.latin, dawa.latin.text],
+                [copy.signature.facts.element, element],
+                [copy.signature.facts.mode, copy.mode[def.mode]],
+                [copy.signature.facts.symbol, words.symbol],
+              ].map(([label, value]) => (
+                <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
+                  <dt className="type-label text-ink-500">{label}</dt>
+                  <dd className="type-body-sm text-ink-900">{value}</dd>
+                </div>
+              ))}
+              <div className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
+                <dt className="type-label text-ink-500">{copy.signature.facts.ruler}</dt>
+                <dd className="type-body-sm text-ink-700">
+                  <span className="font-semibold text-ink-900">{words.ruler.name}</span>
+                  <span className="mt-1 block">{words.ruler.line}</span>
+                </dd>
+              </div>
+              {[
+                [copy.signature.facts.house, `${house.roman} ${house.name}: ${house.question}`],
+                [copy.signature.facts.season, dawa.season.text],
+                [copy.signature.facts.stars, starList(dawa.stars)],
+              ].map(([label, value]) => (
+                <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
+                  <dt className="type-label text-ink-500">{label}</dt>
+                  <dd className="type-body-sm text-ink-900">{value}</dd>
+                </div>
+              ))}
+            </dl>
+            {dawa.didYouKnow.length > 0 ? (
+              <div>
+                <h3 className="type-label text-ink-500">{copy.signature.didYouKnow}</h3>
+                <ul role="list" className="mt-2 grid gap-3">
+                  {dawa.didYouKnow.map((fact) => (
+                    <li key={fact.slice(0, 24)} className="border-l-2 border-gold-500 pl-4 type-body-sm text-ink-700">
+                      {fact}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </Section>
+
+      <Section labelledBy="signature-title" band>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16">
           <div className="min-w-0">
             <Eyebrow>{copy.signature.eyebrow}</Eyebrow>
             <Headline id="signature-title" line={copy.signature.line(name)} accent={copy.signature.accent} />
-            <ul role="list" className="mt-6 grid max-w-[34rem] grid-cols-2 gap-x-6 gap-y-1">
-              {words.traits.map((trait) => (
+            <h3 className="sr-only">{copy.signature.traits}</h3>
+            <ul role="list" className="mt-6 flex max-w-[40rem] flex-wrap gap-x-6 gap-y-1">
+              {dawa.traits.map((trait) => (
                 <li key={trait} className="font-display text-[1.625rem] leading-snug text-ink-900 md:text-[2rem]">
                   {trait}
                 </li>
               ))}
             </ul>
+            {dawa.aside ? <p className="mt-3 type-body text-ink-700">{dawa.aside}</p> : null}
             <div className="mt-10">
               <h3 className="type-label text-ink-500">{copy.signature.shadow.label}</h3>
-              <ul role="list" className="mt-2 flex max-w-[34rem] flex-wrap gap-x-5 gap-y-1">
-                {words.shadows.map((shadow) => (
+              <ul role="list" className="mt-2 flex max-w-[40rem] flex-wrap gap-x-5 gap-y-1">
+                {dawa.shadows.map((shadow) => (
                   <li key={shadow} className="font-display text-[1.25rem] italic leading-snug text-ink-700 md:text-[1.375rem]">
                     {shadow}
                   </li>
@@ -123,51 +208,35 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
               </blockquote>
             </figure>
           </div>
-          <div className="grid content-start gap-10">
-            <dl className="grid content-start border-b border-ink-200">
-              {[
-                [copy.signature.facts.dates, signDates(sign)],
-                [copy.signature.facts.element, element],
-                [copy.signature.facts.mode, copy.mode[def.mode]],
-                [copy.signature.facts.symbol, words.symbol],
-              ].map(([label, value]) => (
-                <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-                  <dt className="type-label text-ink-500">{label}</dt>
-                  <dd className="type-body-sm text-ink-900">{value}</dd>
-                </div>
-              ))}
-              <div className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-                <dt className="type-label text-ink-500">{copy.signature.facts.ruler}</dt>
-                <dd className="type-body-sm text-ink-700">
-                  <span className="font-semibold text-ink-900">{words.ruler.name}</span>
-                  <span className="mt-1 block">{words.ruler.line}</span>
-                </dd>
-              </div>
-            </dl>
-            <div>
-              <h3 className="type-label text-ink-500">{copy.signature.famous(name)}</h3>
-              <ul role="list" className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-                {TRIBE_FAMOUS[sign].map((person) => {
-                  const chart = famousByName(person);
-                  return (
-                    <li key={person} className="type-body-sm text-ink-900">
-                      {chart ? (
-                        <Link
-                          href={`/famous/${chart.slug}`}
-                          className="text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
-                        >
-                          {person}
-                        </Link>
-                      ) : (
-                        person
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
+          <TribeNewsFlash sign={sign} news={news} />
         </div>
+      </Section>
+
+      <Section labelledBy="famous-title">
+        <Eyebrow>{copy.famous.eyebrow}</Eyebrow>
+        <h2 id="famous-title" className="type-heading-2 font-normal text-ink-900">
+          {copy.famous.title(name)}
+        </h2>
+        <p className="mt-2 type-body-sm text-ink-500">{copy.famous.lede}</p>
+        <ul role="list" className="mt-6 columns-2 gap-x-6 sm:columns-3 lg:columns-4">
+          {TRIBE_FAMOUS[sign].map((person) => {
+            const chart = famousByName(person);
+            return (
+              <li key={person} className="break-inside-avoid py-1 type-body-sm text-ink-900">
+                {chart ? (
+                  <Link
+                    href={`/famous/${chart.slug}`}
+                    className="text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+                  >
+                    {person}
+                  </Link>
+                ) : (
+                  person
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </Section>
 
       <Section labelledBy="people-title" band>
