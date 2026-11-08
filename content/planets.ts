@@ -24,6 +24,7 @@
 import type { BodyId, HouseNumber, SignId } from '@/lib/keys';
 import type { SkyId } from '@/lib/sky';
 import { PLANET_DRAFTS } from './planet-drafts';
+import { SUN_STORIES } from './sun-stories';
 import { the, The } from './the';
 
 export interface PlanetContent {
@@ -136,7 +137,7 @@ const sun: PlanetContent = {
     12: 'The twelfth house is the “last” house and brings a cycle of unfolding to its conclusion. It is about integrating the experiences of incarnation, and preparation for a new beginning: spiritual rebirth. It is also where we face the challenges of letting go of past or unhealthy patterns and habits: relinquishment and surrender. The twelfth is the realm of the unconscious: the unaddressed, the unacknowledged, the subconscious mind, the realm of dreams.',
   },
   housesNote: 'If your Sun is in a house, that house is strongly emphasized as integral to your core identity. It is how you most deeply manifest your tribe’s energy. Whichever planet or point is in a house, it is expressed through that house’s meaning.',
-  source: 'Sign lines by Dawa (The twelve signs, Nov 5) and house lines by Dawa (The Houses, Nov 5).',
+  source: 'Sign lines by Dawa (his story for each Tribe, Nov 6, then The twelve signs, Nov 5) and house lines by Dawa (The Houses, Nov 5).',
   reviewed: false,
 };
 
@@ -553,10 +554,18 @@ function withDrafts(planet: PlanetContent): PlanetContent {
   return { ...planet, signs, houses };
 }
 
+/** The Sun's sign lines led by Dawa's story for each Tribe (his Nov 7 note 12), his twelve signs after. */
+function withStories(planet: PlanetContent): PlanetContent {
+  if (planet.body !== 'sun') return planet;
+  const signs: Partial<Record<SignId, string>> = {};
+  for (const [sign, story] of Object.entries(SUN_STORIES) as [SignId, string][]) signs[sign] = joined(story, planet.signs[sign]);
+  return { ...planet, signs };
+}
+
 /** The planets with a page, in the order of lib/keys.ts, with their drafted lines merged in. */
 export const PLANET_PAGES: readonly PlanetContent[] = [
   sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto, northNode, southNode, chiron, galacticCenter,
-].map(withDrafts);
+].map(withDrafts).map(withStories);
 
 export const planetPage = (body: BodyId): PlanetContent | undefined => PLANET_PAGES.find((p) => p.body === body);
 
