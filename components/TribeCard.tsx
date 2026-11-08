@@ -10,7 +10,7 @@ const ELEMENT_NAME = { fire: 'Fire', earth: 'Earth', air: 'Air', water: 'Water' 
 
 /**
  * One of the 12 Tribes: Kirstie Connon's painting of the sign on top (David, Nov 4: her paintings
- * belong to the Tribes, Jane's to the backgrounds), square so her glyph and signature stay whole,
+ * belong to the Tribes, the ink landscapes to the backgrounds), square so her glyph and signature stay whole,
  * then the name and dates, with the glyph above the element badge on the right from 40rem, stacked
  * under them on a phone. The image is decorative here (the link names the sign) and lazy; the list
  * that holds the cards carries her credit. No text touches the image.

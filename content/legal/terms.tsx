@@ -83,8 +83,8 @@ export const terms = {
             describes, and you can take it back by deleting your account.
           </p>
           <p>
-            The glyphs are by Lama Dawa and the paintings by Jane Kwan; they belong to them and are
-            used here with their permission. The AstroTribes name, the 28 Keys and their names, the
+            The glyphs are by Lama Dawa and the Tribe paintings by Kirstie Connon; they belong to them
+            and are used here with their permission. The ink landscapes are in the public domain. The AstroTribes name, the 28 Keys and their names, the
             design, and the software belong to [operator]. Please do not copy or resell them.
           </p>
         </>

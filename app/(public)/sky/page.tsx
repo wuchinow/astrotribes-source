@@ -68,7 +68,7 @@ function changeText(change: Change) {
  * skyNow through lib/today-sky.ts. Public since 1d: it no longer sits behind the passcode.
  *
  * Art: a telescope image beside the hero's words (David, Nov 4), Cassini's Saturn backlit by the Sun
- * in a night window, credited in the footer. The page carries no Jane wash.
+ * in a night window, credited in the footer. The page carries no painting wash.
  */
 export default function SkyPage() {
   const sky = todaySky(new Date());

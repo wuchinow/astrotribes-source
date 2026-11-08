@@ -1,4 +1,4 @@
-// AA over Jane's washes, across the whole wash range, in both moods (U10 and U11, made repeatable).
+// AA over the washes, across the whole wash range, in both moods (U10 and U11, made repeatable).
 //
 // For every wash piece and every cut the site serves, the served file's pixels are composited the
 // way the browser does, in sRGB, at a normal blend in both moods (v3.4 retired the Night multiply):

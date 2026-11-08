@@ -76,33 +76,26 @@ describe('the art manifest', () => {
     expect((WASHES.p7 as { night?: string }).night).toBe('p9');
   });
 
-  it('P7 and P9 use the confirmed windows: wide at desktop, tall on phones (David, Sep 25)', () => {
+  it('P7 and P9 use a wide window at desktop and a tall one on phones (David, Sep 25)', () => {
     expect(WASHES.p7.use).toMatchObject({ lg: 'wide', sm: 'tall' });
     expect(WASHES.p9.use).toMatchObject({ lg: 'wide', sm: 'tall' });
-    // The wide P7 window keeps the left seal column whole.
-    const column = WASHES.p7.marks.find((m) => m.label.includes('left column'))!;
-    const wide = WASHES.p7.cuts.wide.box;
-    expect(column.box[1] >= wide[1] && column.box[1] + column.box[3] <= wide[1] + wide[3]).toBe(true);
   });
 
-  // The caption names the medium for the About page; the site shows none under a piece (1h).
-  it('every piece is a flagged placeholder with a caption, and the web-size sources are noted', () => {
+  // The caption names the artist and title for the About page; the site shows none under a piece (1h).
+  // Since Nov 8 (David) every piece is a public domain ink landscape, so no earlier artist is named.
+  it('every piece is a flagged public domain landscape with a caption and alt text', () => {
     for (const id of ids) {
       const piece = ART[id];
       expect(piece.approved).toBe(false);
-      expect(piece.caption).toMatch(/^(Painting|Collage|Calligraphy) by Jane Kwan$/);
+      expect(piece.source).toMatch(/^asian-[a-z0-9-]+\.jpg$/);
+      expect(piece.caption.length).toBeGreaterThan(5);
+      expect(piece.caption).not.toMatch(/Jane/);
       expect(piece.alt.length).toBeGreaterThan(20);
     }
-    for (const p of ['P1', 'P2', 'P3', 'P4', 'P5', 'P8']) {
-      const piece = Object.values(ART).find((a) => a.p === p)!;
-      expect(piece.source_note, p).toBe('web-size file; ask Jane for the original');
-    }
-    expect(WASHES.p10.orientation).toBe('unconfirmed');
   });
 
   it('framed pieces render no wider than half their cropped pixels', () => {
     for (const piece of Object.values(FRAMED)) {
-      if (piece.stem === 'p2-black-arch') continue; // accepted at 1x in the Tribe cards (David, Sep 25)
       expect(piece.maxCssWidth).toBe(Math.floor(piece.crop[2] / 2));
     }
   });

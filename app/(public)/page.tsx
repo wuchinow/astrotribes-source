@@ -34,7 +34,7 @@ export const revalidate = 86400;
 // The landing page, in the order of the brief's MVP row and the design system's
 // Section card: one headline and at most one primary action per section.
 //
-// Jane's art is the background (David, Nov 4): the hero's wash (IMG_9821) and the night band's framed
+// The ink landscapes are the background (David, Nov 4 and 8): the hero's wash (h) and the night band's framed
 // piece (P1); P5 sits in the footer. The Tribe cards carry Kirstie Connon's paintings, credited in the
 // footer. The Keys cards carry the sky: one telescope image per card (1h, design system v23's
 // card-grid exception), and the next step one more of its own, Andromeda beside its text (David, Nov 4).
@@ -48,7 +48,7 @@ export default function HomePage() {
   const season = sunSeasonSign(new Date());
   return (
     <>
-      {/* Hero: Jane's ink wash as wallpaper under the nav, a frosted panel, and pins. */}
+      {/* Hero: the misty river wash as wallpaper under the nav, a frosted panel, and pins. */}
       <ArtWash piece="h" top>
         <div className="mx-auto grid min-h-[70dvh] max-w-content items-center gap-6 px-4 pt-27 pb-12 md:grid-cols-[minmax(0,36rem)_1fr] md:items-end md:px-6 lg:items-center md:pt-38 md:pb-20 lg:pb-34">
           <div className="panel-frost p-6 md:p-10">

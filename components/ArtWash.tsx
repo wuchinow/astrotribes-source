@@ -14,7 +14,7 @@ interface ArtWashProps {
 }
 
 /**
- * One of Jane Kwan's washes as wallpaper behind a page or section. It is a CSS background chosen by
+ * One of the ink landscape washes as wallpaper behind a page or section. It is a CSS background chosen by
  * the region's data-wash and the visitor's data-art on <html> (lib/art-assets.ts), so a pre-built
  * page shows the right painting before first paint and None downloads nothing. Text goes on a
  * frosted panel, never on the art. As wallpaper, it is credited in the footer.

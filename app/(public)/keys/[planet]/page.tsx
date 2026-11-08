@@ -38,7 +38,7 @@ const linkClass = 'inline-flex min-h-touch items-center type-ui text-cobalt-600 
  * and public like the 28 Keys page; no engine, no data. Names, glosses, signs, and houses come from
  * lib/keys.ts and Dawa's words from content/planets.ts, so a rename lands here too. The hero is the
  * words beside a telescope picture of the planet in a night window (David, Nov 4, the Today's sky
- * pattern; its credit is in the footer), so the page carries no Jane wash; below it the page is one
+ * pattern; its credit is in the footer), so the page carries no painting wash; below it the page is one
  * region on the page tone. The Galactic Center sits at the same degree for everyone, so its page has
  * a house key and house lines only (3x, Nov 6). A line or note can run to several paragraphs.
  */

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { KeyChip } from '@/components/KeyChip';
 import { NightBand } from '@/components/NightBand';
+import { OldPrint } from '@/components/OldPrint';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeBadge } from '@/components/TribeBadge';
@@ -18,6 +19,7 @@ import { TribeNewsFlash } from '@/components/TribeNewsFlash';
 import { tribeNews } from '@/lib/tribe-news';
 import { houseOf, KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
 import { GuestOnly, PrimaryAction } from '@/components/HeaderAccount';
+import { CARTOONS, PLATES, TRIBE_CARTOON } from '@/lib/old-prints';
 import { PRIMARY_ACTION } from '@/lib/site';
 
 // The 12 Tribe pages (3a), from David's "warm community" direction (Oct 21), reworked after a UX
@@ -25,11 +27,14 @@ import { PRIMARY_ACTION } from '@/lib/site';
 // its strengths; how the keys split a Tribe; questions to bring; the element family), and what
 // arrives with members is one band, said as a promise rather than as empty placeholders. Static: no database.
 //
-// Art (David, Nov 4): Kirstie Connon's paintings belong to the Tribes, Jane's to the backgrounds. The
+// Art (David, Nov 4): Kirstie Connon's paintings belong to the Tribes, the ink landscapes to the backgrounds. The
 // hero carries Kirstie's painting of the sign, framed and credited under it, the one painting in the
-// first screen; the element family's cards carry hers too, credited under the list. Jane's stay as
+// first screen; the element family's cards carry hers too, credited under the list. The landscapes stay as
 // background: the night band's P8 and the next step's painted edge P4. Members' gallery art comes
 // with layer 3.
+//
+// Old prints (4j, David, Nov 8): the sign's Urania's Mirror star card (1824) beside the facts, and a
+// Grandville engraving (1844) beside the smile, a stand-in for Dawa's humor section; lib/old-prints.ts.
 //
 // Rhythm: the hero on surface-hero, then the page tone and the band alternating. No textures:
 // Kirstie's paintings have no texture cut.
@@ -168,6 +173,12 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
                 </ul>
               </div>
             ) : null}
+            {/* The sign's Urania's Mirror card (4j), whole and full strength; credited in the footer. */}
+            <div>
+              <h3 className="type-label text-ink-500">{copy.signature.plate.label}</h3>
+              <p className="mt-2 mb-4 type-body-sm text-ink-700">{copy.signature.plate.line(name)}</p>
+              <OldPrint id={`plate-${sign}`} alt={PLATES[sign].alt} sizes="(min-width: 64rem) 24rem, calc(100vw - 2rem)" />
+            </div>
           </div>
         </div>
       </Section>
@@ -201,12 +212,21 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
                 </p>
               ))}
             </div>
-            <figure className="mt-10 border-l-2 border-gold-500 pl-5">
-              <figcaption className="type-label text-ink-500">{copy.signature.smileLabel}</figcaption>
-              <blockquote className="mt-2 max-w-[40ch] font-display text-[1.375rem] italic leading-snug text-ink-900">
-                {words.smile}
-              </blockquote>
-            </figure>
+            {/* The smile, with a Grandville engraving beside it (4j): a stand-in for Dawa's humor section. */}
+            <div className="mt-10 grid items-center gap-6 sm:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
+              <OldPrint
+                id={`cartoon-${TRIBE_CARTOON[sign]}`}
+                alt={CARTOONS[TRIBE_CARTOON[sign]].alt}
+                sizes="(min-width: 40rem) 17rem, calc(100vw - 2rem)"
+                className="max-w-[17rem]!"
+              />
+              <figure className="border-l-2 border-gold-500 pl-5">
+                <figcaption className="type-label text-ink-500">{copy.signature.smileLabel}</figcaption>
+                <blockquote className="mt-2 max-w-[40ch] font-display text-[1.375rem] italic leading-snug text-ink-900">
+                  {words.smile}
+                </blockquote>
+              </figure>
+            </div>
           </div>
           <TribeNewsFlash sign={sign} news={news} />
         </div>

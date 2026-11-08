@@ -223,6 +223,12 @@ export const tribePage = {
     },
     traits: 'Traits',
     didYouKnow: 'Did you know?',
+    // PLACEHOLDER: our words, beside the Urania's Mirror card (4j), until Dawa's copy replaces them.
+    plate: {
+      label: 'In the night sky',
+      line: (sign: string) =>
+        `The ${sign} constellation on a hand-colored star card from 1824. Its stars were punched through, so they shone when you held the card up to a lamp.`,
+    },
     traditional: (name: string) => `${The(name)} is the traditional ruler.`,
   },
 
@@ -237,7 +243,7 @@ export const tribePage = {
     eyebrow: 'News flash',
     title: (sign: string) => `This week in the ${sign} sky`,
     ruler: (planet: string, sign: string, retrograde: boolean) =>
-      `Your ruling planet, ${The(planet)}, is in ${sign}${retrograde ? ', and retrograde' : ''}.`,
+      `Your ruling planet, ${the(planet)}, is in ${sign}${retrograde ? ', and retrograde' : ''}.`,
     visiting: (bodies: string[], sign: string) => {
       const names = bodies.map((b, i) => (i === 0 ? The(b) : the(b)));
       const list = names.length > 2 ? `${names.slice(0, -1).join(', ')}, and ${names.at(-1)}` : names.join(' and ');

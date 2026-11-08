@@ -10,7 +10,7 @@ interface TintPanelProps {
   className?: string;
   /**
    * A painted edge: a framed piece at full strength in the panel's empty side (a band on top on a
-   * phone), with no text over it. No caption: Jane's credit lives in the footer (1h).
+   * phone), with no text over it. No caption: the painters' credit lives in the footer (1h).
    */
   art?: FramedId;
   /**

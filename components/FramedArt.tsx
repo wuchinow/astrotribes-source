@@ -13,7 +13,7 @@ interface FramedArtProps {
 }
 
 /**
- * One of Jane Kwan's pieces as the subject: full strength, whole (never cropped past the manifest),
+ * One of the site's paintings as the subject: full strength, whole (never cropped past the manifest),
  * no wider than half its pixels so it stays sharp at 2x. No caption under it: her credit lives in the
  * footer and in What stays true (David, Sep 25; 1h). Not governed by the wash setting and not hidden
  * by None.

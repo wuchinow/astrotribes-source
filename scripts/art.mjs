@@ -1,6 +1,7 @@
-// Cuts Jane Kwan's pieces for the web from the reference folder, per the manifest in lib/art.ts.
-// Run by hand after a manifest change (node scripts/art.mjs); never in the build. The sources stay in
-// ~/Developer/astrotribes/reference and never enter git; only the cuts in public/art/ do.
+// Cuts the site's paintings for the web, per the manifest in lib/art.ts. Run by hand after a manifest
+// change (node scripts/art.mjs); never in the build. The sources (Drive: AstroTribes 2.0 > Art/Design >
+// Asian public domain images) are read from ../reference/asian public domain images, or from the folder
+// named by ART_SOURCE, and never enter git; only the cuts in public/art/ do.
 //
 // For each cut: crop, resize to each width (never up), convert to sRGB, strip every bit of metadata
 // (phone photos can carry a location), and write AVIF and WebP with a content hash in the name, so
@@ -15,7 +16,7 @@ import { createJiti } from 'jiti';
 import sharp from 'sharp';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const reference = path.join(root, '..', 'reference', "jane's art");
+const reference = process.env.ART_SOURCE ?? path.join(root, '..', 'reference', 'asian public domain images');
 const out = path.join(root, 'public', 'art');
 
 const { ART } = await createJiti(import.meta.url).import(path.join(root, 'lib', 'art.ts'));

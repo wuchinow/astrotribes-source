@@ -14,7 +14,7 @@ interface ComingSoonProps {
   framed?: FramedId;
 }
 
-/** A page that exists before its feature does: one panel, a way home, and one of Jane's pieces. */
+/** A page that exists before its feature does: one panel, a way home, and one of the ink landscapes. */
 export function ComingSoon({ line, accent, body, wash, framed }: ComingSoonProps) {
   const panel = (
     <div className={framed ? 'max-w-[36rem]' : 'panel-frost max-w-[36rem] p-6 md:p-10'}>
