@@ -70,12 +70,14 @@ export const keysPage = {
     galacticCenter: 'No sign key. The Galactic Center sits in the same sign for everyone alive today.',
   } as Partial<Record<BodyId, string>>,
 
-  // PLACEHOLDER: the houses' heading and intro. "The unfolding journey" is Dawa's name for the twelve questions.
+  // PLACEHOLDER: the houses' heading. "The unfolding journey" is Dawa's name for the twelve questions.
+  // The intro opens with his line (Nov 7, note 13), the Sun's house as the example.
   houses: {
     eyebrow: 'The unfolding journey',
     line: 'Twelve houses.',
     accent: 'One question each.',
-    intro: 'A house key names the house a planet was in when you were born. Each house asks a question.',
+    intro:
+      'If your Sun is in a house, that house is strongly emphasized as integral to your core identity. A house key names the house a planet was in when you were born, and each house asks a question.',
     /** The section's name in the contents list. */
     contents: 'The twelve houses',
     /** For a screen reader, ahead of the Roman numeral. */
