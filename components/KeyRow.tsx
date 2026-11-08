@@ -12,6 +12,8 @@ interface KeyRowProps {
   missing?: string;
   /** A link to the body's own page, where Dawa has written one (content/planets.ts). */
   more?: { href: string; label: string };
+  /** A second link: the Moon's and Rising's twelve Clan and Vibe pages (4l). */
+  also?: { href: string; label: string };
 }
 
 function KeyCell({ keyDef, notes }: { keyDef: KeyDef; notes: KeyRowProps['notes'] }) {
@@ -36,7 +38,7 @@ function KeyCell({ keyDef, notes }: { keyDef: KeyDef; notes: KeyRowProps['notes'
  * quiet static chip. A stand-in glyph shows until Dawa brushes his own (his Nov 7 notes), uncredited.
  * From lg the row is three columns, body, sign key, house key; below it they stack in that order.
  */
-export function KeyRow({ body, notes, missing, more }: KeyRowProps) {
+export function KeyRow({ body, notes, missing, more, also }: KeyRowProps) {
   const sign = keyFor(body, 'sign');
   const house = keyFor(body, 'house');
   const glyph = drawn(body);
@@ -58,6 +60,15 @@ export function KeyRow({ body, notes, missing, more }: KeyRowProps) {
             className="mt-1 inline-flex min-h-touch items-center type-body-sm text-cobalt-600 underline-offset-4 hover:underline"
           >
             {more.label}
+          </Link>
+        ) : null}
+        {also ? (
+          <Link
+            href={also.href}
+            data-body-also=""
+            className="mt-1 flex min-h-touch items-center type-body-sm text-cobalt-600 underline-offset-4 hover:underline"
+          >
+            {also.label}
           </Link>
         ) : null}
       </div>

@@ -11,7 +11,7 @@ import { computeChart } from '@/lib/engine';
 import type { Chart } from '@/lib/engine';
 import type { memberClient } from './supabase/server';
 import { WHEEL_BODIES, type WheelInput } from './chart-wheel';
-import { BODY_IDS } from './keys';
+import { BODY_IDS, type SignId } from './keys';
 import { closeMatchesFrom, connectionPoints, type ConnectionPoints, type Longitudes } from './connection-points';
 import { ownPlacements } from './members';
 import { sharedKeys, splitShared, type PlacementRow, type SharedKey } from './shared-keys';
@@ -126,3 +126,13 @@ export function famousMatches(viewer: Extract<Viewer, { kind: 'member' }>): Famo
         b.points.total - a.points.total || b.personalCount - a.personalCount || a.worked.chart.name.localeCompare(b.worked.chart.name),
     );
 }
+
+/**
+ * The famous people with the Moon or the rising sign in one sign (the Clan and Vibe pages, 4l), oldest
+ * first, as the Tribe pages list theirs. Every famous chart has a birth time, so each has both.
+ */
+export const famousWith = (body: 'moon' | 'rising', sign: SignId): FamousChart[] =>
+  famousCharts()
+    .filter((worked) => worked.placements.some((row) => row.body === body && row.sign === sign))
+    .map((worked) => worked.chart)
+    .sort((a, b) => a.born - b.born || a.name.localeCompare(b.name));

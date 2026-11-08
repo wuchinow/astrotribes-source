@@ -15,6 +15,7 @@ import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { SUN_STORIES } from '@/content/sun-stories';
 import { TRIBE_DAWA, starList } from '@/content/tribe-dawa';
 import { TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
+import { clanLinks } from '@/content/clans';
 import { TribeNewsFlash } from '@/components/TribeNewsFlash';
 import { tribeNews } from '@/lib/tribe-news';
 import { houseOf, KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
@@ -265,8 +266,20 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         <Lede>{copy.people.lede(name)}</Lede>
         <ul role="list" className="mt-8 grid gap-6 md:grid-cols-3">
           {(['sunSign', 'moonSign', 'risingSign'] as const).map((key) => (
-            <li key={key} className="rounded-md border border-ink-200 bg-surface-200 p-5 shadow-rest">
+            <li key={key} className="grid content-start gap-3 rounded-md border border-ink-200 bg-surface-200 p-5 shadow-rest">
               <KeyChip keyId={key} showGloss />
+              {/* The Clan and Vibe pages (4l, Nov 8). */}
+              {key === 'moonSign' ? (
+                <Link href="/clans" className={textLink}>
+                  {clanLinks.allClans(KEYS.moonSign.name)}
+                  <span aria-hidden="true">{'→'}</span>
+                </Link>
+              ) : key === 'risingSign' ? (
+                <Link href="/vibes" className={textLink}>
+                  {clanLinks.allVibes(KEYS.risingSign.name)}
+                  <span aria-hidden="true">{'→'}</span>
+                </Link>
+              ) : null}
             </li>
           ))}
         </ul>

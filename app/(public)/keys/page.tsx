@@ -13,6 +13,7 @@ import { TintPanel } from '@/components/TintPanel';
 import { EXAMPLE_CHART } from '@/content/keys-example';
 import { keysPage } from '@/content/keys-page';
 import { planetHref, planetPage, planetPageCopy } from '@/content/planets';
+import { clanLinks } from '@/content/clans';
 import { cn } from '@/lib/cn';
 import { drawn } from '@/lib/glyphs';
 import {
@@ -225,6 +226,13 @@ export default function KeysPage() {
                             notes={keysPage.notes}
                             missing={keysPage.noKey[body]}
                             more={planet ? { href: planetHref(planet), label: planetPageCopy.more(BODIES[body].name) } : undefined}
+                            also={
+                              body === 'moon'
+                                ? { href: '/clans', label: clanLinks.allClans(KEYS.moonSign.name) }
+                                : body === 'rising'
+                                  ? { href: '/vibes', label: clanLinks.allVibes(KEYS.risingSign.name) }
+                                  : undefined
+                            }
                           />
                         </li>
                       );

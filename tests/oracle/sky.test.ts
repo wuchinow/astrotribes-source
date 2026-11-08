@@ -19,8 +19,11 @@ describe('the sky images', () => {
     expect(IDS).toEqual([
       'ring', 'keysSun', 'keysMoon', 'keysRising', 'andromeda', 'today', 'keysCenter', 'jupiter',
       'sun', 'moon', 'mercury', 'venus', 'mars', 'saturn', 'uranus', 'neptune', 'pluto',
-      'galacticCenter',
+      'galacticCenter', 'clanMoon', 'vibeRising',
     ]);
+    // Nov 8 (4l): the Clan pages' Moon and the Vibe pages' Earthrise, other cuts of the Moon page's and the Rising card's photos.
+    expect(credits.images.clanMoon.credit).toBe(credits.images.moon.credit);
+    expect(credits.images.vibeRising.credit).toBe(credits.images.keysRising.credit);
     // Nov 6: the Galactic Center's page has its own square cut of the 28 Keys page's image (Spitzer since Nov 8).
     expect(credits.images.galacticCenter.credit).toBe(credits.images.keysCenter.credit);
     expect(credits.images.jupiter.credit).toBe('NASA/JPL/Space Science Institute');
@@ -75,10 +78,10 @@ describe('the sky images', () => {
       let chroma = 0;
       for (let i = 0; i < data.length; i += 3) chroma = Math.max(chroma, Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]));
       // Some planets are nearly colorless in their own right, and their cuts stay that way: the Moon's
-      // photo is black and white (grey, under 30), Venus is pale cloud tops with a faint tan, and
+      // photo is black and white (grey, under 30, its Clan pages' cut too), Venus is pale cloud tops with a faint tan, and
       // Uranus a pale blue green, and the crescent Earth on Today's sky is white cloud and blue sea in
       // black space (all above 20).
-      if (id === 'moon' || id === 'keysMoon') expect(chroma, id).toBeLessThan(30);
+      if (id === 'moon' || id === 'keysMoon' || id === 'clanMoon') expect(chroma, id).toBeLessThan(30);
       else expect(chroma, id).toBeGreaterThan(['venus', 'uranus', 'today'].includes(id) ? 20 : 60);
     }
   });

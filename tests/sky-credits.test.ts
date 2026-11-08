@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { PLANET_PAGES, planetHref } from '@/content/planets';
+import { SIGN_IDS } from '@/lib/keys';
 import skyFiles from '@/public/sky-images/credits.json';
 import { SKY_PAGES } from '@/lib/sky';
 import { FLAMMARION } from '@/lib/flammarion';
@@ -29,7 +30,15 @@ describe('telescope credits in the footer', () => {
     const pictured = PLANET_PAGES.filter((planet) => planet.sky);
     for (const planet of pictured) expect(SKY_PAGES[planetHref(planet)]).toEqual([planet.sky]);
     for (const planet of PLANET_PAGES.filter((p) => !p.sky)) expect(SKY_PAGES[planetHref(planet)]).toBeUndefined();
-    expect(Object.keys(SKY_PAGES).sort()).toEqual([...Object.keys(PAGE_FILES), ...pictured.map(planetHref)].sort());
+    // The Clan and Vibe pages (4l): each kind shows one photo, named in its page file.
+    expect(skyIdsIn('app/(public)/clans/[sign]/page.tsx')).toEqual(['clanMoon']);
+    expect(skyIdsIn('app/(public)/vibes/[sign]/page.tsx')).toEqual(['vibeRising']);
+    for (const sign of SIGN_IDS) {
+      expect(SKY_PAGES[`/clans/${sign}`]).toEqual(['clanMoon']);
+      expect(SKY_PAGES[`/vibes/${sign}`]).toEqual(['vibeRising']);
+    }
+    const kin = SIGN_IDS.flatMap((sign) => [`/clans/${sign}`, `/vibes/${sign}`]);
+    expect(Object.keys(SKY_PAGES).sort()).toEqual([...Object.keys(PAGE_FILES), ...pictured.map(planetHref), ...kin].sort());
   });
 
   it('give each page one short line, NASA only, with every full credit kept in the manifest (David, Nov 4)', () => {
