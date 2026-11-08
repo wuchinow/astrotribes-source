@@ -1,6 +1,8 @@
 // Birth details and the member's own chart (2c): our words, not Dawa's. Every block is marked
 // PLACEHOLDER until his copy replaces it. Key names come from lib/keys.ts through KeyChip, never here.
 
+import { the } from './the';
+
 // PLACEHOLDER: the welcome steps.
 export const welcomeCopy = {
   title: 'Welcome',
@@ -22,8 +24,9 @@ export const welcomeCopy = {
   time: { label: 'Birth time', help: 'As close as you know it. A birth certificate often has it.' },
   place: { label: 'Birthplace', help: 'Start typing the town or city, then pick it from the list.' },
   unknownTime: "I don't know my birth time",
+  // A short form of Dawa's answer to "Why do you ask for my birth time?" (Nov 7).
   unknownTimeNote:
-    'That is fine. Without a time we can still read most of your chart. Rising and the twelve houses need one, and you can add it later from your account.',
+    'That is fine. Your time of birth dials in your rising sign and your houses, so those Keys wait for it. Most of your sign Keys still work without it, and you can add a time later from your account.',
   submit: 'Save and see my chart',
   submitEdit: 'Save changes',
   submitting: 'Saving',
@@ -56,7 +59,7 @@ export const yourChartCopy = {
   eyebrow: 'Your chart',
   line: 'Your three,',
   accent: 'saved.',
-  lede: 'Your Sun, Moon, and Rising, the start of your chart. The rest of your 28 Keys arrive here soon.',
+  lede: 'Your Sun, your Moon, and your rising sign start your chart. Your 28 Keys follow below.',
   /** On a picked sign: "You chose Leo. Virgo is the other one it could be." */
   picked: (chosen: string, other: string) => `You chose ${chosen}. ${other} is the other sign it could be.`,
   noTime: 'You saved your chart without a birth time, so Rising and the houses wait on one.',
@@ -64,15 +67,16 @@ export const yourChartCopy = {
   // (content/planets.ts). Key names arrive as arguments.
   keys: {
     eyebrow: 'Your Keys',
+    // Dawa's headline (Nov 7). He will rewrite the introduction later.
     line: 'Your planets,',
-    accent: 'in your own words.',
+    accent: 'your Keys.',
     lede: 'Each planet in your chart gives you two Keys: one from its sign and one from its house.',
     /** "Jupiter in Leo" */
     inSign: (planet: string, sign: string) => `${planet} in ${sign}`,
     /** "Jupiter in house X, Accomplishment" */
     inHouse: (planet: string, roman: string, name: string) => `${planet} in house ${roman}, ${name}`,
     noTime: (keyName: string) => `Your ${keyName} needs your birth time. Add it and it appears here.`,
-    more: (planet: string) => `All of ${planet}'s Keys`,
+    more: (planet: string) => `All of ${the(planet)}'s Keys`,
   },
   // The Chinese zodiac sign (3y, admin to-do): a small panel under Your Keys. PLACEHOLDER words for Dawa.
   chinese: {
@@ -91,7 +95,7 @@ export const yourChartCopy = {
     tribe: (sign: string) => `Meet the ${sign} Tribe`,
     tribeBody: 'Your Sun sign is your Tribe: the people who share it, and what you have in common.',
     cards: [
-      { href: '/keys', title: 'The 28 Keys', body: 'Every placement in your chart has a name and a meaning. Read them all.' },
+      { href: '/keys', title: 'The 28 Keys', body: 'Each Key unlocks a piece of your horoscope. Read them all.' },
       { href: '/oracle', title: 'The Daily Oracle', body: 'One hexagram and one card, new each day.' },
       { href: '/sky', title: "Today's sky", body: 'Where the Sun, the Moon, and every planet are right now.' },
       { href: '/members', title: 'Members', body: 'Find the members who share your Keys.' },

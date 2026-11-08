@@ -2,6 +2,7 @@
 // Dawa replaces them (the roadmap asks for his review before launch). Signs and bodies are named from
 // lib/keys.ts, never typed here.
 import type { MoonPhase, PlanetId } from '@/lib/today-sky';
+import { The } from './the';
 
 export const skyCopy = {
   placeholder: true,
@@ -41,9 +42,9 @@ export const skyCopy = {
   soon: {
     heading: 'Changing soon',
     label: 'The next seven days',
-    ingress: (body: string, sign: string) => `${body} moves into ${sign}`,
-    retrograde: (body: string, sign: string) => `${body} turns retrograde in ${sign}`,
-    direct: (body: string, sign: string) => `${body} turns direct in ${sign}`,
+    ingress: (body: string, sign: string) => `${The(body)} moves into ${sign}`,
+    retrograde: (body: string, sign: string) => `${The(body)} turns retrograde in ${sign}`,
+    direct: (body: string, sign: string) => `${The(body)} turns direct in ${sign}`,
     none: 'No planet changes sign or turns this week. The sky holds steady.',
   },
 

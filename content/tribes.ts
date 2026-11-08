@@ -5,6 +5,7 @@
 // are examples until members can join (layer 3 fills them from the database).
 
 import type { SignId } from '@/lib/keys';
+import { The } from './the';
 
 export interface TribeWords {
   /** The sign's symbol, in sentence case: "The ram". */
@@ -234,26 +235,28 @@ export const tribePage = {
     smileLabel: 'You will recognize this',
     // Dawa's words (Tribe Shadows doc, Oct 26), lightly edited for punctuation. Not a placeholder.
     shadow: {
-      label: 'The shadow side',
+      // Dawa, Nov 7: "Your Tribe’s Shadow Side".
+      label: 'Your Tribe’s shadow side',
       note: [
-        'Not every Tribe member necessarily has each of these shadows. They are not meant to insult. They are the potential pitfalls, and represent the shadow side of each zodiac sign.',
+        'Not every Tribe member necessarily has each of these shadows. They are not meant to insult! They are the potential pitfalls, and represent the shadow side of each zodiac sign.',
         'But keep in mind, the shadow is as valid as the Tribe’s more traditionally positive qualities. The shadow exists because of the Sun’s light. There cannot be one without the other. To fully understand a zodiac sign’s energy, you must know all aspects of each sign.',
       ],
     },
     famous: (sign: string) => `Well-known members of the ${sign} Tribe`,
     facts: { dates: 'Sun dates', element: 'Element', mode: 'Mode', symbol: 'Symbol', ruler: 'Ruling planet' },
-    traditional: (name: string) => `${name} is the traditional ruler.`,
+    traditional: (name: string) => `${The(name)} is the traditional ruler.`,
   },
 
   // Key names come from lib/keys.ts: the counts are written around them.
   people: {
-    eyebrow: 'Closer connections',
-    line: 'One Tribe,',
-    accent: (count: number) => `${count.toLocaleString('en-US')} kinds of you.`,
+    // Dawa, Nov 7: "Tighter connections" and "1728 possibilities", counted over his three, Tribe, Clan, and Vibe.
+    eyebrow: 'Tighter connections',
+    line: (count: number) => count.toLocaleString('en-US'),
+    accent: 'possibilities.',
     lede: (sign: string) =>
-      `Everyone here is ${article(sign)} ${sign} Sun. Your Moon, your rising sign, and the house your Sun sits in make you one of many kinds of ${sign}. Match on any of them to find the people closest to you.`,
-    sum: (moon: string, rising: string, house: string) =>
-      `Twelve ${moon}s times twelve ${rising}s times twelve ${house}s.`,
+      `Everyone here is ${article(sign)} ${sign} Sun. Your Moon sign and your rising sign make you one of 144 kinds of ${sign}, and one of 1,728 across all twelve Tribes. Match on all three to find the people closest to you.`,
+    sum: (tribe: string, moon: string, rising: string) =>
+      `Twelve ${tribe}s times twelve ${moon}s times twelve ${rising}s.`,
     action: 'Find your three',
   },
 

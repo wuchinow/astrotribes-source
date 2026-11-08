@@ -7,7 +7,7 @@ import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SkyWindow } from '@/components/SkyWindow';
 import { learnCopy } from '@/content/articles';
 import { PLANET_PAGES, paragraphs, planetPageCopy as copy, type PlanetContent } from '@/content/planets';
-import { GLYPHS } from '@/lib/glyphs';
+import { GLYPHS, drawn } from '@/lib/glyphs';
 import { BODIES, HOUSES, SIGN_IDS, keyFor } from '@/lib/keys';
 import { learnArticleFor } from '@/lib/substack';
 
@@ -67,7 +67,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
           <div className="min-w-0">
             <Eyebrow>{copy.eyebrow}</Eyebrow>
             <div className="flex items-center gap-4">
-              {GLYPHS[planet.body].credit !== null ? (
+              {drawn(planet.body) ? (
                 <GlyphIcon glyph={planet.body} size={48} className="text-ink-900" />
               ) : null}
               <Headline as="h1" line={`${body.name},`} accent={body.line.charAt(0).toLowerCase() + body.line.slice(1)} className="mb-0" />

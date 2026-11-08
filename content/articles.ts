@@ -12,6 +12,7 @@
 // and they keep what the feed cannot say: the series' part titles, its excerpts, and each planet.
 
 import type { BodyId } from '@/lib/keys';
+import { the } from './the';
 
 export const SUBSTACK_URL = 'https://docdawa.substack.com';
 
@@ -142,6 +143,5 @@ export const learnCopy = {
   videosHeading: 'Videos',
   videosComing: 'Dawa’s videos are on the way. They will show here as soon as the first one is ready.',
   /** On a planet's page under /keys. */
-  planetLink: (planet: string) =>
-    `Read Dawa’s article on ${planet === 'Sun' || planet === 'Moon' ? 'the ' : ''}${planet}`,
+  planetLink: (planet: string) => `Read Dawa’s article on ${the(planet)}`,
 };

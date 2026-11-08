@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useId, useRef, useState, type ReactNode } from 'react';
 import { chartWheelCopy } from '@/content/chart-wheel';
+import { Stressed } from './Stressed';
 import {
   ON_INNER_RING,
   cuspPlace,
@@ -276,7 +277,9 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
       </div>
 
       <div className="lg:col-start-2 lg:row-start-2">
-        <p className="text-ink-700">{words.body}</p>
+        <p className="text-ink-700">
+          <Stressed text={words.body} />
+        </p>
         <p className="mt-2 type-body-sm text-ink-700">{timeKnown ? words.houses : words.noTime}</p>
         <ul aria-label={chartWheelCopy.listLabel} className="mt-5 grid gap-x-3 gap-y-1 sm:grid-cols-2">
           {layout.bodies.map((b) => {

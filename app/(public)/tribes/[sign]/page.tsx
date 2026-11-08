@@ -172,17 +172,17 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
 
       <Section labelledBy="people-title" band>
         <Eyebrow>{copy.people.eyebrow}</Eyebrow>
-        <Headline id="people-title" line={copy.people.line} accent={copy.people.accent(12 * 12 * 12)} />
+        <Headline id="people-title" line={copy.people.line(12 * 12 * 12)} accent={copy.people.accent} />
         <Lede>{copy.people.lede(name)}</Lede>
         <ul role="list" className="mt-8 grid gap-6 md:grid-cols-3">
-          {(['moonSign', 'risingSign', 'sunHouse'] as const).map((key) => (
+          {(['sunSign', 'moonSign', 'risingSign'] as const).map((key) => (
             <li key={key} className="rounded-md border border-ink-200 bg-surface-200 p-5 shadow-rest">
               <KeyChip keyId={key} showGloss />
             </li>
           ))}
         </ul>
         <p className="mt-6 type-body-sm text-ink-700">
-          {copy.people.sum(KEYS.moonSign.name, KEYS.risingSign.name, KEYS.sunHouse.name)}
+          {copy.people.sum(KEYS.sunSign.name, KEYS.moonSign.name, KEYS.risingSign.name)}
         </p>
         <Button href={PRIMARY_ACTION.href} variant="tertiary" className="mt-2 -ml-2">
           {copy.people.action}
