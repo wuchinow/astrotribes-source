@@ -67,8 +67,8 @@ function changeText(change: Change) {
  * days, then where every planet is, then what changes in the next seven days. Every fact comes from
  * skyNow through lib/today-sky.ts. Public since 1d: it no longer sits behind the passcode.
  *
- * Art: a telescope image beside the hero's words (David, Nov 4), Cassini's Saturn backlit by the Sun
- * in a night window, credited in the footer. The page carries no painting wash.
+ * Art: a telescope image beside the hero's words (David, Nov 4), Artemis II's crescent Earth (Nov 8, in
+ * place of Cassini's Saturn) in a night window, credited in the footer. The page carries no painting wash.
  */
 export default function SkyPage() {
   const sky = todaySky(new Date());

@@ -145,43 +145,43 @@ export const SKY = {
     released: '2003-12-10',
   },
   today: {
-    stem: 'saturn-eclipse',
-    subject: 'Saturn backlit by the Sun, from Cassini ("The Day the Earth Smiled")',
-    // Nov 4 (David): pure NASA in place of the Great Observatories' galactic center, which was part ESA.
-    // Saved by the Claude extension into Drive (planet photos / today-earth-smiled.jpg).
-    source: 'today-earth-smiled.jpg',
-    size: [9000, 3500],
-    sha256: '028f7cea0875a6aad90456d1a8a25b52d31f4f9013d5bb0920a7f8c68d431455',
-    crop: [2750, 0, 3500, 3500],
+    stem: 'artemis-crescent-earth',
+    subject: "The Earth as a crescent, from Artemis II in lunar orbit",
+    // Nov 8 (David): in place of Cassini's "The Day the Earth Smiled". Artemis II's art002e014066,
+    // fetched by David's Chrome to his Desktop, then Drive (NASA planet photos / Sky image choices).
+    source: 'sky-2-artemis2-crescent-earth.jpg',
+    size: [5568, 3712],
+    sha256: '291b7d64308f198a1f81d89e7da84b786a4d33fd1194f55c0968607dc2bccb54',
+    crop: [1786, 900, 2800, 2800],
     levels: { black: 6, white: 255, gamma: 1 },
     strength: 0.9,
     widths: [1040, 640],
-    alt: 'Saturn seen from its night side, a dark globe ringed with sunlight, its rings glowing gold and blue',
-    credit: 'NASA/JPL-Caltech/Space Science Institute',
+    alt: 'The Earth as a thin crescent in black space, white clouds and blue ocean along its sunlit edge',
+    credit: 'NASA',
     tinted: false,
     license: 'NASA release; not copyrighted in the United States',
-    release: 'https://science.nasa.gov/resource/the-day-the-earth-smiled',
-    released: '2013-11-12',
+    release: 'https://images.nasa.gov/details/art002e014066',
+    released: '2026-04-06',
   },
   keysCenter: {
-    stem: 'chandra-galactic-center',
-    subject: 'The center of the Milky Way in X-rays, from Chandra',
-    // Nov 4 (David): pure NASA in place of the Great Observatories' arcs, which were part ESA. Saved by
-    // the Claude extension into Drive (planet photos / keys-galactic-center.jpg); cut inside the
-    // mosaic's zigzag edge.
-    source: 'keys-galactic-center.jpg',
-    size: [2987, 1158],
-    sha256: 'dfbb970e78a69c23c337a7b73a508efdcb13a60d206691e8000babf6ef1e9602',
-    crop: [400, 180, 2000, 800],
+    stem: 'spitzer-galactic-center',
+    subject: 'The center of the Milky Way in infrared, from Spitzer',
+    // Nov 8 (David): Spitzer's PIA03654 in place of Chandra's X-ray mosaic. Fetched by David's Chrome
+    // to his Desktop, then Drive (NASA planet photos / Sky image choices). A band through the core.
+    source: 'gc-1-spitzer-infrared.jpg',
+    size: [7002, 5050],
+    sha256: '0c3402601fa193afd2766ed70bc407f9526bb8a74df30f3099ab5974047a78a3',
+    crop: [550, 1500, 6000, 2400],
     levels: { black: 6, white: 255, gamma: 1 },
+    median: 3,
     strength: 0.9,
     widths: [1600, 800],
-    alt: 'The heart of our galaxy in X-rays, gold and red clouds scattered with bright points of light',
-    credit: 'NASA/UMass/D. Wang et al.',
+    alt: 'The crowded heart of our galaxy in infrared, a band of red dust and countless stars around a bright white core',
+    credit: 'NASA/JPL-Caltech',
     tinted: false,
-    license: 'NASA release; not copyrighted in the United States',
-    release: 'https://science.nasa.gov/resource/chandra-x-ray-mosaic-of-galactic-center',
-    released: '2002-01-10',
+    license: 'NASA and JPL release; not copyrighted in the United States',
+    release: 'https://science.nasa.gov/photojournal/a-cauldron-of-stars-at-the-galaxys-center/',
+    released: '2006-01-10',
   },
   // The Jupiter page's hero (David, Nov 4): Cassini's Jupiter, saved by David from the Photojournal
   // (file PIA04866.jpg, 1920x2400). Pure NASA, so public domain. Its release date waits on the catalog
@@ -365,24 +365,25 @@ export const SKY = {
     release: 'https://science.nasa.gov/photojournal/the-rich-color-variations-of-pluto/',
     released: '2015-09-24',
   },
-  // The Galactic Center's page (3x, Nov 6): a square closer in on the same Chandra mosaic as the 28
-  // Keys page's band, centered on the galaxy's heart (Sagittarius A*), so the two places are two cuts.
+  // The Galactic Center's page (3x, Nov 6; Spitzer since Nov 8): a square closer in on the same Spitzer
+  // image as the 28 Keys page's band, centered on the galaxy's heart, so the two places are two cuts.
   galacticCenter: {
-    stem: 'chandra-galactic-heart',
-    subject: 'The heart of the Milky Way in X-rays, from Chandra',
-    source: 'keys-galactic-center.jpg',
-    size: [2987, 1158],
-    sha256: 'dfbb970e78a69c23c337a7b73a508efdcb13a60d206691e8000babf6ef1e9602',
-    crop: [1060, 190, 720, 720],
+    stem: 'spitzer-galactic-heart',
+    subject: 'The heart of the Milky Way in infrared, from Spitzer',
+    source: 'gc-1-spitzer-infrared.jpg',
+    size: [7002, 5050],
+    sha256: '0c3402601fa193afd2766ed70bc407f9526bb8a74df30f3099ab5974047a78a3',
+    crop: [2350, 1500, 2400, 2400],
     levels: { black: 6, white: 255, gamma: 1 },
+    median: 3,
     strength: 0.9,
     widths: [720, 640],
-    alt: 'The center of our galaxy in X-rays, a bright white point inside glowing gold and red clouds',
-    credit: 'NASA/UMass/D. Wang et al.',
+    alt: 'The center of our galaxy in infrared, a bright white core inside red dust and dense stars',
+    credit: 'NASA/JPL-Caltech',
     tinted: false,
-    license: 'NASA release; not copyrighted in the United States',
-    release: 'https://science.nasa.gov/resource/chandra-x-ray-mosaic-of-galactic-center',
-    released: '2002-01-10',
+    license: 'NASA and JPL release; not copyrighted in the United States',
+    release: 'https://science.nasa.gov/photojournal/a-cauldron-of-stars-at-the-galaxys-center/',
+    released: '2006-01-10',
   },
 } as const satisfies Record<string, SkyImage>;
 
