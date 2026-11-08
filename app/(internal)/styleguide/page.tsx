@@ -307,9 +307,9 @@ export default function StyleguidePage() {
 
       <Section title="Glyphs (pending Dawa's review)">
         <p className="max-w-measure type-body-sm text-ink-700">
-          Signs and planets by Lama Dawa, traced Sep 23. Uranus, Pluto, and Chiron are placeholders
-          made with an image tool, not Dawa&apos;s, until he brushes his own. Glyphs without a
-          drawing show their text symbol.
+          Signs and planets by Lama Dawa, traced Sep 23 (Uranus and Pluto Nov 8). Chiron is a
+          placeholder made with an image tool, not Dawa&apos;s, until he brushes his own. Glyphs
+          without a drawing show their text symbol.
         </p>
         <div className="mt-4 flex flex-wrap gap-3 text-ink-900">
           {SIGN_IDS.map((id) => (

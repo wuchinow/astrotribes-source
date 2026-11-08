@@ -84,10 +84,10 @@ export const tribes = {
 export const keys = {
   placeholder: true, // PLACEHOLDER: headline, lede, and the link to the 28 Keys page
   eyebrow: 'The 28 Keys',
-  // The headline from Dawa's 28 Keys introduction (Nov 7).
-  line: 'Each Key unlocks a piece of your horoscope.',
-  accent: 'Start with five.',
-  lede: 'These five come from your Sun, Moon, and Rising. Join, and the other 23 open up.',
+  // Dawa's words (Nov 7), set in wood type between two pointing hands.
+  title: 'Find your Keys',
+  // The line from Dawa's 28 Keys introduction (Nov 7).
+  lede: 'Each Key unlocks a piece of your horoscope. These five come from your Sun, Moon, and Rising. Join, and the other 23 open up.',
   /** Under the cards, to the page that lists all 28 (1k). */
   more: { href: '/keys', label: 'See all 28 Keys' },
 } satisfies Block & Record<string, unknown>;

@@ -101,6 +101,7 @@ export default function KeysPage() {
     { id: HOUSES_ID, title: keysPage.houses.contents },
     { id: keysPage.example.id, title: keysPage.example.contents },
     { id: keysPage.connect.id, title: keysPage.connect.contents },
+    { id: keysPage.glance.id, title: keysPage.glance.contents },
   ];
   const contents = (linkClassName: string) =>
     sections.map((section) => (
@@ -155,9 +156,9 @@ export default function KeysPage() {
                 className="mt-8 grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] md:gap-8 md:p-8"
               >
                 <div className="flex items-center gap-3 md:block">
-                  {drawn('sun') ? <GlyphIcon glyph="sun" size={48} className="-ml-1 text-ink-900" /> : null}
+                  {drawn('sun') ? <GlyphIcon glyph="sun" size={72} className="-ml-1 text-ink-900" /> : null}
                   <div>
-                    <p className="type-heading-3 text-ink-900 md:mt-1">{BODIES.sun.name}</p>
+                    <p className="type-heading-2 text-ink-900 md:mt-1">{BODIES.sun.name}</p>
                     <p className="type-body-sm text-ink-500">{keysPage.how.whose(surname)}</p>
                   </div>
                 </div>
@@ -254,11 +255,11 @@ export default function KeysPage() {
                       {house.roman}
                     </span>
                     <div>
-                      <h3 className="font-body text-[1.25rem] font-semibold leading-snug text-ink-900">
+                      <h3 className="font-body text-[1.375rem] font-semibold leading-snug text-ink-900">
                         {house.name}
                       </h3>
-                      <p className="mt-1 type-body-sm text-ink-900">{house.question}</p>
-                      <p data-house-line="" className="mt-1 type-body-sm text-ink-500">
+                      <p className="mt-1 type-body text-ink-900">{house.question}</p>
+                      <p data-house-line="" className="mt-1 type-body text-ink-500">
                         {house.line}
                       </p>
                     </div>
@@ -347,9 +348,19 @@ export default function KeysPage() {
               />
             </section>
 
+            <section
+              id={keysPage.glance.id}
+              aria-labelledby={`${keysPage.glance.id}-title`}
+              className="mt-14 scroll-mt-8"
+            >
+              <Eyebrow>{keysPage.glance.eyebrow}</Eyebrow>
+              <Headline id={`${keysPage.glance.id}-title`} line={keysPage.glance.line} accent={keysPage.glance.accent} />
+              <KeysTable />
+            </section>
+
             <TintPanel className="mt-14" art="p3">
               <Eyebrow>{keysPage.nextStep.eyebrow}</Eyebrow>
-              <h2 className="type-heading-2 font-normal text-ink-900">{keysPage.nextStep.title}</h2>
+              <h2 className="type-display-lg text-ink-900">{keysPage.nextStep.title}</h2>
               <p className="mt-2 max-w-[56ch] text-ink-700">{keysPage.nextStep.body}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <PrimaryAction />
@@ -362,5 +373,82 @@ export default function KeysPage() {
         </div>
       </div>
     </>
+  );
+}
+
+/**
+ * Dawa's table of the 28 Keys (Nov 7, note 25): one row per planet or point, in the six groups'
+ * order, with its glyph, its sign Key, its house Key, and how many Keys it gives, and the tally at
+ * the foot. Chips without their meanings: every one is glossed in the groups above. On a phone the
+ * house Key sits under the sign Key and the count column drops (the tally stays), so it fits.
+ */
+function KeysTable() {
+  const bodies = BODY_GROUPS.flatMap((group) => bodiesIn(group.id));
+  const { columns } = keysPage.glance;
+  const head = 'px-3 py-3 text-left type-label text-ink-500';
+  return (
+    <div className="mt-8 overflow-x-auto rounded-[12px] border border-ink-200 bg-surface-200 shadow-rest">
+      <table data-keys-table="" className="w-full border-collapse sm:min-w-[36rem]">
+        <caption className="sr-only">{keysPage.glance.caption}</caption>
+        <thead>
+          <tr className="border-b border-ink-200">
+            <th scope="col" className={head}>
+              {columns.body}
+            </th>
+            <th scope="col" className={head}>
+              <span className="sm:hidden">{columns.both}</span>
+              <span className="hidden sm:inline">{columns.sign}</span>
+            </th>
+            <th scope="col" className={cn(head, 'hidden sm:table-cell')}>
+              {columns.house}
+            </th>
+            <th scope="col" className={cn(head, 'hidden text-right sm:table-cell')}>
+              {columns.count}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {bodies.map((body) => {
+            const sign = keyFor(body, 'sign');
+            const house = keyFor(body, 'house');
+            return (
+              <tr key={body} data-keys-table-row={body} className="border-b border-ink-200">
+                <th scope="row" className="px-3 py-3 text-left font-normal">
+                  <span className="flex items-center gap-3">
+                    {drawn(body) ? (
+                      <GlyphIcon glyph={body} size={48} className="text-ink-900" />
+                    ) : (
+                      <span aria-hidden="true" className="inline-block size-12 shrink-0" />
+                    )}
+                    <span className="type-body text-ink-900">{BODIES[body].name}</span>
+                  </span>
+                </th>
+                <td className="px-3 py-3">
+                  <span className="flex flex-col items-start gap-2">
+                    {sign ? <KeyChip keyId={sign.id} /> : null}
+                    {house ? (
+                      <span className="sm:hidden">
+                        <KeyChip keyId={house.id} />
+                      </span>
+                    ) : null}
+                  </span>
+                </td>
+                <td className="hidden px-3 py-3 sm:table-cell">{house ? <KeyChip keyId={house.id} /> : null}</td>
+                <td className="hidden px-3 py-3 text-right type-body whitespace-nowrap text-ink-700 sm:table-cell">
+                  {keysPage.glance.count([sign, house].filter(Boolean).length)}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={4} className="px-3 py-4 text-right font-display text-[1.5rem] text-ink-900">
+              {keysPage.glance.total(KEY_LIST.length)}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   );
 }

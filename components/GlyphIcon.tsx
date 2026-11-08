@@ -4,8 +4,8 @@ import { GLYPHS, type GlyphId } from '@/lib/glyphs';
 
 interface GlyphIconProps {
   glyph: GlyphId;
-  /** Dawa's glyphs are drawn for 24, 48, and 96px. */
-  size?: 24 | 48 | 96;
+  /** Dawa's glyphs are drawn for 24, 48, and 96px; 72 is the Keys size (Dawa, Nov 7: much larger). */
+  size?: 24 | 48 | 72 | 96;
   /** Give a label only when the glyph stands alone; beside its name it is decorative. */
   label?: string;
   className?: string;

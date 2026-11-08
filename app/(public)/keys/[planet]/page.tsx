@@ -68,7 +68,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
             <Eyebrow>{copy.eyebrow}</Eyebrow>
             <div className="flex items-center gap-4">
               {drawn(planet.body) ? (
-                <GlyphIcon glyph={planet.body} size={48} className="text-ink-900" />
+                <GlyphIcon glyph={planet.body} size={96} className="text-ink-900" />
               ) : null}
               <Headline as="h1" line={`${body.name},`} accent={body.line.charAt(0).toLowerCase() + body.line.slice(1)} className="mb-0" />
             </div>
@@ -135,7 +135,7 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                 {signs.map((sign) => (
                   <li key={sign} data-planet-sign={sign} className="grid gap-3 border-t border-ink-200 py-5">
                     <div className="flex items-center gap-3">
-                      {GLYPHS[sign].credit !== null ? <GlyphIcon glyph={sign} size={24} className="text-ink-900" /> : null}
+                      {GLYPHS[sign].credit !== null ? <GlyphIcon glyph={sign} size={48} className="text-ink-900" /> : null}
                       <KeyChip keyId={signKey.id} value={sign} />
                     </div>
                     <Lines text={planet.signs[sign]!} />
@@ -205,7 +205,7 @@ function Lines({ text }: { text: string }) {
   return (
     <div className="grid gap-2">
       {paragraphs(text).map((paragraph) => (
-        <p key={paragraph.slice(0, 32)} className="type-body-sm text-ink-700">
+        <p key={paragraph.slice(0, 32)} className="type-body text-ink-700">
           {paragraph}
         </p>
       ))}

@@ -4,7 +4,7 @@ import { SiteAnalytics } from '@/components/SiteAnalytics';
 import { washCss } from '@/lib/art-assets';
 import { appearanceScript } from '@/lib/appearance';
 import { tuneScript } from '@/lib/tune-head';
-import { fraunces, nunitoSans, plexMono } from './fonts';
+import { fraunces, nunitoSans, plexMono, rye } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     // applies a team member's Tune (1f), and does nothing without a valid at-tune cookie.
     <html
       lang="en"
-      className={`${fraunces.variable} ${nunitoSans.variable} ${plexMono.variable}`}
+      className={`${fraunces.variable} ${nunitoSans.variable} ${plexMono.variable} ${rye.variable}`}
       suppressHydrationWarning
     >
       <head>
