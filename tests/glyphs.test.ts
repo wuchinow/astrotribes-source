@@ -35,8 +35,8 @@ describe('glyph registry', () => {
     for (const id of SIGN_IDS) expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id}.svg`);
   });
 
-  it("credits Dawa's own Uranus and Pluto", () => {
-    for (const id of ['uranus', 'pluto'] as const) {
+  it("credits Dawa's own Uranus, Pluto, and Rising", () => {
+    for (const id of ['uranus', 'pluto', 'rising'] as const) {
       expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id}.svg`);
       expect(GLYPHS[id].placeholder, id).toBe(false);
       expect(GLYPHS[id].credit, id).toBe('Lama Dawa');

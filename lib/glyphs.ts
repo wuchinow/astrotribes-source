@@ -65,8 +65,10 @@ const BODY_SYMBOLS: Record<BodyId, string> = {
 
 const withText = (symbol: string) => (symbol.length === 1 ? symbol + TEXT : symbol);
 
-// Dawa's glyphs traced so far: all 12 signs and 8 planets (0b, Sep 23), and his
-// Uranus and Pluto (Nov 8, from his Apr 10 photos, found in Drive). Libra is
+// Dawa's glyphs traced so far: all 12 signs and 8 planets (0b, Sep 23), his
+// Uranus and Pluto (Nov 8, from his Apr 10 photos, found in Drive), and his
+// Rising (Nov 8, an arrow rising through a circle, from his photo "Rising sign
+// glyph" in Drive AstroTribes 2.0 > Art/Design, modified Oct 21). Libra is
 // his drawing thickened by scripts/bold-glyph.py (Nov 4) to the weight of the rest, as he
 // asked, until his own bolder Libra file arrives.
 const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
@@ -83,6 +85,7 @@ const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
   'uranus',
   'neptune',
   'pluto',
+  'rising',
 ]);
 
 // Placeholders until Dawa brushes his own. Chiron (Sep 24) was made with an
@@ -94,10 +97,9 @@ const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
 // Center is traced from the brushed starburst on the old Lovable site (Nov 6,
 // asked for at the Nov 4 call). Best guess it is Dawa's, but nobody has said
 // so, so it stays a placeholder and uncredited until he confirms. The Rising
-// (the Sun's half disc on the horizon, with rays) was drawn by the same script
-// on Nov 8, when David saw the homepage Rising card had none.
+// was a stand-in from the same script for a few hours on Nov 8, until his own
+// was found.
 const PLACEHOLDERS: ReadonlySet<GlyphId> = new Set<GlyphId>([
-  'rising',
   'chiron',
   'northNode',
   'southNode',
