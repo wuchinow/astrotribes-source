@@ -175,7 +175,8 @@ export const KEYS = {
     name: 'Gift',
     body: 'jupiter',
     dimension: 'sign',
-    gloss: "Jupiter's sign; what is presented as resource and inspiration",
+    // Dawa, Nov 7: "resource, inspiration, or natural talent".
+    gloss: "Jupiter's sign; what is presented as resource, inspiration, or natural talent",
     core: false,
     settled: true,
   },
@@ -190,8 +191,8 @@ export const KEYS = {
   },
   saturnSign: {
     id: 'saturnSign',
-    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
-    name: 'Test',
+    // Dawa's "Keys and Houses" doc (Drive, edited Nov 8), his newest list (David, Nov 6: go with the newest).
+    name: 'Challenge',
     body: 'saturn',
     dimension: 'sign',
     gloss: "Saturn's sign; how you learn and grow",
@@ -381,8 +382,9 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   'Kingdom',
   'Muse',
   'Attraction',
-  'Challenge',
   'Enchantment',
+  // Saturn's sign from the Nov 5 Keys and Houses doc until its Nov 8 edit brought back Challenge.
+  'Test',
 ];
 
 /** Keys that need a birth time: every house key, and Vibe (the rising sign). */

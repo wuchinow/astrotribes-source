@@ -10,7 +10,7 @@ export const visibilityCopy = {
     tribe: { label: 'Your Tribe', body: 'Members who share your Sun sign.' },
     everyone: { label: 'All members', body: 'Anyone signed in to AstroTribes. Everyone starts here for now.' },
   } satisfies Record<Visibility, { label: string; body: string }>,
-  what: 'Members who can see you see your name, the signs and houses in your chart, the Keys you share, and which of your placements sit within a few degrees of theirs. They never see your birth date, time, place, or degrees. Signs, houses, and close placements together can hint at when you were born, so choose what feels right.',
+  what: 'Members who can see you see your name, the signs and houses in your chart, the Keys you share, and which of your planets sit within a few degrees of theirs. They never see your birth date, time, place, or degrees. Signs, houses, and close placements together can hint at when you were born, so choose what feels right.',
   save: 'Save',
   saved: 'Saved.',
   failed: "That didn't save. Try again.",

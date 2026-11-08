@@ -1,12 +1,14 @@
 // The chart wheel on Your chart (3g): our words, not Dawa's. PLACEHOLDER until his copy replaces it.
 // Body and sign names come from lib/keys.ts; no key name is typed here.
 
-// PLACEHOLDER
+import { the, The } from './the';
+
+// PLACEHOLDER, except the headline and body: Dawa's (Nov 7), his *you* in italics.
 export const chartWheelCopy = {
   /** The page's headline, now that the wheel leads Your chart (David, Nov 4). */
-  line: 'Your sky,',
+  line: 'The solar system,',
   accent: 'the moment you were born.',
-  body: 'Where the Sun, the Moon, and every planet stood when you were born, set around the twelve signs.',
+  body: 'Your horoscope is a snapshot of the solar system, where every planet was, at the moment of your birth. This unique moment in time is your celestial DNA and is what makes you uniquely *you*!',
   houses: 'The lines inside mark your twelve houses, counted from your Rising at the left.',
   noTime:
     'Without a birth time there are no houses, and the planets sit where they were at midday, so the Moon may be a few degrees off.',
@@ -23,8 +25,8 @@ export const chartWheelCopy = {
   housesLabel: 'Where each house begins',
   close: 'Close',
   retrogradeMark: 'retrograde',
-  retrograde: (name: string) => `${name} was retrograde: seen from Earth, it seemed to move backward through the signs.`,
+  retrograde: (name: string) => `${The(name)} was retrograde: seen from Earth, it seemed to move backward through the signs.`,
   noHouse: 'The house needs a birth time.',
-  more: (name: string) => `More about ${name}`,
+  more: (name: string) => `More about ${the(name)}`,
   figure: 'Your chart as a wheel. The list beside it says the same in words.',
 };

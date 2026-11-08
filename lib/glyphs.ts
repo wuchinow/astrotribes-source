@@ -137,3 +137,10 @@ export const GLYPHS: Record<GlyphId, GlyphDef> = {
     ]),
   ) as Record<BodyId, GlyphDef>),
 };
+
+/**
+ * Whether a glyph has a drawing to show: Dawa's, or a stand-in until he brushes his own. Dawa asked on
+ * Nov 7 for every planet's glyph on the 28 Keys page, Uranus and Pluto included, so the stand-ins show
+ * wherever the wheel shows them, still uncredited. Rising has none.
+ */
+export const drawn = (id: GlyphId): boolean => GLYPHS[id].svg !== null;

@@ -11,14 +11,15 @@ export const keysPage = {
 
   // PLACEHOLDER: the page title and description
   metaTitle: 'The 28 Keys',
-  description: 'Every placement in a chart has a name. All 28 Keys, each with a one-line meaning.',
+  description: 'Each Key unlocks a piece of your horoscope. All 28 Keys, each with a one-line meaning.',
 
-  // PLACEHOLDER: headline and lede. The first line is the landing's, carried over.
+  // Dawa's words (Nov 7), lightly edited for punctuation, his italics between asterisks. The headline
+  // is his last sentence, and the landing's Keys section carries it too.
   hero: {
     eyebrow: 'The 28 Keys',
-    line: 'Every placement has a name.',
-    accent: 'Here are all 28.',
-    lede: 'Your chart puts the Sun, the Moon, and each planet in a sign and in a house. Each of those placements is a Key.',
+    line: 'Each Key unlocks',
+    accent: 'a piece of your horoscope.',
+    lede: 'In your horoscope the Sun, the Moon, and each planet carry an energy (its *sign*) and an area of manifestation (its *house*). These are your Keys. There are also Keys for your rising sign, your lunar nodes, and the Galactic Center: 28 Keys in all. Each Key unlocks a piece of *your* horoscope’s puzzle.',
   },
 
   // PLACEHOLDER: which keys need a birth time, said once at the top. The counts come from lib/keys.ts.
@@ -36,12 +37,12 @@ export const keysPage = {
 
   contents: 'On this page',
 
-  // PLACEHOLDER: one placement, shown as its two keys, before the full list.
+  // PLACEHOLDER: one body's sign and house, shown as its two keys, before the full list.
   how: {
     id: 'how-a-key-works',
     contents: 'How a Key works',
     eyebrow: 'How a Key works',
-    line: 'One placement,',
+    line: 'One sign, one house,',
     accent: 'two Keys.',
     body: (person: string) =>
       `The Sun, the Moon, and each planet sit in a sign and in a house. The sign gives each one a Key, and the house gives it a second. Here is the Sun in ${person}'s chart.`,

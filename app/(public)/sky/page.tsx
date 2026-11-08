@@ -8,7 +8,7 @@ import { MoonDisc } from '@/components/sky/MoonDisc';
 import { MoonStrip } from '@/components/sky/MoonStrip';
 import { ElementDisc } from '@/components/TribeBadge';
 import { skyCopy } from '@/content/sky';
-import { GLYPHS } from '@/lib/glyphs';
+import { drawn } from '@/lib/glyphs';
 import { BODIES, SIGNS, type BodyId } from '@/lib/keys';
 import { MOON_DAYS, todaySky, type Change, type SkyBody } from '@/lib/today-sky';
 
@@ -21,9 +21,9 @@ export const revalidate = 3600;
 /** 3°05′: degrees and minutes within the sign. */
 const degrees = ({ degree, minute }: SkyBody) => `${degree}°${String(minute).padStart(2, '0')}′`;
 
-/** Dawa's glyph for a body, or nothing: an image-tool stand-in is never shown (as on the 28 Keys page). */
+/** A body's glyph, Dawa's or a stand-in (as on the 28 Keys page), or nothing for Rising. */
 function BodyGlyph({ body, size, className }: { body: BodyId; size: 24 | 48; className?: string }) {
-  return GLYPHS[body].credit !== null ? <GlyphIcon glyph={body} size={size} className={className} /> : null;
+  return drawn(body) ? <GlyphIcon glyph={body} size={size} className={className} /> : null;
 }
 
 interface LightProps {

@@ -59,7 +59,7 @@ export const howItWorks = {
     {
       category: 'Your keys',
       title: 'Unlock all 28.',
-      body: 'Every placement in your chart gets a name and a meaning.',
+      body: 'The Sun, the Moon, and every planet give you two Keys, each with a meaning.',
       more: { href: '/keys', label: 'What the 28 Keys are' },
     },
     {
@@ -84,7 +84,8 @@ export const tribes = {
 export const keys = {
   placeholder: true, // PLACEHOLDER: headline, lede, and the link to the 28 Keys page
   eyebrow: 'The 28 Keys',
-  line: 'Every placement has a name.',
+  // The headline from Dawa's 28 Keys introduction (Nov 7).
+  line: 'Each Key unlocks a piece of your horoscope.',
   accent: 'Start with five.',
   lede: 'These five come from your Sun, Moon, and Rising. Join, and the other 23 open up.',
   /** Under the cards, to the page that lists all 28 (1k). */
@@ -117,10 +118,17 @@ export const privacyFaq = {
     {
       id: 'faq-birth-time',
       question: 'Why do you ask for my birth time?',
+      // Dawa's answer (Nov 7), lightly edited for punctuation. Key names stay out of it (copy rules), so
+      // his "(Vibe)" and "Portal, Vibe" read as the rising sign and the Galactic Center here.
       answer: (
         <p>
-          Your birth time sets your rising sign and your houses, which change every few minutes.
-          Without it you still get your Sun, and usually your Moon.
+          Your time of birth is what dials in the orientation of your horoscope. Without an accurate
+          time of birth it is nearly impossible to determine your rising sign and the signs for each
+          house. Therefore without your time of birth, we cannot determine any of the house Keys
+          with confidence. We can usually still determine most or all of the sign Keys for the
+          planets, Chiron, and the nodes of the Moon. However your rising sign’s Key, the Galactic
+          Center’s Key, and your planets’ house Keys will be missing. For completeness’ sake, we hope
+          you can find your time of birth{'!'}
         </p>
       ),
     },

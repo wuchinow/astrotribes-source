@@ -24,6 +24,7 @@
 import type { BodyId, HouseNumber, SignId } from '@/lib/keys';
 import type { SkyId } from '@/lib/sky';
 import { PLANET_DRAFTS } from './planet-drafts';
+import { the, The } from './the';
 
 export interface PlanetContent {
   body: BodyId;
@@ -561,8 +562,7 @@ export const planetPage = (body: BodyId): PlanetContent | undefined => PLANET_PA
 
 export const planetHref = (planet: PlanetContent) => `/keys/${planet.slug}`;
 
-/** "the Sun", "the Moon", "the Galactic Center", "Jupiter": the article Dawa asked for (Nov 5). */
-export const the = (name: string) => (['Sun', 'Moon', 'Galactic Center'].includes(name) ? `the ${name}` : name);
+export { the, The } from './the';
 
 /** Paragraphs of a line or note, split by a blank line. */
 export const paragraphs = (text: string): string[] => text.split('\n\n');
@@ -585,7 +585,7 @@ export const planetPageCopy = {
   eyebrow: 'The 28 Keys',
   /** The page title: "Jupiter, its two Keys" */
   metaTitle: (planet: string) => `${planet}, its two Keys`,
-  description: (planet: string) => `${planet} in each of the twelve signs and each of the twelve houses.`,
+  description: (planet: string) => `${The(planet)} in each of the twelve signs and each of the twelve houses.`,
   introTitle: (planet: string) => `About ${the(planet)}`,
   signsTitle: (planet: string) => `${planet} in the signs`,
   housesTitle: (planet: string) => `${planet} in the houses`,
@@ -598,6 +598,6 @@ export const planetPageCopy = {
   signsComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each sign are still to come.`,
   housesComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each house are still to come.`,
   back: 'All 28 Keys',
-  more: (planet: string) => `More about ${planet}`,
+  more: (planet: string) => `More about ${the(planet)}`,
   yourChart: { href: '/your-chart', label: 'See yours on Your chart' },
 };

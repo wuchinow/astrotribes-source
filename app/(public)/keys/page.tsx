@@ -14,7 +14,7 @@ import { EXAMPLE_CHART } from '@/content/keys-example';
 import { keysPage } from '@/content/keys-page';
 import { planetHref, planetPage, planetPageCopy } from '@/content/planets';
 import { cn } from '@/lib/cn';
-import { GLYPHS } from '@/lib/glyphs';
+import { drawn } from '@/lib/glyphs';
 import {
   BODIES,
   BODY_GROUPS,
@@ -31,6 +31,7 @@ import {
 } from '@/lib/keys';
 import type { FramedId } from '@/lib/art';
 import { PrimaryAction } from '@/components/HeaderAccount';
+import { Stressed } from '@/components/Stressed';
 
 export const metadata: Metadata = { title: keysPage.metaTitle, description: keysPage.description };
 
@@ -125,7 +126,9 @@ export default function KeysPage() {
           <div className="panel-frost max-w-[36rem] p-6 md:p-10">
             <Eyebrow>{keysPage.hero.eyebrow}</Eyebrow>
             <Headline as="h1" line={keysPage.hero.line} accent={keysPage.hero.accent} />
-            <Lede>{keysPage.hero.lede}</Lede>
+            <Lede>
+              <Stressed text={keysPage.hero.lede} />
+            </Lede>
           </div>
         </div>
       </ArtWash>
@@ -152,7 +155,7 @@ export default function KeysPage() {
                 className="mt-8 grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] md:gap-8 md:p-8"
               >
                 <div className="flex items-center gap-3 md:block">
-                  {GLYPHS.sun.credit !== null ? <GlyphIcon glyph="sun" size={48} className="-ml-1 text-ink-900" /> : null}
+                  {drawn('sun') ? <GlyphIcon glyph="sun" size={48} className="-ml-1 text-ink-900" /> : null}
                   <div>
                     <p className="type-heading-3 text-ink-900 md:mt-1">{BODIES.sun.name}</p>
                     <p className="type-body-sm text-ink-500">{keysPage.how.whose(surname)}</p>

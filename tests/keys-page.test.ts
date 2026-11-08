@@ -164,12 +164,14 @@ describe('the 28 Keys page', () => {
     expect(shape(unsettled.querySelector('span')!)).toEqual(shape(settled.querySelector('span')!));
   });
 
-  it("carries Dawa's glyph only where he has drawn one", async () => {
+  it('carries a glyph for every body that has a drawing, stand-ins included (Dawa, Nov 7)', async () => {
     const { GLYPHS } = await import('@/lib/glyphs');
     const shown = [...document.querySelectorAll('[data-key-row] use')].map((use) => use.getAttribute('href'));
-    const byDawa = BODY_GROUPS.flatMap((group) => bodiesIn(group.id)).filter((body) => GLYPHS[body].credit !== null);
-    expect(shown).toEqual(byDawa.map((body) => `${GLYPHS[body].svg}#glyph`));
-    for (const body of BODY_IDS) if (GLYPHS[body].placeholder) expect(shown).not.toContain(`${GLYPHS[body].svg}#glyph`);
+    const drawn = BODY_GROUPS.flatMap((group) => bodiesIn(group.id)).filter((body) => GLYPHS[body].svg !== null);
+    expect(shown).toEqual(drawn.map((body) => `${GLYPHS[body].svg}#glyph`));
+    // Uranus and Pluto were the two he missed.
+    expect(shown).toContain(`${GLYPHS.uranus.svg}#glyph`);
+    expect(shown).toContain(`${GLYPHS.pluto.svg}#glyph`);
   });
 });
 
