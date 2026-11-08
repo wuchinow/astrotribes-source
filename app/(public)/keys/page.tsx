@@ -230,6 +230,16 @@ export default function KeysPage() {
                       );
                     })}
                   </ul>
+                  {group.id === 'generational' ? (
+                    <div data-generation-example="" className="mt-6 max-w-measure border-l-2 border-gold-500 pl-5">
+                      <h3 className="type-heading-3 text-ink-900">{keysPage.generationExample.title}</h3>
+                      {keysPage.generationExample.paragraphs.map((paragraph) => (
+                        <p key={paragraph.slice(0, 24)} className="mt-3 type-body text-ink-700">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  ) : null}
                 </section>
               );
             })}

@@ -19,6 +19,7 @@ import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { chineseSign } from '@/lib/chinese-zodiac';
+import { familyOf, GENERATIONAL } from '@/lib/generations';
 import { drawn } from '@/lib/glyphs';
 import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
@@ -71,6 +72,15 @@ export default async function YourChartPage() {
   // the animal, element, and that year's Lunar New Year reach the page.
   const { data: birth } = await supabase.from('birth_data').select('birth_date').eq('user_id', user.id).maybeSingle();
   const chinese = birth?.birth_date ? chineseSign(String(birth.birth_date)) : null;
+  // The generational families (4g): the member's Uranus, Neptune, and Pluto signs and their own
+  // birth date pick each window; only the planet, sign, and two years reach the page.
+  const families = birth?.birth_date
+    ? GENERATIONAL.flatMap((planet) => {
+        const row = byBody.get(planet);
+        const family = row ? familyOf(planet, row.sign, String(birth.birth_date)) : null;
+        return family ? [family] : [];
+      })
+    : [];
   // The wheel (3g): the member's own chart redrawn on the server from their birth details. Null on any failure.
   const wheel = await memberWheel(supabase, user.id, { sun: sun.sign, moon: moon?.sign ?? null });
 
@@ -179,6 +189,32 @@ export default async function YourChartPage() {
             );
           })}
         </div>
+        {families.length > 0 ? (
+          <div data-your-families="" className="mt-8">
+            <TintPanel>
+              <h3 className="type-heading-3 text-ink-900">{yourChartCopy.families.title}</h3>
+              <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.families.intro}</p>
+              <ul role="list" className="mt-6 grid gap-6 md:grid-cols-3">
+                {families.map((family) => (
+                  <li key={family.planet} data-your-family={family.planet} className="flex items-start gap-3">
+                    {drawn(family.planet) ? (
+                      <GlyphIcon glyph={family.planet} size={48} className="shrink-0 text-ink-900" />
+                    ) : null}
+                    <div>
+                      <p className="type-heading-3 text-ink-900">
+                        {yourChartCopy.families.name(BODIES[family.planet].name, SIGNS[family.sign].name)}
+                      </p>
+                      <p className="mt-1 type-body-sm text-ink-700">{yourChartCopy.families.years(family.from, family.to)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <Button href={yourChartCopy.families.more.href} variant="tertiary" className="mt-4 -ml-2">
+                {yourChartCopy.families.more.label}
+              </Button>
+            </TintPanel>
+          </div>
+        ) : null}
         {chinese ? (
           <div data-your-chinese="" className="mt-8">
             <TintPanel>
