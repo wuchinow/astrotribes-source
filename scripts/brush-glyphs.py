@@ -1,11 +1,12 @@
-"""Brush-style stand-in glyphs, not Dawa's: the North Node and the Rising (the Galactic Center once).
+"""Brush-style stand-in glyphs, not Dawa's: the North Node (the Galactic Center and the Rising once;
+Dawa's own Rising replaced its stand-in on Nov 8).
 
 A local tool, run by hand from repo/: `python3 scripts/brush-glyphs.py` (needs potracer,
 numpy, and pillow from pip). It reads nothing: each glyph is drawn from scratch as dry-brush
 strokes (a row of bristles that run dry toward the end of a stroke), in the manner of Dawa's set,
 fitted to 88 of a 96 viewBox like scripts/trace-glyphs.mjs, traced with potrace, and written to
 public/glyphs/ with <g id="glyph"> and no fill. The seed fixes the drawing, so a rerun gives the
-same files. Both stay `placeholder: true` in lib/glyphs.ts until Dawa brushes his own.
+same files. It stays `placeholder: true` in lib/glyphs.ts until Dawa brushes his own.
 Usage: brush-glyphs.py [outdir] [seed]
 """
 import math
@@ -105,33 +106,6 @@ def galactic_center(seed):
     return img
 
 
-def rising(seed):
-    """The Rising (Ascendant): the Sun's half disc on the horizon, with its center dot and three
-    short rays, an echo of Dawa's Sun. Drawn Nov 8 (David: the Rising card had no glyph)."""
-    rng = np.random.default_rng(seed)
-    img = Image.new('L', (BIG, BIG), 255)
-    dr = ImageDraw.Draw(img)
-    cx, cy = 1200, 1500
-    r = 520
-    # The half disc, one stroke from the left foot up over the top and down to the right.
-    stroke(dr, rng, arc(cx, cy, r, 180, 360, wobble=0.015, rng=rng), 120, dry=0.3)
-    # Three short rays above it, each drawn outward.
-    for ang in (225, 270, 315):
-        a = math.radians(ang)
-        n = 120
-        rr = np.linspace(r + 150, r + 400, n)
-        pts = np.stack([cx + rr * math.cos(a), cy + rr * math.sin(a)], axis=1)
-        stroke(dr, rng, pts, 100, dry=0.35, bristles=30, taper=0.4)
-    # The horizon, wider than the disc, drawn left to right.
-    n = 400
-    xs = np.linspace(cx - 820, cx + 820, n)
-    ys = cy + 70 + smooth_noise(rng, n, 6, 8)
-    stroke(dr, rng, np.stack([xs, ys], axis=1), 110, dry=0.4, bristles=40)
-    # The Sun's center dot, just above the horizon.
-    dr.ellipse([cx - 62, cy - 120, cx + 62, cy + 4], fill=0)
-    return img
-
-
 def fit(img):
     a = np.array(img)
     ys, xs = np.where(a < 128)
@@ -173,7 +147,7 @@ if __name__ == '__main__':
     seed = int(sys.argv[2]) if len(sys.argv) > 2 else SEED
     # The Galactic Center's spiral is retired: public/glyphs/galacticCenter.svg is now traced from
     # the starburst on the old Lovable site (Nov 6), so only the North Node is drawn here.
-    for name, fn in (('northNode', north_node), ('rising', rising)):
+    for name, fn in (('northNode', north_node),):
         with open(f'{out}/{name}.svg', 'w') as fh:
             fh.write(to_svg(fit(fn(seed))))
         print(f'{out}/{name}.svg')

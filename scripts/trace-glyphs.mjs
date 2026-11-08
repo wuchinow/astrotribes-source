@@ -156,6 +156,18 @@ const GLYPHS = [
     fillHoles: 4000,
     note: 'orb form',
   },
+  // Dawa's Rising (an arrow rising through a circle), the HEIC "Rising sign
+  // glyph" in Drive AstroTribes 2.0 > Art/Design (modified Oct 21), found Nov 8
+  // and converted to greyscale PNG. It replaces the brush-glyphs.py stand-in.
+  {
+    id: 'rising',
+    source: 'photo',
+    file: 'glyphs/rising-dawa.png',
+    crop: [1100, 1950, 1000, 1330],
+    threshold: 1.25,
+    fillHoles: 4000,
+    note: 'dry-brush streaks in the circle, filled',
+  },
   // Placeholders until Dawa brushes his own (Sep 24): not his work, never credited to him
   {
     id: 'uranus',
