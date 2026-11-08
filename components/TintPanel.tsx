@@ -71,7 +71,9 @@ export function TintPanel({ children, className, art, sky }: TintPanelProps) {
       )}
     >
       <div className="order-first flex flex-col md:order-last md:border-l md:border-ink-200">
-        <picture className="block h-28 md:h-auto md:min-h-0 md:flex-1">
+        {/* The picture fills the side without setting its height (4l, Nov 8): since the ink landscapes came in
+            (4i), several are tall scrolls, and a tall image stretched the panel far past its words. */}
+        <picture className="relative block h-28 md:h-auto md:min-h-48 md:flex-1">
           <source type="image/avif" srcSet={set.avif} sizes="(width >= 48rem) 24rem, 100vw" />
           <source type="image/webp" srcSet={set.webp} sizes="(width >= 48rem) 24rem, 100vw" />
           <img
@@ -81,7 +83,7 @@ export function TintPanel({ children, className, art, sky }: TintPanelProps) {
             height={set.height}
             loading="lazy"
             decoding="async"
-            className="size-full object-cover"
+            className="absolute inset-0 size-full object-cover"
           />
         </picture>
       </div>

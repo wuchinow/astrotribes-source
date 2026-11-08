@@ -17,11 +17,12 @@ import { PLANET_PAGES, paragraphs, planetHref } from '@/content/planets';
 import { chartWheelCopy } from '@/content/chart-wheel';
 import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
+import { clanLinks } from '@/content/clans';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { chineseSign } from '@/lib/chinese-zodiac';
 import { familyOf, GENERATIONAL } from '@/lib/generations';
 import { drawn } from '@/lib/glyphs';
-import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
+import { BODIES, KEYS, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
 import { wheelDetails } from '@/lib/wheel-details';
@@ -120,6 +121,19 @@ export default async function YourChartPage() {
                     <p className="px-2 type-caption text-ink-500">
                       {yourChartCopy.picked(SIGNS[row.sign].name, SIGNS[row.sign_alternate].name)}
                     </p>
+                  ) : null}
+                  {/* Their Clan and Vibe pages (4l, Nov 8). */}
+                  {row && body === 'moon' ? (
+                    <Button href={`/clans/${row.sign}`} variant="tertiary" className="-ml-2 justify-self-start">
+                      {clanLinks.yourClan(SIGNS[row.sign].name, KEYS.moonSign.name)}
+                      <span aria-hidden="true">{'→'}</span>
+                    </Button>
+                  ) : null}
+                  {row && body === 'rising' ? (
+                    <Button href={`/vibes/${row.sign}`} variant="tertiary" className="-ml-2 justify-self-start">
+                      {clanLinks.yourVibe(SIGNS[row.sign].name, KEYS.risingSign.name)}
+                      <span aria-hidden="true">{'→'}</span>
+                    </Button>
                   ) : null}
                 </div>
               );

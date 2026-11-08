@@ -5,6 +5,8 @@
 // Nebula behind the Oracle's hexagram card (1c, lifted in 1h), and one image on each of the landing's three
 // Keys cards (1h): the Milky Way's core on Sun, the Ring's upper arc on Moon, Earthrise on Rising (Mystic Mountain until Nov 4, when it came out for being part ESA).
 
+import { SIGN_IDS } from './keys';
+
 export type Box = readonly [x: number, y: number, width: number, height: number];
 
 export interface SkyImage {
@@ -385,6 +387,47 @@ export const SKY = {
     release: 'https://science.nasa.gov/photojournal/a-cauldron-of-stars-at-the-galaxys-center/',
     released: '2006-01-10',
   },
+  // The Clan pages (4l, Nov 8; plan claude.ai/artifact/U5pJhfRWF1AoY11oBHdQpV): the Moon as each
+  // Clan's hero, NASA only (Dawa's Drive "Moon photos" were Unsplash stock). A square closer in on the
+  // lower right limb of the LRO photo that stands whole on /keys/moon, so the two places are two cuts.
+  clanMoon: {
+    stem: 'lroc-moon-limb-south',
+    subject: 'The Moon from the Lunar Reconnaissance Orbiter, its lower right limb',
+    source: 'moon.jpg',
+    size: [1400, 1400],
+    sha256: '039dff75b050aa0ffc0792579797514846f6dd097d1b83747ef1124872c50548',
+    crop: [460, 460, 900, 900],
+    levels: { black: 6, white: 255, gamma: 1 },
+    median: 3,
+    strength: 0.9,
+    widths: [900, 640],
+    alt: 'The curved edge of the Moon in grey, bright craters crowding its southern highlands against the dark',
+    credit: 'NASA/GSFC/Arizona State University',
+    tinted: false,
+    license: 'NASA release; not copyrighted in the United States',
+    release: 'https://science.nasa.gov/mission/lro/',
+    released: '2010-12',
+  },
+  // The Vibe pages (4l, Nov 8): the rising sign is the sign coming up over the eastern horizon at
+  // birth, so Apollo 8's Earthrise, a square around the Earth and the horizon, where the landing's
+  // Rising card holds the wide view.
+  vibeRising: {
+    stem: 'earthrise-square',
+    subject: 'Earthrise, from Apollo 8, the Earth over the lunar horizon',
+    source: 'rising-earthrise.jpg',
+    size: [3000, 1971],
+    sha256: '71034e6ab962869b25d6ac1d5e548482e7b0129d45445e2d99078c1af5fdd68c',
+    crop: [950, 80, 1600, 1600],
+    levels: { black: 8, white: 255, gamma: 1 },
+    strength: 0.9,
+    widths: [1040, 640],
+    alt: 'Earth, half in sunlight, rising above the grey edge of the Moon',
+    credit: 'NASA',
+    tinted: false,
+    license: 'NASA release; not copyrighted in the United States',
+    release: 'https://www.nasa.gov/image-detail/moon-landing-l-7-months-10-apollo-8-earthrise-photo-as08-14-2383',
+    released: '1968-12-24',
+  },
 } as const satisfies Record<string, SkyImage>;
 
 export type SkyId = keyof typeof SKY;
@@ -409,6 +452,9 @@ export const SKY_PAGES: Readonly<Record<string, readonly SkyId[]>> = {
   '/keys/neptune': ['neptune'],
   '/keys/pluto': ['pluto'],
   '/keys/galactic-center': ['galacticCenter'],
+  // The Clan and Vibe pages (4l, Nov 8): one photo each, the same on all twelve of a kind.
+  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/clans/${sign}`, ['clanMoon'] as const])),
+  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/vibes/${sign}`, ['vibeRising'] as const])),
 };
 
 export const skyCredit = (image: SkyImage) => (image.tinted ? `${image.credit} (tinted)` : image.credit);

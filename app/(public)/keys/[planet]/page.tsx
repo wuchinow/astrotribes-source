@@ -6,9 +6,10 @@ import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SkyWindow } from '@/components/SkyWindow';
 import { learnCopy } from '@/content/articles';
+import { clanLinks } from '@/content/clans';
 import { PLANET_PAGES, paragraphs, planetPageCopy as copy, type PlanetContent } from '@/content/planets';
 import { GLYPHS, drawn } from '@/lib/glyphs';
-import { BODIES, HOUSES, SIGN_IDS, keyFor } from '@/lib/keys';
+import { BODIES, HOUSES, KEYS, SIGNS, SIGN_IDS, keyFor } from '@/lib/keys';
 import { learnArticleFor } from '@/lib/substack';
 
 export const dynamicParams = false;
@@ -139,6 +140,12 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                       <KeyChip keyId={signKey.id} value={sign} />
                     </div>
                     <Lines text={planet.signs[sign]!} />
+                    {/* The Moon's sign is a Clan, with a page of its own (4l, Nov 8). */}
+                    {planet.body === 'moon' ? (
+                      <Link href={`/clans/${sign}`} data-planet-clan={sign} className={linkClass}>
+                        {clanLinks.clanOf(SIGNS[sign].name, KEYS.moonSign.name)}
+                      </Link>
+                    ) : null}
                   </li>
                 ))}
               </ul>
