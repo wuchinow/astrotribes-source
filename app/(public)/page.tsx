@@ -150,10 +150,10 @@ export default function HomePage() {
 
       <Section id="keys" labelledBy="keys-title" band>
         <Eyebrow>{keys.eyebrow}</Eyebrow>
-        {/* Dawa's old-west poster (Nov 7): wood type between two printers' hands, used only here. */}
+        {/* Dawa's 19th-century poster (Nov 7): poster-weight type between two printers' hands. */}
         <h2
           id="keys-title"
-          className="mb-6 flex items-center gap-3 font-woodtype text-[2.5rem] leading-[1.05] text-ink-900 md:gap-6 md:text-[4.5rem]"
+          className="mb-6 flex items-center gap-3 type-poster text-[2.5rem] leading-[1.05] text-ink-900 md:gap-6 md:text-[4.5rem]"
         >
           <PointingHand className="hidden w-24 shrink-0 text-ink-900 sm:block md:w-36" />
           <span>{keys.title}</span>

@@ -93,15 +93,16 @@ const BY_DAWA: ReadonlySet<GlyphId> = new Set<GlyphId>([
 // South Node turns the North Node's over, as its symbol does. The Galactic
 // Center is traced from the brushed starburst on the old Lovable site (Nov 6,
 // asked for at the Nov 4 call). Best guess it is Dawa's, but nobody has said
-// so, so it stays a placeholder and uncredited until he confirms.
+// so, so it stays a placeholder and uncredited until he confirms. The Rising
+// (the Sun's half disc on the horizon, with rays) was drawn by the same script
+// on Nov 8, when David saw the homepage Rising card had none.
 const PLACEHOLDERS: ReadonlySet<GlyphId> = new Set<GlyphId>([
+  'rising',
   'chiron',
   'northNode',
   'southNode',
   'galacticCenter',
 ]);
-
-// Rising has no drawing: on the wheel it is the horizon line.
 
 /** The file each glyph is drawn from, where it is not its own. */
 const SHARED_FILE: Partial<Record<GlyphId, GlyphId>> = { southNode: 'northNode' };

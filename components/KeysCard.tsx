@@ -16,7 +16,7 @@ interface KeysCardProps {
 
 /**
  * One of the landing's three Keys cards (1h, design system v23's card-grid exception): a sky
- * image in a night-900 window at the top, Dawa's Sun or Moon glyph (none on Rising), the body's name,
+ * image in a night-900 window at the top, Dawa's Sun or Moon glyph (a brush stand-in on Rising), the body's name,
  * and its keys with their one-line meanings. On Paper the window is its own night with a clean
  * edge; on Night it fades into the card. The image loads lazily, at its manifest strength scaled by
  * the visitor's wash; None hides it, and the window stays as plain night. No text sits on the image
@@ -25,7 +25,6 @@ interface KeysCardProps {
 export function KeysCard({ body, keys, sky }: KeysCardProps) {
   const image = SKY[sky];
   const file = skyFiles.images[sky].files['720'];
-  const glyph = body === 'sun' || body === 'moon' ? body : null;
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-md border border-ink-200 bg-surface-200 shadow-rest">
       <div className="keys-window relative aspect-video">
@@ -43,8 +42,8 @@ export function KeysCard({ body, keys, sky }: KeysCardProps) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4 md:p-6">
-        {/* Rising has no glyph of Dawa's; its space is kept so the three titles line up. */}
-        {glyph ? <GlyphIcon glyph={glyph} size={72} className="-ml-1 text-ink-900" /> : <span aria-hidden="true" className="block h-18" />}
+        {/* Dawa's Sun and Moon; the Rising is a brush stand-in until he paints one (Nov 8). */}
+        <GlyphIcon glyph={body} size={72} className="-ml-1 text-ink-900" />
         <h3 className="mt-2 type-heading-2 text-ink-900">{BODIES[body].name}</h3>
         {/* Each Key in a tile of its own with where it comes from, so the house Keys (Realm, Hearth)
             stand out as clearly as the sign Keys (Dawa, Nov 7). */}

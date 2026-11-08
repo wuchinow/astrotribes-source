@@ -331,6 +331,16 @@
 }
 
 /* Type styles from tokens.json v3. Sizes in rem so browser text settings still work. */
+/* Poster weight (Nov 8): Fraunces at its heaviest, for Dawa's 19th-century poster lines (the
+   homepage's "Find your Keys" between the pointing hands, the Tribe slogans). David chose it over Rye,
+   which did not sit with the rest of the type. */
+@utility type-poster {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variation-settings: "opsz" 144, "SOFT" 0;
+  letter-spacing: -0.02em;
+}
+
 @utility type-display-xl {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 1.85rem + 2.667vw, 4.25rem); /* 40px on a phone to 68px wide */
