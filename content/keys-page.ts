@@ -59,10 +59,22 @@ export const keysPage = {
   },
 
   // PLACEHOLDER: one line under a group's heading, only where it carries something the keys do not.
+  // The generational lede is Dawa's ("Planetary Families", Oct 23), with our last sentence on houses.
   groupLedes: {
     generational:
-      'Uranus, Neptune, and Pluto move slowly, so their signs belong to a whole generation. Their houses are yours alone.',
+      'The outermost three planets, Uranus, Neptune, and Pluto, move so slowly through the zodiac that they stay in a single sign for many years. In this way the signs of these outer three planets are shared by everyone born within a few years of you: your astrological generation. These are your people, your planet-wide families. Their houses are yours alone.',
   } as Partial<Record<BodyGroup, string>>,
+
+  // Dawa's example ("Planetary Families", Oct 23), fitted to the copy rules (4g, a draft he can rewrite).
+  generationExample: {
+    title: 'How does this work in real life?',
+    paragraphs: [
+      'Take the so-called “baby boomer” generation. These people were mostly born between the mid to late 1940s, just as World War II was ending, and the early 1960s. They mostly all have Uranus in Cancer, Neptune in Libra, and Pluto in Leo.',
+      'Uranus in Cancer signals a departure from the old paradigm of home and loyalty to homeland. This was the generation that experimented with communes and other alternative approaches to creating “home”, as well as questioning parental authority. And this was the generation that openly rebelled against the homeland’s wars and social apartheid policies. Very Uranian!',
+      'Next, Neptune in Libra: this generation expounded “flower power”, and values of peace, love, and tolerance. It was also the generation that gave rise to rebalancing gender inequality, namely the feminist movement, and sought and fought for civil rights.',
+      'Finally, Pluto in Leo gave birth to the “rock star” phenomenon and the famous cultural slogan of the 60s, “do your own thing”. This was the generation where being a peacock and wearing outlandish clothing and costumes became accepted.',
+    ],
+  },
 
   // PLACEHOLDER: why a body has one key, not two, in place of the missing one.
   noKey: {

@@ -84,7 +84,7 @@ export const tribes = {
 export const keys = {
   placeholder: true, // PLACEHOLDER: headline, lede, and the link to the 28 Keys page
   eyebrow: 'The 28 Keys',
-  // Dawa's words (Nov 7), set in wood type between two pointing hands.
+  // Dawa's words (Nov 7), set in poster type after a pointing hand.
   title: 'Find your Keys',
   // The line from Dawa's 28 Keys introduction (Nov 7).
   lede: 'Each Key unlocks a piece of your horoscope. These five come from your Sun, Moon, and Rising. Join, and the other 23 open up.',

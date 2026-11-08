@@ -78,6 +78,17 @@ export const yourChartCopy = {
     noTime: (keyName: string) => `Your ${keyName} needs your birth time. Add it and it appears here.`,
     more: (planet: string) => `All of ${the(planet)}'s Keys`,
   },
+
+  // 4g: Dawa's "Planetary Families" (Oct 23). The heading and first paragraph are his; the rows
+  // follow his examples ("Anyone born between 1996 and 2003 is in Janine's Uranus family").
+  families: {
+    title: 'Your generation’s families',
+    intro:
+      'Uranus, Neptune, and Pluto move so slowly that they stay in a single sign for many years, so their signs are shared by everyone born within a few years of you: your astrological generation. These are your people, your planet-wide families.',
+    name: (planet: string, sign: string) => `Your ${planet} family: ${sign}`,
+    years: (from: number, to: number) => `Anyone born between ${from} and ${to} is in it.`,
+    more: { href: '/keys#generational', label: 'How generations work' },
+  },
   // The Chinese zodiac sign (3y, admin to-do): a small panel under Your Keys. PLACEHOLDER words for Dawa.
   chinese: {
     title: 'Your Chinese zodiac sign',
