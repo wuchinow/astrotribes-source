@@ -43,7 +43,7 @@
   /*
    * The ring sits 2px off the control, and a 2px surface-000 halo fills that gap (the design
    * system's .at-btn and .at-chip pattern), so the ring always meets a solid color at 3:1 or better,
-   * even over Jane's art, where the bare ring fell to 2.5:1 at the top of the wash range (1e,
+   * even over the art, where the bare ring fell to 2.5:1 at the top of the wash range (1e,
    * tests/art-contrast.test.ts). The halo replaces a control's resting shadow while it has focus.
    */
   :focus-visible {
@@ -61,7 +61,7 @@
 /* Patterns ported from the design system's bundle.css */
 @layer components {
   /*
-   * Jane's painting as wallpaper (components/ArtWash.tsx). The region names its own piece in
+   * A painting as wallpaper (components/ArtWash.tsx). The region names its own piece in
    * data-wash; the visitor's pick on <html data-art> overrides it, and None hides every wash. The
    * per-piece images, sizes, and heights come from lib/art-assets.ts (washCss, in the root layout).
    * Opacity is the visitor's wash strength, times 0.6 on Night, times 0.5 behind a section, at a

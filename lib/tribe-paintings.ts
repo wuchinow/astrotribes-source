@@ -4,8 +4,8 @@ import type { SignId } from './keys';
 /**
  * Kirstie Connon's twelve Tribe paintings (acrylic on canvas, 2026), one per sign, each the sign's
  * animal or figure over her mandala, with the glyph at the top and her "KC 2026" mark at the lower
- * right. Dawa traded readings for them and asked for them on the Tribe pages, with Jane Kwan's art
- * still the leading look (Oct 28); David supplied the files on Nov 3, saved from the Lovable site.
+ * right. Dawa traded readings for them and asked for them on the Tribe pages, with the background
+ * art still the leading look (Oct 28); David supplied the files on Nov 3, saved from the Lovable site.
  *
  * Each one is a framed subject on its Tribe page, full strength, never hidden by None, and credited
  * on the page under the image (the rule for art that is the subject). The sources stay outside the

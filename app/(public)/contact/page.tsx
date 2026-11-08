@@ -5,7 +5,7 @@ import { CONTACT_EMAIL } from '@/lib/site';
 
 export const metadata: Metadata = { title: 'Contact' };
 
-// Contact stands on Jane's gold collage (P7), so it sits outside the legal layout: the words go on a
+// Contact stands on Shen Zhou's clouds over the river (P7), so it sits outside the legal layout: the words go on a
 // frosted panel over the wash.
 export default function ContactPage() {
   return (

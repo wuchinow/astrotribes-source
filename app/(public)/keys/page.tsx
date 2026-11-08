@@ -68,14 +68,14 @@ function exampleCluster() {
  * and houses all come from lib/keys.ts, so a rename lands here too, and a key Dawa has not
  * confirmed looks like any other.
  *
- * The hero stands on Jane's P10; below it the page is one region on the page tone (so no bands),
+ * The hero stands on P10 (Xie Shichen's winter landscape); below it the page is one region on the page tone (so no bands),
  * with a contents list that stays in view at desktop widths, as on the legal pages. Two framed
  * pieces below: P1 in the night band, P3 on the next step's painted edge.
  */
 /**
  * Pictures between the groups, so the long list breaks up (David, Nov 4). Telescope images where the
  * group is about the sky itself (the Galactic Center, which is the Milky Way's core; Journey's Crab Nebula
- * came out on Nov 4 because it is part ESA, not public domain, until a public-domain image replaces it), credited in the footer; one of Jane's pieces where it is about people (the Generational
+ * came out on Nov 4 because it is part ESA, not public domain, until a public-domain image replaces it), credited in the footer; one of the ink landscapes where it is about people (the Generational
  * family), credited in the footer like all of hers. Never two in one screen: Identity and Healing,
  * the shortest groups, stay plain.
  */

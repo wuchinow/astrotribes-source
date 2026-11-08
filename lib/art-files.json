@@ -1,39 +1,39 @@
 {
   "h": {
     "crop": {
-      "ratio": 1.2715,
+      "ratio": 1.7115,
       "files": {
         "160": {
-          "h": 126,
+          "h": 93,
           "avif": {
-            "src": "/art/h-ink-wash/h-ink-wash-crop-160.0227e017.avif",
-            "bytes": 2053
+            "src": "/art/h-misty-river/h-misty-river-crop-160.c15f8f70.avif",
+            "bytes": 1119
           },
           "webp": {
-            "src": "/art/h-ink-wash/h-ink-wash-crop-160.57097541.webp",
-            "bytes": 2394
+            "src": "/art/h-misty-river/h-misty-river-crop-160.cf5544b6.webp",
+            "bytes": 1124
           }
         },
         "720": {
-          "h": 566,
+          "h": 421,
           "avif": {
-            "src": "/art/h-ink-wash/h-ink-wash-crop-720.e8d9ccc3.avif",
-            "bytes": 32203
+            "src": "/art/h-misty-river/h-misty-river-crop-720.c5ab419b.avif",
+            "bytes": 12319
           },
           "webp": {
-            "src": "/art/h-ink-wash/h-ink-wash-crop-720.9b2f8b19.webp",
-            "bytes": 55618
+            "src": "/art/h-misty-river/h-misty-river-crop-720.d3fd5990.webp",
+            "bytes": 16350
           }
         },
         "1440": {
-          "h": 1132,
+          "h": 841,
           "avif": {
-            "src": "/art/h-ink-wash/h-ink-wash-crop-1440.d9fd127d.avif",
-            "bytes": 113564
+            "src": "/art/h-misty-river/h-misty-river-crop-1440.623baf5c.avif",
+            "bytes": 64530
           },
           "webp": {
-            "src": "/art/h-ink-wash/h-ink-wash-crop-1440.e9592939.webp",
-            "bytes": 200218
+            "src": "/art/h-misty-river/h-misty-river-crop-1440.8ecfcf9b.webp",
+            "bytes": 103702
           }
         }
       }
@@ -41,44 +41,60 @@
   },
   "p6": {
     "crop": {
-      "ratio": 0.6237,
+      "ratio": 2.2989,
       "files": {
-        "160": {
-          "h": 257,
-          "avif": {
-            "src": "/art/p6-characters/p6-characters-crop-160.549620da.avif",
-            "bytes": 5833
-          },
-          "webp": {
-            "src": "/art/p6-characters/p6-characters-crop-160.e6ef6d82.webp",
-            "bytes": 8850
-          }
-        },
         "720": {
-          "h": 1154,
+          "h": 313,
           "avif": {
-            "src": "/art/p6-characters/p6-characters-crop-720.5136872e.avif",
-            "bytes": 45459
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-crop-720.e9629446.avif",
+            "bytes": 13024
           },
           "webp": {
-            "src": "/art/p6-characters/p6-characters-crop-720.e0219105.webp",
-            "bytes": 61604
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-crop-720.fa025381.webp",
+            "bytes": 18864
           }
         }
       }
     },
     "wide": {
-      "ratio": 1.6053,
+      "ratio": 2.2989,
       "files": {
-        "1220": {
-          "h": 760,
+        "160": {
+          "h": 70,
           "avif": {
-            "src": "/art/p6-characters/p6-characters-wide-1220.3788c65e.avif",
-            "bytes": 39171
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-wide-160.b43e29f7.avif",
+            "bytes": 1073
           },
           "webp": {
-            "src": "/art/p6-characters/p6-characters-wide-1220.2d267167.webp",
-            "bytes": 46334
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-wide-160.3f7bdcfe.webp",
+            "bytes": 1348
+          }
+        },
+        "1440": {
+          "h": 626,
+          "avif": {
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-wide-1440.0e838297.avif",
+            "bytes": 46193
+          },
+          "webp": {
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-wide-1440.d98a0fcb.webp",
+            "bytes": 63956
+          }
+        }
+      }
+    },
+    "tall": {
+      "ratio": 0.9195,
+      "files": {
+        "720": {
+          "h": 783,
+          "avif": {
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-tall-720.812ff2af.avif",
+            "bytes": 27736
+          },
+          "webp": {
+            "src": "/art/p6-autumn-mist/p6-autumn-mist-tall-720.7a39f070.webp",
+            "bytes": 35718
           }
         }
       }
@@ -86,60 +102,44 @@
   },
   "p7": {
     "wide": {
-      "ratio": 1.83,
+      "ratio": 1.875,
       "files": {
-        "1440": {
-          "h": 787,
+        "160": {
+          "h": 85,
           "avif": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-wide-1440.9565495c.avif",
-            "bytes": 66025
+            "src": "/art/p7-clouds-river/p7-clouds-river-wide-160.b41f9b72.avif",
+            "bytes": 1694
           },
           "webp": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-wide-1440.30abd443.webp",
-            "bytes": 96022
+            "src": "/art/p7-clouds-river/p7-clouds-river-wide-160.cd8bb6f0.webp",
+            "bytes": 2406
+          }
+        },
+        "1440": {
+          "h": 768,
+          "avif": {
+            "src": "/art/p7-clouds-river/p7-clouds-river-wide-1440.be125969.avif",
+            "bytes": 57778
+          },
+          "webp": {
+            "src": "/art/p7-clouds-river/p7-clouds-river-wide-1440.6f85950e.webp",
+            "bytes": 88656
           }
         }
       }
     },
     "tall": {
-      "ratio": 0.5599,
+      "ratio": 0.8125,
       "files": {
         "720": {
-          "h": 1286,
+          "h": 886,
           "avif": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-tall-720.4e6193e7.avif",
-            "bytes": 61404
+            "src": "/art/p7-clouds-river/p7-clouds-river-tall-720.0dfb997e.avif",
+            "bytes": 36964
           },
           "webp": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-tall-720.07a9a7b5.webp",
-            "bytes": 91986
-          }
-        }
-      }
-    },
-    "free": {
-      "ratio": 1.0207,
-      "files": {
-        "160": {
-          "h": 157,
-          "avif": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-free-160.af75c445.avif",
-            "bytes": 3141
-          },
-          "webp": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-free-160.4a35e8c4.webp",
-            "bytes": 4412
-          }
-        },
-        "720": {
-          "h": 705,
-          "avif": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-free-720.7b964e76.avif",
-            "bytes": 34517
-          },
-          "webp": {
-            "src": "/art/p7-gold-collage/p7-gold-collage-free-720.b55da369.webp",
-            "bytes": 52258
+            "src": "/art/p7-clouds-river/p7-clouds-river-tall-720.7c95946b.webp",
+            "bytes": 57878
           }
         }
       }
@@ -147,55 +147,55 @@
   },
   "p9": {
     "wide": {
-      "ratio": 1.8309,
+      "ratio": 1.6732,
       "files": {
         "160": {
-          "h": 87,
+          "h": 96,
           "avif": {
-            "src": "/art/p9-leaves/p9-leaves-wide-160.c053dbb2.avif",
-            "bytes": 1525
+            "src": "/art/p9-eight-views/p9-eight-views-wide-160.e29c966d.avif",
+            "bytes": 905
           },
           "webp": {
-            "src": "/art/p9-leaves/p9-leaves-wide-160.9a8f575e.webp",
-            "bytes": 1390
+            "src": "/art/p9-eight-views/p9-eight-views-wide-160.7e3309f7.webp",
+            "bytes": 746
           }
         },
         "720": {
-          "h": 393,
+          "h": 430,
           "avif": {
-            "src": "/art/p9-leaves/p9-leaves-wide-720.7851b4fa.avif",
-            "bytes": 14045
+            "src": "/art/p9-eight-views/p9-eight-views-wide-720.471acb39.avif",
+            "bytes": 8559
           },
           "webp": {
-            "src": "/art/p9-leaves/p9-leaves-wide-720.2b19860b.webp",
-            "bytes": 16536
+            "src": "/art/p9-eight-views/p9-eight-views-wide-720.e90bb46c.webp",
+            "bytes": 9988
           }
         },
-        "1375": {
-          "h": 751,
+        "1440": {
+          "h": 861,
           "avif": {
-            "src": "/art/p9-leaves/p9-leaves-wide-1375.0e373676.avif",
-            "bytes": 30382
+            "src": "/art/p9-eight-views/p9-eight-views-wide-1440.cebcfcdb.avif",
+            "bytes": 26135
           },
           "webp": {
-            "src": "/art/p9-leaves/p9-leaves-wide-1375.d512af01.webp",
-            "bytes": 37416
+            "src": "/art/p9-eight-views/p9-eight-views-wide-1440.4cd0c7c0.webp",
+            "bytes": 31296
           }
         }
       }
     },
     "tall": {
-      "ratio": 0.5601,
+      "ratio": 0.8497,
       "files": {
         "720": {
-          "h": 1286,
+          "h": 847,
           "avif": {
-            "src": "/art/p9-leaves/p9-leaves-tall-720.9803258c.avif",
-            "bytes": 39997
+            "src": "/art/p9-eight-views/p9-eight-views-tall-720.ff208881.avif",
+            "bytes": 16201
           },
           "webp": {
-            "src": "/art/p9-leaves/p9-leaves-tall-720.95ee9854.webp",
-            "bytes": 49840
+            "src": "/art/p9-eight-views/p9-eight-views-tall-720.d488eb16.webp",
+            "bytes": 20078
           }
         }
       }
@@ -203,44 +203,44 @@
   },
   "p10": {
     "crop": {
-      "ratio": 0.7163,
+      "ratio": 3.8911,
       "files": {
         "160": {
-          "h": 223,
+          "h": 41,
           "avif": {
-            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-160.9fdc8632.avif",
-            "bytes": 3840
+            "src": "/art/p10-winter-landscape/p10-winter-landscape-crop-160.3386a6f6.avif",
+            "bytes": 1129
           },
           "webp": {
-            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-160.ed0cd2ec.webp",
-            "bytes": 5514
+            "src": "/art/p10-winter-landscape/p10-winter-landscape-crop-160.2242baad.webp",
+            "bytes": 1548
           }
         },
-        "720": {
-          "h": 1005,
+        "1440": {
+          "h": 370,
           "avif": {
-            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-720.a1cd0569.avif",
-            "bytes": 46884
+            "src": "/art/p10-winter-landscape/p10-winter-landscape-crop-1440.a61d013b.avif",
+            "bytes": 50234
           },
           "webp": {
-            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-crop-720.032c1e3d.webp",
-            "bytes": 77832
+            "src": "/art/p10-winter-landscape/p10-winter-landscape-crop-1440.32e7639f.webp",
+            "bytes": 92122
           }
         }
       }
     },
-    "wide": {
-      "ratio": 1.6062,
+    "tall": {
+      "ratio": 1.297,
       "files": {
-        "1285": {
-          "h": 800,
+        "720": {
+          "h": 555,
           "avif": {
-            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-wide-1285.4c7b0c6d.avif",
-            "bytes": 77971
+            "src": "/art/p10-winter-landscape/p10-winter-landscape-tall-720.ad94999d.avif",
+            "bytes": 31523
           },
           "webp": {
-            "src": "/art/p10-ink-on-grey/p10-ink-on-grey-wide-1285.80edac4b.webp",
-            "bytes": 136356
+            "src": "/art/p10-winter-landscape/p10-winter-landscape-tall-720.ad7ca62f.webp",
+            "bytes": 54960
           }
         }
       }
@@ -248,28 +248,28 @@
   },
   "p1": {
     "crop": {
-      "ratio": 1.015,
+      "ratio": 0.5243,
       "files": {
-        "506": {
-          "h": 499,
+        "378": {
+          "h": 721,
           "avif": {
-            "src": "/art/p1-night-hill/p1-night-hill-crop-506.6a8e142a.avif",
-            "bytes": 22432
+            "src": "/art/p1-moon-pine/p1-moon-pine-crop-378.8558444d.avif",
+            "bytes": 6774
           },
           "webp": {
-            "src": "/art/p1-night-hill/p1-night-hill-crop-506.728601bd.webp",
-            "bytes": 33448
+            "src": "/art/p1-moon-pine/p1-moon-pine-crop-378.18052ff9.webp",
+            "bytes": 8068
           }
         },
-        "1013": {
-          "h": 998,
+        "755": {
+          "h": 1440,
           "avif": {
-            "src": "/art/p1-night-hill/p1-night-hill-crop-1013.3a3af086.avif",
-            "bytes": 61791
+            "src": "/art/p1-moon-pine/p1-moon-pine-crop-755.018a66ea.avif",
+            "bytes": 21045
           },
           "webp": {
-            "src": "/art/p1-night-hill/p1-night-hill-crop-1013.d850259f.webp",
-            "bytes": 96970
+            "src": "/art/p1-moon-pine/p1-moon-pine-crop-755.62720e41.webp",
+            "bytes": 25200
           }
         }
       }
@@ -277,28 +277,28 @@
   },
   "p2": {
     "crop": {
-      "ratio": 2.0771,
+      "ratio": 6.4762,
       "files": {
-        "512": {
-          "h": 247,
+        "850": {
+          "h": 131,
           "avif": {
-            "src": "/art/p2-black-arch/p2-black-arch-crop-512.4d8a4060.avif",
-            "bytes": 10878
+            "src": "/art/p2-streams-mountains/p2-streams-mountains-crop-850.697d3292.avif",
+            "bytes": 5627
           },
           "webp": {
-            "src": "/art/p2-black-arch/p2-black-arch-crop-512.cd507c81.webp",
-            "bytes": 15352
+            "src": "/art/p2-streams-mountains/p2-streams-mountains-crop-850.0d4de4bf.webp",
+            "bytes": 6800
           }
         },
-        "1024": {
-          "h": 493,
+        "1700": {
+          "h": 263,
           "avif": {
-            "src": "/art/p2-black-arch/p2-black-arch-crop-1024.ce01db19.avif",
-            "bytes": 28045
+            "src": "/art/p2-streams-mountains/p2-streams-mountains-crop-1700.75790175.avif",
+            "bytes": 18378
           },
           "webp": {
-            "src": "/art/p2-black-arch/p2-black-arch-crop-1024.80290763.webp",
-            "bytes": 39428
+            "src": "/art/p2-streams-mountains/p2-streams-mountains-crop-1700.475ff027.webp",
+            "bytes": 22506
           }
         }
       }
@@ -306,28 +306,28 @@
   },
   "p3": {
     "crop": {
-      "ratio": 2.322,
+      "ratio": 2.2429,
       "files": {
-        "512": {
-          "h": 221,
+        "785": {
+          "h": 350,
           "avif": {
-            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-512.2964d0eb.avif",
-            "bytes": 7752
+            "src": "/art/p3-small-landscape/p3-small-landscape-crop-785.4dd3e6c7.avif",
+            "bytes": 17191
           },
           "webp": {
-            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-512.6351e72f.webp",
-            "bytes": 8506
+            "src": "/art/p3-small-landscape/p3-small-landscape-crop-785.1f2b725e.webp",
+            "bytes": 27146
           }
         },
-        "1024": {
-          "h": 441,
+        "1570": {
+          "h": 700,
           "avif": {
-            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-1024.22f8f876.avif",
-            "bytes": 19541
+            "src": "/art/p3-small-landscape/p3-small-landscape-crop-1570.98d2a725.avif",
+            "bytes": 57267
           },
           "webp": {
-            "src": "/art/p3-yellow-lavender/p3-yellow-lavender-crop-1024.9ae0fd39.webp",
-            "bytes": 23060
+            "src": "/art/p3-small-landscape/p3-small-landscape-crop-1570.a68ac446.webp",
+            "bytes": 90574
           }
         }
       }
@@ -335,28 +335,28 @@
   },
   "p4": {
     "crop": {
-      "ratio": 1.3333,
+      "ratio": 0.5615,
       "files": {
-        "320": {
-          "h": 240,
+        "365": {
+          "h": 650,
           "avif": {
-            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-320.0ad31d35.avif",
-            "bytes": 6522
+            "src": "/art/p4-clearing-rain/p4-clearing-rain-crop-365.0161dd2a.avif",
+            "bytes": 13172
           },
           "webp": {
-            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-320.28c6a7de.webp",
-            "bytes": 8436
+            "src": "/art/p4-clearing-rain/p4-clearing-rain-crop-365.5237e4d5.webp",
+            "bytes": 18842
           }
         },
-        "640": {
-          "h": 480,
+        "730": {
+          "h": 1300,
           "avif": {
-            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-640.b9846785.avif",
-            "bytes": 17285
+            "src": "/art/p4-clearing-rain/p4-clearing-rain-crop-730.7e42dd36.avif",
+            "bytes": 42067
           },
           "webp": {
-            "src": "/art/p4-tissue-hills/p4-tissue-hills-crop-640.4ae57603.webp",
-            "bytes": 23280
+            "src": "/art/p4-clearing-rain/p4-clearing-rain-crop-730.a1778656.webp",
+            "bytes": 59448
           }
         }
       }
@@ -364,28 +364,28 @@
   },
   "p5": {
     "crop": {
-      "ratio": 0.7504,
+      "ratio": 1,
       "files": {
-        "210": {
-          "h": 280,
+        "224": {
+          "h": 224,
           "avif": {
-            "src": "/art/p5-enso/p5-enso-crop-210.e239a3db.avif",
-            "bytes": 4447
+            "src": "/art/p5-enso/p5-enso-crop-224.28484f90.avif",
+            "bytes": 2641
           },
           "webp": {
-            "src": "/art/p5-enso/p5-enso-crop-210.79fe2b6a.webp",
-            "bytes": 5030
+            "src": "/art/p5-enso/p5-enso-crop-224.bd1f11e6.webp",
+            "bytes": 2956
           }
         },
-        "421": {
-          "h": 561,
+        "448": {
+          "h": 448,
           "avif": {
-            "src": "/art/p5-enso/p5-enso-crop-421.5d240e52.avif",
-            "bytes": 10920
+            "src": "/art/p5-enso/p5-enso-crop-448.93e3502b.avif",
+            "bytes": 8034
           },
           "webp": {
-            "src": "/art/p5-enso/p5-enso-crop-421.0b521f31.webp",
-            "bytes": 13214
+            "src": "/art/p5-enso/p5-enso-crop-448.84f98130.webp",
+            "bytes": 9538
           }
         }
       }
@@ -393,28 +393,28 @@
   },
   "p8": {
     "crop": {
-      "ratio": 0.7089,
+      "ratio": 0.4359,
       "files": {
-        "226": {
-          "h": 319,
+        "348": {
+          "h": 798,
           "avif": {
-            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-226.e4d2bc27.avif",
-            "bytes": 5680
+            "src": "/art/p8-moonlight/p8-moonlight-crop-348.1a1fdf32.avif",
+            "bytes": 12554
           },
           "webp": {
-            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-226.cb4ac5a1.webp",
-            "bytes": 6822
+            "src": "/art/p8-moonlight/p8-moonlight-crop-348.da67f6e0.webp",
+            "bytes": 16926
           }
         },
-        "453": {
-          "h": 639,
+        "697": {
+          "h": 1599,
           "avif": {
-            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-453.008b0e26.avif",
-            "bytes": 14925
+            "src": "/art/p8-moonlight/p8-moonlight-crop-697.dcbb1978.avif",
+            "bytes": 42702
           },
           "webp": {
-            "src": "/art/p8-character-rubbing/p8-character-rubbing-crop-453.8cc9d96a.webp",
-            "bytes": 19138
+            "src": "/art/p8-moonlight/p8-moonlight-crop-697.592be108.webp",
+            "bytes": 59056
           }
         }
       }

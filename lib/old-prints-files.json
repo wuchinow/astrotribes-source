@@ -1,0 +1,522 @@
+{
+  "plate-aries": {
+    "width": 3588,
+    "height": 2509,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-aries-384.052b4805.avif",
+          "bytes": 9827
+        },
+        "webp": {
+          "src": "/old-prints/plate-aries-384.db6a5f4d.webp",
+          "bytes": 11746
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-aries-768.2170f6f4.avif",
+          "bytes": 31941
+        },
+        "webp": {
+          "src": "/old-prints/plate-aries-768.42ecb777.webp",
+          "bytes": 38244
+        }
+      }
+    }
+  },
+  "plate-taurus": {
+    "width": 3602,
+    "height": 2533,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-taurus-384.ec03e621.avif",
+          "bytes": 9686
+        },
+        "webp": {
+          "src": "/old-prints/plate-taurus-384.8d54e5de.webp",
+          "bytes": 11288
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-taurus-768.deca5162.avif",
+          "bytes": 32559
+        },
+        "webp": {
+          "src": "/old-prints/plate-taurus-768.f546c099.webp",
+          "bytes": 36736
+        }
+      }
+    }
+  },
+  "plate-gemini": {
+    "width": 3568,
+    "height": 2494,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-gemini-384.1907111e.avif",
+          "bytes": 9235
+        },
+        "webp": {
+          "src": "/old-prints/plate-gemini-384.4d644057.webp",
+          "bytes": 10790
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-gemini-768.9a2843b3.avif",
+          "bytes": 28638
+        },
+        "webp": {
+          "src": "/old-prints/plate-gemini-768.ca16c12b.webp",
+          "bytes": 32690
+        }
+      }
+    }
+  },
+  "plate-cancer": {
+    "width": 3280,
+    "height": 4690,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-cancer-384.d918be25.avif",
+          "bytes": 19914
+        },
+        "webp": {
+          "src": "/old-prints/plate-cancer-384.37b71725.webp",
+          "bytes": 26102
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-cancer-768.2363b174.avif",
+          "bytes": 62132
+        },
+        "webp": {
+          "src": "/old-prints/plate-cancer-768.8b80bf23.webp",
+          "bytes": 76822
+        }
+      }
+    }
+  },
+  "plate-leo": {
+    "width": 3305,
+    "height": 4709,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-leo-384.62c61126.avif",
+          "bytes": 22480
+        },
+        "webp": {
+          "src": "/old-prints/plate-leo-384.e7fc73d8.webp",
+          "bytes": 27836
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-leo-768.e455399b.avif",
+          "bytes": 67732
+        },
+        "webp": {
+          "src": "/old-prints/plate-leo-768.856d657e.webp",
+          "bytes": 84922
+        }
+      }
+    }
+  },
+  "plate-virgo": {
+    "width": 3566,
+    "height": 2505,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-virgo-384.28e8b204.avif",
+          "bytes": 12737
+        },
+        "webp": {
+          "src": "/old-prints/plate-virgo-384.25f3f6c2.webp",
+          "bytes": 17090
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-virgo-768.bd082a3c.avif",
+          "bytes": 40831
+        },
+        "webp": {
+          "src": "/old-prints/plate-virgo-768.e7a59f65.webp",
+          "bytes": 54906
+        }
+      }
+    }
+  },
+  "plate-libra": {
+    "width": 3586,
+    "height": 2506,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-libra-384.cb2e2426.avif",
+          "bytes": 9249
+        },
+        "webp": {
+          "src": "/old-prints/plate-libra-384.9ddec445.webp",
+          "bytes": 11668
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-libra-768.36b668fa.avif",
+          "bytes": 28854
+        },
+        "webp": {
+          "src": "/old-prints/plate-libra-768.f68cb2fc.webp",
+          "bytes": 34996
+        }
+      }
+    }
+  },
+  "plate-scorpio": {
+    "width": 2494,
+    "height": 3573,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-scorpio-384.79426685.avif",
+          "bytes": 16460
+        },
+        "webp": {
+          "src": "/old-prints/plate-scorpio-384.72d28cbc.webp",
+          "bytes": 20208
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-scorpio-768.4c3e6004.avif",
+          "bytes": 48074
+        },
+        "webp": {
+          "src": "/old-prints/plate-scorpio-768.6ee8b691.webp",
+          "bytes": 56074
+        }
+      }
+    }
+  },
+  "plate-sagittarius": {
+    "width": 3572,
+    "height": 2498,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-sagittarius-384.b3d05885.avif",
+          "bytes": 12717
+        },
+        "webp": {
+          "src": "/old-prints/plate-sagittarius-384.9f71907d.webp",
+          "bytes": 15848
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-sagittarius-768.f7823b74.avif",
+          "bytes": 37404
+        },
+        "webp": {
+          "src": "/old-prints/plate-sagittarius-768.6685a354.webp",
+          "bytes": 45782
+        }
+      }
+    }
+  },
+  "plate-capricorn": {
+    "width": 3600,
+    "height": 2516,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-capricorn-384.a8e6bcc8.avif",
+          "bytes": 10721
+        },
+        "webp": {
+          "src": "/old-prints/plate-capricorn-384.be208bcb.webp",
+          "bytes": 12620
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-capricorn-768.f54359a4.avif",
+          "bytes": 35801
+        },
+        "webp": {
+          "src": "/old-prints/plate-capricorn-768.6c49511c.webp",
+          "bytes": 41860
+        }
+      }
+    }
+  },
+  "plate-aquarius": {
+    "width": 3568,
+    "height": 2498,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-aquarius-384.0ab61e19.avif",
+          "bytes": 11751
+        },
+        "webp": {
+          "src": "/old-prints/plate-aquarius-384.54adb35e.webp",
+          "bytes": 14102
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-aquarius-768.c48448a2.avif",
+          "bytes": 36983
+        },
+        "webp": {
+          "src": "/old-prints/plate-aquarius-768.9fa68ad6.webp",
+          "bytes": 45112
+        }
+      }
+    }
+  },
+  "plate-pisces": {
+    "width": 3567,
+    "height": 2497,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/plate-pisces-384.71964d11.avif",
+          "bytes": 8649
+        },
+        "webp": {
+          "src": "/old-prints/plate-pisces-384.0c13556c.webp",
+          "bytes": 9510
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/plate-pisces-768.78c4ba80.avif",
+          "bytes": 26983
+        },
+        "webp": {
+          "src": "/old-prints/plate-pisces-768.76bd53fd.webp",
+          "bytes": 28886
+        }
+      }
+    }
+  },
+  "cartoon-bubble-worlds": {
+    "width": 1798,
+    "height": 1983,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-bubble-worlds-384.9c7a0122.avif",
+          "bytes": 17461
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-bubble-worlds-384.5bbe54ed.webp",
+          "bytes": 22282
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-bubble-worlds-768.fdd3a49c.avif",
+          "bytes": 84466
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-bubble-worlds-768.23684f27.webp",
+          "bytes": 121642
+        }
+      }
+    }
+  },
+  "cartoon-comet": {
+    "width": 3130,
+    "height": 4149,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-comet-384.987294be.avif",
+          "bytes": 23522
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-comet-384.212ae6c5.webp",
+          "bytes": 29412
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-comet-768.da256355.avif",
+          "bytes": 88785
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-comet-768.0f2c6a8a.webp",
+          "bytes": 110618
+        }
+      }
+    }
+  },
+  "cartoon-eclipse": {
+    "width": 1982,
+    "height": 2459,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-eclipse-384.369caed0.avif",
+          "bytes": 23639
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-eclipse-384.b2396c0f.webp",
+          "bytes": 31596
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-eclipse-768.25e48dd7.avif",
+          "bytes": 101648
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-eclipse-768.77e8e865.webp",
+          "bytes": 156958
+        }
+      }
+    }
+  },
+  "cartoon-juggler-of-worlds": {
+    "width": 1696,
+    "height": 2317,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-juggler-of-worlds-384.64d284f8.avif",
+          "bytes": 25288
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-juggler-of-worlds-384.45afdb63.webp",
+          "bytes": 32980
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-juggler-of-worlds-768.592fc4aa.avif",
+          "bytes": 112184
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-juggler-of-worlds-768.fd97ae6d.webp",
+          "bytes": 169940
+        }
+      }
+    }
+  },
+  "cartoon-moon": {
+    "width": 2724,
+    "height": 3363,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-moon-384.c2b33733.avif",
+          "bytes": 25158
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-moon-384.a8ad9a63.webp",
+          "bytes": 34814
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-moon-768.142c2624.avif",
+          "bytes": 102943
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-moon-768.aedecc47.webp",
+          "bytes": 161140
+        }
+      }
+    }
+  },
+  "cartoon-planet-bridge": {
+    "width": 2162,
+    "height": 1467,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-planet-bridge-384.d8fa33a9.avif",
+          "bytes": 10727
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-planet-bridge-384.87789501.webp",
+          "bytes": 14362
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-planet-bridge-768.fbf83667.avif",
+          "bytes": 49142
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-planet-bridge-768.d65fe6b3.webp",
+          "bytes": 66964
+        }
+      }
+    }
+  },
+  "cartoon-star": {
+    "width": 1792,
+    "height": 2010,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-star-384.e9be51fb.avif",
+          "bytes": 25469
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-star-384.664852cf.webp",
+          "bytes": 32442
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-star-768.5d95b818.avif",
+          "bytes": 107412
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-star-768.8815ca80.webp",
+          "bytes": 166712
+        }
+      }
+    }
+  },
+  "cartoon-sun-and-moon": {
+    "width": 2287,
+    "height": 2452,
+    "files": {
+      "384": {
+        "avif": {
+          "src": "/old-prints/cartoon-sun-and-moon-384.e5e9ab1f.avif",
+          "bytes": 22894
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-sun-and-moon-384.607da6c1.webp",
+          "bytes": 31560
+        }
+      },
+      "768": {
+        "avif": {
+          "src": "/old-prints/cartoon-sun-and-moon-768.b4d6979f.avif",
+          "bytes": 109933
+        },
+        "webp": {
+          "src": "/old-prints/cartoon-sun-and-moon-768.174ab5c7.webp",
+          "bytes": 169510
+        }
+      }
+    }
+  }
+}

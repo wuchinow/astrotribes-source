@@ -14,7 +14,7 @@ interface TribePaintingProps {
 /**
  * Kirstie Connon's painting for one Tribe, framed as the subject: whole, full strength, never hidden
  * by None, lazy-loaded unless it is in the first screen, never wider than its own pixels at 2x. Her
- * credit lives in the footer only, like Jane's, not under each image (David, Nov 4).
+ * credit lives in the footer only, like the landscapes', not under each image (David, Nov 4).
  */
 export function TribePainting({ sign, sizes, className, priority = false }: TribePaintingProps) {
   const painting = TRIBE_PAINTINGS[sign];

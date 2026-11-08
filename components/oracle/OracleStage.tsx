@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 /**
  * The Oracle's art region (design system v21, The three motifs, item 3; the pair, 1i). "Each page's
- * own" is Jane Kwan's calligraphy (P6) as the page wash in both moods, at the visitor's wash (0.6 of
+ * own" is Bian Wenyu's autumn mist (P6) as the page wash in both moods, at the visitor's wash (0.6 of
  * it on Night), with no sky image (David, Nov 4: the hexagram card takes no space picture). A painting
  * the visitor picks wins; None removes it.
  */

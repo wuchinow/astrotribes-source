@@ -1,13 +1,14 @@
-// Jane Kwan's art: the manifest. Every piece the site can show is listed here, and nothing renders a
-// piece that is not (tests/art-crop.test.ts). Boxes are in the source file's pixels, [x, y, width,
-// height], marked by eye on the part A picks page (staging/26.9.25 - 1e art picks/, confirmed by
-// David on Sep 25). Sources stay in ~/Developer/astrotribes/reference and never enter git;
-// scripts/art.mjs cuts the web files in public/art/ from them.
+// The site's paintings: the manifest. Every piece the site can show is listed here, and nothing renders
+// a piece that is not (tests/art-crop.test.ts). Since Nov 8 (David) they are public domain Chinese and
+// Japanese ink landscapes from museum open-access collections, in place of the earlier art: landscape
+// and nature only, no people as the subject and no faces. Boxes are in the source file's pixels,
+// [x, y, width, height], marked by eye, each crop inside the painting (no mount or brocade) and clear
+// of its seals and inscriptions. Sources live in Drive (AstroTribes 2.0 > Art/Design > Asian public
+// domain images) and never enter git; scripts/art.mjs cuts the web files in public/art/ from them.
 //
 // Two modes. A wash is wallpaper: behind a page or section at the visitor's wash strength, hidden
-// by None, and credited in the footer. A framed piece is the subject: full strength, never hidden,
-// with its caption. None is approved to appear yet (open decision 6), so every piece is a flagged
-// placeholder on the noindex site.
+// by None, and credited in the footer. A framed piece is the subject: full strength, never hidden.
+// David picks where each goes after seeing them live (Nov 8), so every piece stays flagged.
 
 
 export type Box = readonly [x: number, y: number, width: number, height: number];
@@ -36,7 +37,7 @@ interface ArtBase {
   p: `P${number}` | null;
   /** Web file stem: public/art/<stem>/. */
   stem: string;
-  /** The file in reference/jane's art/. */
+  /** The file in the Drive folder (asian-<artist>-<title>.jpg). */
   source: string;
   /** Source size in pixels. */
   size: readonly [width: number, height: number];
@@ -44,10 +45,10 @@ interface ArtBase {
   crop: Box;
   marks: readonly ArtMark[];
   approved: false;
-  caption: 'Painting by Jane Kwan' | 'Collage by Jane Kwan' | 'Calligraphy by Jane Kwan';
+  /** Artist and title as the file names them, for the About page and the credits. */
+  caption: string;
   alt: string;
   orientation: 'confirmed' | 'unconfirmed';
-  source_note?: 'web-size file; ask Jane for the original';
 }
 
 /** The wash pieces' ids, typed ahead of the manifest so a piece can name another. */
@@ -77,227 +78,208 @@ export interface FramedPiece extends ArtBase {
 
 export type ArtPiece = WashPiece | FramedPiece;
 
-const WEB_SIZE = 'web-size file; ask Jane for the original' as const;
-
 export const WASHES = {
   h: {
     p: null,
-    stem: 'h-ink-wash',
-    source: 'IMG_9821 1.png',
-    size: [1447, 1138],
-    crop: [0, 0, 1447, 1138],
-    marks: [],
+    stem: 'h-misty-river',
+    source: 'asian-motonobu-ink-landscape.jpg',
+    size: [3000, 2058],
+    crop: [60, 250, 2670, 1560],
+    marks: [{ kind: 'seal', label: 'Seal, bottom right', box: [2740, 1700, 160, 140] }],
     mode: 'wash',
-    name: 'Ink wash',
-    alt: 'Grey and violet ink bleeding across pale paper, with a few black drops',
-    caption: 'Painting by Jane Kwan',
+    name: 'Misty river',
+    alt: 'Ink mountains in mist over a wide river, with willows on an island and two small boats',
+    caption: 'Ink landscape, Motonobu',
     approved: false,
     orientation: 'confirmed',
-    cuts: { crop: { box: [0, 0, 1447, 1138], widths: [1440, 720, 160] } },
+    cuts: { crop: { box: [60, 250, 2670, 1560], widths: [1440, 720, 160] } },
     use: { sm: 'crop', lg: 'crop', strip: 'crop', thumb: 'crop', texture: 'crop' },
   },
   p6: {
     p: 'P6',
-    stem: 'p6-characters',
-    source: 'IMG-2460-1.jpg 1.png',
-    size: [1298, 2048],
-    crop: [13, 10, 1220, 1956],
+    stem: 'p6-autumn-mist',
+    source: 'asian-bian-wenyu-streams-and-mountains-in-autumn-mist.jpg',
+    size: [2000, 975],
+    crop: [0, 40, 2000, 870],
     marks: [],
     mode: 'wash',
-    name: 'Brushed characters',
-    alt: 'Columns of black brushed characters over washes of red and blue watercolor, with gold flecks',
-    caption: 'Calligraphy by Jane Kwan',
+    name: 'Autumn mist',
+    alt: 'Grey ink hills folding back into mist, with pines on the ridges and willows by the water',
+    caption: 'Streams and Mountains in Autumn Mist, Bian Wenyu',
     approved: false,
     orientation: 'confirmed',
     cuts: {
-      crop: { box: [13, 10, 1220, 1956], widths: [720, 160] },
-      // A landscape band for wide regions, so a desktop screen does not load the whole tall sheet.
-      wide: { box: [13, 610, 1220, 760], widths: [1220] },
+      crop: { box: [0, 40, 2000, 870], widths: [720] },
+      // The Oracle stage reads the wide window (tests/oracle/stage-contrast.test.ts).
+      wide: { box: [0, 40, 2000, 870], widths: [1440, 160] },
+      // The mountains alone, for a phone.
+      tall: { box: [700, 40, 800, 870], widths: [720] },
     },
-    use: { sm: 'crop', lg: 'wide', strip: 'wide', thumb: 'crop', texture: 'wide' },
+    use: { sm: 'tall', lg: 'wide', strip: 'wide', thumb: 'wide', texture: 'wide' },
   },
   p7: {
     p: 'P7',
-    stem: 'p7-gold-collage',
-    source: 'IMG-1025.jpg 1.png',
-    size: [1494, 2048],
-    crop: [0, 10, 1464, 2038],
-    marks: [
-      { kind: 'seal', label: 'Two seals, upper right', box: [1240, 184, 179, 308] },
-      { kind: 'seal', label: 'Three seals, left column', box: [15, 881, 194, 614] },
-      { kind: 'seal', label: 'Oval seal, center left', box: [463, 1147, 90, 184] },
-      { kind: 'seal', label: 'Two seals, lower right', box: [1150, 1556, 165, 205] },
-      { kind: 'seal', label: 'Seal, bottom left', box: [75, 1802, 164, 185] },
-      { kind: 'signature', label: 'Handwritten numerals, bottom right', box: [1360, 1823, 97, 205] },
-      { kind: 'signature', label: 'Handwritten numerals on a scrap, top', box: [896, 41, 75, 184] },
-    ],
+    stem: 'p7-clouds-river',
+    source: 'asian-shen-zhou-clouds-over-the-river.jpg',
+    size: [3000, 1822],
+    crop: [0, 110, 3000, 1600],
+    marks: [],
     mode: 'wash',
-    name: 'Gold collage',
-    alt: 'A large black brushed character on torn white paper over gold, with red seals and newspaper scraps',
-    caption: 'Collage by Jane Kwan',
+    name: 'Clouds over the river',
+    alt: 'Soft blue peaks above low clouds, a quiet river, leaning trees, and a thatched hut on the bank',
+    caption: 'Clouds over the River, Shen Zhou',
     approved: false,
     orientation: 'confirmed',
     cuts: {
-      crop: { box: [0, 10, 1464, 2038], widths: [] },
-      // David, Sep 25: the clean wide window at desktop widths, the clean tall window on phones.
-      wide: { box: [0, 700, 1464, 800], widths: [1440] },
-      tall: { box: [0, 10, 1141, 2038], widths: [720] },
-      // The heart of the sheet with no mark inside, for strips and the panel thumbnail.
-      free: { box: [210, 226, 939, 920], widths: [720, 160] },
+      crop: { box: [0, 110, 3000, 1600], widths: [] },
+      wide: { box: [0, 110, 3000, 1600], widths: [1440, 160] },
+      // The trees and the hut, for a phone.
+      tall: { box: [1700, 110, 1300, 1600], widths: [720] },
     },
-    use: { sm: 'tall', lg: 'wide', strip: 'free', thumb: 'free', texture: 'free' },
-    // David, Sep 25 evening: Contact keeps P7 on Paper; on Night the gold collage lays a warm veil
-    // over the navy, so the page shows P9 there. A visitor's own pick still wins.
+    use: { sm: 'tall', lg: 'wide', strip: 'wide', thumb: 'wide', texture: 'wide' },
+    // On Night the page shows P9 (David, Sep 25 evening); a visitor's own pick still wins.
     night: 'p9',
   },
   p9: {
     p: 'P9',
-    stem: 'p9-leaves',
-    source: 'IMG-2465-1.jpg 1.png',
-    size: [1432, 2048],
-    crop: [0, 0, 1375, 2048],
+    stem: 'p9-eight-views',
+    source: 'asian-tsunenobu-eight-views-of-xiao-and-xiang.jpg',
+    size: [4000, 1723],
+    crop: [0, 50, 2560, 1530],
     marks: [
-      { kind: 'seal', label: 'Two seals, top right', box: [931, 246, 172, 327] },
-      { kind: 'seal', label: 'Seal, bottom left, on the collage strip', box: [186, 1536, 143, 184] },
+      { kind: 'seal', label: 'Two seals, lower middle', box: [2570, 1270, 200, 250] },
+      { kind: 'seal', label: 'Seal, right edge', box: [3830, 1150, 170, 200] },
     ],
     mode: 'wash',
-    name: 'Leaves',
-    alt: 'One sweeping black brushstroke with skeleton leaves and gold flecks on white paper',
-    caption: 'Calligraphy by Jane Kwan',
+    name: 'Eight views',
+    alt: 'A rocky island with a temple rising out of clouds, low hills and a bridge below in pale ink',
+    caption: 'Eight Views of Xiao and Xiang, Tsunenobu',
     approved: false,
     orientation: 'confirmed',
     cuts: {
-      crop: { box: [0, 0, 1375, 2048], widths: [] },
-      wide: { box: [0, 660, 1375, 751], widths: [1375, 720, 160] },
-      tall: { box: [0, 0, 1147, 2048], widths: [720] },
+      crop: { box: [0, 50, 2560, 1530], widths: [] },
+      wide: { box: [0, 50, 2560, 1530], widths: [1440, 720, 160] },
+      // The island and the temple, for a phone.
+      tall: { box: [900, 50, 1300, 1530], widths: [720] },
     },
     use: { sm: 'tall', lg: 'wide', strip: 'wide', thumb: 'wide', texture: 'wide' },
   },
   p10: {
     p: 'P10',
-    stem: 'p10-ink-on-grey',
-    source: 'IMG_9820 1.png',
-    size: [1512, 2016],
-    // Drops the dish at the top-right edge and the table past the paper (part A, with the 30px
-    // pull-in at the bottom right).
-    crop: [0, 222, 1285, 1794],
+    stem: 'p10-winter-landscape',
+    source: 'asian-xie-shichen-winter-landscape.jpg',
+    size: [3000, 771],
+    crop: [0, 0, 3000, 771],
     marks: [],
     mode: 'wash',
-    name: 'Ink on grey',
-    alt: 'Large black ink masses on grey paper, with one red stroke and touches of teal and blue',
-    caption: 'Painting by Jane Kwan',
+    name: 'Winter landscape',
+    alt: 'Snowy cliffs and pines in grey ink, with pavilions and a long wooden bridge across a gorge',
+    caption: 'Winter Landscape, Xie Shichen',
     approved: false,
-    // Portrait as stored; it may have been photographed sideways. Jane settles it.
-    orientation: 'unconfirmed',
+    orientation: 'confirmed',
     cuts: {
-      crop: { box: [0, 222, 1285, 1794], widths: [720, 160] },
-      // A landscape band through the red stroke and the largest mass, for wide regions.
-      wide: { box: [0, 600, 1285, 800], widths: [1285] },
+      crop: { box: [0, 0, 3000, 771], widths: [1440, 160] },
+      wide: { box: [0, 0, 3000, 771], widths: [] },
+      // The bridge and the pavilions, for a phone.
+      tall: { box: [800, 0, 1000, 771], widths: [720] },
     },
-    use: { sm: 'crop', lg: 'wide', strip: 'wide', thumb: 'crop', texture: 'wide' },
+    use: { sm: 'tall', lg: 'crop', strip: 'crop', thumb: 'crop', texture: 'crop' },
   },
 } as const satisfies Record<WashKey, WashPiece>;
 
 export const FRAMED = {
   p1: {
     p: 'P1',
-    stem: 'p1-night-hill',
-    source: 'IMG_2454.jpg 1.png',
-    size: [1013, 1024],
-    crop: [0, 8, 1013, 998],
-    marks: [],
+    stem: 'p1-moon-pine',
+    source: 'asian-rosetsu-moonlit-landscape.jpg',
+    size: [1881, 4000],
+    crop: [190, 1000, 1510, 2880],
+    marks: [{ kind: 'signature', label: 'Signature and two seals, top left', box: [245, 240, 230, 720] }],
     mode: 'framed',
-    alt: 'A navy and near-black hill under a pale swirling sky, flecked with ochre and orange',
-    caption: 'Painting by Jane Kwan',
+    alt: 'A full moon glowing through mist above a dark mountain and a windswept pine',
+    caption: 'Moonlit Landscape, Rosetsu',
     approved: false,
     orientation: 'confirmed',
-    source_note: WEB_SIZE,
-    cuts: { crop: { box: [0, 8, 1013, 998], widths: [1013, 506] } },
-    maxCssWidth: 506,
+    cuts: { crop: { box: [190, 1000, 1510, 2880], widths: [755, 378] } },
+    maxCssWidth: 755,
   },
   p2: {
     p: 'P2',
-    stem: 'p2-black-arch',
-    source: 'P1160515-1-scaled.jpg 1.png',
-    size: [1024, 493],
-    crop: [0, 0, 1024, 493],
+    stem: 'p2-streams-mountains',
+    source: 'asian-anonymous-streams-and-mountains-without-end.jpg',
+    size: [3400, 525],
+    crop: [0, 0, 3400, 525],
     marks: [],
     mode: 'framed',
-    alt: 'Thick strokes of pink, violet, and red around a black arch, with white splashes',
-    caption: 'Painting by Jane Kwan',
+    alt: 'A long handscroll of hills, trees, and water receding into the distance in pale ink',
+    caption: 'Streams and Mountains without End, anonymous',
     approved: false,
     orientation: 'confirmed',
-    source_note: WEB_SIZE,
-    // David, Sep 25: across the Tribe grid it shows at 1x on wide screens; the full 1024 is served.
-    cuts: { crop: { box: [0, 0, 1024, 493], widths: [1024, 512] } },
-    maxCssWidth: 1024,
+    cuts: { crop: { box: [0, 0, 3400, 525], widths: [1700, 850] } },
+    maxCssWidth: 1700,
   },
   p3: {
     p: 'P3',
-    stem: 'p3-yellow-lavender',
-    source: 'P1160514-scaled.jpg 1.png',
-    size: [1024, 441],
-    crop: [0, 0, 1024, 441],
+    stem: 'p3-small-landscape',
+    source: 'asian-chikuden-small-landscape-in-ink.jpg',
+    size: [4000, 2998],
+    // The valley below the poem, clear of the seals at the right edge.
+    crop: [360, 1300, 3140, 1400],
     marks: [],
     mode: 'framed',
-    alt: 'Yellow at the top right, lavender and white across the middle, dark red at the left',
-    caption: 'Painting by Jane Kwan',
+    alt: 'A valley of pines, hills, and a village by a river, in ink on warm golden silk',
+    caption: 'Small Landscape in Ink, Chikuden',
     approved: false,
     orientation: 'confirmed',
-    source_note: WEB_SIZE,
-    cuts: { crop: { box: [0, 0, 1024, 441], widths: [1024, 512] } },
-    maxCssWidth: 512,
+    cuts: { crop: { box: [360, 1300, 3140, 1400], widths: [1570, 785] } },
+    maxCssWidth: 1570,
   },
   p4: {
     p: 'P4',
-    stem: 'p4-tissue-hills',
-    source: 'P1260084-1.jpg 1.png',
-    size: [640, 480],
-    crop: [0, 0, 640, 480],
+    stem: 'p4-clearing-rain',
+    source: 'asian-wang-hui-clearing-after-rain.jpg',
+    size: [2128, 4000],
+    // The mountains and trees between the inscription and the lower seals.
+    crop: [330, 700, 1460, 2600],
     marks: [],
     mode: 'framed',
-    alt: 'Blue and green tissue paper over cream, crossed by black brush strokes',
-    caption: 'Collage by Jane Kwan',
+    alt: 'Ink mountains and clustered trees after rain, with a path winding up between them',
+    caption: 'Clearing after Rain, Wang Hui',
     approved: false,
     orientation: 'confirmed',
-    source_note: WEB_SIZE,
-    cuts: { crop: { box: [0, 0, 640, 480], widths: [640, 320] } },
-    maxCssWidth: 320,
+    cuts: { crop: { box: [330, 700, 1460, 2600], widths: [730, 365] } },
+    maxCssWidth: 730,
   },
   p5: {
     p: 'P5',
     stem: 'p5-enso',
-    source: 'P1260073-1.jpg 1.png',
-    size: [421, 561],
-    crop: [0, 0, 421, 561],
-    marks: [
-      { kind: 'seal', label: 'Seal, top', box: [181, 39, 72, 62] },
-      { kind: 'seal', label: 'Seal, inside the circle', box: [202, 123, 93, 113] },
-    ],
+    source: 'asian-taido-enso.jpg',
+    size: [6540, 3137],
+    // The circle alone, without the calligraphy at its left or the seal at its right.
+    crop: [3450, 300, 2450, 2450],
+    marks: [],
     mode: 'framed',
-    alt: 'A black ink circle with a red seal inside it, over blue and green paper hills',
-    caption: 'Collage by Jane Kwan',
+    alt: 'A single black brushed circle on pale paper',
+    caption: 'Enso, Taido',
     approved: false,
     orientation: 'confirmed',
-    source_note: WEB_SIZE,
-    cuts: { crop: { box: [0, 0, 421, 561], widths: [421, 210] } },
-    maxCssWidth: 210,
+    cuts: { crop: { box: [3450, 300, 2450, 2450], widths: [448, 224] } },
+    maxCssWidth: 1225,
   },
   p8: {
     p: 'P8',
-    stem: 'p8-character-rubbing',
-    source: 'P1190232-1.jpg 1.png',
-    size: [453, 639],
-    crop: [0, 0, 453, 639],
+    stem: 'p8-moonlight',
+    source: 'asian-yogetsu-landscape-in-the-moonlight.jpg',
+    size: [2667, 4000],
+    crop: [535, 600, 1395, 3200],
     marks: [],
     mode: 'framed',
-    alt: 'A black brushed character over a red rubbing, with gold flecks on cream',
-    caption: 'Calligraphy by Jane Kwan',
+    alt: 'A pale moon over a steep cliff, a village among pines, and reeds by the water below',
+    caption: 'Landscape in the Moonlight, Yogetsu',
     approved: false,
     orientation: 'confirmed',
-    source_note: WEB_SIZE,
-    cuts: { crop: { box: [0, 0, 453, 639], widths: [453, 226] } },
-    maxCssWidth: 226,
+    cuts: { crop: { box: [535, 600, 1395, 3200], widths: [697, 348] } },
+    maxCssWidth: 697,
   },
 } as const satisfies Record<string, FramedPiece>;
 

@@ -98,9 +98,9 @@ export const humanHands = {
   title: 'Made by human hands.',
   items: [
     { title: "Dawa's glyphs", body: 'Every sign and planet, brushed in sumi ink.' },
-    // Jane's credit lives here and in the footer, not under each piece (David, Sep 25); Kirstie's
-    // joins it since her paintings became the Tribes' images (David, Nov 4).
-    { title: 'The paintings', body: "Jane Kwan's paintings are the ground every page stands on. Kirstie Connon painted the twelve Tribes." },
+    // The painters' credit lives here and in the footer, not under each piece (David, Sep 25 and Nov 4).
+    // Since Nov 8 (David) the ground is public domain ink landscapes; Kirstie's are the Tribes'.
+    { title: 'The paintings', body: 'Kirstie Connon painted the twelve Tribes. Old Chinese and Japanese ink landscapes, now in the public domain, are the ground every page stands on.' },
     {
       title: 'Your data is yours',
       body: 'Birth details are private. You choose who sees your chart.',

@@ -330,7 +330,7 @@ export default function StyleguidePage() {
 
       <Section title="Art wash and frosted panel">
         <p className="max-w-measure type-body-sm text-ink-700">
-          Jane Kwan&apos;s washes at the Appearance panel&apos;s strength (30% by default, 0.6 of it on
+          The ink landscape washes at the Appearance panel&apos;s strength (30% by default, 0.6 of it on
           Night, half behind a section). All placeholders until Dawa says which can appear.
         </p>
         <div className="mt-4 grid gap-4 md:grid-cols-2">

@@ -26,8 +26,8 @@ function LinkList({ label, links }: { label: string; links: readonly NavLink[] }
 }
 
 /**
- * The footer (1h), on the band tone where the page's rhythm ends. Desktop: the logo left, Jane's enso
- * collage centred, the main nav repeated (0d) beside the legal links and the address on the right,
+ * The footer (1h), on the band tone where the page's rhythm ends. Desktop: the logo left, the ink enso
+ * centred, the main nav repeated (0d) beside the legal links and the address on the right,
  * the credit lines under the logo, top-aligned with the enso so they never hang below it (David, Nov 4) (the art is wallpaper, so its credit lives here, and in What stays
  * true; the page's telescope images are credited here too, David, Nov 4), then a bottom row with the year and the mood toggle as an icon, with its name on hover and
  * focus. On a phone the same parts stack, the enso centred.
@@ -53,7 +53,7 @@ export function SiteFooter() {
         </div>
         <div className="max-w-measure md:col-start-1 md:row-start-2 md:self-start">
           <p className="type-body-sm text-ink-700">All art on AstroTribes is made by human hands.</p>
-          <p className="mt-1 type-caption text-ink-500">Glyphs by Lama Dawa. Art by Jane Kwan. Tribe paintings by Kirstie Connon.</p>
+          <p className="mt-1 type-caption text-ink-500">Glyphs by Lama Dawa. Tribe paintings by Kirstie Connon. Ink landscapes: public domain, from museum collections.</p>
           <SkyCredit lines={skyCreditLines()} />
           <SkyCredit lines={pictureCreditLines} sky={false} />
         </div>

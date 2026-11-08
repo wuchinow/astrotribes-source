@@ -12,7 +12,7 @@ export const appearanceCopy = {
     legend: 'Painting',
     page: "Each page's own",
     none: 'None',
-    credit: 'Art by Jane Kwan',
+    credit: 'Ink landscapes, public domain',
   },
   wash: {
     label: 'Wash strength',
