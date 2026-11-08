@@ -21,12 +21,13 @@ describe('the sky images', () => {
       'sun', 'moon', 'mercury', 'venus', 'mars', 'saturn', 'uranus', 'neptune', 'pluto',
       'galacticCenter',
     ]);
-    // Nov 6: the Galactic Center's page has its own square cut of the 28 Keys card's Chandra mosaic.
+    // Nov 6: the Galactic Center's page has its own square cut of the 28 Keys page's image (Spitzer since Nov 8).
     expect(credits.images.galacticCenter.credit).toBe(credits.images.keysCenter.credit);
     expect(credits.images.jupiter.credit).toBe('NASA/JPL/Space Science Institute');
     expect(credits.images.andromeda.credit).toBe('NASA/JPL/California Institute of Technology');
-    expect(credits.images.today.credit).toBe('NASA/JPL-Caltech/Space Science Institute');
-    expect(credits.images.keysCenter.credit).toBe('NASA/UMass/D. Wang et al.');
+    expect(credits.images.today.credit).toBe('NASA');
+    // Nov 8 (David): Artemis II's crescent Earth on Today's sky, Spitzer's galactic center on the 28 Keys page.
+    expect(credits.images.keysCenter.credit).toBe('NASA/JPL-Caltech');
     expect(credits.images.ring.credit).toBe('The Hubble Heritage Team (AURA/STScI/NASA)');
     // Nov 4 (David): the Sun and Moon cards show the Sun and the Moon, other cuts of their planet pages' photos.
     expect(credits.images.keysSun.credit).toBe(credits.images.sun.credit);
@@ -35,7 +36,7 @@ describe('the sky images', () => {
     for (const id of IDS) {
       expect(skyCredit(SKY[id])).toBe(credits.images[id].credit);
       expect(credits.images[id].tinted, id).toBe(false);
-      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov|www\.nasa\.gov|photojournal\.jpl\.nasa\.gov)\//);
+      expect(credits.images[id].release, id).toMatch(/^https:\/\/(science\.nasa\.gov|www\.spitzer\.caltech\.edu|www\.jpl\.nasa\.gov|www\.nasa\.gov|images\.nasa\.gov|photojournal\.jpl\.nasa\.gov)\//);
       // Public domain only (David, Nov 4): the Crab Nebula, Mystic Mountain, and the Great Observatories'
       // galactic center, each part ESA, came out for that.
       expect(credits.images[id].credit, id).not.toMatch(/ESA/);
@@ -75,9 +76,10 @@ describe('the sky images', () => {
       for (let i = 0; i < data.length; i += 3) chroma = Math.max(chroma, Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]));
       // Some planets are nearly colorless in their own right, and their cuts stay that way: the Moon's
       // photo is black and white (grey, under 30), Venus is pale cloud tops with a faint tan, and
-      // Uranus a pale blue green (both above 20).
+      // Uranus a pale blue green, and the crescent Earth on Today's sky is white cloud and blue sea in
+      // black space (all above 20).
       if (id === 'moon' || id === 'keysMoon') expect(chroma, id).toBeLessThan(30);
-      else expect(chroma, id).toBeGreaterThan(id === 'venus' || id === 'uranus' ? 20 : 60);
+      else expect(chroma, id).toBeGreaterThan(['venus', 'uranus', 'today'].includes(id) ? 20 : 60);
     }
   });
 
