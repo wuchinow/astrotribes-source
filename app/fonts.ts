@@ -1,4 +1,4 @@
-import { Fraunces, IBM_Plex_Mono, Nunito_Sans } from 'next/font/google';
+import { Fraunces, IBM_Plex_Mono, Nunito_Sans, Rye } from 'next/font/google';
 
 // next/font downloads these at build time and serves them from this site's own
 // origin: no visitor's browser ever calls Google.
@@ -27,4 +27,16 @@ export const plexMono = IBM_Plex_Mono({
   display: 'swap',
   preload: false,
   variable: '--font-plex-mono',
+});
+
+/**
+ * Wood type, for the homepage's "Find your Keys" and nowhere else (Dawa, Nov 7: "much bigger and
+ * bolder, perhaps in a funner font", with 19th-century pointing hands). Not preloaded.
+ */
+export const rye = Rye({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  preload: false,
+  variable: '--font-rye',
 });

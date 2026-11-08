@@ -42,13 +42,13 @@ export function KeyRow({ body, notes, missing, more }: KeyRowProps) {
   const glyph = drawn(body);
   const gap = missing ? <p className="max-w-[40ch] type-body-sm text-ink-500">{missing}</p> : null;
   return (
-    <div data-key-row="" className="grid gap-x-8 gap-y-5 py-6 lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)]">
+    <div data-key-row="" className="grid gap-x-8 gap-y-5 py-6 lg:grid-cols-[13rem_minmax(0,1fr)_minmax(0,1fr)]">
       <div>
         <div className="flex items-center gap-3 lg:block">
-          {glyph ? <GlyphIcon glyph={body} size={48} className="-ml-1 text-ink-900" /> : null}
-          <h3 className="type-heading-3 text-ink-900 lg:mt-1">{BODIES[body].name}</h3>
+          {glyph ? <GlyphIcon glyph={body} size={72} className="-ml-1 text-ink-900" /> : null}
+          <h3 className="type-heading-2 text-ink-900 lg:mt-1">{BODIES[body].name}</h3>
         </div>
-        <p data-body-line="" className="mt-1 max-w-[40ch] font-display text-[1.0625rem] leading-snug italic text-ink-700">
+        <p data-body-line="" className="mt-1 max-w-[40ch] font-display text-[1.25rem] leading-snug italic text-ink-700">
           {BODIES[body].line}
         </p>
         {more ? (

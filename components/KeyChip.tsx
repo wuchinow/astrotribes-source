@@ -32,10 +32,10 @@ export function KeyChip({ keyId, value, showGloss = false, href, className }: Ke
   // yet is a quiet paper pill with the name in ink (.at-chip-static), because
   // cobalt means clickable.
   const chipClasses = cn(
-    'inline-flex min-h-9 items-baseline gap-2 rounded-pill border px-3 py-2 font-body text-[1rem] leading-[1.25] text-ink-900 no-underline',
+    // Dawa, Nov 7: Key names much larger everywhere. 20px on a phone, 22px from md (was 16px).
+    'inline-flex min-h-11 items-baseline gap-2 rounded-pill border px-4 py-2 font-body text-[1.25rem] leading-[1.25] text-ink-900 no-underline md:text-[1.375rem]',
     href
-      ? // A clickable chip is 36px tall; the ::before pads the hit area to 44px.
-        'relative border-transparent bg-cobalt-100 transition-colors duration-200 before:absolute before:inset-x-0 before:-inset-y-1 hover:border-cobalt-400'
+      ? 'relative border-transparent bg-cobalt-100 transition-colors duration-200 hover:border-cobalt-400'
       : 'border-ink-200 bg-surface-200',
   );
 
@@ -43,7 +43,7 @@ export function KeyChip({ keyId, value, showGloss = false, href, className }: Ke
     <>
       <span className={cn('font-semibold', href ? 'text-cobalt-600' : 'text-ink-900')}>{key.name}</span>
       {valueText ? (
-        <span className={cn('font-normal', isHouse && 'font-mono text-[0.9375rem]')}>{valueText}</span>
+        <span className={cn('font-normal', isHouse && 'font-mono text-[1.125rem] md:text-[1.25rem]')}>{valueText}</span>
       ) : null}
       {showGloss ? null : <span className="sr-only">: {gloss}</span>}
     </>
@@ -60,7 +60,7 @@ export function KeyChip({ keyId, value, showGloss = false, href, className }: Ke
           {content}
         </span>
       )}
-      {showGloss ? <span className="mt-2 type-body-sm text-ink-700">{gloss}</span> : null}
+      {showGloss ? <span className="mt-2 type-body text-ink-700">{gloss}</span> : null}
     </span>
   );
 }

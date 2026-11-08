@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import skyFiles from '@/public/sky-images/credits.json';
-import { BODIES, type BodyId, type KeyId } from '@/lib/keys';
+import { BODIES, KEYS, sourceLabel, type BodyId, type KeyId } from '@/lib/keys';
 import { SKY } from '@/lib/sky';
 import { GlyphIcon } from './GlyphIcon';
 import { KeyChip } from './KeyChip';
@@ -44,11 +44,14 @@ export function KeysCard({ body, keys, sky }: KeysCardProps) {
       </div>
       <div className="flex flex-1 flex-col p-4 md:p-6">
         {/* Rising has no glyph of Dawa's; its space is kept so the three titles line up. */}
-        {glyph ? <GlyphIcon glyph={glyph} size={48} className="-ml-1 text-ink-900" /> : <span aria-hidden="true" className="block h-12" />}
-        <h3 className="mt-2 type-heading-3 text-ink-900">{BODIES[body].name}</h3>
-        <ul className="mt-4 grid gap-5">
+        {glyph ? <GlyphIcon glyph={glyph} size={72} className="-ml-1 text-ink-900" /> : <span aria-hidden="true" className="block h-18" />}
+        <h3 className="mt-2 type-heading-2 text-ink-900">{BODIES[body].name}</h3>
+        {/* Each Key in a tile of its own with where it comes from, so the house Keys (Realm, Hearth)
+            stand out as clearly as the sign Keys (Dawa, Nov 7). */}
+        <ul className="mt-4 grid gap-4">
           {keys.map((id) => (
-            <li key={id}>
+            <li key={id} data-starter-key={id} className="rounded-md border border-ink-200 bg-surface-100 p-4">
+              <p className="mb-2 type-label text-ink-500">{sourceLabel(KEYS[id])}</p>
               <KeyChip keyId={id} showGloss />
             </li>
           ))}

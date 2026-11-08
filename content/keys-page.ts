@@ -128,10 +128,24 @@ export const keysPage = {
     ],
   },
 
-  // PLACEHOLDER: the next step
+  // Dawa's table (Nov 7, note 25): a glyph, the sign Key, the house Key, and how many Keys, one row
+  // per body, with the tally at the foot. The headings are ours. Key names come from lib/keys.ts.
+  glance: {
+    id: 'all-28-at-a-glance',
+    contents: 'All 28 at a glance',
+    eyebrow: 'All 28 at a glance',
+    line: 'Every planet and point,',
+    accent: 'every Key.',
+    caption: 'The 28 Keys: each planet or point, its sign Key, its house Key, and how many Keys it gives.',
+    columns: { body: 'Planet or point', both: 'Sign and house Keys', sign: 'Sign Key', house: 'House Key', count: 'Keys' },
+    count: (n: number) => (n === 1 ? '1 Key' : `${n} Keys`),
+    total: (n: number) => `${n} Keys in all`,
+  },
+
+  // The title is Dawa's (Nov 7: "Find Yours!", in larger type under the table); the rest is ours.
   nextStep: {
     eyebrow: 'Start here',
-    title: 'See your first three.',
+    title: 'Find yours!',
     body: 'Your Sun, Moon, and Rising from your birth details. Free with an account, no payment.',
     secondary: { href: '/#tribes', label: 'Find your Tribe' },
   },

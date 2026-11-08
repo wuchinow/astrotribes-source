@@ -18,9 +18,12 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
 
-const REFERENCE = path.resolve('../reference');
+// GLYPH_REFERENCE and GLYPH_STAGING point elsewhere when ../reference is not
+// on this machine; ids on the command line trace only those picks (no alternates).
+const REFERENCE = path.resolve(process.env.GLYPH_REFERENCE ?? '../reference');
 const PUBLIC = path.resolve('public/glyphs');
-const STAGING = path.resolve('../staging/26.9.23 - 0b glyph traces');
+const STAGING = path.resolve(process.env.GLYPH_STAGING ?? '../staging/26.9.23 - 0b glyph traces');
+const ONLY = process.argv.slice(2);
 const TMP = path.join(tmpdir(), 'astrotribes-glyph-trace');
 
 const CANVAS = 1024; // bitmap handed to potrace
@@ -30,6 +33,7 @@ const ART = (CANVAS * 88) / 96; // the glyph's longer side, leaving a 4-unit mar
  * crop: [left, top, width, height] in source pixels, the drawing Dawa marked.
  * threshold: ink cut-off, 0 to 1 (alpha: share of opacity; photo: multiplier on Otsu).
  * alt: an alternate candidate, written to staging only.
+ * fillHoles: fill enclosed gaps in the ink smaller than this many canvas pixels (streaks from a soft photo).
  * placeholder: a stand-in made with an image tool and cleaned by Fable, not
  * Dawa's; traced the same way and labelled as such on the contact sheet.
  */
@@ -131,19 +135,43 @@ const GLYPHS = [
   { id: 'jupiter', source: 'alpha', file: 'glyphs alpha/6 1.png' },
   { id: 'saturn', source: 'alpha', file: 'glyphs alpha/7 1.png' },
   { id: 'neptune', source: 'alpha', file: 'glyphs alpha/2 1.png' },
-  // Placeholders until Dawa brushes his own (Sep 24): not his work, never credited to him
+  // Dawa's Uranus and Pluto, brushed Apr 10 and found Nov 8 in his Drive
+  // folder "Dawa glyphs" (Uranus.HEIC, Pluto.HEIC), converted to greyscale PNG.
+  // Both photos are soft; a sharper photo of either traces better.
   {
     id: 'uranus',
-    source: 'alpha',
-    file: 'glyphs alpha/12 uranus (placeholder).png',
-    placeholder: true,
+    source: 'photo',
+    file: 'glyphs/uranus-dawa.png',
+    crop: [1050, 1400, 1350, 1300],
+    threshold: 1.1,
+    fillHoles: 4000,
+    note: 'lower of the two, fully in frame; the soft photo leaves dry-brush streaks in the bars, filled',
   },
   {
     id: 'pluto',
+    source: 'photo',
+    file: 'glyphs/pluto-dawa.png',
+    crop: [700, 2000, 1350, 1300],
+    threshold: 1.14,
+    fillHoles: 4000,
+    note: 'orb form',
+  },
+  // Placeholders until Dawa brushes his own (Sep 24): not his work, never credited to him
+  {
+    id: 'uranus',
+    alt: true,
+    source: 'alpha',
+    file: 'glyphs alpha/12 uranus (placeholder).png',
+    placeholder: true,
+    note: 'the Sep 24 stand-in',
+  },
+  {
+    id: 'pluto',
+    alt: true,
     source: 'alpha',
     file: 'glyphs alpha/13 pluto orb (placeholder).png',
     placeholder: true,
-    note: 'orb form, in use',
+    note: 'the Sep 24 stand-in, orb form',
   },
   {
     id: 'pluto',
@@ -289,6 +317,32 @@ function keepComponents(ink, W, H, cut, minArea) {
   return { x0, y0, x1, y1, kept: areas.filter((a) => a >= floor).length };
 }
 
+/** Fill paper regions enclosed by ink (not touching the edge) smaller than maxArea. */
+function fillHoles(bits, W, H, maxArea) {
+  const seen = new Uint8Array(W * H);
+  for (let start = 0; start < W * H; start++) {
+    if (bits[start] || seen[start]) continue;
+    const region = [];
+    let edge = false;
+    const stack = [start];
+    seen[start] = 1;
+    while (stack.length) {
+      const p = stack.pop();
+      region.push(p);
+      const x = p % W,
+        y = (p - x) / W;
+      if (x === 0 || y === 0 || x === W - 1 || y === H - 1) edge = true;
+      for (const q of [p - 1, p + 1, p - W, p + W]) {
+        if (q < 0 || q >= W * H || bits[q] || seen[q]) continue;
+        if ((q === p - 1 && x === 0) || (q === p + 1 && x === W - 1)) continue;
+        seen[q] = 1;
+        stack.push(q);
+      }
+    }
+    if (!edge && region.length < maxArea) for (const p of region) bits[p] = 1;
+  }
+}
+
 function toPbm(bits, W, H) {
   const rowBytes = Math.ceil(W / 8);
   const body = Buffer.alloc(rowBytes * H);
@@ -320,6 +374,8 @@ async function trace(entry) {
   const oy = Math.round((CANVAS - h) / 2);
   for (let y = 0; y < h; y++)
     for (let x = 0; x < w; x++) if (fitted[y * w + x] >= cut) bits[(y + oy) * CANVAS + x + ox] = 1;
+
+  if (entry.fillHoles) fillHoles(bits, CANVAS, entry.fillHoles);
 
   mkdirSync(TMP, { recursive: true });
   const name = entry.alt ? `${entry.id}-alt` : entry.id;
@@ -430,6 +486,7 @@ async function main() {
   mkdirSync(STAGING, { recursive: true });
   const results = [];
   for (const entry of GLYPHS) {
+    if (ONLY.length && (entry.alt || !ONLY.includes(entry.id))) continue;
     const { name, svg, components } = await trace(entry);
     const dir = entry.alt ? STAGING : PUBLIC;
     const file = path.join(dir, `${name}.svg`);

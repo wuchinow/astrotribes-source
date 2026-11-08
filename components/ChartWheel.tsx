@@ -18,6 +18,7 @@ import {
 import { cn } from '@/lib/cn';
 import { GLYPHS, type GlyphId } from '@/lib/glyphs';
 import { BODIES, HOUSES, SIGNS, keyFor, type HouseNumber } from '@/lib/keys';
+import { GlyphIcon } from './GlyphIcon';
 import { KeyChip } from './KeyChip';
 
 // A chart as a line-drawn wheel (3g, David, Nov 4): thin rings in ink, the twelve sign glyphs on an
@@ -379,13 +380,18 @@ function WheelPanel({
   return (
     <div className="rounded-md border border-ink-200 bg-surface-200 p-4 shadow-rest md:p-6">
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className="type-heading-3 text-ink-900">{planet}</h3>
-          <p className="mt-1 type-body-sm text-ink-700">
-            {SIGNS[b.sign].name}
-            {degrees ? ` ${degrees}` : null}
-            {b.house ? `, ${chartWheelCopy.house(HOUSES[b.house - 1].roman)}` : null}
-          </p>
+        <div className="flex items-center gap-3">
+          {/* The planet and its sign in Dawa's glyphs (his Nov 7 notes: glyphs larger, wherever a Key appears). */}
+          {GLYPHS[b.body].svg ? <GlyphIcon glyph={b.body} size={48} className="shrink-0 text-ink-900" /> : null}
+          <GlyphIcon glyph={b.sign} size={48} className="shrink-0 text-ink-900" />
+          <div>
+            <h3 className="type-heading-2 text-ink-900">{planet}</h3>
+            <p className="mt-1 type-body text-ink-700">
+              {SIGNS[b.sign].name}
+              {degrees ? ` ${degrees}` : null}
+              {b.house ? `, ${chartWheelCopy.house(HOUSES[b.house - 1].roman)}` : null}
+            </p>
+          </div>
         </div>
         <button
           type="button"
@@ -400,14 +406,14 @@ function WheelPanel({
         {signKey ? (
           <div>
             <KeyChip keyId={signKey.id} value={b.sign} showGloss />
-            {detail?.signLine ? <p className="mt-2 text-ink-900">{detail.signLine}</p> : null}
+            {detail?.signLine ? <p className="mt-2 type-body text-ink-900">{detail.signLine}</p> : null}
           </div>
         ) : null}
         {houseKey ? (
           <div>
             {b.house ? <KeyChip keyId={houseKey.id} value={b.house} showGloss /> : <KeyChip keyId={houseKey.id} showGloss />}
             {b.house ? (
-              detail?.houseLine ? <p className="mt-2 text-ink-900">{detail.houseLine}</p> : null
+              detail?.houseLine ? <p className="mt-2 type-body text-ink-900">{detail.houseLine}</p> : null
             ) : (
               <p className="mt-2 type-body-sm text-ink-700">{chartWheelCopy.noHouse}</p>
             )}

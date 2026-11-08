@@ -5,6 +5,7 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { ChartWheel } from '@/components/ChartWheel';
 import { ChartReading } from '@/components/ChartReading';
+import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { Quote } from '@/components/Quote';
@@ -18,6 +19,7 @@ import { quote } from '@/content/quotes';
 import { yourChartCopy } from '@/content/welcome';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { chineseSign } from '@/lib/chinese-zodiac';
+import { drawn } from '@/lib/glyphs';
 import { BODIES, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
@@ -134,9 +136,17 @@ export default async function YourChartPage() {
                 data-your-planet={planet.body}
                 className="grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-2 md:gap-8 md:p-8"
               >
+                {/* Dawa's glyphs for the planet and its sign; none for houses, as he says (Nov 7). */}
+                <div className="flex items-center gap-4 md:col-span-2">
+                  {drawn(planet.body) ? <GlyphIcon glyph={planet.body} size={72} className="text-ink-900" /> : null}
+                  <h3 className="type-heading-2 text-ink-900">{name}</h3>
+                </div>
                 {signKey ? (
                   <div data-your-key={signKey.id}>
-                    <p className="mb-2 type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
+                    <div className="mb-3 flex items-center gap-3">
+                      <GlyphIcon glyph={row.sign} size={48} className="text-ink-900" />
+                      <p className="type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
+                    </div>
                     <KeyChip keyId={signKey.id} value={row.sign} showGloss />
                     <Lines text={planet.signs[row.sign]} />
                   </div>
@@ -147,7 +157,7 @@ export default async function YourChartPage() {
                 >
                   {row.house ? (
                     <>
-                      <p className="mb-2 type-label text-ink-500">
+                      <p className="mb-3 flex min-h-12 items-center type-label text-ink-500">
                         {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
                       </p>
                       <KeyChip keyId={houseKey.id} value={row.house} showGloss />
@@ -231,7 +241,7 @@ function Lines({ text }: { text?: string }) {
   return (
     <>
       {paragraphs(text).map((paragraph) => (
-        <p key={paragraph.slice(0, 32)} className="mt-3 text-ink-900">
+        <p key={paragraph.slice(0, 32)} className="mt-3 type-body text-ink-900">
           {paragraph}
         </p>
       ))}

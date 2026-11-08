@@ -6,6 +6,7 @@ import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeysCard } from '@/components/KeysCard';
 import { NightBand } from '@/components/NightBand';
 import { NumberedSteps } from '@/components/NumberedSteps';
+import { PointingHand } from '@/components/PointingHand';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeCard } from '@/components/TribeCard';
@@ -149,7 +150,15 @@ export default function HomePage() {
 
       <Section id="keys" labelledBy="keys-title" band>
         <Eyebrow>{keys.eyebrow}</Eyebrow>
-        <Headline id="keys-title" line={keys.line} accent={keys.accent} />
+        {/* Dawa's old-west poster (Nov 7): wood type between two printers' hands, used only here. */}
+        <h2
+          id="keys-title"
+          className="mb-6 flex items-center gap-3 font-woodtype text-[2.5rem] leading-[1.05] text-ink-900 md:gap-6 md:text-[4.5rem]"
+        >
+          <PointingHand className="hidden w-24 shrink-0 text-ink-900 sm:block md:w-36" />
+          <span>{keys.title}</span>
+          <PointingHand direction="left" className="hidden w-24 shrink-0 text-ink-900 sm:block md:w-36" />
+        </h2>
         <Lede>{keys.lede}</Lede>
         <ul className="mt-8 grid gap-6 md:grid-cols-3">
           <li>

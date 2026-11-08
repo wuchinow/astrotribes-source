@@ -35,8 +35,16 @@ describe('glyph registry', () => {
     for (const id of SIGN_IDS) expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id}.svg`);
   });
 
+  it("credits Dawa's own Uranus and Pluto", () => {
+    for (const id of ['uranus', 'pluto'] as const) {
+      expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id}.svg`);
+      expect(GLYPHS[id].placeholder, id).toBe(false);
+      expect(GLYPHS[id].credit, id).toBe('Lama Dawa');
+    }
+  });
+
   it("flags the stand-ins and keeps them out of Dawa's credit", () => {
-    for (const id of ['uranus', 'pluto', 'chiron', 'northNode', 'southNode', 'galacticCenter'] as const) {
+    for (const id of ['chiron', 'northNode', 'southNode', 'galacticCenter'] as const) {
       expect(GLYPHS[id].svg, id).toBe(`/glyphs/${id === 'southNode' ? 'northNode' : id}.svg`);
       expect(GLYPHS[id].placeholder, id).toBe(true);
       expect(GLYPHS[id].reviewed, id).toBe(false);

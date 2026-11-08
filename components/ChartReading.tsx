@@ -56,7 +56,7 @@ export function ChartReading({ body, reading, headingId, shared = false, strip =
       {stripEl}
       <div className="flex items-center gap-3 text-ink-900">
         {signs.map((sign) => (
-          <GlyphIcon key={sign} glyph={sign} size={48} />
+          <GlyphIcon key={sign} glyph={sign} size={72} />
         ))}
       </div>
       <div>
