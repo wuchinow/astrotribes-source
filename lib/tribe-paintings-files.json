@@ -250,26 +250,26 @@
     }
   },
   "aquarius": {
-    "size": 632,
+    "size": 1264,
     "files": {
       "384": {
         "avif": {
-          "src": "/tribe-paintings/aquarius-384.d0d17ea1.avif",
-          "bytes": 11955
+          "src": "/tribe-paintings/aquarius-384.c87530af.avif",
+          "bytes": 12896
         },
         "webp": {
-          "src": "/tribe-paintings/aquarius-384.f9d51627.webp",
-          "bytes": 20102
+          "src": "/tribe-paintings/aquarius-384.b66b6d6b.webp",
+          "bytes": 24228
         }
       },
-      "632": {
+      "768": {
         "avif": {
-          "src": "/tribe-paintings/aquarius-632.6e36011e.avif",
-          "bytes": 31509
+          "src": "/tribe-paintings/aquarius-768.475e149b.avif",
+          "bytes": 42939
         },
         "webp": {
-          "src": "/tribe-paintings/aquarius-632.e7a97f2f.webp",
-          "bytes": 48200
+          "src": "/tribe-paintings/aquarius-768.2c9e20c1.webp",
+          "bytes": 71352
         }
       }
     }
