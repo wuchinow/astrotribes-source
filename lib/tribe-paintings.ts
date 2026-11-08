@@ -34,7 +34,7 @@ export const TRIBE_PAINTINGS: Record<SignId, TribePainting> = {
   scorpio: { source: 'scorpio.jpg', size: [2748, 2793], alt: 'A blue scorpion, its tail curled, over a deep blue mandala.' },
   sagittarius: { source: 'sagittarius.jpg', size: [2873, 2949], alt: 'A centaur drawing a bow over a pink mandala.' },
   capricorn: { source: 'capricorn.jpg', size: [2660, 2685], alt: 'A mountain goat with curled horns over a dark green mandala.' },
-  aquarius: { source: 'aquarius.jpg', size: [636, 632], alt: 'A figure pouring water from a jar, in blues.' },
+  aquarius: { source: 'aquarius.png', size: [1272, 1264], alt: 'A figure pouring water from a jar, in blues.' },
   pisces: { source: 'pisces.jpg', size: [3000, 3000], alt: 'Two fish circling each other, in pale blues.' },
 };
 
