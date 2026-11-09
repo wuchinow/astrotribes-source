@@ -10,7 +10,15 @@
 // Since 3y (Nov 6) the Learn page reads his Substack feed by itself (lib/substack.ts): new posts and
 // edited titles arrive within the hour. These entries are the fallback when the feed cannot be read,
 // and they keep what the feed cannot say: the series' part titles, its excerpts, and each planet.
+//
+// Since 4w (David, Nov 9: "feature an article or several on the website without linking to
+// substack. perhaps all of them", and "at least one open on learn where they can read by scrolling
+// not clicking") every article reads in full on the site, at /learn/<its Substack address>, from the
+// body his feed carries (lib/article-html.ts). The Learn page shows one in full (FEATURED_URL) and the
+// rest as cards with their opening lines. The text is still typed nowhere in the repo: when the feed
+// cannot be read, a card shows the excerpt below and its page links to the post on Substack.
 
+import type { ArticleNode } from '@/lib/article-html';
 import type { BodyId } from '@/lib/keys';
 import { the } from './the';
 
@@ -26,7 +34,19 @@ export interface Article {
   date: string;
   /** The planet a post is about, so its page under /keys can link to it. */
   body?: BodyId;
+  /** The post in full, from the feed (4w); absent when the feed cannot be read. */
+  content?: readonly ArticleNode[];
+  /** The post's opening lines for its card, from the feed (4w). */
+  opening?: string;
+  /** It lists Key names Dawa has changed since he wrote it, so its page says so (4w). */
+  olderKeys?: boolean;
 }
+
+/** The part of a post's Substack address after /p/, which is also its address on Learn. */
+export const slugOf = (url: string) => url.slice(url.indexOf('/p/') + 3).split(/[?#/]/)[0];
+
+/** Its page on the site (4w). */
+export const learnHref = (article: Pick<Article, 'url'>) => `/learn/${slugOf(article.url)}`;
 
 /** "Astrology: A New Language", Dawa's series on the planets, in the order he wrote it. */
 export const SERIES_TITLE = 'Astrology: A new language';
@@ -37,6 +57,8 @@ export const SERIES: readonly Article[] = [
     title: 'Introduction',
     excerpt: 'Fresh words for astrological meaning in today’s world.',
     date: '2026-08-27',
+    // Its list is the 26 Keys of August, before the renames (lib/keys.ts has today's 28).
+    olderKeys: true,
   },
   {
     url: `${SUBSTACK_URL}/p/astrology-a-new-language-41c`,
@@ -75,6 +97,12 @@ export const SERIES: readonly Article[] = [
   },
 ];
 
+/**
+ * The article Learn shows in full (4w): the Galactic Center, which reads well on its own and lists no
+ * Key (David, Nov 9). He first picked the series' introduction, but its list holds the August Key names.
+ */
+export const FEATURED_URL = `${SUBSTACK_URL}/p/the-galactic-center-point`;
+
 /** Everything else he has written, newest first. */
 export const ARTICLES: readonly Article[] = [
   {
@@ -94,6 +122,8 @@ export const ARTICLES: readonly Article[] = [
     title: 'The ninth house in your horoscope',
     excerpt: 'Creating a conscious life.',
     date: '2026-08-10',
+    // It calls the Sun's house Key Kingdom, an older name (today Realm).
+    olderKeys: true,
   },
   {
     url: `${SUBSTACK_URL}/p/symbolism-of-the-north-node`,
@@ -131,15 +161,35 @@ export const learnCopy = {
   eyebrow: 'Learn',
   line: 'Learn the language',
   accent: 'of the sky.',
-  lede: 'Dawa writes about astrology in fresh words for today: the planets, the points that matter most, and the times we live in. Every article opens on his Substack.',
+  lede: 'Dawa writes about astrology in fresh words for today: the planets, the points that matter most, and the times we live in. Read him here, or get each new article by email from his Substack.',
   subscribe: 'Subscribe on Substack',
+  featuredEyebrow: 'Start here',
+  /** Over the featured article and on each article's page: where it sits in the series. */
+  seriesPart: (n: number) => `${SERIES_TITLE}, part ${n}`,
+  articleEyebrow: 'From Dawa',
+  byline: 'By Dawa',
+  minutes: (words: number) => `${Math.max(1, Math.round(words / 230))} min read`,
+  back: 'All articles',
+  next: (title: string) => `Next in the series: ${title}`,
+  previous: (title: string) => `Before this: ${title}`,
+  moreHeading: 'Keep',
+  moreAccent: 'reading.',
+  aboutHeading: 'About Dawa',
+  about: 'Dawa is the AstroTribes astrologer. He gave every placement in a chart its Key, the names this site is built on.',
+  /** For screen readers: the next and previous parts under a series article. */
+  seriesNav: 'More in the series',
+  subscribeLine: 'Dawa’s new articles arrive here and by email from his Substack.',
+  /** When the feed cannot be read and the article page has only the excerpt. */
+  unavailable: 'This article will be back here shortly. In the meantime you can read it on Dawa’s Substack.',
+  readThere: 'Read on Substack',
+  /** Over an article whose Key names have changed since (olderKeys); the link goes to the 28 Keys. */
+  olderKeysNote: 'Dawa wrote this in the summer of 2026, and some Key names have changed since. For the current ones, see',
+  olderKeysLink: 'the 28 Keys',
   seriesEyebrow: 'A series',
   part: (n: number) => `Part ${n}`,
   seriesLede: 'Why each planet takes the words it does in AstroTribes, one planet at a time.',
   articlesHeading: 'More from Dawa',
-  read: 'Read on Substack',
-  /** For screen readers: where the card goes. */
-  readLabel: (title: string) => `${title}, on Dawa’s Substack`,
+  read: 'Read the article',
   videosHeading: 'Videos',
   videosComing: 'Dawa’s videos are on the way. They will show here as soon as the first one is ready.',
   /** On a planet's page under /keys. */

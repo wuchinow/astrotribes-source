@@ -1,11 +1,13 @@
 // Dawa's Substack on the Learn page, kept up to date by itself (3y, admin to-do, David Nov 6: "yes to
 // auto update with substack changes"). The page reads his public feed (docdawa.substack.com/feed) on
 // the server at most once an hour, so a new post, or a title or subtitle he edits, reaches the page
-// within the hour with no site update. Only each post's title, subtitle, date, and address are used;
-// no full text is copied onto the site. If the feed cannot be read, the page shows the posts typed
+// within the hour with no site update. Since 4w (David, Nov 9) each post's body comes from the feed
+// too, read through lib/article-html.ts, so every article reads in full on the site; the text is
+// never typed into the repo. If the feed cannot be read, the page shows the posts typed
 // into content/articles.ts, which also hold what the feed cannot say: the series' part titles (his
 // series posts all share one title) and which planet each is about.
-import { SERIES, ARTICLES, SUBSTACK_URL, type Article } from '@/content/articles';
+import { SERIES, ARTICLES, SUBSTACK_URL, slugOf, type Article } from '@/content/articles';
+import { articleBody, openingOf } from '@/lib/article-html';
 import { BODIES, SIGNS, type BodyId } from '@/lib/keys';
 
 export const FEED_URL = `${SUBSTACK_URL}/feed`;
@@ -22,6 +24,8 @@ export interface FeedItem {
   subtitle: string;
   /** YYYY-MM-DD (UTC). */
   date: string;
+  /** The post's body as Substack's HTML (content:encoded), where the feed carries it. */
+  html?: string;
 }
 
 const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
@@ -48,7 +52,14 @@ export function parseFeed(xml: string): FeedItem[] {
     const url = tag(item, 'link').split('?')[0];
     const time = Date.parse(tag(item, 'pubDate'));
     if (!url.startsWith(`${SUBSTACK_URL}/p/`) || Number.isNaN(time)) continue;
-    items.push({ url, title: tag(item, 'title'), subtitle: tag(item, 'description'), date: new Date(time).toISOString().slice(0, 10) });
+    const html = /<content:encoded>([\s\S]*?)<\/content:encoded>/.exec(item)?.[1].replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, '$1');
+    items.push({
+      url,
+      title: tag(item, 'title'),
+      subtitle: tag(item, 'description'),
+      date: new Date(time).toISOString().slice(0, 10),
+      ...(html?.trim() ? { html } : {}),
+    });
   }
   return items;
 }
@@ -108,6 +119,13 @@ function seriesPost(item: FeedItem): Article {
   return { url: item.url, title, excerpt, date: item.date, ...(body ? { body } : {}) };
 }
 
+/** The post in full and its opening lines, where the feed carries its body (4w). */
+function fullText(item: FeedItem): Pick<Article, 'content' | 'opening'> {
+  if (!item.html) return {};
+  const content = articleBody(item.html, item.title, item.subtitle);
+  return content.length ? { content, opening: openingOf(content) } : {};
+}
+
 /** Learn's two lists from the feed, with the typed posts filling in what the feed no longer lists. */
 export function mergeFeed(items: readonly FeedItem[]): { series: Article[]; articles: Article[] } {
   const typedSeries = new Map(SERIES.map((article) => [article.url, article]));
@@ -118,7 +136,7 @@ export function mergeFeed(items: readonly FeedItem[]): { series: Article[]; arti
     if (LEFT_OUT.has(item.url)) continue;
     if (item.url.startsWith(SERIES_PREFIX) || typedSeries.has(item.url)) {
       // The series keeps its typed part titles and excerpts; the feed adds new parts.
-      series.set(item.url, typedSeries.get(item.url) ?? seriesPost(item));
+      series.set(item.url, { ...(typedSeries.get(item.url) ?? seriesPost(item)), ...fullText(item) });
     } else {
       articles.set(item.url, {
         url: item.url,
@@ -126,6 +144,7 @@ export function mergeFeed(items: readonly FeedItem[]): { series: Article[]; arti
         excerpt: excerptOf(item.subtitle),
         date: item.date,
         ...(typed.get(item.url)?.body ? { body: typed.get(item.url)!.body } : {}),
+        ...fullText(item),
       });
     }
   }
@@ -146,6 +165,15 @@ export async function learnArticles(): Promise<{ series: readonly Article[]; art
   } catch {
     return { series: SERIES, articles: ARTICLES };
   }
+}
+
+/** One article by its address on Learn, with its place in the series (a part number) if it has one. */
+export async function learnArticle(slug: string): Promise<{ article: Article; part?: number; series: readonly Article[]; articles: readonly Article[] } | undefined> {
+  const { series, articles } = await learnArticles();
+  const index = series.findIndex((article) => slugOf(article.url) === slug);
+  if (index >= 0) return { article: series[index], part: index + 1, series, articles };
+  const article = articles.find((entry) => slugOf(entry.url) === slug);
+  return article ? { article, series, articles } : undefined;
 }
 
 /** Dawa's article on a planet, for that planet's page. */
