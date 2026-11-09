@@ -8,10 +8,11 @@ import { PointsBreakdown } from '@/components/PointsBreakdown';
 import { glossOnce } from '@/components/MemberCard';
 import { SharedKeys } from '@/components/SharedKeys';
 import { TribeBadge } from '@/components/TribeBadge';
+import { ZodiacJade } from '@/components/ZodiacJade';
 import { memberCopy, membersCopy, pointsCopy, pointsCount } from '@/content/members';
 import { BODIES, KEYS, SIGNS } from '@/lib/keys';
 import { FAMILY_BODIES } from '@/lib/mates';
-import { ownPlacements, visibleMember } from '@/lib/members';
+import { memberAnimal, ownPlacements, visibleMember } from '@/lib/members';
 import { hasBirthTime } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
@@ -26,7 +27,7 @@ const pageLink =
 /**
  * One member's profile (3g; 4r): their Sun, Moon, and rising sign as Keys with links to those Tribe,
  * Clan, and Vibe pages, their generational families (signs only, linked to each family's members; no
- * years, which would narrow their birth date), then your connection points
+ * years, which would narrow their birth date), their Chinese animal (4s, from 0008; never the element), then your connection points
  * (3p) and every Key the two of you share, in the six groups of the 28 Keys page, with the outer
  * planets' sign keys apart, then how the points add up. Read as the
  * viewer under RLS: a member the database does not let you see is a 404, the same as one who does
@@ -45,6 +46,7 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
   if (!mine.some((row) => row.body === 'sun')) redirect('/welcome');
   const member = await visibleMember(supabase, id, mine);
   if (!member) notFound();
+  const animal = await memberAnimal(supabase, id);
 
   const sun = member.placements.find((row) => row.body === 'sun')!;
   const theirs = new Map(member.placements.map((row) => [row.body, row]));
@@ -107,6 +109,19 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
               </li>
             ))}
           </ul>
+        </section>
+      ) : null}
+
+      {animal ? (
+        <section aria-labelledby="their-chinese" className="mt-10 flex items-center gap-6">
+          <ZodiacJade animal={animal} sizes="7rem" className="max-w-[7rem]! shrink-0" />
+          <div>
+            <h2 id="their-chinese" className="type-heading-3 text-ink-900 [overflow-wrap:anywhere]">
+              {memberCopy.chineseHeading(member.name)}
+            </h2>
+            <p className="mt-1 type-body text-ink-900">{memberCopy.chineseName(animal)}</p>
+            <p className="mt-1 max-w-measure type-body-sm text-ink-700">{memberCopy.chineseNote}</p>
+          </div>
         </section>
       ) : null}
 
