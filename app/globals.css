@@ -804,6 +804,14 @@
     color: var(--ink-500);
   }
 
+  /* The Chinese zodiac animal's character on Your chart (4p), traditional form. */
+  .zodiac-hanzi {
+    font-family: var(--font-zodiac), serif;
+    font-weight: 700;
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
   .hexagram-chars {
     font-family: var(--font-hanzi), serif;
     font-weight: 700;

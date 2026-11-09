@@ -19,6 +19,8 @@ export interface TribeWords {
   prompts: readonly [string, string, string];
   /** A light line the Tribe would recognize. */
   smile: string;
+  /** Two more for the humor section (Dawa's Nov 7 note 19: "Astro humor should be an important component"). */
+  jokes: readonly [string, string];
 }
 
 // PLACEHOLDER: ours, for Dawa to review. His own words for each Tribe (hello, traits, shadows, facts,
@@ -34,6 +36,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'What did you start this year?',
     ],
     smile: '“I’m working on my patience. How long does that take?”',
+    jokes: ['“How many Aries does it take to change a light bulb?” “One. It’s done. What’s next?”', 'An Aries’ favorite exercise: jumping to conclusions.'],
   },
   taurus: {
     symbol: 'The bull',
@@ -45,6 +48,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you handle change you did not choose?',
     ],
     smile: '“I’m open to new ideas, as long as nothing changes.”',
+    jokes: ['“How many Taurus does it take to change a light bulb?” “None. We like the old one.”', 'A Taurus reads the whole menu, slowly, and orders the usual.'],
   },
   gemini: {
     symbol: 'The twins',
@@ -56,6 +60,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The best conversation you had lately',
     ],
     smile: '“I have two moods and both of them have opinions.”',
+    jokes: ['“How many Geminis does it take to change a light bulb?” “Two. Or one, depending on the mood.”', 'A Gemini’s to-do list has a podcast on, three tabs open, and a second to-do list.'],
   },
   cancer: {
     symbol: 'The crab',
@@ -67,6 +72,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you take care of yourself, not just everyone else?',
     ],
     smile: '“I’m not crying, I’m remembering something from 2009.”',
+    jokes: ['“How many Cancers does it take to change a light bulb?” “One, but they keep the old bulb for sentimental reasons.”', 'A Cancer’s idea of going out: inviting everyone over.'],
   },
   leo: {
     symbol: 'The lion',
@@ -78,6 +84,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you share the spotlight?',
     ],
     smile: '“I don’t need attention. I just like it when it finds me.”',
+    jokes: ['“How many Leos does it take to change a light bulb?” “One. Everyone else holds the ladder and claps.”', 'A Leo’s favorite song is the one they’re singing.'],
   },
   virgo: {
     symbol: 'The maiden',
@@ -89,6 +96,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Something useful you learned this month',
     ],
     smile: '“I’m relaxed. I made a list of ways to relax.”',
+    jokes: ['“How many Virgos does it take to change a light bulb?” “One, after cleaning the fixture and checking the wattage.”', 'A Virgo doesn’t judge. They just notice everything, quietly, with notes.'],
   },
   libra: {
     symbol: 'The scales',
@@ -100,6 +108,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'How do you decide when both sides are right?',
     ],
     smile: '“I can’t decide whether this is funny. What do you think?”',
+    jokes: ['“How many Libras does it take to change a light bulb?” “Hmm. Warm white or soft white?”', 'A Libra asked the group where to eat. The group is still deciding. So is the Libra.'],
   },
   scorpio: {
     symbol: 'The scorpion',
@@ -115,6 +124,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The question you keep coming back to',
     ],
     smile: '“I’ll tell you how I feel. Eventually. Maybe.”',
+    jokes: ['“How many Scorpios does it take to change a light bulb?” “Who wants to know?”', 'A Scorpio forgives. A Scorpio also remembers the exact date.'],
   },
   sagittarius: {
     symbol: 'The archer',
@@ -126,6 +136,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The best thing a stranger taught you',
     ],
     smile: '“I’m not late. I took the scenic route through three other plans.”',
+    jokes: ['“How many Sagittarians does it take to change a light bulb?” “The sun’s out. Let’s go outside.”', 'A Sagittarius tells you a hard truth, then invites you on a road trip.'],
   },
   capricorn: {
     symbol: 'The sea goat',
@@ -137,6 +148,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Advice you would give your younger self',
     ],
     smile: '“I scheduled some spontaneity for Thursday.”',
+    jokes: ['“How many Capricorns does it take to change a light bulb?” “None. They hired someone, and now they own the light bulb company.”', 'A Capricorn is born forty and gets younger every year.'],
   },
   aquarius: {
     symbol: 'The water bearer',
@@ -152,6 +164,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'The community that shaped you',
     ],
     smile: '“I’m a team player. The team just hasn’t caught up yet.”',
+    jokes: ['“How many Aquarians does it take to change a light bulb?” “Light bulbs? We’re building a better sun.”', 'An Aquarius loves humanity. People, one at a time, are a work in progress.'],
   },
   pisces: {
     symbol: 'The fish',
@@ -167,6 +180,7 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
       'Something that moved you this week',
     ],
     smile: '“I didn’t forget. I was somewhere else for a minute.”',
+    jokes: ['“How many Pisces does it take to change a light bulb?” “What light bulb? I was watching the Moon.”', 'A Pisces cried at a commercial, then wrote it a poem.'],
   },
 };
 
@@ -200,7 +214,8 @@ export const tribePage = {
     eyebrow: 'The signature',
     line: (sign: string) => `What every ${sign}`,
     accent: 'has in common.',
-    smileLabel: 'You will recognize this',
+    // Dawa's name for it (Nov 7 note 19). The lines are ours (TRIBE_WORDS), for him to swap.
+    smileLabel: 'Astro humor',
     // Dawa's words (Tribe Shadows doc, Oct 26), lightly edited for punctuation. Not a placeholder.
     shadow: {
       // Dawa, Nov 7: "Your Tribe’s Shadow Side".

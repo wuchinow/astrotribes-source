@@ -4,8 +4,9 @@ import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { MemberCard, glossOnce } from '@/components/MemberCard';
 import { matesCopy as copy } from '@/content/clans';
 import { membersCopy } from '@/content/members';
-import { HOUSES, KEYS, SIGNS, type HouseNumber, type SignId } from '@/lib/keys';
-import { mates, type MatesBody } from '@/lib/mates';
+import { BODIES, HOUSES, KEYS, SIGNS, type HouseNumber, type SignId } from '@/lib/keys';
+import { the } from '@/content/the';
+import { isFamilyBody, mates, type MatesBody } from '@/lib/mates';
 import { ownPlacements, visibleMembers, type MemberSummary } from '@/lib/members';
 import { topShared } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
@@ -14,7 +15,8 @@ import { memberClient } from '@/lib/supabase/server';
 const link = 'font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4';
 
 /**
- * The Clanmates or Vibemates of one sign (4l): a member page under /members, so proxy.ts refreshes
+ * The Clanmates or Vibemates of one sign (4l), or a generational family (4r: Uranus, Neptune, or Pluto
+ * in one sign): a member page under /members, so proxy.ts refreshes
  * the session as on the members list. Checks the session itself (invariant 5) and reads as the member
  * under RLS through visibleMembers, the members list's own read: who appears is decided by
  * private.can_view_member alone, and lib/mates.ts only narrows that list to one sign. No degrees, no
@@ -32,8 +34,12 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
   const members = await visibleMembers(supabase, user.id, mine);
 
   const name = SIGNS[sign].name;
+  const family = isFamilyBody(body);
+  const planet = family ? BODIES[body].name : '';
   const keyName = body === 'moon' ? KEYS.moonSign.name : KEYS.risingSign.name;
-  const back = body === 'moon' ? `/clans/${sign}` : `/vibes/${sign}`;
+  const back = family ? `/keys/${body}` : body === 'moon' ? `/clans/${sign}` : `/vibes/${sign}`;
+  const backLabel = family ? copy.familyBack(the(planet)) : copy.back(name, keyName);
+  const line = family ? copy.familyLine(planet, name) : body === 'moon' ? copy.clanLine(name) : copy.vibeLine(name);
   const found = members ? mates(members, mine, body, sign) : null;
   const firstTime = glossOnce();
   const noTime = body === 'rising' && !mine.some((row) => row.body === 'rising');
@@ -67,10 +73,10 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
   return (
     <div className="mx-auto max-w-content px-4 pt-31 pb-16 md:px-6 md:pt-38 md:pb-24">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Headline as="h1" line={body === 'moon' ? copy.clanLine(name) : copy.vibeLine(name)} accent={copy.accent} />
+      <Headline as="h1" line={line} accent={copy.accent} />
       <Lede>
         <Link href={back} className={link}>
-          {copy.back(name, keyName)}
+          {backLabel}
         </Link>
         {' · '}
         <Link href="/members" className={link}>
@@ -92,7 +98,7 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
         <>
           {found.total !== null ? (
             <p data-mates-total="" className="mt-6 type-body font-semibold text-ink-900">
-              {copy.total(found.total, name, keyName)}
+              {family ? copy.familyTotal(found.total, planet, name) : copy.total(found.total, name, keyName)}
             </p>
           ) : null}
           {found.groups.map((group) => (

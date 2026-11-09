@@ -46,7 +46,8 @@ export const sharedCount = (count: number): string =>
 
 // PLACEHOLDER: one member's page.
 export const memberCopy = {
-  eyebrow: 'A member',
+  // A member's profile (4r, Dawa's Nov 7 note 9, until his material for the page arrives).
+  eyebrow: 'Member profile',
   accent: 'and you.',
   threeHeading: (name: string) => `${name}'s Sun, Moon, and rising`,
   sharedHeading: 'Keys you share',
@@ -56,6 +57,12 @@ export const memberCopy = {
   addTime: 'Add your birth time',
   noTimeTheirs: (name: string) => `House Keys need a birth time from both of you, and ${name} hasn't added one.`,
   back: 'All members',
+  /** "The Aries Tribe": their Tribe, Clan, and Vibe pages (Dawa's Nov 7 note 21). Names from lib/keys.ts. */
+  page: (sign: string, keyName: string) => `The ${sign} ${keyName}`,
+  pagesLabel: 'Their pages',
+  familiesHeading: (name: string) => `${name}'s generation`,
+  familiesNote: 'Uranus, Neptune, and Pluto stay in a sign for years, so everyone born around the same time shares their signs. Open one to see who else is in it.',
+  family: (planet: string, sign: string) => `${planet} in ${sign}`,
 };
 
 /** "Sun and Moon", "Sun, Moon, and Rising". */

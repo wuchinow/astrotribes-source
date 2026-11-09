@@ -1,6 +1,8 @@
 // Clanmates and Vibemates (4l, Nov 8; Dawa's 2025 Clan docs): from the members a member may already
 // see (lib/members.ts, decided by private.can_view_member alone), the ones with the Moon or the rising
 // sign in one sign, with those who also share the viewer's Tribe, Vibe or Clan, or Hearth set apart.
+// Generational families (4r, Dawa's punch list: "click-through to all members in each family regardless
+// of Tribe"): the same, for Uranus, Neptune, or Pluto in one sign, with the viewer's Tribe set apart.
 // Pure: no database, so it is tested on its own. It never widens who is visible, only narrows.
 import type { HouseNumber, SignId } from './keys';
 import type { PlacementRow } from './shared-keys';
@@ -8,7 +10,12 @@ import type { PlacementRow } from './shared-keys';
 /** The fewest people a group total is shown for, so a small group can't single anyone out (plan, Nov 8). */
 export const MIN_TOTAL = 5;
 
-export type MatesBody = 'moon' | 'rising';
+export type MatesBody = 'moon' | 'rising' | FamilyBody;
+
+/** The generational planets, whose sign makes a family. */
+export const FAMILY_BODIES = ['uranus', 'neptune', 'pluto'] as const;
+export type FamilyBody = (typeof FAMILY_BODIES)[number];
+export const isFamilyBody = (value: string): value is FamilyBody => (FAMILY_BODIES as readonly string[]).includes(value);
 
 interface WithPlacements {
   placements: readonly PlacementRow[];
@@ -52,7 +59,7 @@ export function mates<T extends WithPlacements>(members: readonly T[], mine: rea
     // The Hearth is the Moon's house: shared only when both have a birth time.
     const myHearth = houseOf(mine, 'moon');
     add('hearth', myHearth, (m) => houseOf(m.placements, 'moon') === myHearth);
-  } else {
+  } else if (body === 'rising') {
     const myMoon = signOf(mine, 'moon');
     add('clan', myMoon, (m) => signOf(m.placements, 'moon') === myMoon);
   }
