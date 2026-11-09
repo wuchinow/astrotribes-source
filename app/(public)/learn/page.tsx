@@ -1,9 +1,20 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArticleBody } from '@/components/ArticleBody';
+import { ArticleCard, OlderKeysNote } from '@/components/ArticleCard';
 import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
-import { SERIES_TITLE, SUBSTACK_URL, VIDEOS, learnCopy as copy, type Article } from '@/content/articles';
+import {
+  FEATURED_URL,
+  SERIES_TITLE,
+  SUBSTACK_URL,
+  VIDEOS,
+  learnCopy as copy,
+  learnHref,
+} from '@/content/articles';
 import { longDate } from '@/content/famous';
+import { wordsIn } from '@/lib/article-html';
 import { learnArticles } from '@/lib/substack';
 
 // Dawa's Substack feed is read again at most once an hour (3y).
@@ -11,32 +22,10 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = { title: copy.title, description: copy.description };
 
-/** One article as a card that opens the post on Substack. */
-function ArticleCard({ article, eyebrow }: { article: Article; eyebrow?: string }) {
-  return (
-    <li>
-      <a
-        href={article.url}
-        aria-label={copy.readLabel(article.title)}
-        className="flex h-full flex-col rounded-md border border-ink-200 bg-surface-200 p-4 text-ink-700 no-underline shadow-rest transition-shadow duration-200 hover:shadow-warm md:p-6"
-      >
-        {eyebrow ? <p className="type-label text-ink-500">{eyebrow}</p> : null}
-        <h3 className="mt-1 type-heading-3 text-ink-900">{article.title}</h3>
-        {article.excerpt ? <p className="mt-2 type-body-sm">{article.excerpt}</p> : null}
-        <p className="mt-auto flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 pt-4">
-          <time dateTime={article.date} className="type-caption text-ink-500">
-            {longDate(article.date)}
-          </time>
-          <span className="type-ui text-cobalt-600">{copy.read}</span>
-        </p>
-      </a>
-    </li>
-  );
-}
-
 /**
- * Learn (David, Nov 4): Dawa's articles, each a card that opens on his Substack, with no full text
- * copied here, and a place for his videos once they exist. Public, no member data. The articles come
+ * Learn (David, Nov 4): Dawa's articles and a place for his videos once they exist. Since 4w (David,
+ * Nov 9) the series' introduction reads in full on the page, by scrolling, under the hero, and every
+ * other card opens the article in full on its own page here (/learn/[slug]), not on Substack. Public, no member data. The articles come
  * from his Substack feed, read again at most once an hour (3y, lib/substack.ts). Since 4m (David,
  * Nov 8: break up the text-heavy pages) the hero stands on an ink landscape wash (P6) with its words
  * on a frosted panel, the series takes the soft gradient, and the videos section an ink landscape
@@ -44,6 +33,9 @@ function ArticleCard({ article, eyebrow }: { article: Article; eyebrow?: string 
  */
 export default async function LearnPage() {
   const { series: SERIES, articles: ARTICLES } = await learnArticles();
+  const featuredIndex = SERIES.findIndex((article) => article.url === FEATURED_URL);
+  const featured = SERIES[featuredIndex] ?? ARTICLES.find((article) => article.url === FEATURED_URL);
+  const after = featuredIndex >= 0 ? SERIES[featuredIndex + 1] : undefined;
   return (
     <>
       <ArtWash piece="p6" top>
@@ -60,6 +52,35 @@ export default async function LearnPage() {
           </div>
         </div>
       </ArtWash>
+
+      {featured?.content ? (
+        <Section labelledBy="learn-featured">
+          <article data-learn-featured="">
+            <Eyebrow>{copy.featuredEyebrow}</Eyebrow>
+            {featuredIndex >= 0 ? <p className="type-label text-ink-500">{copy.seriesPart(featuredIndex + 1)}</p> : null}
+            <h2 id="learn-featured" className="mt-2 type-display-lg text-ink-900">
+              {featured.title}
+            </h2>
+            {featured.excerpt ? <Lede className="mt-3">{featured.excerpt}</Lede> : null}
+            <p className="mt-4 type-caption text-ink-500">
+              {copy.byline} · <time dateTime={featured.date}>{longDate(featured.date)}</time> ·{' '}
+              {copy.minutes(wordsIn(featured.content))}
+            </p>
+            {featured.olderKeys ? <OlderKeysNote className="mt-6" /> : null}
+            <ArticleBody nodes={featured.content} className="mt-8" />
+            {after ? (
+              <p className="mt-10">
+                <Link
+                  href={learnHref(after)}
+                  className="inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline-offset-4 hover:underline"
+                >
+                  {copy.next(after.title)}
+                </Link>
+              </p>
+            ) : null}
+          </article>
+        </Section>
+      ) : null}
 
       <Section labelledBy="learn-series" backdrop={{ gradient: true }}>
         <Eyebrow>{copy.seriesEyebrow}</Eyebrow>
