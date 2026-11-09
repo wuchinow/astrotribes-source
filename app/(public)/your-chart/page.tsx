@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { Fragment } from 'react';
 import { ArtWash } from '@/components/ArtWash';
 import type { Backdrop } from '@/components/Backdrop';
 import { Button } from '@/components/Button';
@@ -176,6 +177,32 @@ export default async function YourChartPage() {
     );
   };
 
+  // The Chinese zodiac sits under Identity (the Sun, Moon, and Rising) and above Journey (4v, David,
+  // Nov 9). Plain paper, so it doesn't sit gradient against gradient with Journey.
+  const chineseSection = chinese ? (
+    <Section labelledBy="your-chinese">
+      {/* The member's animal as one of the Met's Qing jade figures, cut out, with its character
+          (4p, David, Nov 9), in place of the framed ink landscape. */}
+      <div data-your-chinese="" className={cn(zodiacFont.variable, 'grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,14rem)]')}>
+        <TintPanel>
+          <div className="flex items-center gap-5">
+            <ZodiacHanzi animal={chinese.animal} className="shrink-0 text-ink-900" />
+            <div className="min-w-0">
+              <h2 id="your-chinese" className="type-heading-3 text-ink-900">
+                {yourChartCopy.chinese.title}
+              </h2>
+              <p className="mt-2 type-heading-2 italic text-highlight">
+                {yourChartCopy.chinese.name(chinese.element, chinese.animal)}
+              </p>
+            </div>
+          </div>
+          <p className="mt-4 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
+        </TintPanel>
+        <ZodiacJade animal={chinese.animal} sizes="(width >= 64rem) 14rem, 12rem" className="mx-auto max-w-[12rem]! lg:mx-0 lg:max-w-[14rem]!" />
+      </div>
+    </Section>
+  ) : null;
+
   return (
     <>
       <ArtWash piece="p9" top>
@@ -261,82 +288,60 @@ export default async function YourChartPage() {
         if (planets.length === 0) return null;
         const look = GROUP_LOOK[group.id];
         return (
-          <Section
-            key={group.id}
-            labelledBy={`your-group-${group.id}`}
-            band={look.band}
-            backdrop={look.backdrop}
-          >
-            <h2 id={`your-group-${group.id}`} className="mb-6 type-label text-ink-500">
-              {group.name}
-            </h2>
-            <div className="grid gap-6">{planets.map(planetCard)}</div>
-            {group.id === 'generational' && families.length > 0 ? (
-              <div data-your-families="" className="mt-8 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)]">
-                <TintPanel>
-                  <h3 className="type-heading-3 text-ink-900">{yourChartCopy.families.title}</h3>
-                  <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.families.intro}</p>
-                  <ul role="list" className="mt-6 grid gap-6 md:grid-cols-3">
-                    {families.map((family) => (
-                      <li key={family.planet} data-your-family={family.planet} className="flex items-start gap-3">
-                        {drawn(family.planet) ? (
-                          <GlyphIcon glyph={family.planet} size={48} className="shrink-0 text-ink-900" />
-                        ) : null}
-                        <div>
-                          <p className="type-heading-3 text-ink-900">
-                            {yourChartCopy.families.name(BODIES[family.planet].name, SIGNS[family.sign].name)}
-                          </p>
-                          <p className="mt-1 type-body-sm text-ink-700">{yourChartCopy.families.years(family.from, family.to)}</p>
-                          {/* Everyone in the family, whatever their Tribe (4r, Dawa's punch list). */}
-                          <Link
-                            href={`/members/family/${family.planet}/${family.sign}`}
-                            className="mt-1 inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
-                          >
-                            {yourChartCopy.families.members}
-                          </Link>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button href={yourChartCopy.families.more.href} variant="tertiary" className="mt-4 -ml-2">
-                    {yourChartCopy.families.more.label}
-                  </Button>
-                </TintPanel>
-                <OldPrint
-                  id="cartoon-juggler-of-worlds"
-                  alt={CARTOONS['juggler-of-worlds'].alt}
-                  sizes="(width >= 64rem) 18rem, calc(100vw - 2rem)"
-                  className="mx-auto max-w-[18rem]! lg:mx-0"
-                />
-              </div>
-            ) : null}
-          </Section>
+          <Fragment key={group.id}>
+            <Section
+              labelledBy={`your-group-${group.id}`}
+              band={look.band}
+              backdrop={look.backdrop}
+            >
+              <h2 id={`your-group-${group.id}`} className="mb-6 type-label text-ink-500">
+                {group.name}
+              </h2>
+              <div className="grid gap-6">{planets.map(planetCard)}</div>
+              {group.id === 'generational' && families.length > 0 ? (
+                <div data-your-families="" className="mt-8 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)]">
+                  <TintPanel>
+                    <h3 className="type-heading-3 text-ink-900">{yourChartCopy.families.title}</h3>
+                    <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.families.intro}</p>
+                    <ul role="list" className="mt-6 grid gap-6 md:grid-cols-3">
+                      {families.map((family) => (
+                        <li key={family.planet} data-your-family={family.planet} className="flex items-start gap-3">
+                          {drawn(family.planet) ? (
+                            <GlyphIcon glyph={family.planet} size={48} className="shrink-0 text-ink-900" />
+                          ) : null}
+                          <div>
+                            <p className="type-heading-3 text-ink-900">
+                              {yourChartCopy.families.name(BODIES[family.planet].name, SIGNS[family.sign].name)}
+                            </p>
+                            <p className="mt-1 type-body-sm text-ink-700">{yourChartCopy.families.years(family.from, family.to)}</p>
+                            {/* Everyone in the family, whatever their Tribe (4r, Dawa's punch list). */}
+                            <Link
+                              href={`/members/family/${family.planet}/${family.sign}`}
+                              className="mt-1 inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+                            >
+                              {yourChartCopy.families.members}
+                            </Link>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <Button href={yourChartCopy.families.more.href} variant="tertiary" className="mt-4 -ml-2">
+                      {yourChartCopy.families.more.label}
+                    </Button>
+                  </TintPanel>
+                  <OldPrint
+                    id="cartoon-juggler-of-worlds"
+                    alt={CARTOONS['juggler-of-worlds'].alt}
+                    sizes="(width >= 64rem) 18rem, calc(100vw - 2rem)"
+                    className="mx-auto max-w-[18rem]! lg:mx-0"
+                  />
+                </div>
+              ) : null}
+            </Section>
+            {group.id === 'identity' ? chineseSection : null}
+          </Fragment>
         );
       })}
-
-      {chinese ? (
-        <Section labelledBy="your-chinese" backdrop={{ gradient: true }}>
-          {/* The member's animal as one of the Met's Qing jade figures, cut out, with its character
-              (4p, David, Nov 9), in place of the framed ink landscape. */}
-          <div data-your-chinese="" className={cn(zodiacFont.variable, 'grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,14rem)]')}>
-            <TintPanel>
-              <div className="flex items-center gap-5">
-                <ZodiacHanzi animal={chinese.animal} className="shrink-0 text-ink-900" />
-                <div className="min-w-0">
-                  <h2 id="your-chinese" className="type-heading-3 text-ink-900">
-                    {yourChartCopy.chinese.title}
-                  </h2>
-                  <p className="mt-2 type-heading-2 italic text-highlight">
-                    {yourChartCopy.chinese.name(chinese.element, chinese.animal)}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-4 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
-            </TintPanel>
-            <ZodiacJade animal={chinese.animal} sizes="(width >= 64rem) 14rem, 12rem" className="mx-auto max-w-[12rem]! lg:mx-0 lg:max-w-[14rem]!" />
-          </div>
-        </Section>
-      ) : null}
 
       <Section band labelledBy="your-chart-next">
         <Eyebrow>{yourChartCopy.next.eyebrow}</Eyebrow>
