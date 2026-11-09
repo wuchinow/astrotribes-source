@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import files from '@/lib/old-prints-files.json';
 import { CARTOONS, PLATES, TRIBE_CARTOON, oldPrintSet } from '@/lib/old-prints';
 import { SIGN_IDS } from '@/lib/keys';
-import { pictureCreditLines } from '@/lib/sky-credits';
+import { footerCredits } from '@/lib/sky-credits';
 
 const cut = files as Record<string, { files: Record<string, { avif: { src: string }; webp: { src: string } }> }>;
 
@@ -30,9 +30,7 @@ describe('old prints on the Tribe pages', () => {
     }
   });
 
-  it('credits them in the footer of every Tribe page', () => {
-    for (const sign of SIGN_IDS) {
-      expect(pictureCreditLines[`/tribes/${sign}`]).toMatch(/Urania’s Mirror.*Grandville/);
-    }
+  it('credits them in the footer', () => {
+    expect(footerCredits.publicDomain).toMatch(/Urania’s Mirror.*Grandville/);
   });
 });

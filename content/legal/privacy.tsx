@@ -181,6 +181,12 @@ export const privacy = {
             For team sign-in, Supabase holds accounts and the database, and Google confirms who you
             are when you choose to sign in with Google.
           </p>
+          {/* PLACEHOLDER (Nov 9): the feedback form, for Kevin to review. */}
+          <p>
+            If you send us feedback, what you write, the kind of note you picked, the name or email
+            you add (if any), and the page you came from are saved in Notion, where our team keeps
+            its notes. Notion may email a team member that a new note arrived.
+          </p>
           <p>
             We do not sell your information, share it for advertising, or send marketing email. We
             share it with no one else unless the law requires it.

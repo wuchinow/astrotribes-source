@@ -6,7 +6,7 @@ import { startGoogleSignIn } from '@/app/(public)/sign-in/actions';
 import { accountSlotCopy } from '@/content/account';
 import { accountMenuCopy } from '@/content/welcome';
 import { cn } from '@/lib/cn';
-import { MEMBER_ACTION, PRIMARY_ACTION } from '@/lib/site';
+import { FEEDBACK_LINK, MEMBER_ACTION, PRIMARY_ACTION } from '@/lib/site';
 import { Button } from './Button';
 import { browserClient } from '@/lib/supabase/browser';
 import { DISCLOSURE_EVENT } from './AppearancePanel';
@@ -105,7 +105,7 @@ const linkClass =
 /**
  * The header's account slot (2b, 2c). Signed out: Sign in, before the primary action. Signed in:
  * the member's photo (an initial when there is none) at the far right, a button that opens a small
- * menu: Your chart, Members (3g), Admin for an admin only (0004), Account, Sign out (David, Oct 22). `show` places each copy, so it renders only
+ * menu: Your chart, Members (3g), Admin for an admin only (0004), Account, Send feedback (Nov 9), Sign out (David, Oct 22). `show` places each copy, so it renders only
  * in its own state. `place="menu"` is the mobile menu's copy: the name, then the same three links.
  * The header's own is from lg up, because below it the header has no room beside the logo.
  */
@@ -172,6 +172,9 @@ function MenuLinks({ admin, onNavigate, className }: { admin: boolean; onNavigat
       ) : null}
       <Link href="/account" onClick={onNavigate} className={cn(linkClass, className)}>
         {accountMenuCopy.account}
+      </Link>
+      <Link href={FEEDBACK_LINK.href} onClick={onNavigate} className={cn(linkClass, className)}>
+        {FEEDBACK_LINK.label}
       </Link>
       <form method="post" action="/auth/sign-out">
         <button type="submit" className={cn(linkClass, className, 'cursor-pointer text-left')}>

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import files from '@/lib/zodiac-jade-files.json';
 import { ANIMALS } from '@/lib/chinese-zodiac';
-import { pictureCreditLines } from '@/lib/sky-credits';
+import { footerCredits } from '@/lib/sky-credits';
 import { ZODIAC_JADE, zodiacJadeCredit, zodiacJadeSet } from '@/lib/zodiac-jade';
 
 const root = path.join(__dirname, '..');
@@ -33,8 +33,8 @@ describe('the Chinese zodiac jade animals (4p)', () => {
     expect(existsSync(path.join(root, 'app', '(public)', 'your-chart', 'zodiac-hanzi-OFL.txt'))).toBe(true);
   });
 
-  it('credits the Met in the footer of Your chart', () => {
-    expect(pictureCreditLines['/your-chart']).toContain(zodiacJadeCredit);
-    expect(zodiacJadeCredit).toMatch(/Metropolitan Museum of Art/);
+  it('credits the Met in the footer', () => {
+    expect(footerCredits.publicDomain).toContain(zodiacJadeCredit);
+    expect(zodiacJadeCredit).toMatch(/The Met\b/);
   });
 });

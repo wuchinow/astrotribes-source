@@ -41,3 +41,8 @@ export const LEGAL_NAV: readonly NavLink[] = [
 
 // The team's address (David, Sep 25), shown as a mailto link on Privacy, Terms, Contact, and the footer.
 export const CONTACT_EMAIL = 'weareastrotribes@gmail.com';
+
+// Feedback during the alpha (David, Nov 9): the form at /feedback, which saves each note to the team's
+// Notion feedback database (lib/feedback.ts); in the footer's bottom row for everyone and in the
+// account menu for members.
+export const FEEDBACK_LINK: NavLink = { href: '/feedback', label: 'Send feedback' };
