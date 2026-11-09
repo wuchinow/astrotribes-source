@@ -16,6 +16,7 @@ const PAGE_FILES: Record<string, string> = {
   '/': 'app/(public)/page.tsx',
   '/sky': 'app/(public)/sky/page.tsx',
   '/keys': 'app/(public)/keys/page.tsx',
+  '/your-chart': 'app/(public)/your-chart/page.tsx',
 };
 
 const skyIdsIn = (file: string) =>

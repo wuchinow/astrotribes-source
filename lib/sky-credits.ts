@@ -34,6 +34,8 @@ export const pictureCreditLines: Readonly<Record<string, string>> = {
   // The Clan pages' Grandville Moon and the Vibe pages' star cards, as backdrops (4m, David, Nov 9).
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/clans/${sign}`, cartoonCredit])),
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/vibes/${sign}`, plateCredit])),
+  // Your chart (4o, Nov 9): the Sun's star card, the planets' cards in the gaps, and a Grandville engraving.
+  '/your-chart': oldPrintsCredit,
   // The old prints trial page (4m, previews only).
   '/trials/old-prints': oldPrintsCredit,
 };

@@ -459,6 +459,8 @@ export const SKY_PAGES: Readonly<Record<string, readonly SkyId[]>> = {
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/vibes/${sign}`, ['vibeRising'] as const])),
   // The Tribe pages (4m, Nov 8): Andromeda behind "Your people", another place for the landing's photo.
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/tribes/${sign}`, ['andromeda'] as const])),
+  // Your chart (4o, Nov 9): Andromeda under the Identity group, the galactic center under its own.
+  '/your-chart': ['andromeda', 'keysCenter'],
 };
 
 export const skyCredit = (image: SkyImage) => (image.tinted ? `${image.credit} (tinted)` : image.credit);
