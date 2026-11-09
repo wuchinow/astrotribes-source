@@ -67,10 +67,11 @@ export const yourChartCopy = {
   // (content/planets.ts). Key names arrive as arguments.
   keys: {
     eyebrow: 'Your Keys',
-    // Dawa's headline (Nov 7). He will rewrite the introduction later.
+    // Dawa's headline (Nov 7). The introduction (4r) is put together from his own words in the same
+    // notes (8 and 15), until he re-introduces the section himself (note 1). *word* is his italics.
     line: 'Your planets,',
     accent: 'your Keys.',
-    lede: 'Each planet in your chart gives you two Keys: one from its sign and one from its house.',
+    lede: 'Your horoscope is a snapshot of the solar system at the moment of your birth. In it the Sun, the Moon, and each planet carry an energy (its *sign*) and an area of manifestation (its *house*). Each one gives you two Keys, and each Key unlocks a piece of *your* horoscope’s puzzle.',
     /** "Jupiter in Leo" */
     inSign: (planet: string, sign: string) => `${planet} in ${sign}`,
     /** "Jupiter in house X, Accomplishment" */
@@ -87,6 +88,7 @@ export const yourChartCopy = {
       'Uranus, Neptune, and Pluto move so slowly that they stay in a single sign for many years, so their signs are shared by everyone born within a few years of you: your astrological generation. These are your people, your planet-wide families.',
     name: (planet: string, sign: string) => `Your ${planet} family: ${sign}`,
     years: (from: number, to: number) => `Anyone born between ${from} and ${to} is in it.`,
+    members: 'See who else is in it',
     more: { href: '/keys#generational', label: 'How generations work' },
   },
   // The Chinese zodiac sign (3y, admin to-do): a small panel under Your Keys. PLACEHOLDER words for Dawa.

@@ -81,6 +81,25 @@ const saturn: PlanetDrafts = {
   },
 };
 
+const uranus: PlanetDrafts = {
+  // A second paragraph after Dawa's line for each sign (4r: his Nov 7 note 27 says the proper
+  // generational content is still to come). The years are the passes since 1900 (lib/generations.json).
+  signs: {
+    aries: 'Uranus was in Aries roughly from 1927 to 1935, and again from 2010 to 2019. This generation starts things over: new ways of standing up for oneself, and the nerve to go first.',
+    taurus: 'Uranus was in Taurus roughly from 1934 to 1942, and again from 2018 to 2026. This generation shakes up what we own, what we eat, and how we live on the land, and finds new ways to make things last.',
+    gemini: 'Uranus was in Gemini roughly from 1941 to 1949, and returned in 2025 for the generation being born now. This generation changes how we talk, learn, and move from place to place.',
+    cancer: 'Uranus was in Cancer roughly from 1948 to 1956. This generation questioned the old idea of home and loyalty to homeland, tried communes and other new kinds of family, and questioned parental authority.',
+    leo: 'Uranus was in Leo roughly from 1955 to 1962. This generation made self expression a right: to look, love, and create the way one chooses.',
+    virgo: 'Uranus was in Virgo roughly from 1961 to 1969. This generation changed how we work and how we care for the body, from health food to the first personal computers.',
+    libra: 'Uranus was in Libra roughly from 1968 to 1975. This generation rewrote the rules of partnership: who marries whom, who does what, and what equal really means.',
+    scorpio: 'Uranus was in Scorpio roughly from 1974 to 1981. This generation broke open taboos about sex, death, and power, and tends to trust what it can see for itself.',
+    sagittarius: 'Uranus was in Sagittarius roughly from 1981 to 1988. This generation wants freedom to roam, in body and in belief, and treats the whole world as a playground.',
+    capricorn: 'Uranus was in Capricorn roughly from 1988 to 1996. This generation came of age as old institutions wobbled, and is remaking work, government, and success on its own terms.',
+    aquarius: 'Uranus is at home in Aquarius, where it was roughly from 1995 to 2003. This generation grew up networked, and takes for granted that anyone can reach anyone.',
+    pisces: 'Uranus was in Pisces roughly from 2003 to 2011. This generation dissolves old lines between real and virtual, and between one identity and another, and feels at home in the in-between.',
+  },
+};
+
 const neptune: PlanetDrafts = {
   signs: {
     aries: 'Neptune was in Aries roughly from 1861 to 1875, and returned in 2025 for the generation being born now. Its gift is the courage to begin again: new spiritual paths, and the faith to act on a vision.',
@@ -254,6 +273,7 @@ const southNode: PlanetDrafts = {
 export const PLANET_DRAFTS: Readonly<Partial<Record<BodyId, PlanetDrafts>>> = {
   jupiter,
   saturn,
+  uranus,
   neptune,
   pluto,
   chiron,

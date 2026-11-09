@@ -1,0 +1,314 @@
+{
+  "rat": {
+    "width": 1183,
+    "height": 1686,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/rat-256.00eb64b8.avif",
+          "bytes": 8959
+        },
+        "webp": {
+          "src": "/zodiac-jade/rat-256.7f7bfd4a.webp",
+          "bytes": 13678
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/rat-512.23a150e1.avif",
+          "bytes": 20830
+        },
+        "webp": {
+          "src": "/zodiac-jade/rat-512.ce5fdba2.webp",
+          "bytes": 34464
+        }
+      }
+    }
+  },
+  "ox": {
+    "width": 1200,
+    "height": 1693,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/ox-256.ecdb23fc.avif",
+          "bytes": 9167
+        },
+        "webp": {
+          "src": "/zodiac-jade/ox-256.ec019827.webp",
+          "bytes": 14064
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/ox-512.2a7bda07.avif",
+          "bytes": 21105
+        },
+        "webp": {
+          "src": "/zodiac-jade/ox-512.d411f1a8.webp",
+          "bytes": 35522
+        }
+      }
+    }
+  },
+  "tiger": {
+    "width": 1171,
+    "height": 1725,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/tiger-256.b91745dd.avif",
+          "bytes": 8804
+        },
+        "webp": {
+          "src": "/zodiac-jade/tiger-256.9a8fa210.webp",
+          "bytes": 13730
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/tiger-512.dc047690.avif",
+          "bytes": 19541
+        },
+        "webp": {
+          "src": "/zodiac-jade/tiger-512.39722557.webp",
+          "bytes": 33354
+        }
+      }
+    }
+  },
+  "rabbit": {
+    "width": 1253,
+    "height": 1779,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/rabbit-256.d8660122.avif",
+          "bytes": 9480
+        },
+        "webp": {
+          "src": "/zodiac-jade/rabbit-256.9597c871.webp",
+          "bytes": 14860
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/rabbit-512.8f10e454.avif",
+          "bytes": 21546
+        },
+        "webp": {
+          "src": "/zodiac-jade/rabbit-512.c1f49368.webp",
+          "bytes": 35496
+        }
+      }
+    }
+  },
+  "dragon": {
+    "width": 1288,
+    "height": 1733,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/dragon-256.78490bff.avif",
+          "bytes": 8504
+        },
+        "webp": {
+          "src": "/zodiac-jade/dragon-256.b887c375.webp",
+          "bytes": 12708
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/dragon-512.5fe2110d.avif",
+          "bytes": 19169
+        },
+        "webp": {
+          "src": "/zodiac-jade/dragon-512.0fa48883.webp",
+          "bytes": 30448
+        }
+      }
+    }
+  },
+  "snake": {
+    "width": 1311,
+    "height": 1709,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/snake-256.c5e141f5.avif",
+          "bytes": 7269
+        },
+        "webp": {
+          "src": "/zodiac-jade/snake-256.b646c40c.webp",
+          "bytes": 10952
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/snake-512.8b6889eb.avif",
+          "bytes": 16018
+        },
+        "webp": {
+          "src": "/zodiac-jade/snake-512.c0f61fa5.webp",
+          "bytes": 26644
+        }
+      }
+    }
+  },
+  "horse": {
+    "width": 1259,
+    "height": 1733,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/horse-256.860f0a02.avif",
+          "bytes": 8505
+        },
+        "webp": {
+          "src": "/zodiac-jade/horse-256.77b67ef7.webp",
+          "bytes": 12912
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/horse-512.0f29b8ee.avif",
+          "bytes": 19611
+        },
+        "webp": {
+          "src": "/zodiac-jade/horse-512.186445c9.webp",
+          "bytes": 31348
+        }
+      }
+    }
+  },
+  "goat": {
+    "width": 1241,
+    "height": 1710,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/goat-256.3b302c75.avif",
+          "bytes": 8222
+        },
+        "webp": {
+          "src": "/zodiac-jade/goat-256.f894f7b9.webp",
+          "bytes": 12888
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/goat-512.405b1c24.avif",
+          "bytes": 18658
+        },
+        "webp": {
+          "src": "/zodiac-jade/goat-512.345a602d.webp",
+          "bytes": 32198
+        }
+      }
+    }
+  },
+  "monkey": {
+    "width": 1212,
+    "height": 1788,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/monkey-256.82514724.avif",
+          "bytes": 9021
+        },
+        "webp": {
+          "src": "/zodiac-jade/monkey-256.5eef15a0.webp",
+          "bytes": 14132
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/monkey-512.aa7ce16d.avif",
+          "bytes": 20668
+        },
+        "webp": {
+          "src": "/zodiac-jade/monkey-512.c381ff83.webp",
+          "bytes": 35546
+        }
+      }
+    }
+  },
+  "rooster": {
+    "width": 1298,
+    "height": 1803,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/rooster-256.92d15ee5.avif",
+          "bytes": 8490
+        },
+        "webp": {
+          "src": "/zodiac-jade/rooster-256.82a4a62d.webp",
+          "bytes": 13078
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/rooster-512.5ebba94f.avif",
+          "bytes": 19594
+        },
+        "webp": {
+          "src": "/zodiac-jade/rooster-512.9fc3a25d.webp",
+          "bytes": 31610
+        }
+      }
+    }
+  },
+  "dog": {
+    "width": 1230,
+    "height": 1889,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/dog-256.8535c6eb.avif",
+          "bytes": 9784
+        },
+        "webp": {
+          "src": "/zodiac-jade/dog-256.d44c9c80.webp",
+          "bytes": 14980
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/dog-512.ec6d1b07.avif",
+          "bytes": 22555
+        },
+        "webp": {
+          "src": "/zodiac-jade/dog-512.0d4b943b.webp",
+          "bytes": 36228
+        }
+      }
+    }
+  },
+  "pig": {
+    "width": 1241,
+    "height": 1796,
+    "files": {
+      "256": {
+        "avif": {
+          "src": "/zodiac-jade/pig-256.6e95ca9e.avif",
+          "bytes": 8928
+        },
+        "webp": {
+          "src": "/zodiac-jade/pig-256.528020e4.webp",
+          "bytes": 14524
+        }
+      },
+      "512": {
+        "avif": {
+          "src": "/zodiac-jade/pig-512.7a9cd37b.avif",
+          "bytes": 20007
+        },
+        "webp": {
+          "src": "/zodiac-jade/pig-512.7d20d7e3.webp",
+          "bytes": 34588
+        }
+      }
+    }
+  }
+}

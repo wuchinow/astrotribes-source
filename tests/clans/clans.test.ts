@@ -103,3 +103,27 @@ describe('Clanmates and Vibemates', () => {
     expect(found.groups).toEqual([]);
   });
 });
+
+describe('generational families (4r)', () => {
+  it('list everyone with the planet in the sign, whatever their Tribe, with the viewer’s Tribe set apart', () => {
+    const withPluto = (id: string, sun: SignId, pluto: SignId) => ({
+      id,
+      placements: [row('sun', sun), row('moon', 'leo'), row('pluto', pluto)],
+    });
+    const mine = [row('sun', 'aries'), row('moon', 'leo'), row('pluto', 'scorpio')];
+    const members = [withPluto('a', 'aries', 'scorpio'), withPluto('b', 'virgo', 'scorpio'), withPluto('c', 'aries', 'libra')];
+    const found = mates(members, mine, 'pluto', 'scorpio');
+    expect(found.all.map((m) => m.id)).toEqual(['a', 'b']);
+    expect(found.groups.map((g) => [g.kind, g.members.map((m) => m.id)])).toEqual([['tribe', ['a']]]);
+  });
+
+  it('have a drafted paragraph after Dawa’s line for every Uranus sign, with no em dash or exclamation mark', () => {
+    const uranus = planetPage('uranus')!;
+    for (const sign of SIGN_IDS) {
+      const [his, ours] = uranus.signs[sign]!.split('\n\n');
+      expect(his, sign).toMatch(/^The Uranus in/);
+      expect(ours, sign).toMatch(/^Uranus (was|is)/);
+      expect(ours, sign).not.toMatch(/[—!]/);
+    }
+  });
+});

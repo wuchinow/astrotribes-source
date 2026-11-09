@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ArtWash } from '@/components/ArtWash';
 import type { Backdrop } from '@/components/Backdrop';
@@ -6,9 +8,9 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { ChartWheel } from '@/components/ChartWheel';
 import { ChartReading } from '@/components/ChartReading';
-import { FramedArt } from '@/components/FramedArt';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
+import { Stressed } from '@/components/Stressed';
 import { OldPrint } from '@/components/OldPrint';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { Quote } from '@/components/Quote';
@@ -16,6 +18,7 @@ import { ShareButton } from '@/components/ShareButton';
 import { TintPanel } from '@/components/TintPanel';
 import { TribePainting } from '@/components/TribePainting';
 import { WelcomeGuide } from '@/components/WelcomeGuide';
+import { ZodiacHanzi, ZodiacJade } from '@/components/ZodiacJade';
 import { PLANET_PAGES, paragraphs, planetHref } from '@/content/planets';
 import { chartWheelCopy } from '@/content/chart-wheel';
 import { quote } from '@/content/quotes';
@@ -34,6 +37,17 @@ import { wheelDetails } from '@/lib/wheel-details';
 import { memberWheel } from '@/lib/your-wheel';
 
 export const metadata: Metadata = { title: yourChartCopy.title };
+
+// Noto Serif TC Bold cut to the twelve zodiac animals' characters by scripts/hanzi-font.mjs (SIL Open
+// Font License, zodiac-hanzi-OFL.txt beside it). Declared here, so only this page loads it.
+const zodiacFont = localFont({
+  src: './zodiac-hanzi.woff2',
+  weight: '700',
+  display: 'swap',
+  variable: '--font-zodiac',
+  fallback: ['Songti TC', 'PMingLiU', 'serif'],
+  adjustFontFallback: false,
+});
 
 interface Row {
   body: string;
@@ -232,7 +246,9 @@ export default async function YourChartPage() {
       <Section labelledBy="your-keys" backdrop={{ print: `plate-${sun.sign}` }}>
         <Eyebrow>{yourChartCopy.keys.eyebrow}</Eyebrow>
         <Headline id="your-keys" line={yourChartCopy.keys.line} accent={yourChartCopy.keys.accent} />
-        <Lede>{yourChartCopy.keys.lede}</Lede>
+        <Lede>
+          <Stressed text={yourChartCopy.keys.lede} />
+        </Lede>
       </Section>
 
       {/*
@@ -271,6 +287,13 @@ export default async function YourChartPage() {
                             {yourChartCopy.families.name(BODIES[family.planet].name, SIGNS[family.sign].name)}
                           </p>
                           <p className="mt-1 type-body-sm text-ink-700">{yourChartCopy.families.years(family.from, family.to)}</p>
+                          {/* Everyone in the family, whatever their Tribe (4r, Dawa's punch list). */}
+                          <Link
+                            href={`/members/family/${family.planet}/${family.sign}`}
+                            className="mt-1 inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+                          >
+                            {yourChartCopy.families.members}
+                          </Link>
                         </div>
                       </li>
                     ))}
@@ -293,18 +316,24 @@ export default async function YourChartPage() {
 
       {chinese ? (
         <Section labelledBy="your-chinese" backdrop={{ gradient: true }}>
-          {/* Beside a Chinese ink landscape, framed (David's D, Nov 9). */}
-          <div data-your-chinese="" className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,13rem)]">
+          {/* The member's animal as one of the Met's Qing jade figures, cut out, with its character
+              (4p, David, Nov 9), in place of the framed ink landscape. */}
+          <div data-your-chinese="" className={cn(zodiacFont.variable, 'grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,14rem)]')}>
             <TintPanel>
-              <h2 id="your-chinese" className="type-heading-3 text-ink-900">
-                {yourChartCopy.chinese.title}
-              </h2>
-              <p className="mt-2 type-heading-2 italic text-highlight">
-                {yourChartCopy.chinese.name(chinese.element, chinese.animal)}
-              </p>
-              <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
+              <div className="flex items-center gap-5">
+                <ZodiacHanzi animal={chinese.animal} className="shrink-0 text-ink-900" />
+                <div className="min-w-0">
+                  <h2 id="your-chinese" className="type-heading-3 text-ink-900">
+                    {yourChartCopy.chinese.title}
+                  </h2>
+                  <p className="mt-2 type-heading-2 italic text-highlight">
+                    {yourChartCopy.chinese.name(chinese.element, chinese.animal)}
+                  </p>
+                </div>
+              </div>
+              <p className="mt-4 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
             </TintPanel>
-            <FramedArt id="p4" sizes="(width >= 64rem) 13rem, 13rem" className="mx-auto w-full max-w-[13rem] lg:mx-0" />
+            <ZodiacJade animal={chinese.animal} sizes="(width >= 64rem) 14rem, 12rem" className="mx-auto max-w-[12rem]! lg:mx-0 lg:max-w-[14rem]!" />
           </div>
         </Section>
       ) : null}

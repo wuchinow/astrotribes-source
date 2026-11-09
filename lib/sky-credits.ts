@@ -1,6 +1,7 @@
 import { FLAMMARION } from '@/lib/flammarion';
 import { SIGN_IDS } from '@/lib/keys';
 import { SKY_PAGES } from '@/lib/sky';
+import { zodiacJadeCredit } from '@/lib/zodiac-jade';
 
 // PLACEHOLDER: our words, until Dawa's copy replaces them. The footer says only NASA (David, Nov 4:
 // "simplify space photo creds"): every telescope image is a NASA release, not copyrighted (the sky test
@@ -34,8 +35,9 @@ export const pictureCreditLines: Readonly<Record<string, string>> = {
   // The Clan pages' Grandville Moon and the Vibe pages' star cards, as backdrops (4m, David, Nov 9).
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/clans/${sign}`, cartoonCredit])),
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/vibes/${sign}`, plateCredit])),
-  // Your chart (4o, Nov 9): the Sun's star card, the planets' cards in the gaps, and a Grandville engraving.
-  '/your-chart': oldPrintsCredit,
+  // Your chart (4o, Nov 9): the Sun's star card, the planets' cards in the gaps, and a Grandville engraving;
+  // since 4p the member's Chinese zodiac animal, one of the Met's jade figures.
+  '/your-chart': `${oldPrintsCredit} ${zodiacJadeCredit}`,
   // The old prints trial page (4m, previews only).
   '/trials/old-prints': oldPrintsCredit,
 };

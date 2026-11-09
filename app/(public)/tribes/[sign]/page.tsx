@@ -35,7 +35,8 @@ import { PRIMARY_ACTION } from '@/lib/site';
 // with layer 3.
 //
 // Old prints (4j, David, Nov 8): the sign's Urania's Mirror star card (1824) beside the facts, and a
-// Grandville engraving (1844) beside the smile, a stand-in for Dawa's humor section; lib/old-prints.ts.
+// Grandville engraving (1844) beside the Astro humor lines (4r: three per Tribe, ours), a stand-in for
+// the cartoons Dawa has in mind; lib/old-prints.ts.
 //
 // Rhythm: the hero on surface-hero, then the page tone and the band alternating. No textures:
 // Kirstie's paintings have no texture cut.
@@ -213,7 +214,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
                 </p>
               ))}
             </div>
-            {/* The smile, with a Grandville engraving beside it (4j): a stand-in for Dawa's humor section. */}
+            {/* Astro humor (4r, Dawa's Nov 7 note 19): three of our lines beside a Grandville engraving (4j), until his cartoons. */}
             <div className="mt-10 grid items-center gap-6 sm:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
               <OldPrint
                 id={`cartoon-${TRIBE_CARTOON[sign]}`}
@@ -223,9 +224,13 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
               />
               <figure className="border-l-2 border-gold-500 pl-5">
                 <figcaption className="type-label text-ink-500">{copy.signature.smileLabel}</figcaption>
-                <blockquote className="mt-2 max-w-[40ch] font-display text-[1.375rem] italic leading-snug text-ink-900">
-                  {words.smile}
-                </blockquote>
+                <ul role="list" className="mt-2 grid max-w-[40ch] gap-4">
+                  {[words.smile, ...words.jokes].map((line) => (
+                    <li key={line} className="font-display text-[1.375rem] italic leading-snug text-ink-900">
+                      {line}
+                    </li>
+                  ))}
+                </ul>
               </figure>
             </div>
           </div>

@@ -143,4 +143,9 @@ export const matesCopy = {
   back: (sign: string, name: string) => `Back to the ${sign} ${name}`,
   allMembers: 'All members',
   noTimeVibe: 'You have no birth time saved, so you have no rising sign yet. You can still see who is here.',
+  // Generational families (4r): everyone with Uranus, Neptune, or Pluto in one sign.
+  familyTitle: (planet: string, sign: string) => `The ${planet} in ${sign} family: members`,
+  familyLine: (planet: string, sign: string) => `${planet} in ${sign},`,
+  familyTotal: (count: number, planet: string, sign: string) => `${count} members in the ${planet} in ${sign} family, you included where you belong.`,
+  familyBack: (planet: string) => `More about ${planet}`,
 };

@@ -9,7 +9,8 @@ import { glossOnce } from '@/components/MemberCard';
 import { SharedKeys } from '@/components/SharedKeys';
 import { TribeBadge } from '@/components/TribeBadge';
 import { memberCopy, membersCopy, pointsCopy, pointsCount } from '@/content/members';
-import { SIGNS } from '@/lib/keys';
+import { BODIES, KEYS, SIGNS } from '@/lib/keys';
+import { FAMILY_BODIES } from '@/lib/mates';
 import { ownPlacements, visibleMember } from '@/lib/members';
 import { hasBirthTime } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
@@ -19,9 +20,13 @@ import { memberClient } from '@/lib/supabase/server';
 export const metadata: Metadata = { title: membersCopy.title };
 
 const THREE_KEYS = ['sunSign', 'moonSign', 'risingSign'] as const;
+const pageLink =
+  'inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4';
 
 /**
- * One member's page (3g): their Sun, Moon, and rising sign as Keys, then your connection points
+ * One member's profile (3g; 4r): their Sun, Moon, and rising sign as Keys with links to those Tribe,
+ * Clan, and Vibe pages, their generational families (signs only, linked to each family's members; no
+ * years, which would narrow their birth date), then your connection points
  * (3p) and every Key the two of you share, in the six groups of the 28 Keys page, with the outer
  * planets' sign keys apart, then how the points add up. Read as the
  * viewer under RLS: a member the database does not let you see is a 404, the same as one who does
@@ -46,6 +51,10 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
   const firstTime = glossOnce();
   const myTime = hasBirthTime(mine);
   const theirTime = hasBirthTime(member.placements);
+  const families = FAMILY_BODIES.flatMap((body) => {
+    const row = theirs.get(body);
+    return row ? [row] : [];
+  });
 
   return (
     <div className="mx-auto max-w-content px-4 pt-31 pb-16 md:px-6 md:pt-38 md:pb-24">
@@ -66,7 +75,40 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
             return row ? <KeyChip key={keyId} keyId={keyId} value={row.sign} showGloss={firstTime(keyId)} /> : null;
           })}
         </div>
+        <h3 className="mt-6 type-label text-ink-500">{memberCopy.pagesLabel}</h3>
+        <ul role="list" className="mt-1 flex flex-wrap gap-x-6">
+          {THREE_KEYS.map((keyId) => {
+            const row = theirs.get(keyId === 'sunSign' ? 'sun' : keyId === 'moonSign' ? 'moon' : 'rising');
+            if (!row) return null;
+            const base = keyId === 'sunSign' ? 'tribes' : keyId === 'moonSign' ? 'clans' : 'vibes';
+            return (
+              <li key={keyId}>
+                <Link href={`/${base}/${row.sign}`} className={pageLink}>
+                  {memberCopy.page(SIGNS[row.sign].name, KEYS[keyId].name)}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </section>
+
+      {families.length > 0 ? (
+        <section aria-labelledby="their-families" className="mt-10">
+          <h2 id="their-families" className="type-heading-3 text-ink-900 [overflow-wrap:anywhere]">
+            {memberCopy.familiesHeading(member.name)}
+          </h2>
+          <p className="mt-2 max-w-measure type-body-sm text-ink-700">{memberCopy.familiesNote}</p>
+          <ul role="list" className="mt-2 flex flex-wrap gap-x-6">
+            {families.map((row) => (
+              <li key={row.body}>
+                <Link href={`/members/family/${row.body}/${row.sign}`} className={pageLink}>
+                  {memberCopy.family(BODIES[row.body].name, SIGNS[row.sign].name)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section aria-labelledby="shared-heading" className="mt-12 border-t border-ink-200 pt-10">
         <h2 id="shared-heading" className="type-display-lg max-w-[22ch] text-ink-900">

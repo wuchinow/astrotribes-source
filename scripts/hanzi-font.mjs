@@ -3,11 +3,14 @@
 // instead of eight megabytes. Run by hand (node scripts/hanzi-font.mjs) after the names change;
 // never in the build. It reads the characters from content/oracle/iching.json and the source font
 // from .cache/fonts/ (gitignored; fetched from github.com/notofonts/noto-cjk if missing), and writes
-// app/(public)/oracle/hanzi-bold.woff2 beside its licence.
+// app/(public)/oracle/hanzi-bold.woff2 beside its licence. Since 4p it also cuts the twelve zodiac
+// animals' characters (lib/zodiac-jade.ts) into app/(public)/your-chart/zodiac-hanzi.woff2, the only
+// page that shows them, so neither page loads the other's characters.
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createJiti } from 'jiti';
 import subsetFont from 'subset-font';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -42,3 +45,11 @@ const woff2 = await subsetFont(font, chars.join(''), { targetFormat: 'woff2' });
 await writeFile(path.join(outDir, 'hanzi-bold.woff2'), woff2);
 await writeFile(path.join(outDir, 'hanzi-bold-OFL.txt'), license);
 console.log(`${chars.length} characters, ${woff2.length} bytes: app/(public)/oracle/hanzi-bold.woff2`);
+
+const { ZODIAC_JADE } = await createJiti(import.meta.url).import(path.join(root, 'lib', 'zodiac-jade.ts'));
+const zodiac = [...new Set(Object.values(ZODIAC_JADE).map((jade) => jade.hanzi))].sort();
+const zodiacDir = path.join(root, 'app', '(public)', 'your-chart');
+const zodiacWoff2 = await subsetFont(font, zodiac.join(''), { targetFormat: 'woff2' });
+await writeFile(path.join(zodiacDir, 'zodiac-hanzi.woff2'), zodiacWoff2);
+await writeFile(path.join(zodiacDir, 'zodiac-hanzi-OFL.txt'), license);
+console.log(`${zodiac.length} characters, ${zodiacWoff2.length} bytes: app/(public)/your-chart/zodiac-hanzi.woff2`);
