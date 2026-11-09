@@ -46,15 +46,31 @@ describe('the schema', () => {
     expect(migrations).not.toMatch(/\b(using|with check)\s*\(\s*true\s*\)/i);
   });
 
-  it('grants nothing to anon', () => {
-    const grants = [...migrations.matchAll(/^\s*grant\b[^;]+;/gim)].map((m) => m[0]);
+  it('grants nothing to anon but the keepalive (0007)', () => {
+    const grants = [...migrations.matchAll(/^\s*grant\b[^;]+;/gim)].map((m) => m[0].trim());
     expect(grants.length).toBeGreaterThan(0);
-    for (const grant of grants) expect(grant, grant.trim()).not.toMatch(/\banon\b/);
+    const toAnon = grants.filter((grant) => /\banon\b/.test(grant));
+    expect(toAnon).toEqual([
+      'grant execute on function private.keepalive() to anon;',
+      'grant execute on function public.keepalive() to anon;',
+    ]);
+  });
+
+  it('lets the keepalive bump one private row and nothing else (0007)', () => {
+    const door = /create function public\.keepalive\(\)[\s\S]*?return private\.keepalive\(\);/.exec(migrations)?.[0] ?? '';
+    expect(door).toContain('returns boolean');
+    expect(door).toContain('security invoker');
+    expect(door).not.toContain('security definer');
+    const ping = /create function private\.keepalive\(\)[\s\S]*?\$\$[\s\S]*?\$\$/.exec(migrations)?.[0] ?? '';
+    expect(ping).toContain('security definer');
+    expect(ping).toContain('update private.keepalive');
+    // It names no other table.
+    expect(ping).not.toMatch(/\b(public\.|auth\.|private\.(?!keepalive\b))/);
   });
 
   it('keeps every security definer function out of the served schema, with a fixed search path', () => {
-    // A header ends at its quoted body ($$) or at a standard SQL body (0003's `return`).
-    const functions = [...migrations.matchAll(/create (?:or replace )?function (\w+)\.(\w+)[\s\S]*?(?:\$\$|\breturn\b)/g)];
+    // A header ends at its quoted body ($$) or at a standard SQL body (0003's `return`, 0005's `begin atomic`).
+    const functions = [...migrations.matchAll(/create (?:or replace )?function (\w+)\.(\w+)[\s\S]*?(?:\$\$|\breturn\b|\bbegin atomic\b)/g)];
     expect(functions.length).toBeGreaterThan(0);
     for (const [header, schema, name] of functions) {
       if (!/security definer/.test(header)) continue;
@@ -63,9 +79,9 @@ describe('the schema', () => {
     }
   });
 
-  it('serves three functions, the admin door (0003), the admin yes or no (0004), and close matches (0005), each security invoker over a check in private', () => {
+  it('serves five functions, the admin door (0003), the admin yes or no (0004), close matches (0005), the keepalive (0007), and member animals (0008), each security invoker over a check in private', () => {
     const served = [...migrations.matchAll(/create (?:or replace )?function public\.(\w+)/g)].map((m) => m[1]);
-    expect(served).toEqual(['admin_members', 'is_admin', 'close_matches']);
+    expect(served).toEqual(['admin_members', 'is_admin', 'close_matches', 'keepalive', 'member_animals']);
     const door = /create function public\.admin_members\(\)[\s\S]*?return private\.admin_members\(\);/.exec(migrations)?.[0] ?? '';
     expect(door).toContain('security invoker');
     expect(door).not.toContain('security definer');
@@ -100,6 +116,30 @@ describe('the schema', () => {
     for (const grant of [door, work]) expect(grant).not.toMatch(/grant execute[^;]*\b(anon|service_role)\b/);
     expect(migrations).toMatch(/grant execute on function public\.close_matches\(uuid\[\]\) to authenticated;/);
     expect(migrations).not.toMatch(/grant execute on function (public|private)\.close_matches\(uuid\[\]\) to [^;]*\b(anon|service_role)\b/);
+  });
+
+  it('tells a member only the Chinese animal of members they may see, never a date, with the app’s Lunar New Year dates (0008)', () => {
+    const door = /create function public\.member_animals\(others uuid\[\]\)[\s\S]*?end;/.exec(migrations)?.[0] ?? '';
+    expect(door).toContain('security invoker');
+    expect(door).not.toContain('security definer');
+    expect(door).toContain('from private.member_animals(others)');
+    const work = /create function private\.member_animals\(others uuid\[\]\)[\s\S]*?\$\$[\s\S]*?\$\$/.exec(migrations)?.[0] ?? '';
+    expect(work).toContain('security definer');
+    expect(work).toContain('returns table (member uuid, animal text)');
+    expect(work).toContain('private.can_view_member(o)');
+    expect(work).toContain('o <> viewer.id');
+    expect(work).not.toMatch(/\b(insert|update|delete)\b/i);
+    // Only the animal leaves: the select at the end names no birth column.
+    const last = work.slice(work.lastIndexOf('select'));
+    for (const column of ['birth_date', 'birth_time', 'place_label', 'latitude', 'longitude', 'timezone']) {
+      expect(last, column).not.toMatch(new RegExp(`\\b${column}\\b`));
+    }
+    // The same 201 Lunar New Year dates as lib/chinese-zodiac.ts.
+    const app = /const LUNAR_NEW_YEAR = `([\s\S]*?)`/.exec(readFileSync('lib/chinese-zodiac.ts', 'utf8'))![1].trim().split(/\s+/);
+    const sql = [...work.matchAll(/'(\d{4})'/g)].map((m) => m[1]);
+    expect(sql).toEqual(app);
+    expect(migrations).toMatch(/grant execute on function public\.member_animals\(uuid\[\]\) to authenticated;/);
+    expect(migrations).not.toMatch(/grant execute on function (public|private)\.member_animals\(uuid\[\]\) to [^;]*\b(anon|service_role)\b/);
   });
 
   it('answers only yes or no to the menu, about the caller only, and writes nothing (0004)', () => {

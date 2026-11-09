@@ -4,6 +4,7 @@
 // degree, no minute (not granted), and never birth_data, which is the owner's alone.
 import 'server-only';
 import type { memberClient } from './supabase/server';
+import { ANIMALS, type ChineseSign } from './chinese-zodiac';
 import { connectionPoints, toCloseMatches, type CloseMatch, type ConnectionPoints } from './connection-points';
 import { sharedKeys, splitShared, toPlacements, type PlacementRow, type SharedKey } from './shared-keys';
 
@@ -55,6 +56,20 @@ export async function closeMatches(supabase: Client, ids: readonly string[]): Pr
   const { data, error } = await supabase.rpc('close_matches', { others: [...ids] });
   if (error) return new Map();
   return toCloseMatches(data as { member: unknown; mine: unknown; theirs: unknown; kind: unknown }[] | null);
+}
+
+/**
+ * Another member's Chinese zodiac animal (4s, David, Nov 9: "show it"), from the database's
+ * member_animals (0008), which reads their birth date as no member may and answers with the animal
+ * only, for a member this one may see. Never the element, which with the animal names the year.
+ * `null` when there is none, the member is not visible, or the function is not there yet.
+ */
+export async function memberAnimal(supabase: Client, id: string): Promise<ChineseSign['animal'] | null> {
+  const { data, error } = await supabase.rpc('member_animals', { others: [id] });
+  if (error || !Array.isArray(data)) return null;
+  const row = (data as { member: unknown; animal: unknown }[]).find((r) => r.member === id);
+  const animal = row?.animal;
+  return typeof animal === 'string' && (ANIMALS as readonly string[]).includes(animal) ? (animal as ChineseSign['animal']) : null;
 }
 
 const summarize = (

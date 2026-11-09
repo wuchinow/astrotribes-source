@@ -33,9 +33,9 @@ describe('the members pages', () => {
     }
   });
 
-  it('learn closeness by degree only from the database function, never a degree', () => {
+  it('learn closeness by degree and the Chinese animal only from the database functions, never a degree or a date', () => {
     const source = text('lib/members.ts');
-    expect(source.match(/\.rpc\(\s*'([a-z_]+)'/g)).toEqual([".rpc('close_matches'"]);
+    expect(source.match(/\.rpc\(\s*'([a-z_]+)'/g)).toEqual([".rpc('close_matches'", ".rpc('member_animals'"]);
   });
 
   it('check the session themselves', () => {

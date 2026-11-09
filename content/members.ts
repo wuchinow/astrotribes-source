@@ -63,6 +63,10 @@ export const memberCopy = {
   familiesHeading: (name: string) => `${name}'s generation`,
   familiesNote: 'Uranus, Neptune, and Pluto stay in a sign for years, so everyone born around the same time shares their signs. Open one to see who else is in it.',
   family: (planet: string, sign: string) => `${planet} in ${sign}`,
+  // 4s (David, Nov 9: "show it"): the animal only, never the element, which with it names the year.
+  chineseHeading: (name: string) => `${name}'s Chinese zodiac sign`,
+  chineseName: (animal: string) => `Year of the ${animal}`,
+  chineseNote: 'From the Chinese calendar, a tradition separate from the Western chart.',
 };
 
 /** "Sun and Moon", "Sun, Moon, and Rising". */
