@@ -321,8 +321,7 @@
   }
 
   html[data-art="none"] .keys-sky,
-  html[data-art="none"] .panel-sky,
-  html[data-art="none"] .panel-sky-credit {
+  html[data-art="none"] .panel-sky {
     display: none;
   }
 

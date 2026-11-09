@@ -45,8 +45,8 @@ export const ZODIAC_JADE: Record<Animal, ZodiacJade> = {
   Pig: { source: 'jade-pig.png', hanzi: '豬', pinyin: 'zhū', alt: jade('a pig’s head') },
 };
 
-/** The footer's line for the page that shows one. */
-export const zodiacJadeCredit = 'Jade zodiac animals, China, 1700s to 1800s, The Metropolitan Museum of Art.';
+/** Its part of the footer's public domain line. */
+export const zodiacJadeCredit = 'jade zodiac animals (China, 1700s to 1800s) from The Met';
 
 /** The widths cut, in pixels; a figure narrower than one is cut at its own width instead. */
 export const ZODIAC_JADE_WIDTHS = [256, 512] as const;

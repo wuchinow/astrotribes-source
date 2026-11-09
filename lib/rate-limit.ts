@@ -14,6 +14,8 @@ export const RATE_LIMITS = {
   account: { limit: 20, windowMs: 60_000 },
   // Saving birth details (2c). The database holds the real limit, one change an hour (0002).
   birth: { limit: 10, windowMs: 15 * 60_000 },
+  // The feedback form (Nov 9), open to anyone.
+  feedback: { limit: 5, windowMs: 15 * 60_000 },
 } as const;
 export type RateLimitName = keyof typeof RATE_LIMITS;
 

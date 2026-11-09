@@ -10,7 +10,7 @@ import { SIGN_IDS } from '@/lib/keys';
 import skyFiles from '@/public/sky-images/credits.json';
 import { SKY_PAGES } from '@/lib/sky';
 import { FLAMMARION } from '@/lib/flammarion';
-import { pictureCreditLines, skyCreditLines } from '@/lib/sky-credits';
+import { footerCredits } from '@/lib/sky-credits';
 
 const PAGE_FILES: Record<string, string> = {
   '/': 'app/(public)/page.tsx',
@@ -46,10 +46,9 @@ describe('telescope credits in the footer', () => {
     expect(Object.keys(SKY_PAGES).sort()).toEqual([...Object.keys(PAGE_FILES), ...pictured.map(planetHref), ...kin].sort());
   });
 
-  it('give each page one short line, NASA only, with every full credit kept in the manifest (David, Nov 4)', () => {
-    const lines = skyCreditLines();
-    for (const [path, ids] of Object.entries(SKY_PAGES)) {
-      expect(lines[path], path).toBe(ids.length === 1 ? 'Space photo: NASA.' : 'Space photos: NASA.');
+  it('say NASA only, the same on every page, with every full credit kept in the manifest (David, Nov 4 and 9)', () => {
+    expect(footerCredits.space).toBe('Space photos: NASA.');
+    for (const ids of Object.values(SKY_PAGES)) {
       for (const id of ids) {
         expect(skyFiles.images[id].credit, id).toMatch(/NASA/);
         expect(skyFiles.images[id].license, id).toMatch(/not copyrighted/);
@@ -57,8 +56,8 @@ describe('telescope credits in the footer', () => {
     }
   });
 
-  it('credit the Flammarion engraving in the landing page footer, not under the picture', () => {
-    expect(pictureCreditLines['/']).toBe(`${FLAMMARION.credit}.`);
+  it('credit the Flammarion engraving in the footer, not under the picture', () => {
+    expect(footerCredits.publicDomain).toContain(FLAMMARION.credit.replace('The Flammarion engraving, ', ''));
     const landing = readFileSync('app/(public)/page.tsx', 'utf8');
     expect(landing).not.toMatch(/figcaption|FLAMMARION\.credit/);
   });
