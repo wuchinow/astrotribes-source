@@ -318,3 +318,21 @@ export const marksCut = (piece: ArtPiece, cut: Box): ArtMark[] =>
 
 /** A cut with no mark inside may be cropped further (cover); one that holds a mark renders whole. */
 export const cutIsFree = (piece: ArtPiece, cut: Box): boolean => !piece.marks.some((mark) => overlaps(mark.box, cut));
+
+/**
+ * The pieces a section backdrop may show (4m, David, Nov 8): an ink landscape beside a section's text, or
+ * across the footer's top edge, laid with cover. Cover may crop anywhere, so only cuts with no seal or
+ * signature in them are listed (tests/art-crop.test.ts). The hero's misty river is left out: its cut
+ * holds its seal. Each names its phone and desktop cuts.
+ */
+export const BACKDROP_ART = {
+  p1: { sm: 'crop', lg: 'crop' },
+  p4: { sm: 'crop', lg: 'crop' },
+  p6: { sm: 'tall', lg: 'wide' },
+  p7: { sm: 'tall', lg: 'wide' },
+  p8: { sm: 'crop', lg: 'crop' },
+  p9: { sm: 'tall', lg: 'wide' },
+  p10: { sm: 'tall', lg: 'crop' },
+} as const satisfies Partial<Record<ArtId, { sm: string; lg: string }>>;
+
+export type BackdropArtId = keyof typeof BACKDROP_ART;

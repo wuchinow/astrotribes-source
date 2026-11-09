@@ -155,9 +155,130 @@
     }
   }
 
+  /*
+   * Section backdrops (4m, David, Nov 8: "see the rhythm?"): down a page, sections take turns with an ink
+   * landscape, a NASA photo, and a soft gradient. A backdrop picture is never under text. From xl it
+   * stands beside the text column, starting past --bd-from of the content width (44rem at least) and
+   * fading in toward the window's edge; below xl the text runs too wide, so the picture becomes a band at the foot
+   * of the section, under extra padding (Section adds it), fading in from above. The ink landscape is at
+   * the hero's own strength (the visitor's wash, 0.6 of it on Night); the NASA photo at --backdrop-sky of
+   * it on Paper and --backdrop-sky-night on Night. None hides both. Images come in as --bd-sm and
+   * --bd-lg on the element (components/Backdrop.tsx), mark-free cuts only (tests/art-crop.test.ts).
+   */
+  .backdrop-region {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .backdrop-layer {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: -1;
+    height: 13rem;
+    pointer-events: none;
+    background-image: var(--bd-sm);
+    background-size: cover;
+    background-position: var(--bd-pos, center);
+    background-repeat: no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
+    opacity: calc(var(--wash) * var(--wash-mood) * var(--bd-strength, 1));
+  }
+
+  .backdrop-layer[data-kind="sky"] {
+    --bd-strength: var(--backdrop-sky);
+    background-color: var(--night-900);
+  }
+
+  [data-theme="night"] .backdrop-layer[data-kind="sky"] {
+    --bd-strength: var(--backdrop-sky-night);
+  }
+
+  /* A foot band at every width (data-place="foot"): for a section whose words span two columns. */
+  @media (width >= 48rem) {
+    .backdrop-layer[data-place="foot"] {
+      height: 15rem;
+      background-image: var(--bd-lg);
+    }
+  }
+
+  @media (width >= 80rem) {
+    .backdrop-layer:not([data-reach]):not([data-place]) {
+      --bd-start: calc(max(0px, (100% - var(--content-max)) / 2) + max(44rem, min(100%, var(--content-max)) * var(--bd-from, 0.58)));
+      inset: 0 0 0 var(--bd-start);
+      height: auto;
+      background-image: var(--bd-lg);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 15%, #000 60%);
+      mask-image: linear-gradient(to right, transparent 0%, transparent 15%, #000 60%);
+    }
+
+    .backdrop-layer:not([data-reach]):not([data-place])[data-side="left"] {
+      inset: 0 var(--bd-start) 0 0;
+      -webkit-mask-image: linear-gradient(to left, transparent 0%, transparent 15%, #000 60%);
+      mask-image: linear-gradient(to left, transparent 0%, transparent 15%, #000 60%);
+    }
+  }
+
+  /*
+   * On a long page (the legal pages, data-reach="screen"): from xl, where the article leaves room, the
+   * picture stands beside it below the nav for the first screen, fading out below too; under xl it
+   * stays the band at the page's foot.
+   */
+  @media (width >= 80rem) {
+    .backdrop-layer[data-reach="screen"] {
+      --bd-start: calc(max(0px, (100% - var(--content-max)) / 2) + max(44rem, min(100%, var(--content-max)) * var(--bd-from, 0.58)));
+      inset: 8rem 0 auto var(--bd-start);
+      height: min(calc(100% - 8rem), 100dvh);
+      background-image: var(--bd-lg);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 15%, #000 60%), linear-gradient(to bottom, transparent 0%, #000 15%, #000 55%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, transparent 15%, #000 60%), linear-gradient(to bottom, transparent 0%, #000 15%, #000 55%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+  }
+
+  /* The section gradient (4m): the cool dawn tint at the top, the page between, the warm tint at the foot. */
+  .section-gradient {
+    background-image: linear-gradient(170deg, var(--tint-dawn) 0%, var(--surface-100) 50%, var(--tint-dusk) 100%);
+  }
+
+  /* The footer's horizon (4m): a strip of ink landscape across its top edge, above its words, fading at both edges. */
+  .footer-horizon {
+    height: 7rem;
+    pointer-events: none;
+    background-image: var(--bd-sm);
+    background-size: cover;
+    background-position: var(--bd-pos, center);
+    background-repeat: no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 60%, transparent 100%);
+    opacity: calc(var(--wash) * var(--wash-mood));
+  }
+
+  @media (width >= 48rem) {
+    .footer-horizon {
+      height: 10rem;
+      background-image: var(--bd-lg);
+    }
+  }
+
+  /*
+   * The footer's enso (David, Nov 9: "or no bg"): the brush stroke alone, painted in the ink token through
+   * its own alpha (public/enso/enso-ink.webp, scripts/enso-ink.py), so it sits on the band in both moods.
+   * A framed piece, so None leaves it.
+   */
+  .enso-ink {
+    background-color: var(--ink-900);
+    -webkit-mask: url("/enso/enso-ink.webp") center / contain no-repeat;
+    mask: url("/enso/enso-ink.webp") center / contain no-repeat;
+  }
+
   html[data-art="none"] .wash-layer,
   html[data-art="none"] .wash-strip,
-  html[data-art="none"] .texture-layer {
+  html[data-art="none"] .texture-layer,
+  html[data-art="none"] .backdrop-layer,
+  html[data-art="none"] .footer-horizon {
     display: none;
   }
 

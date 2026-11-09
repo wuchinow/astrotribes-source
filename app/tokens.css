@@ -44,6 +44,10 @@
    * paper (ink-900), lighter than the gold rays (David, Nov 3: logo round 15). The logo only. */
   --logo: #4a2150;
   --ember-500: #a44716;
+  /* The section gradient (4m, David, Nov 8): a cool dawn tint (cobalt-100 into the page) at the top and a
+   * warm one (gold-300 into the page) at the foot, with the page itself between. Text sits on it directly. */
+  --tint-dawn: #e9ebed;
+  --tint-dusk: #f5e8c5;
   --night-900: #13213f;
   --on-night: #f5eddb;
   --on-night-soft: #c9c1b1;
@@ -88,6 +92,8 @@
   --highlight: var(--gold-500);
   --logo: var(--ink-900);
   --ember-500: #f29a5e;
+  --tint-dawn: #192846;
+  --tint-dusk: #2c2243;
   --night-900: #060b15;
   --on-night: #f5eddb;
   --on-night-soft: #c9c1b1;
@@ -126,6 +132,10 @@
   --wash-section: 0.5;
   --wash-texture: 0.2;
   --wash-sky: 0.5;
+  /* A section backdrop (4m): a NASA photo beside the text, this times the visitor's wash, on Paper; Night
+   * shows it at --backdrop-sky-night of the wash, since the night page meets the photo's own black. */
+  --backdrop-sky: 0.6;
+  --backdrop-sky-night: 1.5;
   --panel: 0.8;
   --grain: 0.035;
 }

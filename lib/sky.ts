@@ -438,7 +438,8 @@ export type SkyId = keyof typeof SKY;
  * this to the pages' own code, so an image added to a page without its entry here fails the tests.
  */
 export const SKY_PAGES: Readonly<Record<string, readonly SkyId[]>> = {
-  '/': ['keysSun', 'keysMoon', 'keysRising', 'andromeda'],
+  // keysCenter: Find your Keys' backdrop (4m, Nov 8), another place for the 28 Keys page's photo.
+  '/': ['keysSun', 'keysMoon', 'keysRising', 'andromeda', 'keysCenter'],
   '/sky': ['today'],
   '/keys': ['keysCenter'],
   '/keys/sun': ['sun'],
@@ -453,8 +454,11 @@ export const SKY_PAGES: Readonly<Record<string, readonly SkyId[]>> = {
   '/keys/pluto': ['pluto'],
   '/keys/galactic-center': ['galacticCenter'],
   // The Clan and Vibe pages (4l, Nov 8): one photo each, the same on all twelve of a kind.
-  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/clans/${sign}`, ['clanMoon'] as const])),
+  // keysCenter: the Clan pages' famous Moons backdrop (4m, Nov 8).
+  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/clans/${sign}`, ['clanMoon', 'keysCenter'] as const])),
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/vibes/${sign}`, ['vibeRising'] as const])),
+  // The Tribe pages (4m, Nov 8): Andromeda behind "Your people", another place for the landing's photo.
+  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/tribes/${sign}`, ['andromeda'] as const])),
 };
 
 export const skyCredit = (image: SkyImage) => (image.tinted ? `${image.credit} (tinted)` : image.credit);

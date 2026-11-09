@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ART, FRAMED, TEXTURE_CROPS, WASHES, cutIsFree, marksCut, type ArtId, type Box } from '@/lib/art';
+import { ART, BACKDROP_ART, FRAMED, TEXTURE_CROPS, WASHES, cutIsFree, marksCut, type ArtId, type Box } from '@/lib/art';
 import files from '@/lib/art-files.json';
 
 const root = process.cwd();
@@ -59,12 +59,26 @@ describe('the art manifest', () => {
     const page = readFileSync(path.join(root, 'app/(public)/page.tsx'), 'utf8');
     const hero = /<ArtWash piece="(\w+)" top>/.exec(page)![1];
     const textures = [...page.matchAll(/texture=\{\{ piece: '(\w+)'/g)].map((m) => m[1]);
-    // How it works only: The Keys dropped its texture in 1h, when its cards took sky images.
-    expect(textures.length).toBe(1);
+    // None since 4m (David, Nov 8): How it works took an ink landscape backdrop in place of its texture.
     for (const piece of textures) expect(piece).toBe(hero);
-    // The section after the hero carries no texture.
+    // The section after the hero carries no texture and no backdrop.
     const afterHero = page.slice(page.indexOf('</ArtWash>')).match(/<Section[^>]*>/)![0];
     expect(afterHero).not.toContain('texture');
+    expect(afterHero).not.toContain('backdrop');
+  });
+
+  it('backdrops lay only mark-free cuts with cover, and never the hero painting with its seal (4m)', () => {
+    for (const [id, use] of Object.entries(BACKDROP_ART)) {
+      const piece = ART[id as ArtId];
+      const cuts = piece.cuts as Record<string, { box: Box }>;
+      for (const cut of [use.sm, use.lg]) {
+        expect(cuts[cut], `${id} ${cut}`).toBeDefined();
+        expect(cutIsFree(piece, cuts[cut].box), `${id} ${cut}`).toBe(true);
+        const served = (files as Record<string, Record<string, { files: Record<string, unknown> }>>)[id]?.[cut];
+        expect(Object.keys(served?.files ?? {}).length, `${id} ${cut} has web files`).toBeGreaterThan(0);
+      }
+    }
+    expect('h' in BACKDROP_ART).toBe(false);
   });
 
   it('a Night alternate is another wash, and P7 shows P9 on Night (David, Sep 25 evening)', () => {

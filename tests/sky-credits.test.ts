@@ -30,14 +30,18 @@ describe('telescope credits in the footer', () => {
     const pictured = PLANET_PAGES.filter((planet) => planet.sky);
     for (const planet of pictured) expect(SKY_PAGES[planetHref(planet)]).toEqual([planet.sky]);
     for (const planet of PLANET_PAGES.filter((p) => !p.sky)) expect(SKY_PAGES[planetHref(planet)]).toBeUndefined();
-    // The Clan and Vibe pages (4l): each kind shows one photo, named in its page file.
-    expect(skyIdsIn('app/(public)/clans/[sign]/page.tsx')).toEqual(['clanMoon']);
+    // The Clan and Vibe pages (4l): each kind shows the same photos on all twelve, named in its page
+    // file; since 4m the Clan pages' famous Moons stand on the galactic center, and the Tribe pages'
+    // "Your people" on Andromeda.
+    expect(skyIdsIn('app/(public)/clans/[sign]/page.tsx')).toEqual(['clanMoon', 'keysCenter']);
     expect(skyIdsIn('app/(public)/vibes/[sign]/page.tsx')).toEqual(['vibeRising']);
+    expect(skyIdsIn('app/(public)/tribes/[sign]/page.tsx')).toEqual(['andromeda']);
     for (const sign of SIGN_IDS) {
-      expect(SKY_PAGES[`/clans/${sign}`]).toEqual(['clanMoon']);
+      expect(SKY_PAGES[`/clans/${sign}`]).toEqual(['clanMoon', 'keysCenter']);
       expect(SKY_PAGES[`/vibes/${sign}`]).toEqual(['vibeRising']);
+      expect(SKY_PAGES[`/tribes/${sign}`]).toEqual(['andromeda']);
     }
-    const kin = SIGN_IDS.flatMap((sign) => [`/clans/${sign}`, `/vibes/${sign}`]);
+    const kin = SIGN_IDS.flatMap((sign) => [`/clans/${sign}`, `/vibes/${sign}`, `/tribes/${sign}`]);
     expect(Object.keys(SKY_PAGES).sort()).toEqual([...Object.keys(PAGE_FILES), ...pictured.map(planetHref), ...kin].sort());
   });
 
@@ -59,7 +63,7 @@ describe('telescope credits in the footer', () => {
   });
 
   it('leave no caption under a picture', () => {
-    for (const file of ['components/SkyWindow.tsx', 'components/TintPanel.tsx', 'components/KeysCard.tsx']) {
+    for (const file of ['components/SkyWindow.tsx', 'components/TintPanel.tsx', 'components/KeysCard.tsx', 'components/Backdrop.tsx']) {
       expect(readFileSync(file, 'utf8'), file).not.toMatch(/\.credit\b/);
     }
   });

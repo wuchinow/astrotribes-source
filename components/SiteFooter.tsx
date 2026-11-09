@@ -1,7 +1,8 @@
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
+import { backdropImages } from './Backdrop';
 import { CONTACT_EMAIL, LEGAL_NAV, PRIMARY_NAV, type NavLink } from '@/lib/site';
 import { pictureCreditLines, skyCreditLines } from '@/lib/sky-credits';
-import { FramedArt } from './FramedArt';
 import { Logo } from './Logo';
 import { MoodToggle } from './MoodToggle';
 import { SkyCredit } from './SkyCredit';
@@ -33,12 +34,20 @@ function LinkList({ label, links }: { label: string; links: readonly NavLink[] }
  * focus. On a phone the same parts stack, the enso centred.
  */
 export function SiteFooter() {
+  // The horizon (4m, David, Nov 8: "also possibly footer"): Eight views (P9) across the top edge, above the words.
+  const horizon = backdropImages({ art: 'p9' });
   return (
     <footer className="border-t border-ink-200 bg-surface-band">
-      <div className="mx-auto grid max-w-content gap-8 px-4 py-10 md:grid-cols-[1fr_auto_1fr] md:grid-rows-[auto_1fr] md:gap-x-12 md:gap-y-6 md:px-6 md:py-12">
+      <div
+        aria-hidden="true"
+        className="footer-horizon"
+        style={{ '--bd-sm': horizon.sm, '--bd-lg': horizon.lg, '--bd-pos': 'center 70%' } as CSSProperties}
+      />
+      <div className="mx-auto grid max-w-content gap-8 px-4 pt-2 pb-10 md:grid-cols-[1fr_auto_1fr] md:grid-rows-[auto_1fr] md:gap-x-12 md:gap-y-6 md:px-6 md:pb-12">
         <Logo className="w-[240px] md:col-start-1 md:row-start-1" />
         <div className="flex justify-center md:col-start-2 md:row-span-2 md:row-start-1 md:items-start">
-          <FramedArt id="p5" sizes="112px" className="w-[112px]" />
+          {/* The enso as ink alone, in the ink token, with no paper square (David, Nov 9; scripts/enso-ink.py). */}
+          <div role="img" aria-label="A single brushed ink circle" className="enso-ink size-[112px]" />
         </div>
         {/* Two link columns, the address under both, starting under the first (David, Nov 4). */}
         <div className="grid grid-cols-[auto_auto] content-start justify-start gap-x-12 md:col-start-3 md:row-span-2 md:row-start-1 md:justify-self-end">
