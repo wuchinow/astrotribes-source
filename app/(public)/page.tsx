@@ -159,7 +159,7 @@ export default function HomePage() {
           className="mb-6 flex items-center gap-3 type-poster text-[2.5rem] leading-[1.05] text-ink-900 md:gap-6 md:text-[4.5rem]"
         >
           <span>{keys.title}</span>
-          <PointingHand direction="left" className="w-14 shrink-0 text-ink-900 sm:w-24 md:w-36" />
+          <PointingHand direction="left" className="w-12 shrink-0 text-ink-900 sm:w-20 md:w-30" />
         </h2>
         <Lede>{keys.lede}</Lede>
         <ul className="mt-8 grid gap-6 md:grid-cols-3">
