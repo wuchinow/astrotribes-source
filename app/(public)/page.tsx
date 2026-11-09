@@ -152,13 +152,14 @@ export default function HomePage() {
 
       <Section id="keys" labelledBy="keys-title" band backdrop={{ sky: 'keysCenter' }}>
         <Eyebrow>{keys.eyebrow}</Eyebrow>
-        {/* Dawa's 19th-century poster (Nov 7): poster-weight type after a printer's hand (one, David Nov 8). */}
+        {/* Dawa's 19th-century poster (Nov 7): poster-weight type with one printer's hand (David, Nov 8),
+            after the words and pointing back at them, so the words line up with the section (David, Nov 9). */}
         <h2
           id="keys-title"
           className="mb-6 flex items-center gap-3 type-poster text-[2.5rem] leading-[1.05] text-ink-900 md:gap-6 md:text-[4.5rem]"
         >
-          <PointingHand className="w-14 shrink-0 text-ink-900 sm:w-24 md:w-36" />
           <span>{keys.title}</span>
+          <PointingHand direction="left" className="w-14 shrink-0 text-ink-900 sm:w-24 md:w-36" />
         </h2>
         <Lede>{keys.lede}</Lede>
         <ul className="mt-8 grid gap-6 md:grid-cols-3">

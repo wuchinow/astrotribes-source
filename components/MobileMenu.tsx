@@ -5,7 +5,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState } from 'react';
 import { appearanceCopy } from '@/content/appearance';
 import { DISCLOSURE_EVENT } from './AppearancePanel';
-import { HeaderAccount } from './HeaderAccount';
+import { PRIMARY_ACTION } from '@/lib/site';
+import { Button } from './Button';
+import { GuestOnly, HeaderAccount } from './HeaderAccount';
 import { MoodToggle } from './MoodToggle';
 import { NavLinks } from './NavLinks';
 
@@ -69,6 +71,14 @@ export function MobileMenu() {
         className="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-6rem)] overflow-y-auto border-b border-ink-200 bg-surface-100 shadow-warm"
       >
         <div className="mx-auto max-w-content px-4 py-2">
+          {/* On a phone the primary action moves in here, so the logo has room in the bar (David, Nov 9). */}
+          <GuestOnly>
+            <div className="pt-2 pb-3 sm:hidden">
+              <Button href={PRIMARY_ACTION.href}>
+                {PRIMARY_ACTION.label}
+              </Button>
+            </div>
+          </GuestOnly>
           <nav aria-label="Main">
             <NavLinks
               className="grid"

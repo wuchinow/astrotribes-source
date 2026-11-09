@@ -26,7 +26,7 @@ export function SiteHeader() {
     <header className="absolute inset-x-0 top-0 z-30">
       <div className="relative mx-auto flex max-w-content items-center justify-between gap-2 px-4 pt-5 pb-2 md:gap-4 md:px-6 md:pt-8">
         <Link href="/" className="inline-flex min-h-touch shrink-0 items-center lg:-ml-3 xl:-ml-8">
-          <Logo className="w-[120px] min-[24rem]:w-[164px] md:w-[280px] lg:w-[212px] xl:w-[340px]" label="AstroTribes, home" />
+          <Logo className="w-[200px] min-[24rem]:w-[240px] md:w-[280px] lg:w-[212px] xl:w-[340px]" label="AstroTribes, home" />
         </Link>
         <nav aria-label="Main" className="hidden lg:ml-3 lg:block xl:ml-10">
           <NavLinks tone="ink" className="flex items-center gap-3 xl:gap-5" />
@@ -37,9 +37,12 @@ export function SiteHeader() {
           </div>
           <HeaderAccount show="out" />
           <GuestOnly>
-            <Button href={PRIMARY_ACTION.href} size="nav">
-              {PRIMARY_ACTION.label}
-            </Button>
+            {/* From sm; on a phone it sits at the top of the menu, so the logo can be larger (David, Nov 9). */}
+            <div className="hidden sm:block">
+              <Button href={PRIMARY_ACTION.href} size="nav">
+                {PRIMARY_ACTION.label}
+              </Button>
+            </div>
           </GuestOnly>
           <HeaderAccount show="in" />
           <MobileMenu />

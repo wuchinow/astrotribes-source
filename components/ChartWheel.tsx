@@ -108,9 +108,11 @@ interface ChartWheelProps {
   words?: WheelWords;
   /** Dawa's lines and planet pages for the tap panel, from lib/wheel-details.ts on the server. */
   details?: WheelDetails;
+  /** A picture under the wheel from lg, where the list beside it runs longer (Your chart, David, Nov 9). */
+  aside?: ReactNode;
 }
 
-export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {} }: ChartWheelProps) {
+export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}, aside }: ChartWheelProps) {
   const layout = wheelLayout(wheel);
   const timeKnown = layout.cusps.length > 0;
   const axes = new Set([1, 4, 7, 10]);
@@ -275,6 +277,7 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
             <p className="text-center type-body-sm text-ink-500">{timeKnown ? chartWheelCopy.hintHouses : chartWheelCopy.hint}</p>
           )}
         </div>
+        {aside ? <div className="mt-10 hidden lg:block">{aside}</div> : null}
       </div>
 
       <div className="lg:col-start-2 lg:row-start-2">

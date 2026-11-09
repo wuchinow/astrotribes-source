@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { ArtWash } from '@/components/ArtWash';
+import type { Backdrop } from '@/components/Backdrop';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { ChartWheel } from '@/components/ChartWheel';
 import { ChartReading } from '@/components/ChartReading';
+import { FramedArt } from '@/components/FramedArt';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
+import { OldPrint } from '@/components/OldPrint';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { Quote } from '@/components/Quote';
 import { ShareButton } from '@/components/ShareButton';
@@ -22,7 +25,9 @@ import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
 import { chineseSign } from '@/lib/chinese-zodiac';
 import { familyOf, GENERATIONAL } from '@/lib/generations';
 import { drawn } from '@/lib/glyphs';
-import { BODIES, KEYS, SIGNS, houseOf, keyFor, type HouseNumber, type SignId } from '@/lib/keys';
+import { BODIES, BODY_GROUPS, KEYS, SIGNS, houseOf, keyFor, type BodyGroup, type HouseNumber, type SignId } from '@/lib/keys';
+import { CARTOONS, PLATES } from '@/lib/old-prints';
+import { cn } from '@/lib/cn';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
 import { wheelDetails } from '@/lib/wheel-details';
@@ -36,6 +41,16 @@ interface Row {
   sign_alternate: SignId | null;
   house: HouseNumber | null;
 }
+
+/** Each group's section on Your chart (4o): the tone and backdrop it takes, in turn down the page. */
+const GROUP_LOOK: Record<BodyGroup, { band?: boolean; backdrop?: Backdrop }> = {
+  identity: { band: true, backdrop: { sky: 'andromeda', foot: true } },
+  journey: { backdrop: { gradient: true } },
+  planets: { backdrop: { art: 'p1', foot: true, pos: 'center 30%' } },
+  generational: { band: true },
+  healing: { backdrop: { gradient: true } },
+  galacticCenter: { backdrop: { sky: 'keysCenter', foot: true } },
+};
 
 /**
  * The member's own chart (2c): their saved Sun, Moon, and Rising, read as the member under RLS by
@@ -85,6 +100,68 @@ export default async function YourChartPage() {
   // The wheel (3g): the member's own chart redrawn on the server from their birth details. Null on any failure.
   const wheel = await memberWheel(supabase, user.id, { sun: sun.sign, moon: moon?.sign ?? null });
 
+  const planetCard = (planet: (typeof PLANET_PAGES)[number]) => {
+    const row = byBody.get(planet.body);
+    if (!row) return null;
+    const name = BODIES[planet.body].name;
+    // The Galactic Center has a house key only (it sits at the same degree for everyone).
+    const signKey = keyFor(planet.body, 'sign');
+    const houseKey = keyFor(planet.body, 'house')!;
+    const signText = signKey ? (planet.signs[row.sign] ?? '') : '';
+    const houseText = row.house ? (planet.houses[row.house] ?? '') : yourChartCopy.keys.noTime(houseKey.name);
+    const gap = signKey ? gapFor(signText, houseText, row.sign) : null;
+    const plate = gap ? <GapPlate sign={row.sign} wide={gap.wide} /> : null;
+    return (
+      <div
+        key={planet.body}
+        data-your-planet={planet.body}
+        className="grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-2 md:gap-8 md:p-8"
+      >
+        {/* Dawa's glyphs for the planet and its sign; none for houses, as he says (Nov 7). */}
+        <div className="flex items-center gap-4 md:col-span-2">
+          {drawn(planet.body) ? <GlyphIcon glyph={planet.body} size={72} className="text-ink-900" /> : null}
+          <h3 className="type-heading-2 text-ink-900">{name}</h3>
+        </div>
+        {signKey ? (
+          <div data-your-key={signKey.id}>
+            <div className="mb-3 flex items-center gap-3">
+              <GlyphIcon glyph={row.sign} size={48} className="text-ink-900" />
+              <p className="type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
+            </div>
+            <KeyChip keyId={signKey.id} value={row.sign} showGloss />
+            <Lines text={planet.signs[row.sign]} />
+            {gap?.column === 'sign' ? plate : null}
+          </div>
+        ) : null}
+        <div
+          data-your-key={houseKey.id}
+          className={signKey ? 'border-t border-ink-200 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8' : 'md:col-span-2'}
+        >
+          {row.house ? (
+            <>
+              <p className="mb-3 flex min-h-12 items-center type-label text-ink-500">
+                {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
+              </p>
+              <KeyChip keyId={houseKey.id} value={row.house} showGloss />
+              <Lines text={planet.houses[row.house]} />
+            </>
+          ) : (
+            <>
+              <KeyChip keyId={houseKey.id} showGloss />
+              <p className="mt-3 type-body-sm text-ink-700">{yourChartCopy.keys.noTime(houseKey.name)}</p>
+            </>
+          )}
+          {gap?.column === 'house' ? plate : null}
+        </div>
+        <div className="md:col-span-2">
+          <Button href={planetHref(planet)} variant="tertiary">
+            {yourChartCopy.keys.more(name)}
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <ArtWash piece="p9" top>
@@ -95,6 +172,15 @@ export default async function YourChartPage() {
               <ChartWheel
                 wheel={wheel}
                 details={wheelDetails(wheel)}
+                aside={
+                  // Grandville's Sun asleep under the Moon (1844), framed (David's D, Nov 9).
+                  <OldPrint
+                    id="cartoon-sun-and-moon"
+                    alt={CARTOONS['sun-and-moon'].alt}
+                    sizes="18rem"
+                    className="mx-auto max-w-[18rem]!"
+                  />
+                }
                 header={
                   <>
                     <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>
@@ -142,105 +228,86 @@ export default async function YourChartPage() {
         </div>
       </ArtWash>
 
-      <Section labelledBy="your-keys">
+      {/* The Keys intro beside the member's own Sun sign's star card (David, Nov 9: rhythm, his pick C). */}
+      <Section labelledBy="your-keys" backdrop={{ print: `plate-${sun.sign}` }}>
         <Eyebrow>{yourChartCopy.keys.eyebrow}</Eyebrow>
         <Headline id="your-keys" line={yourChartCopy.keys.line} accent={yourChartCopy.keys.accent} />
         <Lede>{yourChartCopy.keys.lede}</Lede>
-        <div className="mt-8 grid gap-6">
-          {PLANET_PAGES.map((planet) => {
-            const row = byBody.get(planet.body);
-            if (!row) return null;
-            const name = BODIES[planet.body].name;
-            // The Galactic Center has a house key only (it sits at the same degree for everyone).
-            const signKey = keyFor(planet.body, 'sign');
-            const houseKey = keyFor(planet.body, 'house')!;
-            return (
-              <div
-                key={planet.body}
-                data-your-planet={planet.body}
-                className="grid gap-6 rounded-[12px] border border-ink-200 bg-surface-200 p-6 shadow-rest md:grid-cols-2 md:gap-8 md:p-8"
-              >
-                {/* Dawa's glyphs for the planet and its sign; none for houses, as he says (Nov 7). */}
-                <div className="flex items-center gap-4 md:col-span-2">
-                  {drawn(planet.body) ? <GlyphIcon glyph={planet.body} size={72} className="text-ink-900" /> : null}
-                  <h3 className="type-heading-2 text-ink-900">{name}</h3>
-                </div>
-                {signKey ? (
-                  <div data-your-key={signKey.id}>
-                    <div className="mb-3 flex items-center gap-3">
-                      <GlyphIcon glyph={row.sign} size={48} className="text-ink-900" />
-                      <p className="type-label text-ink-500">{yourChartCopy.keys.inSign(name, SIGNS[row.sign].name)}</p>
-                    </div>
-                    <KeyChip keyId={signKey.id} value={row.sign} showGloss />
-                    <Lines text={planet.signs[row.sign]} />
-                  </div>
-                ) : null}
-                <div
-                  data-your-key={houseKey.id}
-                  className={signKey ? 'border-t border-ink-200 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8' : 'md:col-span-2'}
-                >
-                  {row.house ? (
-                    <>
-                      <p className="mb-3 flex min-h-12 items-center type-label text-ink-500">
-                        {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
-                      </p>
-                      <KeyChip keyId={houseKey.id} value={row.house} showGloss />
-                      <Lines text={planet.houses[row.house]} />
-                    </>
-                  ) : (
-                    <>
-                      <KeyChip keyId={houseKey.id} showGloss />
-                      <p className="mt-3 type-body-sm text-ink-700">{yourChartCopy.keys.noTime(houseKey.name)}</p>
-                    </>
-                  )}
-                </div>
-                <div className="md:col-span-2">
-                  <Button href={planetHref(planet)} variant="tertiary">
-                    {yourChartCopy.keys.more(name)}
+      </Section>
+
+      {/*
+        The planets in the 28 Keys page's groups, each group a section of its own, taking turns down the
+        page (4o, David, Nov 9: "text part of your chart should have more rhythm"): the band and Andromeda,
+        the gradient, an ink landscape, the band with a framed engraving, the gradient, the galactic center.
+      */}
+      {BODY_GROUPS.map((group) => {
+        const planets = PLANET_PAGES.filter((planet) => BODIES[planet.body].group === group.id && byBody.has(planet.body));
+        if (planets.length === 0) return null;
+        const look = GROUP_LOOK[group.id];
+        return (
+          <Section
+            key={group.id}
+            labelledBy={`your-group-${group.id}`}
+            band={look.band}
+            backdrop={look.backdrop}
+          >
+            <h2 id={`your-group-${group.id}`} className="mb-6 type-label text-ink-500">
+              {group.name}
+            </h2>
+            <div className="grid gap-6">{planets.map(planetCard)}</div>
+            {group.id === 'generational' && families.length > 0 ? (
+              <div data-your-families="" className="mt-8 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)]">
+                <TintPanel>
+                  <h3 className="type-heading-3 text-ink-900">{yourChartCopy.families.title}</h3>
+                  <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.families.intro}</p>
+                  <ul role="list" className="mt-6 grid gap-6 md:grid-cols-3">
+                    {families.map((family) => (
+                      <li key={family.planet} data-your-family={family.planet} className="flex items-start gap-3">
+                        {drawn(family.planet) ? (
+                          <GlyphIcon glyph={family.planet} size={48} className="shrink-0 text-ink-900" />
+                        ) : null}
+                        <div>
+                          <p className="type-heading-3 text-ink-900">
+                            {yourChartCopy.families.name(BODIES[family.planet].name, SIGNS[family.sign].name)}
+                          </p>
+                          <p className="mt-1 type-body-sm text-ink-700">{yourChartCopy.families.years(family.from, family.to)}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button href={yourChartCopy.families.more.href} variant="tertiary" className="mt-4 -ml-2">
+                    {yourChartCopy.families.more.label}
                   </Button>
-                </div>
+                </TintPanel>
+                <OldPrint
+                  id="cartoon-juggler-of-worlds"
+                  alt={CARTOONS['juggler-of-worlds'].alt}
+                  sizes="(width >= 64rem) 18rem, calc(100vw - 2rem)"
+                  className="mx-auto max-w-[18rem]! lg:mx-0"
+                />
               </div>
-            );
-          })}
-        </div>
-        {families.length > 0 ? (
-          <div data-your-families="" className="mt-8">
+            ) : null}
+          </Section>
+        );
+      })}
+
+      {chinese ? (
+        <Section labelledBy="your-chinese" backdrop={{ gradient: true }}>
+          {/* Beside a Chinese ink landscape, framed (David's D, Nov 9). */}
+          <div data-your-chinese="" className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,13rem)]">
             <TintPanel>
-              <h3 className="type-heading-3 text-ink-900">{yourChartCopy.families.title}</h3>
-              <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.families.intro}</p>
-              <ul role="list" className="mt-6 grid gap-6 md:grid-cols-3">
-                {families.map((family) => (
-                  <li key={family.planet} data-your-family={family.planet} className="flex items-start gap-3">
-                    {drawn(family.planet) ? (
-                      <GlyphIcon glyph={family.planet} size={48} className="shrink-0 text-ink-900" />
-                    ) : null}
-                    <div>
-                      <p className="type-heading-3 text-ink-900">
-                        {yourChartCopy.families.name(BODIES[family.planet].name, SIGNS[family.sign].name)}
-                      </p>
-                      <p className="mt-1 type-body-sm text-ink-700">{yourChartCopy.families.years(family.from, family.to)}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <Button href={yourChartCopy.families.more.href} variant="tertiary" className="mt-4 -ml-2">
-                {yourChartCopy.families.more.label}
-              </Button>
-            </TintPanel>
-          </div>
-        ) : null}
-        {chinese ? (
-          <div data-your-chinese="" className="mt-8">
-            <TintPanel>
-              <h3 className="type-heading-3 text-ink-900">{yourChartCopy.chinese.title}</h3>
+              <h2 id="your-chinese" className="type-heading-3 text-ink-900">
+                {yourChartCopy.chinese.title}
+              </h2>
               <p className="mt-2 type-heading-2 italic text-highlight">
                 {yourChartCopy.chinese.name(chinese.element, chinese.animal)}
               </p>
               <p className="mt-2 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
             </TintPanel>
+            <FramedArt id="p4" sizes="(width >= 64rem) 13rem, 13rem" className="mx-auto w-full max-w-[13rem] lg:mx-0" />
           </div>
-        ) : null}
-      </Section>
+        </Section>
+      ) : null}
 
       <Section band labelledBy="your-chart-next">
         <Eyebrow>{yourChartCopy.next.eyebrow}</Eyebrow>
@@ -286,6 +353,37 @@ export default async function YourChartPage() {
 }
 
 /** Dawa's line for this member's placement, a paragraph at a time, where he has written one. */
+/*
+ * Where one column of a planet card runs well short of the other (from md, where they sit side by
+ * side), the sign's own star card fills the gap under it (David, Nov 9: "natural areas with lots of
+ * white space where text leaves a gap"). A rough measure in characters: about 52 to a line of 29px.
+ */
+interface Gap {
+  column: 'sign' | 'house';
+  /** 14rem, or 20rem where the gap has room for it. */
+  wide: boolean;
+}
+
+function gapFor(signText: string, houseText: string, sign: SignId): Gap | null {
+  const [w, h] = PLATES[sign].size;
+  const chars = (width: number) => ((24 + (width * h) / w) / 29) * 52;
+  const diff = houseText.length - signText.length;
+  const room = Math.abs(diff);
+  if (room < chars(224)) return null;
+  return { column: diff > 0 ? 'sign' : 'house', wide: room >= chars(320) };
+}
+
+function GapPlate({ sign, wide }: { sign: SignId; wide: boolean }) {
+  return (
+    <OldPrint
+      id={`plate-${sign}`}
+      alt={PLATES[sign].alt}
+      sizes={wide ? '20rem' : '14rem'}
+      className={cn('mt-6 hidden md:block', wide ? 'max-w-[20rem]!' : 'max-w-[14rem]!')}
+    />
+  );
+}
+
 function Lines({ text }: { text?: string }) {
   if (!text) return null;
   return (
