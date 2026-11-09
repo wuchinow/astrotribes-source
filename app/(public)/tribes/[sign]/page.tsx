@@ -114,7 +114,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         </div>
       </div>
 
-      <Section labelledBy="hello-title">
+      <Section labelledBy="hello-title" backdrop={{ gradient: true }}>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16">
           <div className="min-w-0">
             <h2 id="hello-title" className="mb-4 type-label text-ink-500">
@@ -184,7 +184,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         </div>
       </Section>
 
-      <Section labelledBy="signature-title" band>
+      <Section labelledBy="signature-title" band backdrop={{ art: 'p7', foot: true }}>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16">
           <div className="min-w-0">
             <Eyebrow>{copy.signature.eyebrow}</Eyebrow>
@@ -233,7 +233,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         </div>
       </Section>
 
-      <Section labelledBy="famous-title">
+      <Section labelledBy="famous-title" backdrop={{ gradient: true }}>
         <Eyebrow>{copy.famous.eyebrow}</Eyebrow>
         <h2 id="famous-title" className="type-heading-2 font-normal text-ink-900">
           {copy.famous.title(name)}
@@ -260,7 +260,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         </ul>
       </Section>
 
-      <Section labelledBy="people-title" band>
+      <Section labelledBy="people-title" band backdrop={{ sky: 'andromeda' }}>
         <Eyebrow>{copy.people.eyebrow}</Eyebrow>
         <Headline id="people-title" line={copy.people.line(12 * 12 * 12)} accent={copy.people.accent} />
         <Lede>{copy.people.lede(name)}</Lede>
@@ -317,7 +317,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
         </div>
       </Section>
 
-      <Section labelledBy="family-title" band>
+      <Section labelledBy="family-title" band backdrop={{ art: 'p6' }}>
         <Eyebrow>{copy.family.eyebrow(element)}</Eyebrow>
         <Headline id="family-title" line={copy.family.line} accent={copy.family.accent} />
         <Lede>{copy.family.lede(name, element, others.join(copy.family.and))}</Lede>
@@ -328,7 +328,7 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
             </li>
           ))}
         </ul>
-        <nav aria-label={copy.neighbors.label} className="mt-6 flex flex-wrap justify-between gap-4">
+        <nav aria-label={copy.neighbors.label} className="mt-6 flex max-w-[44rem] flex-wrap justify-between gap-4">
           <Link href={`/tribes/${previous}`} className={textLink}>
             <span aria-hidden="true">{'←'}</span>
             <span className="sr-only">{copy.neighbors.previous}: </span>

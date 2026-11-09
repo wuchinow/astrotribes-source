@@ -40,10 +40,12 @@ export const revalidate = 86400;
 // card-grid exception), and the next step one more of its own, Andromeda beside its text (David, Nov 4).
 //
 // Rhythm (1f, design system v20): below the hero, sections alternate the page tone and the band,
-// starting on the page, and the footer ends on the band. How it works carries a texture of the
-// hero's own painting at another crop (6% at the default); The Keys dropped its texture in 1h, when
-// its cards took sky images, and links to the page of all 28 since 1k. Contrast, which touches the hero, takes none; the sections that hold a
-// framed piece take none.
+// starting on the page, and the footer ends on the band. Since 4m (David, Nov 8: "see the rhythm?") the
+// sections also take turns with a backdrop: How it works an ink landscape beside its steps (P7, in
+// place of the 6% texture David could barely see), the 12 Tribes the soft gradient, Find your Keys
+// Spitzer's galactic center beside its words, the night band its framed P1, the privacy questions
+// another ink landscape (P4), the next step Andromeda, and the footer's own horizon. Contrast, which
+// touches the hero, takes none.
 export default function HomePage() {
   const season = sunSeasonSign(new Date());
   return (
@@ -122,13 +124,13 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="how-it-works" labelledBy="how-it-works-title" band texture={{ piece: 'h', crop: 'a' }}>
+      <Section id="how-it-works" labelledBy="how-it-works-title" band backdrop={{ art: 'p7' }}>
         <Eyebrow>{howItWorks.eyebrow}</Eyebrow>
         <Headline id="how-it-works-title" line={howItWorks.line} accent={howItWorks.accent} />
         <NumberedSteps steps={howItWorks.steps} />
       </Section>
 
-      <Section id="tribes" labelledBy="tribes-title">
+      <Section id="tribes" labelledBy="tribes-title" backdrop={{ gradient: true }}>
         <Eyebrow>{tribes.eyebrow}</Eyebrow>
         <Headline id="tribes-title" line={tribes.line} accent={tribes.accent} />
         <Lede>{tribes.lede}</Lede>
@@ -148,7 +150,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="keys" labelledBy="keys-title" band>
+      <Section id="keys" labelledBy="keys-title" band backdrop={{ sky: 'keysCenter' }}>
         <Eyebrow>{keys.eyebrow}</Eyebrow>
         {/* Dawa's 19th-century poster (Nov 7): poster-weight type after a printer's hand (one, David Nov 8). */}
         <h2
@@ -186,7 +188,7 @@ export default function HomePage() {
         />
       </Section>
 
-      <Section id="privacy-faq" labelledBy="privacy-faq-title" band>
+      <Section id="privacy-faq" labelledBy="privacy-faq-title" band backdrop={{ art: 'p4', pos: 'center 30%' }}>
         <Eyebrow>{privacyFaq.eyebrow}</Eyebrow>
         <Headline id="privacy-faq-title" line={privacyFaq.line} accent={privacyFaq.accent} />
         <Faq items={privacyFaq.items} />

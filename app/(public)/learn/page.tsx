@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { SERIES_TITLE, SUBSTACK_URL, VIDEOS, learnCopy as copy, type Article } from '@/content/articles';
@@ -36,28 +37,31 @@ function ArticleCard({ article, eyebrow }: { article: Article; eyebrow?: string 
 /**
  * Learn (David, Nov 4): Dawa's articles, each a card that opens on his Substack, with no full text
  * copied here, and a place for his videos once they exist. Public, no member data. The articles come
- * from his Substack feed, read again at most once an hour (3y, lib/substack.ts). The hero is
- * words only, so the page carries no art and no sky image; below it the sections alternate the page
- * tone and the band.
+ * from his Substack feed, read again at most once an hour (3y, lib/substack.ts). Since 4m (David,
+ * Nov 8: break up the text-heavy pages) the hero stands on an ink landscape wash (P6) with its words
+ * on a frosted panel, the series takes the soft gradient, and the videos section an ink landscape
+ * beside its words while it holds none; the sections still alternate the page tone and the band.
  */
 export default async function LearnPage() {
   const { series: SERIES, articles: ARTICLES } = await learnArticles();
   return (
     <>
-      <div className="bg-surface-hero">
+      <ArtWash piece="p6" top>
         <div className="mx-auto max-w-content px-4 pt-31 pb-12 md:px-6 md:pt-38 md:pb-16">
-          <Eyebrow>{copy.eyebrow}</Eyebrow>
-          <Headline as="h1" size="xl" line={copy.line} accent={copy.accent} />
-          <Lede>{copy.lede}</Lede>
-          <div className="mt-8">
-            <Button href={SUBSTACK_URL} variant="secondary">
-              {copy.subscribe}
-            </Button>
+          <div className="panel-frost max-w-[40rem] p-6 md:p-10">
+            <Eyebrow>{copy.eyebrow}</Eyebrow>
+            <Headline as="h1" size="xl" line={copy.line} accent={copy.accent} />
+            <Lede>{copy.lede}</Lede>
+            <div className="mt-8">
+              <Button href={SUBSTACK_URL} variant="secondary">
+                {copy.subscribe}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </ArtWash>
 
-      <Section labelledBy="learn-series">
+      <Section labelledBy="learn-series" backdrop={{ gradient: true }}>
         <Eyebrow>{copy.seriesEyebrow}</Eyebrow>
         <h2 id="learn-series" className="type-display-lg text-ink-900">
           {SERIES_TITLE}
@@ -81,7 +85,7 @@ export default async function LearnPage() {
         </ul>
       </Section>
 
-      <Section labelledBy="learn-videos">
+      <Section labelledBy="learn-videos" backdrop={VIDEOS.length === 0 ? { art: 'p9' } : undefined}>
         <h2 id="learn-videos" className="type-display-lg text-ink-900">
           {copy.videosHeading}
         </h2>

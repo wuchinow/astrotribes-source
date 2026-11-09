@@ -56,6 +56,9 @@ export const CARTOONS = {
 
 export type CartoonId = keyof typeof CARTOONS;
 
+/** A cut print's id, as `oldPrintSet` takes it. */
+export type OldPrintId = `plate-${SignId}` | `cartoon-${CartoonId}`;
+
 /** Which engraving each Tribe page shows beside its smile. */
 export const TRIBE_CARTOON: Record<SignId, CartoonId> = {
   aries: 'comet',

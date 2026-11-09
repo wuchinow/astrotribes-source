@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { TextureCrop, WashId } from '@/lib/art';
 import { cn } from '@/lib/cn';
+import { BackdropLayer, type Backdrop } from './Backdrop';
 
 // The page rhythm from the design system's Section card: sections split by a
 // hairline and air, an eyebrow, a two-line headline whose second line is italic
@@ -18,26 +19,42 @@ interface SectionProps {
    * section that touches the hero, and never with a framed piece in the section.
    */
   texture?: { piece: WashId; crop: TextureCrop };
+  /**
+   * A backdrop (4m, David, Nov 8): an ink landscape or a NASA photo beside the text (a band at the foot
+   * on a phone, under extra padding), or the soft gradient, which takes the place of the band tone.
+   * Sections take turns down a page so the pictures never meet.
+   */
+  backdrop?: Backdrop;
   className?: string;
   children: ReactNode;
 }
 
-export function Section({ id, labelledBy, band = false, texture, className, children }: SectionProps) {
+export function Section({ id, labelledBy, band = false, texture, backdrop, className, children }: SectionProps) {
+  const gradient = backdrop !== undefined && 'gradient' in backdrop;
+  const picture = backdrop !== undefined && !('gradient' in backdrop) ? backdrop : undefined;
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
       className={cn(
         'scroll-mt-4 border-t border-ink-200',
-        band && 'section-band',
+        band && !gradient && 'section-band',
+        gradient && 'section-gradient',
         texture && 'texture-region',
+        picture && 'backdrop-region',
         className,
       )}
     >
       {texture ? (
         <div aria-hidden="true" data-wash={texture.piece} data-crop={texture.crop} className="texture-layer" />
       ) : null}
-      <div className="mx-auto max-w-content px-4 py-14 md:px-6 md:py-16">{children}</div>
+      {picture ? <BackdropLayer backdrop={picture} /> : null}
+      <div
+        className={cn(
+          'mx-auto max-w-content px-4 md:px-6',
+          picture ? cn('pt-14 pb-52 md:pt-16', picture.foot ? 'md:pb-60' : 'xl:pb-16') : 'py-14 md:py-16',
+        )}
+      >{children}</div>
     </section>
   );
 }

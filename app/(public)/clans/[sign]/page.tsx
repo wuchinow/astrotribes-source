@@ -85,7 +85,7 @@ export default async function ClanPage({ params }: PageProps<'/clans/[sign]'>) {
         </div>
       </div>
 
-      <Section labelledBy="clan-moon">
+      <Section labelledBy="clan-moon" backdrop={{ print: 'cartoon-moon', pos: 'center 35%' }}>
         <Eyebrow>{copy.moon.eyebrow}</Eyebrow>
         <h2 id="clan-moon" className="type-heading-2 text-ink-900">
           {copy.moon.title(name)}
@@ -99,7 +99,7 @@ export default async function ClanPage({ params }: PageProps<'/clans/[sign]'>) {
         </div>
       </Section>
 
-      <Section labelledBy="clan-hearth" band>
+      <Section labelledBy="clan-hearth" backdrop={{ gradient: true }}>
         <Eyebrow>{copy.hearth.eyebrow(clan, hearth)}</Eyebrow>
         <Headline id="clan-hearth" line={copy.hearth.line} accent={copy.hearth.accent} />
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-12">
@@ -138,15 +138,15 @@ export default async function ClanPage({ params }: PageProps<'/clans/[sign]'>) {
         <SignLinks base="/tribes" title={(sunSign) => copy.sun.cardLabel(name, sunSign)} className="mt-4" />
       </Section>
 
-      <Section labelledBy="clan-famous" band>
+      <Section labelledBy="clan-famous" band backdrop={{ sky: 'keysCenter' }}>
         <Eyebrow>{copy.famous.eyebrow}</Eyebrow>
         <h2 id="clan-famous" className="type-heading-2 font-normal text-ink-900">
           {copy.famous.title(name)}
         </h2>
         {famous.length > 0 ? (
           <>
-            <p className="mt-2 type-body-sm text-ink-500">{copy.famous.lede}</p>
-            <ul role="list" className="mt-6 columns-2 gap-x-6 sm:columns-3">
+            <p className="mt-2 max-w-[40rem] type-body-sm text-ink-500">{copy.famous.lede}</p>
+            <ul role="list" className="mt-6 columns-2 gap-x-6 sm:columns-3 xl:max-w-[36rem] xl:columns-2">
               {famous.map((person) => (
                 <li key={person.slug} data-clan-famous={person.slug} className="break-inside-avoid py-1 type-body-sm text-ink-900">
                   <Link href={`/famous/${person.slug}`} className={nameLink}>

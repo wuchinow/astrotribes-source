@@ -19,8 +19,9 @@ export function skyCreditLines(): Record<string, string> {
 }
 
 /** The Tribe pages' star card and engraving. */
-const oldPrintsCredit =
-  'Star card from Urania’s Mirror, London, 1824. Engraving by J. J. Grandville, from Un autre monde, Paris, 1844.';
+const plateCredit = 'Star card from Urania’s Mirror, London, 1824.';
+const cartoonCredit = 'Engraving by J. J. Grandville, from Un autre monde, Paris, 1844.';
+const oldPrintsCredit = `${plateCredit} ${cartoonCredit}`;
 
 /**
  * The Flammarion engraving's credit, in the footer of the landing page that shows it (David, Nov 4:
@@ -30,4 +31,9 @@ export const pictureCreditLines: Readonly<Record<string, string>> = {
   '/': `${FLAMMARION.credit}.`,
   // The Tribe pages' old prints (4j, lib/old-prints.ts), both public domain.
   ...Object.fromEntries(SIGN_IDS.map((sign) => [`/tribes/${sign}`, oldPrintsCredit])),
+  // The Clan pages' Grandville Moon and the Vibe pages' star cards, as backdrops (4m, David, Nov 9).
+  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/clans/${sign}`, cartoonCredit])),
+  ...Object.fromEntries(SIGN_IDS.map((sign) => [`/vibes/${sign}`, plateCredit])),
+  // The old prints trial page (4m, previews only).
+  '/trials/old-prints': oldPrintsCredit,
 };

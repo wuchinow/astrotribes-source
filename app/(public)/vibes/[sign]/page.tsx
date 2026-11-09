@@ -79,7 +79,7 @@ export default async function VibePage({ params }: PageProps<'/vibes/[sign]'>) {
         </div>
       </div>
 
-      <Section labelledBy="vibe-shows">
+      <Section labelledBy="vibe-shows" backdrop={{ print: `plate-${sign}`, from: 0.68 }}>
         <Eyebrow>{copy.shows.eyebrow}</Eyebrow>
         <h2 id="vibe-shows" className="type-heading-2 text-ink-900">
           {copy.shows.title(name, vibe)}
@@ -93,15 +93,15 @@ export default async function VibePage({ params }: PageProps<'/vibes/[sign]'>) {
         </p>
       </Section>
 
-      <Section labelledBy="vibe-famous" band>
+      <Section labelledBy="vibe-famous" backdrop={{ gradient: true }}>
         <Eyebrow>{copy.famous.eyebrow}</Eyebrow>
         <h2 id="vibe-famous" className="type-heading-2 font-normal text-ink-900">
           {copy.famous.title(name)}
         </h2>
         {famous.length > 0 ? (
           <>
-            <p className="mt-2 type-body-sm text-ink-500">{copy.famous.lede}</p>
-            <ul role="list" className="mt-6 columns-2 gap-x-6 sm:columns-3">
+            <p className="mt-2 max-w-[40rem] type-body-sm text-ink-500">{copy.famous.lede}</p>
+            <ul role="list" className="mt-6 columns-2 gap-x-6 sm:columns-3 xl:max-w-[36rem] xl:columns-2">
               {famous.map((person) => (
                 <li key={person.slug} data-vibe-famous={person.slug} className="break-inside-avoid py-1 type-body-sm text-ink-900">
                   <Link href={`/famous/${person.slug}`} className={nameLink}>

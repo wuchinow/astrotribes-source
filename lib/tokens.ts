@@ -78,6 +78,17 @@ export const COLOR_PAIRS: readonly ColorPair[] = [
   { fg: 'on-button-primary', bg: 'button-primary-hover', min: 4.5, use: 'Primary button label on hover' },
   { fg: 'cobalt-600', bg: 'cobalt-100', min: 4.5, use: 'KeyChip key name' },
   { fg: 'ink-900', bg: 'cobalt-100', min: 4.5, use: 'KeyChip value' },
+  // The section gradient's two tints (4m, Nov 8): text sits on them directly.
+  ...(['tint-dawn', 'tint-dusk'] as const).flatMap((bg) => [
+    { fg: 'ink-900', bg, min: 4.5, use: 'Headlines on the section gradient' },
+    { fg: 'ink-700', bg, min: 4.5, use: 'Body text on the section gradient' },
+    { fg: 'ink-500', bg, min: 4.5, use: 'Eyebrows and captions on the section gradient' },
+    { fg: 'highlight', bg, min: 4.5, use: 'Headline accent on the section gradient' },
+    { fg: 'cobalt-600', bg, min: 4.5, use: 'Links on the section gradient' },
+    { fg: 'ember-500', bg, min: 4.5, use: 'Category labels on the section gradient' },
+    { fg: 'button-primary', bg, min: 3, use: 'Primary button on the section gradient' },
+    { fg: 'cobalt-400', bg, min: 3, use: 'Focus ring on the section gradient' },
+  ]),
   { fg: 'ember-500', bg: 'surface-100', min: 4.5, use: 'Category labels and errors' },
   { fg: 'ember-500', bg: 'surface-200', min: 4.5, use: 'Draft for review label on a tinted note' },
   { fg: 'on-night', bg: 'night-900', min: 4.5, use: 'Text on the night band' },
