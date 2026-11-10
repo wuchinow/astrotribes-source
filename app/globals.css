@@ -577,6 +577,95 @@
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * The hero's wheel of the 12 Tribes (4z). The wheel is whole at first paint, always: nothing about
+ * it waits on motion, so a first visit looks like any other. The motion is added once the page has
+ * settled (`.wheel-awake`, set by components/TribeWheel.tsx after the load event, on a visible
+ * tab), so it plays at one speed every time and never while the page is still loading.
+ * The wave, once: a light goes round the ring from Aries in the zodiac's order, each segment
+ * brightening and its glyph lifting a little, `--wheel-step` apart. Then the drift, the same
+ * light at rest pace, one turn per duration-drift. `--i` is the sign's place, Aries 0.
+ * Off under reduced motion: the light's ring stays hidden and the wheel stands still.
+ */
+.wheel {
+  --wheel-step: 120ms;
+  --wheel-pulse: 800ms;
+  /* The wave's twelve steps and its last pulse, then a rest before the drift sets off. */
+  --wheel-drift-from: calc(var(--wheel-step) * 12 + var(--wheel-pulse) + 2s);
+}
+
+.wheel-light {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wheel-awake .wheel-glyph {
+    animation:
+      wheel-wave-lift var(--wheel-pulse) ease-in-out,
+      wheel-lift var(--duration-drift) ease-in-out infinite;
+    animation-delay:
+      calc(var(--i) * var(--wheel-step)),
+      calc(var(--wheel-drift-from) + var(--i) * var(--duration-drift) / 12);
+  }
+
+  .wheel-awake .wheel-light {
+    animation:
+      wheel-wave-light var(--wheel-pulse) ease-in-out,
+      wheel-light var(--duration-drift) ease-in-out infinite;
+    animation-delay:
+      calc(var(--i) * var(--wheel-step)),
+      calc(var(--wheel-drift-from) + var(--i) * var(--duration-drift) / 12);
+  }
+
+  /* The light waits while a visitor is choosing a sign. */
+  .wheel:hover .wheel-glyph,
+  .wheel:focus-within .wheel-glyph {
+    animation-play-state: paused;
+  }
+
+  @keyframes wheel-wave-light {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes wheel-wave-lift {
+    0%,
+    100% {
+      scale: 1;
+    }
+    40% {
+      scale: 1.08;
+    }
+  }
+
+  @keyframes wheel-light {
+    0%,
+    30%,
+    100% {
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes wheel-lift {
+    0%,
+    30%,
+    100% {
+      scale: 1;
+    }
+    10% {
+      scale: 1.06;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

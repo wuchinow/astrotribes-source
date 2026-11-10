@@ -10,12 +10,20 @@ const DISC: Record<Element, string> = {
   water: 'bg-water',
 };
 
+interface ElementDiscProps {
+  sign: SignId;
+  element: Element;
+  /** Draw the glyph from the page's own sprite (`SignGlyphSprite`), on a page that renders one. */
+  sprite?: boolean;
+  className?: string;
+}
+
 /** The sign's glyph in its element-colored disc, 32px. Nothing until the sign has a glyph. */
-export function ElementDisc({ sign, element, className }: { sign: SignId; element: Element; className?: string }) {
+export function ElementDisc({ sign, element, sprite = false, className }: ElementDiscProps) {
   if (GLYPHS[sign].svg === null) return null;
   return (
     <span className={cn('grid size-8 shrink-0 place-items-center rounded-pill text-on-element', DISC[element], className)}>
-      <GlyphIcon glyph={sign} size={24} />
+      <GlyphIcon glyph={sign} size={24} sprite={sprite} />
     </span>
   );
 }

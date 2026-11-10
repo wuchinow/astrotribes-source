@@ -8,6 +8,7 @@ import { NightBand } from '@/components/NightBand';
 import { NumberedSteps } from '@/components/NumberedSteps';
 import { PointingHand } from '@/components/PointingHand';
 import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
+import { SignGlyphSprite } from '@/components/SignGlyphSprite';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeCard } from '@/components/TribeCard';
 import { TribeWheel } from '@/components/TribeWheel';
@@ -74,6 +75,10 @@ export default function HomePage() {
               window's edge, and the Oracle pin hangs below it out of the flow, so the wheel's centre lines up
               with the panel's (David, Oct 21 and 22). */}
           <div className="relative grid gap-6 lg:translate-x-[calc((100vw-min(100vw,var(--content-max)))/4)] lg:justify-items-center">
+            {/* The twelve sign glyphs, in the page itself (4z): the wheel, the Tribe pin, and the Tribe
+                cards below draw from here, so none waits on a glyph file. Before the wheel in the
+                source, so the wheel never paints without them. */}
+            <SignGlyphSprite />
             <div className="hidden w-full lg:block">
               <TribeWheel season={season} />
             </div>
@@ -84,7 +89,7 @@ export default function HomePage() {
                     href={pin.href}
                     title={pin.title}
                     line={pin.line}
-                    mark={pin.mark === 'hexagram' ? <HexagramMark /> : <GlyphIcon glyph={season} size={24} />}
+                    mark={pin.mark === 'hexagram' ? <HexagramMark /> : <GlyphIcon glyph={season} size={24} sprite />}
                   />
                 </li>
               ))}
@@ -142,7 +147,7 @@ export default function HomePage() {
         <ul className="mt-8 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 min-[75rem]:grid-cols-4">
           {SIGN_IDS.map((sign) => (
             <li key={sign}>
-              <TribeCard sign={sign} />
+              <TribeCard sign={sign} sprite />
             </li>
           ))}
         </ul>

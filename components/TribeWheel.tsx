@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { GlyphIcon } from '@/components/GlyphIcon';
 import { wheel } from '@/content/landing';
 import { cn } from '@/lib/cn';
@@ -16,6 +16,17 @@ import { SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
 // Each glyph is a link to its Tribe. The centre shows the Sun's season (the sign the
 // landing already marks) and, while a glyph is hovered or focused, that sign instead.
 // Segments are equal: no member counts until there are members to count.
+//
+// Motion (4z, David, Nov 10: "a subtle animation of the hero wheel to start"). The wheel is whole
+// at first paint and never waits on motion. A first try drew the ring in as the page loaded; it
+// played differently on every load (missed, stalled, or rushed, David the same day), because an
+// animation that starts with the page competes with the page loading. So the motion starts only
+// once the page has settled (`useSettled`): a wave, one light going round the ring from Aries,
+// then the drift, the same light at rest pace, one turn per `duration-drift`. The light is a second
+// ring over the first, so it never touches the season's or the hovered sign's highlight, and it
+// rests while a sign is hovered or focused. The styles are in app/globals.css (`.wheel-*`), off
+// under reduced motion. The glyphs come from the page's own sprite (`SignGlyphSprite`, rendered
+// before the wheel), so no disc is ever empty while a glyph file is on its way.
 
 const SPAN = 30;
 const ARIES_MID = 195; // degrees, counterclockwise from three o'clock
@@ -43,6 +54,9 @@ function segmentPath(i: number) {
   return `M${x0} ${y0} A${R_IN} ${R_IN} 0 0 0 ${x1} ${y1} L${x2} ${y2} A${R_OUT} ${R_OUT} 0 0 1 ${x3} ${y3}Z`;
 }
 
+/** A piece's place in the order, Aries first, for the stagger in app/globals.css. */
+const order = (i: number) => ({ '--i': i }) as CSSProperties;
+
 const ELEMENT_FILL = {
   fire: 'fill-fire',
   earth: 'fill-earth',
@@ -50,15 +64,55 @@ const ELEMENT_FILL = {
   water: 'fill-water',
 } as const;
 
+/** How long after the page has loaded the motion waits, so it never competes with loading. */
+const SETTLE_MS = 400;
+
+/**
+ * True once the page has finished loading, the tab is showing, and a quiet moment has passed, on
+ * a painted frame. Until then, and without scripts, the wheel simply stands whole.
+ */
+function useSettled() {
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    let timer = 0;
+    let frame = 0;
+    let waiting = true;
+    const ready = () => document.readyState === 'complete' && document.visibilityState === 'visible';
+    const check = () => {
+      if (!waiting || !ready()) return;
+      waiting = false;
+      timer = window.setTimeout(() => {
+        // A tab hidden during the wait starts over when it shows again.
+        if (!ready()) {
+          waiting = true;
+          return;
+        }
+        frame = requestAnimationFrame(() => setSettled(true));
+      }, SETTLE_MS);
+    };
+    check();
+    window.addEventListener('load', check);
+    document.addEventListener('visibilitychange', check);
+    return () => {
+      window.removeEventListener('load', check);
+      document.removeEventListener('visibilitychange', check);
+      window.clearTimeout(timer);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+  return settled;
+}
+
 export function TribeWheel({ season }: { season: SignId }) {
   const [focus, setFocus] = useState<SignId | null>(null);
+  const awake = useSettled();
   const shown = focus ?? season;
   const name = SIGNS[shown].name;
 
   return (
     <nav
       aria-label={wheel.label}
-      className="relative mx-auto aspect-square w-full max-w-[30rem]"
+      className={cn('wheel relative mx-auto aspect-square w-full max-w-[30rem]', awake && 'wheel-awake')}
       onMouseLeave={() => setFocus(null)}
     >
       <svg viewBox="-100 -100 200 200" className="absolute inset-0 size-full overflow-visible" aria-hidden="true">
@@ -73,6 +127,17 @@ export function TribeWheel({ season }: { season: SignId }) {
             )}
           />
         ))}
+        {/* The light: each segment again in its own color, lit in turn. */}
+        <g className={cn('transition-opacity duration-200 motion-reduce:transition-none', focus && 'opacity-0')}>
+          {SIGN_IDS.map((sign, i) => (
+            <path
+              key={sign}
+              d={segmentPath(i)}
+              style={order(i)}
+              className={cn(ELEMENT_FILL[SIGNS[sign].element], 'wheel-light')}
+            />
+          ))}
+        </g>
       </svg>
 
       <ul>
@@ -86,15 +151,15 @@ export function TribeWheel({ season }: { season: SignId }) {
                 onMouseEnter={() => setFocus(sign)}
                 onFocus={() => setFocus(sign)}
                 onBlur={() => setFocus(null)}
-                style={{ left: `${50 + x}%`, top: `${50 + y}%` }}
+                style={{ left: `${50 + x}%`, top: `${50 + y}%`, ...order(i) }}
                 className={cn(
-                  'absolute grid size-[16%] min-h-touch min-w-touch -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border text-ink-900',
+                  'wheel-glyph absolute grid size-[16%] min-h-touch min-w-touch -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border text-ink-900',
                   'bg-surface-000/85 shadow-rest backdrop-blur-sm transition-colors duration-200 motion-reduce:transition-none',
                   'hover:text-cobalt-600 focus-visible:text-cobalt-600',
                   sign === shown ? 'border-2 border-cobalt-600' : 'border-cobalt-600/60',
                 )}
               >
-                <GlyphIcon glyph={sign} size={48} className="size-[68%]" />
+                <GlyphIcon glyph={sign} size={48} sprite className="size-[68%]" />
               </Link>
             </li>
           );
