@@ -45,7 +45,9 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
   // other and the page stays blank (David, Nov 4).
   const redraw = Boolean(birth && !sun);
   const edit = (params.edit === 'birth' && Boolean(birth)) || redraw;
-  if (name && birth && sun && !edit) redirect('/your-chart');
+  // `joined` comes only from the name step, a new member's last one: their chart opens the welcome guide.
+  // Every other arrival (a returning member signing in, an edit) goes to the chart without it.
+  if (name && birth && sun && !edit) redirect(params.joined === '1' ? '/your-chart?welcome=1' : '/your-chart');
 
   if (birth && !name && !edit) {
     const error = params.error === 'name';
