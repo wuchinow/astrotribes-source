@@ -6,6 +6,7 @@ import { startGoogleSignIn } from '@/app/(public)/sign-in/actions';
 import { accountSlotCopy } from '@/content/account';
 import { accountMenuCopy } from '@/content/welcome';
 import { cn } from '@/lib/cn';
+import { syncMemberHint } from '@/lib/member-hint';
 import { FEEDBACK_LINK, MEMBER_ACTION, PRIMARY_ACTION } from '@/lib/site';
 import { Button } from './Button';
 import { browserClient } from '@/lib/supabase/browser';
@@ -30,6 +31,8 @@ let started = false;
 
 const publish = (slot: Slot) => {
   current = slot;
+  // The before-paint hint (lib/member-hint.ts) follows the real answer once the session is read (5a).
+  if (slot.state !== 'loading') syncMemberHint(slot.state === 'in');
   for (const listener of listeners) listener();
 };
 

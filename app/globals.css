@@ -589,6 +589,15 @@
 }
 
 /*
+ * For visitors only (5a): hidden for a signed-in member. The attribute is set before first paint by
+ * lib/member-hint.ts and kept true by the header's account slot. Outside every layer, so it wins over
+ * a utility's display on the same element.
+ */
+html[data-member] .guest-only {
+  display: none;
+}
+
+/*
  * The Daily Oracle (1c): the stage, the framed hexagram header, the reading, the card, and Consult.
  * Which of the five built days shows is set per page by lib/oracle-head.ts.
  */

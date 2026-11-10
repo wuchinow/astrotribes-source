@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { SiteAnalytics } from '@/components/SiteAnalytics';
 import { washCss } from '@/lib/art-assets';
 import { appearanceScript } from '@/lib/appearance';
+import { memberHintScript } from '@/lib/member-hint';
 import { tuneScript } from '@/lib/tune-head';
 import { fraunces, nunitoSans, plexMono } from './fonts';
 import './globals.css';
@@ -18,7 +19,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     // The head script applies the visitor's appearance (mood, painting, wash, text size) to <html>
     // before first paint, so its attributes differ from the server render by design. The second
-    // applies a team member's Tune (1f), and does nothing without a valid at-tune cookie.
+    // applies a team member's Tune (1f), and does nothing without a valid at-tune cookie. The third
+    // marks a signed-in member (5a), so what is only for visitors never flashes for them.
     <html
       lang="en"
       className={`${fraunces.variable} ${nunitoSans.variable} ${plexMono.variable}`}
@@ -27,6 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <head>
         <script dangerouslySetInnerHTML={{ __html: appearanceScript }} />
         <script dangerouslySetInnerHTML={{ __html: tuneScript }} />
+        <script dangerouslySetInnerHTML={{ __html: memberHintScript }} />
         <style dangerouslySetInnerHTML={{ __html: washCss() }} />
       </head>
       <body>
