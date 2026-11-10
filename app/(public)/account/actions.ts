@@ -26,7 +26,8 @@ export async function saveDisplayName(form: FormData): Promise<void> {
   // The member's own grant (update of display_name) and RLS (own row) do the rest.
   const { error } = await supabase.from('profiles').update({ display_name: name }).eq('id', user.id);
   if (error) redirect(`${page}?error=name`);
-  redirect(page === '/welcome' ? '/welcome' : '/account?saved=name');
+  // From the welcome steps, the name is the last first-time step, so the chart opens the welcome guide.
+  redirect(page === '/welcome' ? '/welcome?joined=1' : '/account?saved=name');
 }
 
 /**

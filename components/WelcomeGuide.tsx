@@ -31,12 +31,16 @@ function markSeen() {
 /**
  * The first-visit welcome guide (David, Nov 4): four short steps over Your chart, the first time a
  * member lands there, on birth details, the wheel and the Tribe, Members, and Famous charts and
- * Learn. Shown once per browser, noted in local storage the moment it opens, so a reload or a link
- * followed from inside it never brings it back; no database change. Skip, Escape, the close button,
+ * Learn. It opens itself only for a new member arriving straight from the welcome steps
+ * (`firstVisit`, from `?welcome=1`), never on a later sign-in, on another device, or on a preview
+ * address (David, Nov 10: he saw it again after signing in, since a note in one browser cannot
+ * follow a member anywhere else). It is noted in local storage the moment it opens and the address
+ * loses its `?welcome=1`, so a reload or a link followed from inside it never brings it back; no
+ * database change. Skip, Escape, the close button,
  * and a tap on the backdrop all close it. A tertiary button under the page's next steps opens it
  * again. A native <dialog>, like the Oracle's: focus moves in and back, and the page behind is inert.
  */
-export function WelcomeGuide() {
+export function WelcomeGuide({ firstVisit = false }: { firstVisit?: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [step, setStep] = useState(0);
   const total = copy.steps.length;
@@ -50,12 +54,14 @@ export function WelcomeGuide() {
   };
   const close = () => dialog.current?.close();
 
-  // First visit only: the note is written as it opens.
+  // A new member's first visit only: the note is written as it opens, and the address drops its flag.
   useEffect(() => {
+    if (!firstVisit) return;
+    window.history.replaceState(window.history.state, '', window.location.pathname + window.location.hash);
     if (seen()) return;
     markSeen();
     dialog.current?.showModal();
-  }, []);
+  }, [firstVisit]);
 
   return (
     <>

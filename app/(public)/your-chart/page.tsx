@@ -75,12 +75,13 @@ const GROUP_LOOK: Record<BodyGroup, { band?: boolean; backdrop?: Backdrop }> = {
  * a link to that planet's page. A house key waits on a birth time. Checks the session itself
  * (invariant 5).
  */
-export default async function YourChartPage() {
+export default async function YourChartPage({ searchParams }: PageProps<'/your-chart'>) {
   if (!supabaseConfigured()) redirect('/sign-in?error=off');
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
   if (!user) redirect('/sign-in');
+  const firstVisit = (await searchParams).welcome === '1';
 
   const { data: rows } = await supabase
     .from('placements')
@@ -376,8 +377,9 @@ export default async function YourChartPage() {
               <Button href="/welcome?edit=birth" variant="tertiary">
                 {rising ? yourChartCopy.next.edit : yourChartCopy.next.addTime}
               </Button>
-              {/* The first-visit guide (David, Nov 4): opens itself once, and this button opens it again. */}
-              <WelcomeGuide />
+              {/* The first-visit guide (David, Nov 4): opens itself once, for a new member straight from the
+                  welcome steps (Nov 10: never on a later sign-in), and this button opens it again. */}
+              <WelcomeGuide firstVisit={firstVisit} />
             </div>
           </div>
         </div>
