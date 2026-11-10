@@ -124,7 +124,9 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="how-it-works" labelledBy="how-it-works-title" band backdrop={{ art: 'p7' }}>
+      {/* For visitors only (5a, David, Nov 10): a member has done all three steps, so the section goes for
+          them, before first paint (`guest-only`, lib/member-hint.ts). */}
+      <Section id="how-it-works" labelledBy="how-it-works-title" band backdrop={{ art: 'p7' }} className="guest-only">
         <Eyebrow>{howItWorks.eyebrow}</Eyebrow>
         <Headline id="how-it-works-title" line={howItWorks.line} accent={howItWorks.accent} />
         <NumberedSteps steps={howItWorks.steps} />
@@ -204,7 +206,8 @@ export default function HomePage() {
           <p className="mt-2 max-w-[56ch] text-ink-700">{nextStep.body}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <PrimaryAction />
-            <Button href={nextStep.secondary.href} variant="secondary">
+            {/* It jumps to How it works, which a member does not see (5a). */}
+            <Button href={nextStep.secondary.href} variant="secondary" className="guest-only">
               {nextStep.secondary.label}
             </Button>
           </div>
