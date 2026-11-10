@@ -40,7 +40,8 @@ function render(node: ArticleNode, key: number): ReactNode {
           {children}
         </Link>
       ) : (
-        <a key={key} href={node.href} className={linkClass}>
+        // A link that leaves the site opens in a new tab (David, Nov 10).
+        <a key={key} href={node.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
           {children}
         </a>
       );

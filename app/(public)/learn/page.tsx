@@ -45,7 +45,7 @@ export default async function LearnPage() {
             <Headline as="h1" size="xl" line={copy.line} accent={copy.accent} />
             <Lede>{copy.lede}</Lede>
             <div className="mt-8">
-              <Button href={SUBSTACK_URL} variant="secondary">
+              <Button href={SUBSTACK_URL} variant="secondary" newTab>
                 {copy.subscribe}
               </Button>
             </div>

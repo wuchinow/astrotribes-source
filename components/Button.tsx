@@ -16,8 +16,12 @@ interface CommonProps {
 
 type NativeProps = Omit<ComponentPropsWithoutRef<'button'>, keyof CommonProps>;
 
-/** Pass `href` when the button navigates; it renders a link. */
-export type ButtonProps = CommonProps & ({ href: string } | ({ href?: undefined } & NativeProps));
+/**
+ * Pass `href` when the button navigates; it renders a link. `newTab` opens it in a new tab, for
+ * links that leave the site (Dawa's Substack, David Nov 10).
+ */
+export type ButtonProps = CommonProps &
+  ({ href: string; newTab?: boolean } | ({ href?: undefined; newTab?: undefined } & NativeProps));
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-sm border-[1.5px] font-body font-semibold leading-[1.25] no-underline transition-[background-color,color,border-color,outline-color] duration-200 disabled:cursor-not-allowed disabled:opacity-45 aria-disabled:cursor-not-allowed aria-disabled:opacity-45';
@@ -63,6 +67,14 @@ export function Button({
   );
 
   if (rest.href !== undefined) {
+    if (rest.newTab) {
+      return (
+        <a href={rest.href} target="_blank" rel="noopener noreferrer" className={classes}>
+          {icon}
+          {children}
+        </a>
+      );
+    }
     return (
       <Link href={rest.href} className={classes}>
         {icon}
@@ -71,8 +83,9 @@ export function Button({
     );
   }
 
-  const { href: _href, type = 'button', ...buttonProps } = rest;
+  const { href: _href, newTab: _newTab, type = 'button', ...buttonProps } = rest;
   void _href;
+  void _newTab;
   return (
     <button type={type} className={classes} {...buttonProps}>
       {icon}

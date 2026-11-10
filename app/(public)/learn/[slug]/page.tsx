@@ -63,7 +63,7 @@ export default async function LearnArticlePage({ params }: PageProps<'/learn/[sl
           <div className="mt-10 max-w-measure">
             <p className="type-body text-ink-700">{copy.unavailable}</p>
             <div className="mt-6">
-              <Button href={article.url} variant="secondary">
+              <Button href={article.url} variant="secondary" newTab>
                 {copy.readThere}
               </Button>
             </div>
@@ -93,7 +93,7 @@ export default async function LearnArticlePage({ params }: PageProps<'/learn/[sl
           <p className="mt-2 type-body text-ink-700">{copy.about}</p>
           <p className="mt-2 type-body text-ink-700">{copy.subscribeLine}</p>
           <div className="mt-4">
-            <Button href={SUBSTACK_URL} variant="secondary">
+            <Button href={SUBSTACK_URL} variant="secondary" newTab>
               {copy.subscribe}
             </Button>
           </div>
