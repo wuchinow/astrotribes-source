@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { cn } from '@/lib/cn';
-import { GLYPHS, type GlyphId } from '@/lib/glyphs';
+import { GLYPHS, signGlyphSpriteId, type GlyphId } from '@/lib/glyphs';
+import { SIGNS, type SignId } from '@/lib/keys';
 
 interface GlyphIconProps {
   glyph: GlyphId;
@@ -8,6 +9,11 @@ interface GlyphIconProps {
   size?: 24 | 48 | 72 | 96;
   /** Give a label only when the glyph stands alone; beside its name it is decorative. */
   label?: string;
+  /**
+   * Draw a sign's glyph from the page's own sprite, not its file, so it is there at first paint.
+   * Only on a page that renders `SignGlyphSprite`; any other glyph ignores it.
+   */
+  sprite?: boolean;
   className?: string;
 }
 
@@ -16,7 +22,7 @@ interface GlyphIconProps {
  * on-element inside a badge, paper-colored on Night). Until the vectorized SVG
  * exists, it renders the text symbol, outlined in development.
  */
-export function GlyphIcon({ glyph, size = 24, label, className }: GlyphIconProps) {
+export function GlyphIcon({ glyph, size = 24, label, sprite = false, className }: GlyphIconProps) {
   const def = GLYPHS[glyph];
   const a11y = label
     ? ({ role: 'img', 'aria-label': label } as const)
@@ -34,7 +40,7 @@ export function GlyphIcon({ glyph, size = 24, label, className }: GlyphIconProps
         style={{ ...turn, ...(scale !== 1 ? { scale: String(scale) } : null) }}
         {...a11y}
       >
-        <use href={`${def.svg}#glyph`} />
+        <use href={sprite && glyph in SIGNS ? `#${signGlyphSpriteId(glyph as SignId)}` : `${def.svg}#glyph`} />
       </svg>
     );
   }

@@ -8,6 +8,12 @@ const TRIBE_CARD_SIZES = '(width >= 75rem) 18rem, (width >= 64rem) 22rem, 50vw';
 
 const ELEMENT_NAME = { fire: 'Fire', earth: 'Earth', air: 'Air', water: 'Water' } as const;
 
+interface TribeCardProps {
+  sign: SignId;
+  /** Draw the glyph from the page's own sprite (`SignGlyphSprite`), on a page that renders one. */
+  sprite?: boolean;
+}
+
 /**
  * One of the 12 Tribes: Kirstie Connon's painting of the sign on top (David, Nov 4: her paintings
  * belong to the Tribes, the ink landscapes to the backgrounds), square so her glyph and signature stay whole,
@@ -15,7 +21,7 @@ const ELEMENT_NAME = { fire: 'Fire', earth: 'Earth', air: 'Air', water: 'Water' 
  * under them on a phone. The image is decorative here (the link names the sign) and lazy; the list
  * that holds the cards carries her credit. No text touches the image.
  */
-export function TribeCard({ sign }: { sign: SignId }) {
+export function TribeCard({ sign, sprite = false }: TribeCardProps) {
   const def = SIGNS[sign];
   const dates = signDates(sign);
   const element = ELEMENT_NAME[def.element];
@@ -45,7 +51,7 @@ export function TribeCard({ sign }: { sign: SignId }) {
           <p className="mt-1 type-data-sm whitespace-nowrap text-ink-500">{dates}</p>
         </div>
         <div className="flex items-center gap-2 sm:flex-col sm:items-end">
-          <ElementDisc sign={sign} element={def.element} />
+          <ElementDisc sign={sign} element={def.element} sprite={sprite} />
           <TribeBadge sign={sign} element={def.element} label={element} glyph={false} compact />
         </div>
       </div>

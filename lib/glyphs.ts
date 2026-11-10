@@ -149,3 +149,9 @@ export const GLYPHS: Record<GlyphId, GlyphDef> = {
  * wherever the wheel shows them, still uncredited. Rising has none.
  */
 export const drawn = (id: GlyphId): boolean => GLYPHS[id].svg !== null;
+
+/**
+ * A sign glyph's id in the page's own sprite (components/SignGlyphSprite.tsx), for a page that
+ * draws the twelve at first paint instead of fetching twelve files (the hero wheel, 4z).
+ */
+export const signGlyphSpriteId = (sign: SignId) => `sign-glyph-${sign}`;
