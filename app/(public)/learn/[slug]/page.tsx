@@ -103,7 +103,7 @@ export default async function LearnArticlePage({ params }: PageProps<'/learn/[sl
       {more.length > 0 ? (
         <section aria-labelledby="learn-more" className="mt-16 border-t border-ink-200 pt-12">
           <Headline id="learn-more" line={copy.moreHeading} accent={copy.moreAccent} inline />
-          <ul role="list" className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <ul role="list" className="fill-rows mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {more.map((entry) => (
               <ArticleCard
                 key={entry.url}

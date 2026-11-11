@@ -41,6 +41,7 @@ export const config = {
     '/auth/:path*',
     '/account/:path*',
     '/api/account/:path*',
+    '/api/members/:path*',
     '/welcome/:path*',
     '/your-chart/:path*',
     '/admin/:path*',

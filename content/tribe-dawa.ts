@@ -291,3 +291,16 @@ export const starList = (stars: readonly Star[]) =>
   stars
     .map((s) => (s.meaning ? `${s.name} (${s.meaning})` : s.name))
     .join(", ");
+
+/** How every Tribe's hello opens; what follows it, to the first full stop, is what the Tribe is known for. */
+const FAMOUS_FOR = /^Your tribe is famous throughout the solar system for (.+?)\.(?:\s|$)/;
+
+/**
+ * What a Tribe is known for, in Dawa's words: the rest of his hello's first sentence, with a capital.
+ * The 12 Tribes page shows it as a fact, because his sentence itself, twelve times down one page,
+ * opened every card with the same eight words.
+ */
+export const knownFor = (sign: SignId): string | undefined => {
+  const rest = TRIBE_DAWA[sign].hello.match(FAMOUS_FOR)?.[1];
+  return rest ? rest[0].toUpperCase() + rest.slice(1) : undefined;
+};

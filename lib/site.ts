@@ -6,17 +6,34 @@ export interface NavLink {
 }
 
 // The main nav (1h, from the Sep 27 UX audit): How it works only jumps down the landing. Keys is its
-// own page since 1k; Tribes still jumps down the landing until the Tribe pages have an index. The
-// labels name each count, and the Oracle is the Daily Oracle everywhere it shows (David, Oct 21); its
-// address stays /oracle. Today's sky came back once it was public (1d, David, Oct 27). Learn holds
-// Dawa's articles (David, Nov 4).
+// own page since 1k; Tribes still jumps down the landing until the Tribe pages have an index. From
+// Oct 21 (David) the labels named each count (12 Tribes, 28 Keys, Daily Oracle); the Oracle's address
+// stays /oracle. Today's sky came back once it was public (1d, David, Oct 27). Learn holds
+// Dawa's articles (David, Nov 4). Since Nov 11 (David: "lets shorten to tribes, keys, oracle") the nav's
+// own labels are the short ones, for visitors and members alike, in the header, the phone menu, and the
+// footer; page titles, headings, and body text keep the full names (the 12 Tribes, the 28 Keys, the
+// Daily Oracle).
 export const PRIMARY_NAV: readonly NavLink[] = [
-  { href: '/#tribes', label: '12 Tribes' },
-  { href: '/keys', label: '28 Keys' },
-  { href: '/oracle', label: 'Daily Oracle' },
+  { href: '/tribes', label: 'Tribes' },
+  { href: '/keys', label: 'Keys' },
+  { href: '/oracle', label: 'Oracle' },
   { href: '/sky', label: "Today's sky" },
   // Dawa's articles, and his videos to come (David, Nov 4).
   { href: '/learn', label: 'Learn' },
+];
+
+/**
+ * The links that lead the main nav for a signed-in member only (5c, David, Nov 11: "what about my chart
+ * in main nav?", then "main nav is getting full... coordinate... for best ux on where links should
+ * live"). Your chart, then Council, the one link for everything about people (with tabs to Members and
+ * Messages; 5b, David, Nov 11: "council").
+ * With both, the seven links fit on one line at 1024px, because a member has no Sign in link and no
+ * primary button. The names are the same before and after sign-in, and the logo still goes home.
+ * Shown by `member-only` (app/globals.css), display only.
+ */
+export const MEMBER_NAV: readonly NavLink[] = [
+  { href: '/your-chart', label: 'Your chart' },
+  { href: '/members/council', label: 'Council' },
 ];
 
 /**

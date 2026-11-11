@@ -1,9 +1,11 @@
 'use client';
 
+import { ChevronDown, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type ComponentProps, type ReactNode } from 'react';
 import { startGoogleSignIn } from '@/app/(public)/sign-in/actions';
 import { accountSlotCopy } from '@/content/account';
+import { communityCopy } from '@/content/council';
 import { accountMenuCopy } from '@/content/welcome';
 import { cn } from '@/lib/cn';
 import { syncMemberHint } from '@/lib/member-hint';
@@ -15,7 +17,7 @@ import { DISCLOSURE_EVENT } from './AppearancePanel';
 type Slot =
   | { state: 'loading' }
   | { state: 'out' }
-  | { state: 'in'; name: string | null; avatar: string | null; admin: boolean };
+  | { state: 'in'; name: string | null; avatar: string | null; admin: boolean; inbox: number };
 
 /** Google's photo (David, Oct 22): its address from the session's metadata, shown, never copied to the profile. */
 function avatarOf(meta: Record<string, unknown> | undefined): string | null {
@@ -45,15 +47,20 @@ const start = () => {
     const { data } = await supabase.auth.getUser();
     if (!data.user) return publish({ state: 'out' });
     // The admin check (0004) answers yes or no for this session only; any error reads as no.
-    const [{ data: profile }, { data: admin }] = await Promise.all([
+    // The inbox count (5b): hellos waiting for this member's answer and messages they have not read,
+    // counted under RLS. Any error (the tables not there yet) reads as none.
+    const [{ data: profile }, { data: admin }, { count: hellos }, { count: unread }] = await Promise.all([
       supabase.from('profiles').select('display_name').eq('id', data.user.id).maybeSingle(),
       supabase.rpc('is_admin'),
+      supabase.from('hellos').select('id', { count: 'exact', head: true }).eq('recipient_id', data.user.id).eq('status', 'pending'),
+      supabase.from('messages').select('id', { count: 'exact', head: true }).is('read_at', null).neq('sender_id', data.user.id),
     ]);
     publish({
       state: 'in',
       name: profile?.display_name ?? null,
       avatar: avatarOf(data.user.user_metadata),
       admin: admin === true,
+      inbox: (hellos ?? 0) + (unread ?? 0),
     });
   };
   void read();
@@ -108,7 +115,8 @@ const linkClass =
 /**
  * The header's account slot (2b, 2c). Signed out: Sign in, before the primary action. Signed in:
  * the member's photo (an initial when there is none) at the far right, a button that opens a small
- * menu: Your chart, Members (3g), Admin for an admin only (0004), Account, Send feedback (Nov 9), Sign out (David, Oct 22). `show` places each copy, so it renders only
+ * menu: Admin for an admin only (0004), Account, Send feedback (Nov 9), Sign out (David, Oct 22), with an
+ * envelope before the photo for Messages and its count (5b). Your chart and Community are in the main nav (5c). `show` places each copy, so it renders only
  * in its own state. `place="menu"` is the mobile menu's copy: the name, then the same three links.
  * The header's own is from lg up, because below it the header has no room beside the logo.
  */
@@ -148,7 +156,7 @@ export function HeaderAccount({
           <Avatar url={slot.avatar} name={slot.name} />
           {name}
         </p>
-        <MenuLinks admin={slot.admin} onNavigate={onNavigate} className="flex w-full text-[1.125rem]" />
+        <MenuLinks admin={slot.admin} inbox={slot.inbox} onNavigate={onNavigate} className="flex w-full text-[1.125rem]" />
       </div>
     );
   }
@@ -156,17 +164,29 @@ export function HeaderAccount({
 }
 
 /**
- * The menu's links. Admin shows only when the database says this member is on the admin list
- * (David, Nov 4); it is a convenience, not the gate: /admin checks the list itself.
+ * The menu's links: Messages (with the mail icon and what is waiting), Admin, Account, Send feedback,
+ * Sign out. Your chart and Council are in the main nav (5b and 5c, Nov 11); Messages sits here, not in
+ * the header bar, because the bar is full (David, Nov 11). Admin shows
+ * only when the database says this member is on the admin list (David, Nov 4); it is a convenience,
+ * not the gate: /admin checks the list itself.
  */
-function MenuLinks({ admin, onNavigate, className }: { admin: boolean; onNavigate?: () => void; className: string }) {
+function MenuLinks({
+  admin,
+  inbox,
+  onNavigate,
+  className,
+}: {
+  admin: boolean;
+  inbox: number;
+  onNavigate?: () => void;
+  className: string;
+}) {
   return (
     <>
-      <Link href="/your-chart" onClick={onNavigate} className={cn(linkClass, className)}>
-        {accountMenuCopy.chart}
-      </Link>
-      <Link href="/members" onClick={onNavigate} className={cn(linkClass, className)}>
-        {accountMenuCopy.members}
+      <Link href="/members/messages" onClick={onNavigate} className={cn(linkClass, className)}>
+        <Mail aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.5} />
+        {accountMenuCopy.messages}
+        {inbox > 0 ? <span className="type-label text-ember-500 tabular-nums">{accountMenuCopy.newCount(inbox)}</span> : null}
       </Link>
       {admin ? (
         <Link href="/admin" onClick={onNavigate} className={cn(linkClass, className)}>
@@ -228,33 +248,51 @@ function AccountMenu({ name, slot }: { name: string; slot: Extract<Slot, { state
   };
 
   return (
-    <div ref={root} className="relative hidden lg:block">
+    <div ref={root} className="relative hidden items-center lg:flex">
       <button
         ref={button}
         type="button"
         aria-expanded={open}
         aria-controls={`${uid}-menu`}
         onClick={toggle}
-        className={cn(linkClass, 'inline-flex max-w-[11rem] cursor-pointer rounded-pill px-1 text-[1rem]')}
+        title={name}
+        className={cn(linkClass, 'inline-flex cursor-pointer gap-1 rounded-pill px-1 text-[1rem]')}
       >
-        <Avatar url={slot.avatar} name={slot.name} />
-        <span className="sr-only">{accountMenuCopy.open(name)}</span>
-        <span aria-hidden="true" className="hidden truncate xl:inline">
-          {name}
+        {/* Something waiting (a hello to answer, an unread message): an ember dot on the photo, and the
+            count in the button's name, since Messages itself is inside the menu. */}
+        <span className="relative inline-flex">
+          <Avatar url={slot.avatar} name={slot.name} />
+          {slot.inbox > 0 ? (
+            <span aria-hidden="true" className="absolute -right-0.5 -top-0.5 size-3 rounded-full border-2 border-surface-100 bg-ember-500" />
+          ) : null}
         </span>
+        <span className="sr-only">
+          {accountMenuCopy.open(name)}
+          {slot.inbox > 0 ? `, ${communityCopy.inbox(slot.inbox)}` : ''}
+        </span>
+        {/* The photo alone, with a mark that it opens (David, Nov 11: "my username is truncated and
+            i'm on a desktop"): with the member links in the nav, a name beside the photo had no
+            room inside the content width at any window size. The whole name leads the menu. */}
+        <ChevronDown aria-hidden="true" className={cn('size-4 shrink-0 transition-transform duration-200', open && 'rotate-180')} strokeWidth={1.75} />
       </button>
       <div
         id={`${uid}-menu`}
         hidden={!open}
-        className="absolute right-0 top-full z-40 mt-2 grid min-w-[12rem] rounded-sm border border-ink-200 bg-surface-100 px-4 py-2 shadow-warm"
+        className="absolute right-0 top-full z-40 mt-2 grid w-max min-w-[12rem] max-w-[min(20rem,calc(100vw-2rem))] rounded-sm border border-ink-200 bg-surface-100 px-4 py-2 shadow-warm"
       >
-        <MenuLinks admin={slot.admin} onNavigate={() => setOpen(false)} className="flex w-full text-[1rem]" />
+        {/* Never cut short: the menu is as wide as the name needs, up to 20rem, and past that the name
+            wraps (`w-max`: without it the menu took its narrowest width, and a two-word name broke
+            onto two lines for no reason). */}
+        <p data-account-name="" className="flex min-h-touch items-center border-b border-ink-200 font-semibold break-words text-ink-900">
+          <span className="min-w-0">{name}</span>
+        </p>
+        <MenuLinks admin={slot.admin} inbox={slot.inbox} onNavigate={() => setOpen(false)} className="flex w-full text-[1rem]" />
       </div>
     </div>
   );
 }
 
-/** A 32px round photo, or the name's first letter on a tint. Decorative: the name is beside it. */
+/** A 32px round photo, or the name's first letter on a tint. Decorative: the name is beside it, or in the button's own name. */
 function Avatar({ url, name }: { url: string | null; name: string | null }) {
   if (url) {
     return (

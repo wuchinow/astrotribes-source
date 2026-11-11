@@ -32,7 +32,8 @@ export const keysPage = {
       title: 'With your birth time',
       body: (count: number) => `${count} more. Every house key, and your rising sign's.`,
     },
-    more: { href: '/#faq-birth-time', label: 'Why we ask for your birth time' },
+    // Opens the landing page's answer (`faq-birth-time` in content/landing.tsx) in place.
+    more: { label: 'Why we ask for your birth time' },
   },
 
   contents: 'On this page',
@@ -161,6 +162,6 @@ export const keysPage = {
     eyebrow: 'Start here',
     title: 'Find yours!',
     body: 'Your Sun, Moon, and Rising from your birth details. Free with an account, no payment.',
-    secondary: { href: '/#tribes', label: 'Find your Tribe' },
+    secondary: { href: '/tribes', label: 'Find your Tribe' },
   },
 };

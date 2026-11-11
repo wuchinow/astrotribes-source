@@ -25,7 +25,7 @@ export function Faq({ items }: { items: readonly FaqItem[] }) {
               +
             </span>
           </summary>
-          <div className="pb-6 text-ink-700">{item.answer}</div>
+          <div className="open-in pb-6 text-ink-700">{item.answer}</div>
         </details>
       ))}
       <OpenOnHash />

@@ -3,8 +3,10 @@
 // Only signs and houses are compared. No member reads another member's degrees (0001's column
 // grant), so closeness by degree waits for step 2 on the server. The points are lib/connection-points.ts.
 import {
+  BODY_GROUPS,
   BODY_IDS,
   KEY_LIST,
+  bodiesIn,
   SIGN_IDS,
   isGenerational,
   type BodyId,
@@ -63,6 +65,18 @@ export function splitShared(shared: readonly SharedKey[]): { personal: SharedKey
     personal: shared.filter((s) => !isGenerational(s.key)),
     generational: shared.filter((s) => isGenerational(s.key)),
   };
+}
+
+/**
+ * The personal keys in the body groups a member's page lists them under (BODY_GROUPS order). Every
+ * personal key lands in exactly one group, so the count and the list always agree (audit, Nov 11:
+ * an outer planet's house key, such as Channel, was counted and never shown).
+ */
+export function groupShared(personal: readonly SharedKey[]): { group: (typeof BODY_GROUPS)[number]; list: SharedKey[] }[] {
+  return BODY_GROUPS.map((group) => {
+    const bodies = new Set<string>(bodiesIn(group.id));
+    return { group, list: personal.filter((s) => bodies.has(s.key.body)) };
+  }).filter(({ list }) => list.length > 0);
 }
 
 /** The first few personal keys for a member's card, the Core Five first. */

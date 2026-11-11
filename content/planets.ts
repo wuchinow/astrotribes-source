@@ -585,6 +585,25 @@ export const panelLine = (text: string | undefined): string | undefined => {
   return first.length <= 320 ? first : cut(first, 2);
 };
 
+/** The longest line a short card shows whole: about four lines of a phone's card. */
+export const TEASER_MAX = 150;
+
+/**
+ * A line for a short card on Your chart (5c): the first sentence of his text, the rest one tap away.
+ * A sentence longer than `TEASER_MAX` stops at its last comma, colon, or semicolon inside that length
+ * (or, with none past the halfway point, its last whole word) and ends with an ellipsis, so no window
+ * width ever cuts it mid-word (it was clamped to three lines, and a phone cut the Sun's at "ju...").
+ */
+export const teaserLine = (text: string | undefined): string | undefined => {
+  if (!text) return undefined;
+  const first = cut(paragraphs(text)[0], 1);
+  if (first.length <= TEASER_MAX) return first;
+  const head = first.slice(0, TEASER_MAX + 1);
+  const clause = Math.max(head.lastIndexOf(', '), head.lastIndexOf(': '), head.lastIndexOf('; '));
+  const at = clause >= TEASER_MAX / 2 ? clause : head.lastIndexOf(' ');
+  return `${head.slice(0, at).replace(/[\s,;:(“‘]+$/, '')}…`;
+};
+
 /** The first sentences of a paragraph. */
 const cut = (paragraph: string, count: number) =>
   (paragraph.match(/[^.?]+[.?]+(?:[”’)]+)?(?:\s+|$)/g) ?? [paragraph]).slice(0, count).join('').trim();

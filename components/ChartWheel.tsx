@@ -218,15 +218,17 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
               const on = b.body === selected;
               return (
                 <g key={b.body} onClick={() => pick(b.body, false)} className="cursor-pointer">
-                  {/* A larger, invisible target than the glyph, and a tinted disc when chosen. */}
-                  <circle
-                    cx={f(x)}
-                    cy={f(y)}
-                    r={inner ? 5.5 : 7.5}
-                    className={on ? 'fill-cobalt-100 stroke-cobalt-600' : 'fill-transparent'}
-                    strokeWidth={on ? 0.6 : 0}
-                  />
-                  <Glyph id={b.body} x={x} y={y} size={inner ? NODE_GLYPH : BODY_GLYPH} className="fill-cobalt-600" />
+                  {/* A larger, invisible target than the glyph, and a tinted disc when chosen, lifted a little (micro motion, Nov 11). */}
+                  <g className="wheel-pick" data-on={on ? '' : undefined}>
+                    <circle
+                      cx={f(x)}
+                      cy={f(y)}
+                      r={inner ? 5.5 : 7.5}
+                      className={on ? 'fill-cobalt-100 stroke-cobalt-600' : 'fill-transparent'}
+                      strokeWidth={on ? 0.6 : 0}
+                    />
+                    <Glyph id={b.body} x={x} y={y} size={inner ? NODE_GLYPH : BODY_GLYPH} className="fill-cobalt-600" />
+                  </g>
                   {showsRetrograde(b) ? (
                     <text
                       x={f(x + 6.2)}
@@ -269,10 +271,15 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
         </figure>
 
         <div ref={panelRef} id={panelId} aria-live="polite" className="mt-4 scroll-mt-28">
+          {/* Keyed, so each pick settles in afresh (`.motion-in`, micro motion, Nov 11). */}
           {chosen ? (
-            <WheelPanel body={chosen} detail={details[chosen.body]} onClose={() => setSelected(null)} />
+            <div key={chosen.body} className="motion-in">
+              <WheelPanel body={chosen} detail={details[chosen.body]} onClose={() => setSelected(null)} />
+            </div>
           ) : chosenCusp ? (
-            <HousePanel house={chosenCusp.house} longitude={chosenCusp.longitude} onClose={() => setHouse(null)} />
+            <div key={`house-${chosenCusp.house}`} className="motion-in">
+              <HousePanel house={chosenCusp.house} longitude={chosenCusp.longitude} onClose={() => setHouse(null)} />
+            </div>
           ) : (
             <p className="text-center type-body-sm text-ink-500">{timeKnown ? chartWheelCopy.hintHouses : chartWheelCopy.hint}</p>
           )}

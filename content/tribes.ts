@@ -188,6 +188,46 @@ export const TRIBE_WORDS: Record<SignId, TribeWords> = {
 const article = (sign: string) => (/^[AEIOU]/.test(sign) ? 'an' : 'a');
 
 // PLACEHOLDER: the page's shared words.
+/** The 12 Tribes page (5d). PLACEHOLDER: ours, until Dawa writes his own. Its headline is the landing's. */
+export const tribeIndex = {
+  metaTitle: 'The 12 Tribes',
+  description: 'The twelve Sun signs, each a Tribe with a page of its own.',
+  /** For screen readers, over the twelve cards. */
+  all: 'All 12 Tribes',
+  /** Each guide card's way in to its Tribe page. */
+  meet: (sign: string) => `Meet the ${sign} Tribe`,
+  /** The label over what Dawa's hello says a Tribe is famous for (`knownFor` in content/tribe-dawa.ts). */
+  knownFor: 'Known for',
+  yours: {
+    title: 'Your three',
+    chart: 'See your chart',
+    none: 'You have no chart yet.',
+    start: 'Add your birth details',
+  },
+  more: {
+    title: 'Two more homes.',
+    body: 'Your Sun sign is one of your three. Your Moon sign and your rising sign are the other two, each with twelve homes of its own.',
+    clans: 'The twelve Moon signs',
+    vibes: 'The twelve rising signs',
+  },
+};
+
+/** A Tribe's people in the plural, for "Famous Cancers" (audit, Nov 11). */
+export const SIGN_PLURALS: Record<SignId, string> = {
+  aries: 'Aries',
+  taurus: 'Tauruses',
+  gemini: 'Geminis',
+  cancer: 'Cancers',
+  leo: 'Leos',
+  virgo: 'Virgos',
+  libra: 'Libras',
+  scorpio: 'Scorpios',
+  sagittarius: 'Sagittarians',
+  capricorn: 'Capricorns',
+  aquarius: 'Aquarians',
+  pisces: 'Pisceans',
+};
+
 export const tribePage = {
   placeholder: true,
   reviewed: false,
@@ -249,7 +289,8 @@ export const tribePage = {
 
   famous: {
     eyebrow: 'Tribe celebrities',
-    title: (sign: string) => `Well-known members of the ${sign} Tribe`,
+    /** "Famous Cancers": `plural` from SIGN_PLURALS, so "members" means only the site's members on a Tribe page. */
+    title: (plural: string) => `Famous ${plural}`,
     lede: 'Oldest first. A name in blue opens their chart.',
   },
 
@@ -294,14 +335,30 @@ export const tribePage = {
     lede: 'Your Tribe talks them over when the doors open. Start thinking now.',
   },
 
+  // A Tribe's members (5b, David, Nov 11), shown to a signed-in member only, at the foot of the famous names.
+  members: {
+    eyebrow: 'Members',
+    title: (sign: string) => `${sign} members you can meet`,
+    /** With no one to show, the heading makes no promise. */
+    emptyTitle: (sign: string) => `${sign} members`,
+    lede: 'Your closest connections first. Say hello to anyone here.',
+    council: 'Meet members of every Tribe on the Council',
+    all: (sign: string) => `See all ${sign} members`,
+    empty: (sign: string) => `No other ${sign} members yet.`,
+    noChart: 'Your chart isn’t saved yet.',
+    start: 'Save your chart',
+    failed: "We couldn't load members just now. Try again in a minute.",
+  },
+
   opening: {
     eyebrow: 'As members join',
     title: (sign: string) => `Your ${sign} home fills up.`,
+    // For visitors only (the band is guest-only): a member sees the Tribe's members above it and has the Council.
     items: (fellows: string, sign: string) => [
-      { title: 'Conversations', body: `Questions, wins, and advice, between people who share your Sun.` },
-      { title: `Meet your fellow ${fellows.toLowerCase()}`, body: 'A directory by birthday or by the day they joined, showing only what each member shares.' },
+      { title: 'The Council', body: 'Questions, wins, and advice, with members of all 12 Tribes in one place.' },
+      { title: `Meet your fellow ${fellows.toLowerCase()}`, body: `Members see the ${sign} members they can meet, right on this page, and can say hello.` },
+      { title: 'Your Moon and rising sign', body: 'Members also see who shares their Moon sign or their rising sign, and can say hello there too.' },
       { title: 'The gallery', body: `Room for three pieces of art from every member, with ${article(sign)} ${sign} piece in the spotlight each month.` },
-      { title: `${sign} through the years`, body: 'The stories behind the well-known members, oldest first.' },
     ],
   },
 
@@ -320,7 +377,7 @@ export const tribePage = {
     eyebrow: 'Start here',
     title: 'Find your first three.',
     body: 'Your Sun, Moon, and Rising from your birth details. Free with an account, no payment.',
-    secondary: { href: '/#tribes', label: 'See all 12 Tribes' },
+    secondary: { href: '/tribes', label: 'See all 12 Tribes' },
   },
 
   element: { fire: 'Fire', earth: 'Earth', air: 'Air', water: 'Water' } as const,

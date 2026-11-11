@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { hasBirthTime, sharedKeys, splitShared, toPlacements, topShared, type PlacementRow } from '@/lib/shared-keys';
+import { KEY_LIST } from '@/lib/keys';
+import { groupShared, hasBirthTime, sharedKeys, splitShared, toPlacements, topShared, type PlacementRow } from '@/lib/shared-keys';
 
 // Synthetic charts only (invariant 8): signs and houses typed by hand, no birth details.
 const chart = (rows: [string, string, number | null][]): PlacementRow[] =>
@@ -81,5 +82,16 @@ describe('the keys two members share', () => {
       { body: 'sun', sign: 'leo', house: null },
     ]);
     expect(toPlacements(null)).toEqual([]);
+  });
+});
+
+describe('the groups a member page lists shared Keys under', () => {
+  it('hold every personal Key exactly once, an outer planet\'s house Key included, so the count and the list agree', () => {
+    // Every Key at once: as if two charts shared everything.
+    const everything = KEY_LIST.map((key) => ({ key, value: key.dimension === 'sign' ? ('aries' as const) : (11 as const) }));
+    const { personal } = splitShared(everything);
+    const listed = groupShared(personal).flatMap(({ list }) => list.map((s) => s.key.id));
+    expect([...listed].sort()).toEqual(personal.map((s) => s.key.id).sort());
+    expect(listed).toContain('uranusHouse');
   });
 });

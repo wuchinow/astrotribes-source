@@ -26,7 +26,11 @@ export function TribeNewsFlash({
   news: TribeNews;
 }) {
   const name = SIGNS[sign].name;
-  const visiting = news.visiting.map(nameOf);
+  // The line above this one already says where the ruling planet is, so when it is at home in its own
+  // sign it is left out of who is here ("Your ruling planet, Venus, is in Libra." then "Venus is in
+  // Libra now." said it twice).
+  const rulerHome = news.ruler.sign === sign;
+  const visiting = news.visiting.filter((body) => !(rulerHome && body === news.ruler.body)).map(nameOf);
   return (
     <aside
       aria-labelledby="news-title"
@@ -47,11 +51,11 @@ export function TribeNewsFlash({
             news.ruler.retrograde,
           )}
         </li>
-        <li>
-          {visiting.length > 0
-            ? copy.news.visiting(visiting, name)
-            : copy.news.nobody(name)}
-        </li>
+        {visiting.length > 0 ? (
+          <li>{copy.news.visiting(visiting, name)}</li>
+        ) : rulerHome ? null : (
+          <li>{copy.news.nobody(name)}</li>
+        )}
         {news.moonVisit ? (
           <li>
             {copy.news.moonVisit(name)} {day(news.moonVisit)}.

@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { CommunityTabs } from '@/components/CommunityTabs';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { MemberCard, glossOnce } from '@/components/MemberCard';
 import { famousCopy } from '@/content/famous';
 import { membersCopy, visibilityCopy } from '@/content/members';
+import { helloLinks, myHellos } from '@/lib/council';
 import { ownPlacements, visibleMembers } from '@/lib/members';
 import { topShared } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
@@ -33,12 +35,15 @@ export default async function MembersPage() {
   ]);
   if (!profile?.display_name || !mine.some((row) => row.body === 'sun')) redirect('/welcome');
   const visibility = isVisibility(profile.visibility) ? profile.visibility : DEFAULT_VISIBILITY;
-  const members = await visibleMembers(supabase, user.id, mine);
+  const [members, hellos] = await Promise.all([visibleMembers(supabase, user.id, mine), myHellos(supabase)]);
+  // Each card says where the two of you stand on a hello (5b). Without the tables, cards show none.
+  const helloAction = helloLinks(hellos, user.id);
 
   const firstTime = glossOnce();
 
   return (
     <div className="mx-auto max-w-content px-4 pt-31 pb-16 md:px-6 md:pt-38 md:pb-24">
+      <CommunityTabs current="members" />
       <Eyebrow>{membersCopy.eyebrow}</Eyebrow>
       <Headline as="h1" line={membersCopy.line} accent={membersCopy.accent} />
       <Lede>{membersCopy.lede}</Lede>
@@ -80,6 +85,7 @@ export default async function MembersPage() {
               personalCount={member.personalCount}
               points={member.points.total}
               firstTime={firstTime}
+              hello={helloAction(member.id, member.name)}
             />
           ))}
         </ul>

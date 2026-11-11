@@ -17,11 +17,13 @@ interface KeyChipProps {
   value?: SignId | HouseNumber;
   /** Show Dawa's gloss under the chip: do this the first time a key appears on a screen. */
   showGloss?: boolean;
+  /** The gloss a size smaller and closer to the chip, for a short card (Your chart, 5c). */
+  compact?: boolean;
   href?: string;
   className?: string;
 }
 
-export function KeyChip({ keyId, value, showGloss = false, href, className }: KeyChipProps) {
+export function KeyChip({ keyId, value, showGloss = false, compact = false, href, className }: KeyChipProps) {
   const key = KEYS[keyId];
   const isHouse = key.dimension === 'house';
   const valueText =
@@ -60,7 +62,9 @@ export function KeyChip({ keyId, value, showGloss = false, href, className }: Ke
           {content}
         </span>
       )}
-      {showGloss ? <span className="mt-2 type-body text-ink-700">{gloss}</span> : null}
+      {showGloss ? (
+        <span className={cn('text-ink-700', compact ? 'mt-1.5 type-body-sm' : 'mt-2 type-body')}>{gloss}</span>
+      ) : null}
     </span>
   );
 }

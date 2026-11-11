@@ -154,6 +154,10 @@ export default function HomePage() {
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
           <p className="type-body text-ink-700">{tribes.closing}</p>
           <PrimaryAction />
+          {/* The grid stays here; the 12 Tribes page says more about each (David, Nov 11). */}
+          <Button href={tribes.more.href} variant="secondary">
+            {tribes.more.label}
+          </Button>
         </div>
       </Section>
 
@@ -181,7 +185,7 @@ export default function HomePage() {
           </li>
         </ul>
         {/* -ml-6: the button's own side padding, so its words start at the section's edge. */}
-        <Button href={keys.more.href} variant="tertiary" className="mt-6 -ml-6">
+        <Button href={keys.more.href} variant="tertiary" className="mt-6 -ml-2">
           {keys.more.label}
         </Button>
       </Section>

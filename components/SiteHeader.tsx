@@ -8,7 +8,8 @@ import { MoodToggle } from './MoodToggle';
 import { NavLinks } from './NavLinks';
 
 /**
- * Logo home, the main nav from lg up, and on the right the mood switch, Sign in (2b), the
+ * Logo home, the main nav from lg up (for a signed-in member, the member links lead it, 5c),
+ * and on the right the mood switch, Sign in (2b), the
  * primary action (one label everywhere, 1h; hidden for a signed-in member, 2c), and a signed-in
  * member's photo, which opens the account menu, at the far right (David,
  * Oct 21 and 22). Below lg, where the
@@ -37,8 +38,10 @@ export function SiteHeader() {
           </div>
           <HeaderAccount show="out" />
           <GuestOnly>
-            {/* From sm; on a phone it sits at the top of the menu, so the logo can be larger (David, Nov 9). */}
-            <div className="hidden sm:block">
+            {/* From sm; on a phone it sits at the top of the menu, so the logo can be larger (David, Nov 9).
+                `guest-only` takes it away before first paint for a member (5c), whose nav has more
+                links and needs the room at 1024px. */}
+            <div className="guest-only hidden sm:block">
               <Button href={PRIMARY_ACTION.href} size="nav">
                 {PRIMARY_ACTION.label}
               </Button>

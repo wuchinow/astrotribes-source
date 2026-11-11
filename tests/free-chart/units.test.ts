@@ -74,6 +74,9 @@ describe('rate limits', () => {
       account: { limit: 20, windowMs: 60_000 },
       birth: { limit: 10, windowMs: 900_000 },
       feedback: { limit: 5, windowMs: 900_000 },
+      council: { limit: 10, windowMs: 60_000 },
+      hello: { limit: 10, windowMs: 900_000 },
+      message: { limit: 30, windowMs: 60_000 },
     });
   });
 

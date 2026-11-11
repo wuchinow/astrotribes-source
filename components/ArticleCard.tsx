@@ -1,3 +1,4 @@
+import { LIFT } from '@/lib/motion';
 import Link from 'next/link';
 import { learnCopy as copy, learnHref, type Article } from '@/content/articles';
 import { longDate } from '@/content/famous';
@@ -13,7 +14,7 @@ export function ArticleCard({ article, eyebrow }: { article: Article; eyebrow?: 
     <li>
       <Link
         href={learnHref(article)}
-        className="flex h-full flex-col rounded-md border border-ink-200 bg-surface-200 p-4 text-ink-700 no-underline shadow-rest transition-shadow duration-200 hover:shadow-warm md:p-6"
+        className={`flex h-full flex-col rounded-md border border-ink-200 bg-surface-200 p-4 text-ink-700 no-underline shadow-rest md:p-6 ${LIFT}`}
       >
         {eyebrow ? <p className="type-label text-ink-500">{eyebrow}</p> : null}
         <h3 className="mt-1 type-heading-3 text-ink-900">{article.title}</h3>

@@ -7,6 +7,10 @@ export interface ExportParts {
   profile: { display_name: string | null; visibility: string; created_at: string } | null;
   birthData: Record<string, unknown> | null;
   placements: Record<string, unknown>[];
+  /** 5b: what the member wrote in the Council, the hellos they sent or received, and their messages. */
+  council?: Record<string, unknown>[];
+  hellos?: Record<string, unknown>[];
+  messages?: Record<string, unknown>[];
 }
 
 export const PLACEMENT_EXPORT_COLUMNS =
@@ -21,5 +25,8 @@ export function buildExport(parts: ExportParts, now = new Date()) {
     profile: parts.profile,
     birthData: parts.birthData,
     placements: parts.placements,
+    council: parts.council ?? [],
+    hellos: parts.hellos ?? [],
+    messages: parts.messages ?? [],
   };
 }

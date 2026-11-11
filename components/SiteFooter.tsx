@@ -28,7 +28,7 @@ function LinkColumn({ links }: { links: readonly NavLink[] }) {
         <li key={link.href} className="md:contents">
           <Link
             href={link.href}
-            className="inline-flex min-h-touch items-center type-body-sm text-cobalt-600 underline-offset-4 hover:underline md:-my-2.5 md:min-h-0 md:py-2.5"
+            className="inline-flex min-h-touch min-w-touch items-center type-body-sm text-cobalt-600 underline-offset-4 hover:underline md:-my-2.5 md:min-h-0 md:py-2.5"
           >
             {link.label}
           </Link>
@@ -58,7 +58,7 @@ export function SiteFooter() {
       {/* The logo centered on its own row, then two balanced groups side by side, the same height (David,
           Nov 9): the credits on the left, wrapped to a width near the links', and the links with the
           address on the right, spread to the credits' height. */}
-      <div className="mx-auto max-w-content px-4 pt-2 pb-6 md:px-6 md:pb-8">
+      <div className="mx-auto max-w-content px-4 pt-2 pb-10 md:px-6 md:pb-12">
         {/* The logo, featured (David, Nov 9: the enso is not needed here; it stays ready for another page). */}
         <Logo className="mx-auto w-[260px] max-w-full md:w-[340px]" />
         <div className="mt-8 flex flex-col gap-8 md:flex-row md:items-stretch md:justify-between md:gap-12">

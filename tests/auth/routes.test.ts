@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GET as callbackGET } from '@/app/auth/callback/route';
 import { POST as signOutPOST } from '@/app/auth/sign-out/route';
 import { GET as exportGET } from '@/app/api/account/export/route';
+import { GET as tribeMembersGET } from '@/app/api/members/tribe/[sign]/route';
 import { resetRateLimits } from '@/lib/rate-limit';
 
 // Every member route checks for itself (invariant 5): no session, no data. Open to anyone since
@@ -23,6 +24,20 @@ describe('export my data', () => {
     expect(response.status).toBe(401);
     expect(await response.json()).toEqual({ error: 'signed_out' });
     expect(response.headers.get('cache-control')).toBe('no-store');
+  });
+});
+
+describe('a Tribe’s members (5b)', () => {
+  it('refuses without a session, and never caches', async () => {
+    const response = await tribeMembersGET(req('/api/members/tribe/aries'), { params: Promise.resolve({ sign: 'aries' }) });
+    expect(response.status).toBe(401);
+    expect(await response.json()).toEqual({ error: 'signed_out' });
+    expect(response.headers.get('cache-control')).toBe('no-store');
+  });
+
+  it('answers not found for anything but a sign', async () => {
+    const response = await tribeMembersGET(req('/api/members/tribe/x'), { params: Promise.resolve({ sign: 'x' }) });
+    expect(response.status).toBe(404);
   });
 });
 

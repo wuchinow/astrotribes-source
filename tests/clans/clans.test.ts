@@ -104,6 +104,31 @@ describe('Clanmates and Vibemates', () => {
   });
 });
 
+describe('a Tribe’s members (5b)', () => {
+  const mine = [row('sun', 'aries'), row('moon', 'leo'), row('rising', 'pisces')];
+
+  it('list everyone with the Sun in the sign, with the viewer’s Clan and Vibe set apart and no Tribe group', () => {
+    const members = [person('a', 'aries', 'leo'), person('b', 'aries', 'virgo', 'pisces'), person('c', 'aries', 'virgo'), person('d', 'taurus', 'leo')];
+    const found = mates(members, mine, 'sun', 'aries');
+    expect(found.all.map((m) => m.id)).toEqual(['a', 'b', 'c']);
+    expect(found.groups.map((g) => [g.kind, g.value, g.members.map((m) => m.id)])).toEqual([
+      ['clan', 'leo', ['a']],
+      ['vibe', 'pisces', ['b']],
+    ]);
+    // Three others and the viewer, an Aries: under five.
+    expect(found.total).toBeNull();
+    expect(mates([...members, person('e', 'aries', 'cancer')], mine, 'sun', 'aries').total).toBe(MIN_TOTAL);
+  });
+
+  it('read members for the Tribe page as the member, with the session checked, never the admin client', () => {
+    const route = readFileSync('app/api/members/tribe/[sign]/route.ts', 'utf8');
+    expect(route).toMatch(/auth\.getUser\(\)/);
+    expect(route).toMatch(/visibleMembers\(supabase, user\.id, mine\)/);
+    expect(route).toMatch(/no-store/);
+    expect(route).not.toMatch(/supabase\/admin|SUPABASE_SECRET_KEY|birth_data/);
+  });
+});
+
 describe('generational families (4r)', () => {
   it('list everyone with the planet in the sign, whatever their Tribe, with the viewer’s Tribe set apart', () => {
     const withPluto = (id: string, sun: SignId, pluto: SignId) => ({
