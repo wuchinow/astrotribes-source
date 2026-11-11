@@ -238,6 +238,30 @@
     }
   }
 
+  /*
+   * The member pages (5e, `data-backdrop-from="lg"` on the region): the same picture beside the words,
+   * from lg, where their one column already leaves the right of the window empty; never taller than
+   * 44rem, and no band at the foot below lg (the footer's horizon is right under it).
+   */
+  @media (width < 64rem) {
+    [data-backdrop-from="lg"] > .backdrop-layer[data-reach="screen"] {
+      display: none;
+    }
+  }
+
+  @media (width >= 64rem) {
+    [data-backdrop-from="lg"] > .backdrop-layer[data-reach="screen"] {
+      --bd-start: calc(max(0px, (100% - var(--content-max)) / 2) + max(44rem, min(100%, var(--content-max)) * var(--bd-from, 0.58)));
+      inset: 8rem 0 auto var(--bd-start);
+      height: min(calc(100% - 8rem), 44rem);
+      background-image: var(--bd-lg);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 15%, #000 60%), linear-gradient(to bottom, transparent 0%, #000 15%, #000 55%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, transparent 15%, #000 60%), linear-gradient(to bottom, transparent 0%, #000 15%, #000 55%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+  }
+
   /* The section gradient (4m): the cool dawn tint at the top, the page between, the warm tint at the foot. */
   .section-gradient {
     background-image: linear-gradient(170deg, var(--tint-dawn) 0%, var(--surface-100) 50%, var(--tint-dusk) 100%);
@@ -778,6 +802,17 @@ html:not([data-member]) .member-only {
 .key-card-link {
   position: relative;
   z-index: 1;
+}
+
+/* A wide card's star card (5e): tall ones reach into the closed card's foot strip, beside "Read more". */
+@media (width >= 64rem) {
+  .key-card-plate {
+    margin-bottom: -2.5rem;
+  }
+
+  .key-card:has(> details[open]) .key-card-plate {
+    margin-bottom: 0;
+  }
 }
 
 @media (width >= 48rem) {

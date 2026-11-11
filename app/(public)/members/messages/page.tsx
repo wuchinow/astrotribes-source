@@ -130,7 +130,8 @@ export default async function MessagesPage() {
 
           </div>
 
-          <aside className="grid content-start gap-8">
+          {/* On a card: from lg it stands where the page's picture is (5e), and words never sit on a picture. */}
+          <aside className="grid content-start gap-8 self-start rounded-md border border-ink-200 bg-surface-200 p-5 shadow-rest md:p-6">
           {sent.length > 0 ? (
             <section aria-labelledby="sent-heading">
               <h2 id="sent-heading" className="type-heading-3 text-ink-900">

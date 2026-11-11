@@ -356,7 +356,7 @@ export const tribePage = {
     // For visitors only (the band is guest-only): a member sees the Tribe's members above it and has the Council.
     items: (fellows: string, sign: string) => [
       { title: 'The Council', body: 'Questions, wins, and advice, with members of all 12 Tribes in one place.' },
-      { title: `Meet your fellow ${fellows.toLowerCase()}`, body: `Members see the ${sign} members they can meet, right on this page, and can say hello.` },
+      { title: `Meet your fellow ${fellows}`, body: `Members see the ${sign} members they can meet, right on this page, and can say hello.` },
       { title: 'Your Moon and rising sign', body: 'Members also see who shares their Moon sign or their rising sign, and can say hello there too.' },
       { title: 'The gallery', body: `Room for three pieces of art from every member, with ${article(sign)} ${sign} piece in the spotlight each month.` },
     ],

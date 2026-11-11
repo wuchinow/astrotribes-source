@@ -128,9 +128,52 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
 
   const familyBy = new Map(families.map((family) => [family.planet as BodyId, family]));
 
-  // `beside`: from lg this card's star card stands beside it (it ends its group alone in a row), so
-  // the one inside the open card shows below lg only.
-  const planetCard = (planet: (typeof PLANET_PAGES)[number], beside = false) => {
+  // Which cards each group holds, in page order. A planet with nothing to show (the Galactic Center
+  // with no birth time) has no card.
+  const hasCard = (body: BodyId) => {
+    const row = byBody.get(body);
+    return !!row && (!!keyFor(body, 'sign') || !!row.house);
+  };
+  const cardsIn = (groupId: BodyGroup): BodyId[] => [
+    ...PLANET_PAGES.filter((planet) => BODIES[planet.body].group === groupId && hasCard(planet.body)).map((planet) => planet.body),
+    ...(groupId === 'identity' && rising ? (['rising'] as BodyId[]) : []),
+  ];
+  // The last group (the Galactic Center's one card) shares a section with the one before it (below).
+  const lastGroup = BODY_GROUPS.find((group) => group.id === 'galacticCenter');
+  const groupsShown = BODY_GROUPS.filter((group) => cardsIn(group.id).length > 0);
+  const sharesRow = !!lastGroup && groupsShown.includes(lastGroup) && groupsShown.some((group) => group.id === 'healing');
+  // A group with an odd count would end with one card and half a row of nothing from lg, so its last
+  // card takes the whole row there (`wide`).
+  const wideIn = (groupId: BodyGroup): BodyId | undefined => {
+    if (sharesRow && (groupId === 'healing' || groupId === lastGroup?.id)) return undefined;
+    const bodies = cardsIn(groupId);
+    return bodies.length % 2 === 1 ? bodies[bodies.length - 1] : undefined;
+  };
+  const wides = groupsShown.flatMap((group) => wideIn(group.id) ?? []);
+  // The star cards (David, Nov 11: "my chart shows cancer plate twice"): each sign's shows once on the
+  // page. The Sun sign's stands beside the Keys introduction; a wide card carries its sign's inside
+  // it, always in view from lg; any other card carries its sign's at the foot of its opened text. A
+  // sign already shown is not shown again, so two planets in one sign share one star card.
+  const plateOf = new Map<BodyId, SignId>();
+  const platesShown = new Set<SignId>([sun.sign]);
+  const claimPlate = (body: BodyId) => {
+    const sign = body === 'rising' || keyFor(body, 'sign') ? byBody.get(body)?.sign : undefined;
+    if (!sign || platesShown.has(sign)) return;
+    platesShown.add(sign);
+    plateOf.set(body, sign);
+  };
+  wides.forEach(claimPlate);
+  groupsShown.flatMap((group) => cardsIn(group.id)).forEach(claimPlate);
+  const footPlate = (body: BodyId, wide: boolean) => {
+    const sign = plateOf.get(body);
+    // In a wide card the star card is beside the words from lg, so the one at the foot is for below lg.
+    return sign ? (
+      <OldPrint id={`plate-${sign}`} alt={PLATES[sign].alt} sizes="9rem" className={cn('max-w-[9rem]!', wide && 'lg:hidden')} />
+    ) : null;
+  };
+
+  const planetCard = (planet: (typeof PLANET_PAGES)[number]) => {
+    const wide = wides.includes(planet.body);
     const row = byBody.get(planet.body);
     if (!row) return null;
     const name = BODIES[planet.body].name;
@@ -148,6 +191,8 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
         key={planet.body}
         body={planet.body}
         name={name}
+        wide={wide}
+        plate={wide ? plateOf.get(planet.body) : undefined}
         chips={
           <>
             {signKey ? <KeyChip keyId={signKey.id} value={row.sign} showGloss compact /> : null}
@@ -196,15 +241,8 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
           <Button href={planetHref(planet)} variant="tertiary" className="-ml-2">
             {yourChartCopy.keys.more(name)}
           </Button>
-          {/* The sign's own star card (4o), now at the foot of the open card. */}
-          {signKey ? (
-            <OldPrint
-              id={`plate-${row.sign}`}
-              alt={PLATES[row.sign].alt}
-              sizes="9rem"
-              className={cn('max-w-[9rem]!', beside && 'lg:hidden')}
-            />
-          ) : null}
+          {/* The sign's star card (4o), at the foot of the open card: once per sign on the page. */}
+          {footPlate(planet.body, wide)}
         </div>
       </KeyCard>
     );
@@ -216,6 +254,8 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
       key="rising"
       body="rising"
       name={BODIES.rising.name}
+      wide={wides.includes('rising')}
+      plate={wides.includes('rising') ? plateOf.get('rising') : undefined}
       chips={<KeyChip keyId="risingSign" value={rising.sign} showGloss compact />}
       teaser={VIBE_LINES[rising.sign]}
     >
@@ -226,10 +266,11 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
         </div>
         <Lines text={`${VIBE_LINES[rising.sign]}\n\n${VIBE_DRAFTS[rising.sign]}`} />
       </div>
-      <div className="mt-5">
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
         <Button href={`/vibes/${rising.sign}`} variant="tertiary" className="-ml-2">
           {clanLinks.yourVibe(SIGNS[rising.sign].name, KEYS.risingSign.name)}
         </Button>
+        {footPlate('rising', wides.includes('rising'))}
       </div>
     </KeyCard>
   ) : null;
@@ -237,14 +278,6 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
   // Where each of the three leads: the Tribe, and the Moon's and the rising sign's own pages (4l).
   const THREE_HREF = { sun: '/tribes', moon: '/clans', rising: '/vibes' } as const;
   const THREE_KEY = { sun: 'sunSign', moon: 'moonSign', rising: 'risingSign' } as const;
-  const groupsShown = BODY_GROUPS.filter((group) =>
-    PLANET_PAGES.some((planet) => BODIES[planet.body].group === group.id && byBody.has(planet.body) && (keyFor(planet.body, 'sign') || byBody.get(planet.body)?.house)),
-  );
-
-  // The last group (the Galactic Center's one card) shares a section with the one before it (below).
-  const lastGroup = BODY_GROUPS.find((group) => group.id === 'galacticCenter');
-  const sharesRow = !!lastGroup && groupsShown.includes(lastGroup) && groupsShown.some((group) => group.id === 'healing');
-
   // The side list's places, in page order (5d).
   const railItems = [
     { id: 'your-three', label: yourChartCopy.three.title },
@@ -447,12 +480,6 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
             </Section>
           );
         }
-        // A group with an odd count ended with one card and half a row of nothing from lg (Rising,
-        // Saturn, Pluto; and Chiron with no birth time, when the last group waits). The sign's star
-        // card stands in that half, and leaves the inside of the card there (4o: the gaps the text leaves).
-        const cards = planets.length + (group.id === 'identity' && rising ? 1 : 0);
-        const last = planets[planets.length - 1];
-        const lone = cards % 2 === 1 ? (group.id === 'identity' && rising ? rising : byBody.get(last?.body)) : undefined;
         return (
           <Fragment key={group.id}>
             <Section
@@ -481,16 +508,8 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
               ) : null}
               {/* Two to a row from lg, each its own height, so one opened card leaves its neighbour alone. */}
               <div className="grid items-start gap-4 lg:grid-cols-2 lg:gap-6">
-                {planets.map((planet) => planetCard(planet, !!lone && planet === last && !(group.id === 'identity' && rising)))}
+                {planets.map((planet) => planetCard(planet))}
                 {group.id === 'identity' ? risingCard : null}
-                {lone ? (
-                  <OldPrint
-                    id={`plate-${lone.sign}`}
-                    alt={PLATES[lone.sign].alt}
-                    sizes="20rem"
-                    className="mx-auto hidden max-w-[20rem]! self-center lg:block"
-                  />
-                ) : null}
               </div>
             </Section>
             {group.id === 'identity' ? chineseSection : null}
@@ -552,6 +571,8 @@ function KeyCard({
   chips,
   teaser,
   note,
+  wide = false,
+  plate,
   children,
 }: {
   body: BodyId;
@@ -561,17 +582,40 @@ function KeyCard({
   teaser?: string;
   /** A line that shows open or closed (a generational family). */
   note?: ReactNode;
+  /** The last card of an odd group: from lg it takes the whole row, its Keys beside its first line. */
+  wide?: boolean;
+  /** A wide card's own sign's star card, inside it from lg (only where that sign's has not shown yet). */
+  plate?: SignId;
   children: ReactNode;
 }) {
   return (
-    <article data-your-planet={body} className="key-card">
-      <div className="flex min-h-touch items-center gap-3">
-        {drawn(body) ? <GlyphIcon glyph={body} size={48} className="shrink-0 text-ink-900" /> : null}
-        <h3 className="type-heading-3 text-ink-900">{name}</h3>
+    <article data-your-planet={body} data-wide={wide ? '' : undefined} className={cn('key-card', wide && 'lg:col-span-2')}>
+      <div
+        className={
+          wide
+            ? cn('lg:grid lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-8', plate ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,10rem)]' : 'lg:grid-cols-2')
+            : undefined
+        }
+      >
+        <div className={cn('flex min-h-touch items-center gap-3', wide && 'lg:col-span-2')}>
+          {drawn(body) ? <GlyphIcon glyph={body} size={48} className="shrink-0 text-ink-900" /> : null}
+          <h3 className="type-heading-3 text-ink-900">{name}</h3>
+        </div>
+        {plate ? (
+          <OldPrint
+            id={`plate-${plate}`}
+            alt={PLATES[plate].alt}
+            sizes="10rem"
+            // A tall star card may reach into the strip at the closed card's foot, beside "Read more" (.key-card-plate).
+            className="key-card-plate hidden self-start lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:block"
+          />
+        ) : null}
+        <div className="mt-3 grid content-start gap-3">{chips}</div>
+        <div className={wide ? 'lg:mt-3' : undefined}>
+          {teaser ? <p className={cn('key-card-teaser mt-3 type-body text-ink-900', wide && 'lg:mt-0')}>{teaser}</p> : null}
+          {note}
+        </div>
       </div>
-      <div className="mt-3 grid gap-3">{chips}</div>
-      {teaser ? <p className="key-card-teaser mt-3 type-body text-ink-900">{teaser}</p> : null}
-      {note}
       <details data-key-card="" className="group">
         <summary>
           <span className="inline-flex min-h-touch items-center gap-1 type-ui font-semibold text-cobalt-600">
@@ -581,7 +625,7 @@ function KeyCard({
             <ChevronDown aria-hidden="true" size={18} strokeWidth={1.75} className="transition-transform duration-200 group-open:rotate-180" />
           </span>
         </summary>
-        <div className="open-in mt-4 border-t border-ink-200 pt-5">{children}</div>
+        <div className={cn('open-in mt-4 border-t border-ink-200 pt-5', wide && 'lg:max-w-measure')}>{children}</div>
       </details>
     </article>
   );

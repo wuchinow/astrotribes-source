@@ -84,7 +84,9 @@ export default async function MemberPage({ params, searchParams }: PageProps<'/m
         <h2 id="their-three" className="type-heading-3 text-ink-900 [overflow-wrap:anywhere]">
           {memberCopy.threeHeading(member.name)}
         </h2>
-        <div className="mt-4 grid gap-6 sm:grid-cols-3">
+        {/* Two to a row between lg and xl, where Say hello stands beside them: three there ran a long
+            sign's chip into the next one. */}
+        <div className="mt-4 grid gap-6 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
           {THREE_KEYS.map((keyId) => {
             const row = theirs.get(keyId === 'sunSign' ? 'sun' : keyId === 'moonSign' ? 'moon' : 'rising');
             return row ? <KeyChip key={keyId} keyId={keyId} value={row.sign} showGloss={firstTime(keyId)} /> : null;
