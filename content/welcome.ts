@@ -63,6 +63,12 @@ export const yourChartCopy = {
   /** On a picked sign: "You chose Leo. Virgo is the other one it could be." */
   picked: (chosen: string, other: string) => `You chose ${chosen}. ${other} is the other sign it could be.`,
   noTime: 'You saved your chart without a birth time, so Rising and the houses wait on one.',
+  // PLACEHOLDER (5c): the three under the wheel, in one panel beside the member's Tribe painting.
+  three: {
+    title: 'Your three',
+    /** With no birth time: the one link beside the note above. */
+    addTime: 'Add your birth time',
+  },
   // PLACEHOLDER: the member's own Keys, one planet at a time as Dawa writes each in full
   // (content/planets.ts). Key names arrive as arguments.
   keys: {
@@ -71,7 +77,20 @@ export const yourChartCopy = {
     // notes (8 and 15), until he re-introduces the section himself (note 1). *word* is his italics.
     line: 'Your planets,',
     accent: 'your Keys.',
-    lede: 'Your horoscope is a snapshot of the solar system at the moment of your birth. In it the Sun, the Moon, and each planet carry an energy (its *sign*) and an area of manifestation (its *house*). Each one gives you two Keys, and each Key unlocks a piece of *your* horoscope’s puzzle.',
+    // 5c: his "snapshot of the solar system" sentence stands once, beside the wheel
+    // (content/chart-wheel.ts), so the introduction no longer opens with it again.
+    lede: 'In your horoscope the Sun, the Moon, and each planet carry an energy (its *sign*) and an area of manifestation (its *house*). Each one gives you two Keys, and each Key unlocks a piece of *your* horoscope’s puzzle.',
+    // PLACEHOLDER (5c, David, Nov 11: short cards that open): the words around the cards.
+    hint: 'Each card starts with a line. Open one to read it in full.',
+    jump: 'Jump to a group',
+    /** The side list's name, from lg (5d). */
+    rail: 'On this page',
+    openAll: 'Open all',
+    closeAll: 'Close all',
+    readMore: 'Read more',
+    showLess: 'Show less',
+    /** For screen readers, after "Read more": "about the Sun" */
+    about: (planet: string) => `about ${the(planet)}`,
     /** "Jupiter in Leo" */
     inSign: (planet: string, sign: string) => `${planet} in ${sign}`,
     /** "Jupiter in house X, Accomplishment" */
@@ -87,13 +106,16 @@ export const yourChartCopy = {
     intro:
       'Uranus, Neptune, and Pluto move so slowly that they stay in a single sign for many years, so their signs are shared by everyone born within a few years of you: your astrological generation. These are your people, your planet-wide families.',
     name: (planet: string, sign: string) => `Your ${planet} family: ${sign}`,
-    years: (from: number, to: number) => `Anyone born between ${from} and ${to} is in it.`,
+    // "belongs to it", so the link under it ("See who else is in it") does not say "is in it" twice.
+    years: (from: number, to: number) => `Anyone born between ${from} and ${to} belongs to it.`,
     members: 'See who else is in it',
     more: { href: '/keys#generational', label: 'How generations work' },
   },
   // The Chinese zodiac sign (3y, admin to-do): a small panel under Your Keys. PLACEHOLDER words for Dawa.
   chinese: {
     title: 'Your Chinese zodiac sign',
+    /** In the side list (5d). */
+    rail: 'Chinese zodiac',
     /** "Fire Horse" */
     name: (element: string, animal: string) => `${element} ${animal}`,
     /** "February 17, 1966" */
@@ -111,10 +133,12 @@ export const yourChartCopy = {
       { href: '/keys', title: 'The 28 Keys', body: 'Each Key unlocks a piece of your horoscope. Read them all.' },
       { href: '/oracle', title: 'The Daily Oracle', body: 'One hexagram and one card, new each day.' },
       { href: '/sky', title: "Today's sky", body: 'Where the Sun, the Moon, and every planet are right now.' },
-      { href: '/members', title: 'Members', body: 'Find the members who share your Keys.' },
+      // 5b: the Council, the main nav's members item (David, Nov 11): the board, members, and messages.
+      { href: '/members/council', title: 'The Council', body: 'Talk with all 12 Tribes on the Council, find the members who share your Keys, and say hello.' },
       { href: '/famous', title: 'Famous charts', body: 'See how your chart meets the charts of famous people from history.' },
     ],
-    shareTitle: 'Share your three',
+    // Not the button's own words ("Share your three"), which stand right beside it.
+    shareTitle: 'Send it to a friend',
     shareBody: 'The link carries your three signs and nothing else: no date, no time, no place.',
     edit: 'Change your birth details',
     addTime: 'Add your birth time',
@@ -127,6 +151,10 @@ export const accountMenuCopy = {
   open: (name: string) => `${name}, account menu`,
   chart: 'Your chart',
   members: 'Members',
+  // 5b: the shared board and hellos/messages. The count is hellos waiting plus unread messages.
+  council: 'The Council',
+  messages: 'Messages',
+  newCount: (count: number) => (count === 1 ? '1 new' : `${count} new`),
   /** Only for someone on the admin list (0004). */
   admin: 'Admin',
   account: 'Account',

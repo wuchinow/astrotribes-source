@@ -8,7 +8,6 @@ import { HexagramSky, OracleStage } from '@/components/oracle/OracleStage';
 import { TarotCard } from '@/components/oracle/TarotCard';
 import { Eyebrow, Headline } from '@/components/Section';
 import { Quote } from '@/components/Quote';
-import { TintPanel } from '@/components/TintPanel';
 import { quoteForDay } from '@/content/quotes';
 import { oracleCopy } from '@/content/oracle/copy';
 import { TRIGRAMS, WINDOW_REACH, dateLabel, dayIndex, hexagram, oracleWindow, type OracleDay } from '@/lib/oracle';
@@ -23,7 +22,8 @@ export const revalidate = 3600;
 /**
  * One day of the Oracle (1i): the eyebrow with the date, the headline, then the pair. From 1024px the
  * card and the hexagram sit side by side as two equal cards, tops aligned, the card on the left;
- * below it they stack, the hexagram first. The hexagram's image and six lines open in a modal.
+ * below it they stack, the hexagram first. The hexagram's image and six lines open in a modal, and
+ * Consult stands at the foot of the hexagram's card.
  */
 function Day({ day }: { day: OracleDay }) {
   const h = hexagram(day.hexagram);
@@ -62,6 +62,21 @@ function Day({ day }: { day: OracleDay }) {
                 allLines={h.reading.allLines}
               />
             </HexagramReading>
+            {/* Consult, in the hexagram's own card (David, Nov 11: "oracle consult should be in iching card
+                as its related and there white space"): at the card's foot, where the card stood empty
+                beside the longer Tarot card. It was a panel of its own under the pair. */}
+            <div className="oracle-consult">
+              <section aria-labelledby={`consult-${day.date}`}>
+                <Eyebrow className="mb-2">{oracleCopy.consult.eyebrow}</Eyebrow>
+                <h3 id={`consult-${day.date}`} className="type-heading-3 text-ink-900">
+                  {oracleCopy.consult.line}
+                </h3>
+                <p className="mt-2 max-w-measure type-body-sm text-ink-700">{oracleCopy.consult.body}</p>
+                <Button href="/oracle/consult" variant="secondary" className="mt-4">
+                  {oracleCopy.consult.action}
+                </Button>
+              </section>
+            </div>
           </article>
         </div>
         <TarotCard id={day.card} headingId={`card-${day.date}`} />
@@ -93,16 +108,6 @@ export default function OraclePage() {
           {days.map((day) => (
             <Day key={day.date} day={day} />
           ))}
-          <TintPanel className="oracle-consult mt-8">
-            <div>
-              <Eyebrow>{oracleCopy.consult.eyebrow}</Eyebrow>
-              <h2 className="type-heading-2 text-ink-900">{oracleCopy.consult.line}</h2>
-              <p className="mt-3 max-w-[56ch] type-body text-ink-700">{oracleCopy.consult.body}</p>
-            </div>
-            <Button href="/oracle/consult" variant="secondary" className="shrink-0">
-              {oracleCopy.consult.action}
-            </Button>
-          </TintPanel>
         </div>
       </OracleStage>
     </>

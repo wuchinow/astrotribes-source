@@ -1,3 +1,4 @@
+import { LIFT } from '@/lib/motion';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
@@ -17,7 +18,7 @@ interface CardProps {
 export function Card({ title, titleAs: Title = 'h3', children, caption, href, className }: CardProps) {
   const classes = cn(
     'block rounded-md border border-ink-200 bg-surface-200 p-4 text-ink-700 shadow-rest md:p-6',
-    href && 'no-underline transition-shadow duration-200 hover:shadow-warm',
+    href && `no-underline ${LIFT}`,
     className,
   );
 

@@ -13,7 +13,7 @@ describe('the export', () => {
       },
       new Date('2026-10-21T12:00:00Z'),
     );
-    expect(Object.keys(out)).toEqual(['format', 'version', 'exportedAt', 'account', 'profile', 'birthData', 'placements']);
+    expect(Object.keys(out)).toEqual(['format', 'version', 'exportedAt', 'account', 'profile', 'birthData', 'placements', 'council', 'hellos', 'messages']);
     expect(out.format).toBe('astrotribes-export');
     expect(out.exportedAt).toBe('2026-10-21T12:00:00.000Z');
     expect(out.placements[0]).toHaveProperty('degree', 1);

@@ -16,6 +16,10 @@ export const RATE_LIMITS = {
   birth: { limit: 10, windowMs: 15 * 60_000 },
   // The feedback form (Nov 9), open to anyone.
   feedback: { limit: 5, windowMs: 15 * 60_000 },
+  // The Council, hellos, and messages (5b). Per IP, on top of the database's own rules.
+  council: { limit: 10, windowMs: 60_000 },
+  hello: { limit: 10, windowMs: 15 * 60_000 },
+  message: { limit: 30, windowMs: 60_000 },
 } as const;
 export type RateLimitName = keyof typeof RATE_LIMITS;
 

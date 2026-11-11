@@ -2,13 +2,15 @@ import { AdminMemberList, type AdminMemberRow } from '@/components/AdminMemberLi
 import { Eyebrow, Headline } from '@/components/Section';
 import { adminCopy } from '@/content/admin';
 import { formatDay, formatMoment, percent, type AdminData } from '@/lib/admin';
+import type { ReactNode } from 'react';
 
 /**
  * What the admin members page shows (0003), given what private.admin_members() returned: three
  * numbers with last week beside each, the member list, and who looked. Dates are written out
- * here, on the server, so the browser renders the same text. It fetches nothing itself.
+ * here, on the server, so the browser renders the same text. It fetches nothing itself. `reports`
+ * is the open reports (5b), read by the page.
  */
-export function AdminDashboard({ data }: { data: AdminData }) {
+export function AdminDashboard({ data, reports }: { data: AdminData; reports?: ReactNode }) {
   const { stats } = data;
   const c = adminCopy;
   const finishedPct = percent(stats.finished, stats.total);
@@ -48,6 +50,8 @@ export function AdminDashboard({ data }: { data: AdminData }) {
           </div>
         ))}
       </dl>
+
+      {reports}
 
       <section aria-labelledby="members-heading" className="mt-14">
         <h2 id="members-heading" className="mb-6 type-heading-2 text-ink-900">

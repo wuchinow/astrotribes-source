@@ -33,6 +33,8 @@ export const membersCopy = {
   failed: "We couldn't load members just now. Try again in a minute.",
   demo: 'Demo',
   more: (count: number) => `and ${count} more`,
+  /** A card's link to a member's page; the name goes in its label, so a long one never wraps the link. */
+  keys: 'Keys you share',
   open: (name: string) => `See the Keys you share with ${name}`,
 };
 

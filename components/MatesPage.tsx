@@ -6,6 +6,7 @@ import { matesCopy as copy } from '@/content/clans';
 import { membersCopy } from '@/content/members';
 import { BODIES, HOUSES, KEYS, SIGNS, type HouseNumber, type SignId } from '@/lib/keys';
 import { the } from '@/content/the';
+import { helloLinks, myHellos } from '@/lib/council';
 import { isFamilyBody, mates, type MatesBody } from '@/lib/mates';
 import { ownPlacements, visibleMembers, type MemberSummary } from '@/lib/members';
 import { topShared } from '@/lib/shared-keys';
@@ -15,8 +16,8 @@ import { memberClient } from '@/lib/supabase/server';
 const link = 'font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4';
 
 /**
- * The Clanmates or Vibemates of one sign (4l), or a generational family (4r: Uranus, Neptune, or Pluto
- * in one sign): a member page under /members, so proxy.ts refreshes
+ * The Clanmates or Vibemates of one sign (4l), a generational family (4r: Uranus, Neptune, or Pluto
+ * in one sign), or a Tribe's members (5b: the Sun in one sign, linked from the Tribe page): a member page under /members, so proxy.ts refreshes
  * the session as on the members list. Checks the session itself (invariant 5) and reads as the member
  * under RLS through visibleMembers, the members list's own read: who appears is decided by
  * private.can_view_member alone, and lib/mates.ts only narrows that list to one sign. No degrees, no
@@ -31,15 +32,22 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
 
   const mine = await ownPlacements(supabase, user.id);
   if (!mine.some((row) => row.body === 'sun')) redirect('/welcome');
-  const members = await visibleMembers(supabase, user.id, mine);
+  const [members, hellos] = await Promise.all([visibleMembers(supabase, user.id, mine), myHellos(supabase)]);
+  const helloAction = helloLinks(hellos, user.id);
 
   const name = SIGNS[sign].name;
   const family = isFamilyBody(body);
   const planet = family ? BODIES[body].name : '';
-  const keyName = body === 'moon' ? KEYS.moonSign.name : KEYS.risingSign.name;
-  const back = family ? `/keys/${body}` : body === 'moon' ? `/clans/${sign}` : `/vibes/${sign}`;
+  const keyName = body === 'sun' ? KEYS.sunSign.name : body === 'moon' ? KEYS.moonSign.name : KEYS.risingSign.name;
+  const back = family ? `/keys/${body}` : body === 'sun' ? `/tribes/${sign}` : body === 'moon' ? `/clans/${sign}` : `/vibes/${sign}`;
   const backLabel = family ? copy.familyBack(the(planet)) : copy.back(name, keyName);
-  const line = family ? copy.familyLine(planet, name) : body === 'moon' ? copy.clanLine(name) : copy.vibeLine(name);
+  const line = family
+    ? copy.familyLine(planet, name)
+    : body === 'sun'
+      ? copy.tribeLine(name)
+      : body === 'moon'
+        ? copy.clanLine(name)
+        : copy.vibeLine(name);
   const found = members ? mates(members, mine, body, sign) : null;
   const firstTime = glossOnce();
   const noTime = body === 'rising' && !mine.some((row) => row.body === 'rising');
@@ -65,6 +73,7 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
           personalCount={member.personalCount}
           points={member.points.total}
           firstTime={firstTime}
+          hello={helloAction(member.id, member.name)}
         />
       ))}
     </ul>
@@ -109,12 +118,19 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
               {cards(group.members)}
             </section>
           ))}
-          <section data-mates-group="all" className="mt-12" aria-labelledby="mates-all">
-            <h2 id="mates-all" className="type-heading-2 text-ink-900">
-              {copy.everyone}
-            </h2>
-            {cards(found.all)}
-          </section>
+          {/* "Everyone" heads the list only under a group set apart above it (audit, Nov 11). */}
+          {found.groups.length > 0 ? (
+            <section data-mates-group="all" className="mt-12" aria-labelledby="mates-all">
+              <h2 id="mates-all" className="type-heading-2 text-ink-900">
+                {copy.everyone}
+              </h2>
+              {cards(found.all)}
+            </section>
+          ) : (
+            <section data-mates-group="all" className="mt-6">
+              {cards(found.all)}
+            </section>
+          )}
         </>
       )}
     </div>

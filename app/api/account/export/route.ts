@@ -31,6 +31,12 @@ export async function GET(request: NextRequest) {
       adminClient().from('placements').select(PLACEMENT_EXPORT_COLUMNS).eq('user_id', user.id),
     ]);
     if (profile.error || birth.error || placements.error) return refuse(500, 'export_failed');
+    // 5b: what the member wrote and the hellos they are in, as the member under RLS. Empty until 0009.
+    const [council, hellos, messages] = await Promise.all([
+      supabase.from('council_posts').select('id, parent_id, body, created_at').eq('author_id', user.id),
+      supabase.from('hellos').select('id, sender_name, recipient_name, note, status, created_at, answered_at'),
+      supabase.from('messages').select('hello_id, body, created_at').eq('sender_id', user.id),
+    ]);
 
     const body = buildExport({
       account: {
@@ -41,6 +47,9 @@ export async function GET(request: NextRequest) {
       profile: profile.data,
       birthData: birth.data,
       placements: placements.data ?? [],
+      council: council.data ?? [],
+      hellos: hellos.data ?? [],
+      messages: messages.data ?? [],
     });
     return new NextResponse(JSON.stringify(body, null, 2), {
       headers: {

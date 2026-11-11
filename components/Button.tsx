@@ -24,7 +24,7 @@ export type ButtonProps = CommonProps &
   ({ href: string; newTab?: boolean } | ({ href?: undefined; newTab?: undefined } & NativeProps));
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-sm border-[1.5px] font-body font-semibold leading-[1.25] no-underline transition-[background-color,color,border-color,outline-color] duration-200 disabled:cursor-not-allowed disabled:opacity-45 aria-disabled:cursor-not-allowed aria-disabled:opacity-45';
+  'inline-flex items-center justify-center gap-2 rounded-sm border-[1.5px] font-body font-semibold leading-[1.25] no-underline transition-[background-color,color,border-color,outline-color,scale] duration-200 motion-safe:active:not-disabled:not-aria-disabled:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45 aria-disabled:cursor-not-allowed aria-disabled:opacity-45';
 
 // Primary (design system v19): the logo's deep plum on Paper with plum-700 on hover; pale cobalt on
 // Night with a cobalt-400 hover (its dark on-cobalt text holds 6.6:1). Primary buttons only: links,
@@ -61,7 +61,10 @@ export function Button({
   const classes = cn(
     base,
     variants[variant],
-    sizes[size],
+    // A tertiary button is a link in a button's shape, so it keeps its own 8px at the sides at every
+    // size: the size's wider padding used to win over it, and its words stood 16px in from the text
+    // above them wherever a page pulled it back by those 8px (`-ml-2`).
+    variant === 'tertiary' ? sizes[size].replace(/(?:^|\s)(?:md:)?px-\d+/g, '') : sizes[size],
     variant === 'tertiary' && 'min-h-touch',
     className,
   );

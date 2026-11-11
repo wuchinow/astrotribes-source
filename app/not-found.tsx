@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 // a lost visitor keeps the nav and the way to every section (UX audit, Nov 4).
 const PLACES = [
   { href: '/', label: 'The home page' },
-  { href: '/#tribes', label: 'The 12 Tribes' },
+  { href: '/tribes', label: 'The 12 Tribes' },
   { href: '/keys', label: 'The 28 Keys' },
   { href: '/oracle', label: 'The Daily Oracle' },
   { href: '/sky', label: "Today's sky" },

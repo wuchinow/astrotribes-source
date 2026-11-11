@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/cn';
-import { PRIMARY_NAV } from '@/lib/site';
+import { MEMBER_NAV, PRIMARY_NAV } from '@/lib/site';
 
 interface NavLinksProps {
   /**
@@ -17,21 +17,28 @@ interface NavLinksProps {
   onNavigate?: () => void;
 }
 
-/** The main nav links. The current page is marked for screen readers and underlined. */
+/**
+ * The main nav links, with the member links first for a signed-in member (5c). The current page is marked
+ * for screen readers and underlined.
+ */
 export function NavLinks({ tone = 'cobalt', className, linkClassName, onNavigate }: NavLinksProps) {
   const pathname = usePathname();
   return (
     <ul className={className}>
-      {PRIMARY_NAV.map((link) => {
+      {[...MEMBER_NAV, ...PRIMARY_NAV].map((link) => {
         const current = !link.href.includes('#') && (pathname === link.href || pathname.startsWith(`${link.href}/`));
         return (
-          <li key={link.href}>
+          // The member links lead the nav for a signed-in member only (5c): `member-only` hides them
+          // from everyone else, from the same before-paint hint that hides what is only for visitors.
+          <li key={link.href} className={MEMBER_NAV.includes(link) ? 'member-only' : undefined}>
             <Link
               href={link.href}
               aria-current={current ? 'page' : undefined}
               onClick={onNavigate}
               className={cn(
-                'inline-flex min-h-touch items-center whitespace-nowrap type-ui underline-offset-[6px] decoration-2 hover:underline hover:decoration-gold-500 aria-[current=page]:underline',
+                // 6px of tap area each side, taken back by the margin, so a short label (Keys) is 44px wide
+                // to a finger and nothing moves.
+                '-mx-1.5 inline-flex min-h-touch items-center px-1.5 whitespace-nowrap type-ui underline-offset-[6px] decoration-2 hover:underline hover:decoration-gold-500 aria-[current=page]:underline',
                 tone === 'ink'
                   ? 'text-ink-900 hover:text-cobalt-600 focus-visible:text-cobalt-600 aria-[current=page]:text-cobalt-600'
                   : 'text-cobalt-600',

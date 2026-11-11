@@ -687,6 +687,110 @@ html[data-member] .guest-only {
 }
 
 /*
+ * And the other way round (5c, David, Nov 11: Your chart in the main nav): an element with
+ * `member-only` shows only for a signed-in member, from the same hint. Display only, never a check.
+ */
+html:not([data-member]) .member-only {
+  display: none;
+}
+
+/*
+ * A grid of cards that never ends on a part-empty row (David, Nov 11: white space). Two to a row from
+ * 40rem and three from 64rem, as the grid's own classes say; `.fill-rows` only widens the last row's
+ * cards to fill it: one card left over takes the whole row, and two left over of three take half each.
+ * Outside the layers, so it wins over the grid's column classes.
+ */
+@media (width >= 40rem) and (width < 64rem) {
+  .fill-rows > :nth-child(odd):last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (width >= 64rem) {
+  .fill-rows {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .fill-rows > * {
+    grid-column: span 2;
+  }
+
+  .fill-rows > :nth-child(3n + 1):nth-last-child(2),
+  .fill-rows > :nth-child(3n + 2):last-child {
+    grid-column: span 3;
+  }
+
+  .fill-rows > :nth-child(3n + 1):last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Your chart's side list (5d): from lg the groups' sections move over to give it room. */
+@media (width >= 64rem) {
+  .rail-scope > section > div:last-child {
+    padding-left: calc(1.5rem + 12rem + 2.5rem);
+  }
+}
+
+/*
+ * A short card on Your chart (5c, David, Nov 11: "short cards that open"): the planet, its two Keys,
+ * and one line; the rest of the text is in a <details> under them. Its summary lies over the whole
+ * closed card, so a tap anywhere opens it, with the words "Read more" at the foot, after the line they
+ * continue (David, Nov 11: "should read more be at bottom of card?"); once open it is only the strip
+ * across the foot, "Show less" where the reading ends, so the text and links above it can be used.
+ * The card's bottom padding keeps that strip clear. The one line goes when the full text shows. A link
+ * in a closed card (`.key-card-link`) sits above the summary.
+ */
+.key-card {
+  position: relative;
+  border: 1px solid var(--ink-200);
+  border-radius: 12px;
+  background-color: var(--surface-200);
+  box-shadow: var(--shadow-rest);
+  padding: 1.25rem 1.25rem calc(2.75rem + 1rem);
+}
+
+.key-card > details > summary {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 1.25rem 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.key-card > details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.key-card > details[open] > summary {
+  top: auto;
+  border-radius: 0 0 12px 12px;
+}
+
+.key-card:has(> details[open]) .key-card-teaser {
+  display: none;
+}
+
+.key-card-link {
+  position: relative;
+  z-index: 1;
+}
+
+@media (width >= 48rem) {
+  .key-card {
+    padding: 1.5rem 1.5rem calc(2.75rem + 1.25rem);
+  }
+
+  .key-card > details > summary {
+    padding: 0 1.5rem 0.75rem;
+  }
+}
+
+/*
  * The Daily Oracle (1c): the stage, the framed hexagram header, the reading, the card, and Consult.
  * Which of the five built days shows is set per page by lib/oracle-head.ts.
  */
@@ -843,18 +947,21 @@ html[data-member] .guest-only {
     overflow: hidden;
   }
 
-  /* Consult: a full-width row under the pair, its button beside the words from 768px. */
-  .oracle-consult {
-    display: grid;
-    gap: 1.5rem;
-    align-items: center;
+  /* Consult at the foot of the hexagram's card (David, Nov 11): the card is a column, so it sits at
+     the bottom of whatever room the longer Tarot card leaves, under a rule. */
+  .oracle-hex .oracle-card {
+    display: flex;
+    flex-direction: column;
   }
 
-  @media (width >= 48rem) {
-    .oracle-consult {
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 2rem;
-    }
+  .oracle-consult {
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+
+  .oracle-consult > section {
+    border-top: 1px solid var(--ink-200);
+    padding-top: 1.5rem;
   }
 
   /* The framed header (design system, Reading card): a hairline ink frame (the brush corners went, David, Oct 21). */
@@ -1087,5 +1194,79 @@ html[data-member] .guest-only {
 
   .consult-bar-broken {
     background: linear-gradient(90deg, var(--ink-900) 42%, transparent 42% 58%, var(--ink-900) 58%);
+  }
+}
+
+/*
+ * Micro motion (David, Nov 11: "micro animations ... feel responsive without creating lag"). Every
+ * one answers a tap or a hover, so none starts with the page and none hides anything waiting for it
+ * (the 4z rule, CLAUDE.md, Design rules, Motion). Transform and opacity only, so the browser moves a
+ * layer and never lays the page out again, and only under no-preference: with reduced motion the
+ * state still changes, at once. Outside the layers, beside `.key-card`. The press on buttons and the
+ * lift on linked cards are Tailwind utilities (`Button`, `lib/motion.ts`).
+ */
+@media (prefers-reduced-motion: no-preference) {
+  /* A form on its way (`SubmitButton`): the pressed button breathes until the page comes back. */
+  .is-sending {
+    animation: sending 0.9s ease-in-out infinite alternate;
+  }
+
+  @keyframes sending {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.6;
+    }
+  }
+
+  /* What a tap opened settles in: the chart wheel's panel, a short card's reading, an FAQ answer. */
+  .motion-in,
+  details[open] > .open-in {
+    animation: settle-in 0.24s ease-out;
+  }
+
+  @keyframes settle-in {
+    from {
+      opacity: 0.35;
+      transform: translateY(-4px);
+    }
+  }
+
+  /* The planet picked on a chart wheel lifts a little, like the hero wheel's glyphs. */
+  .wheel-pick {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform var(--duration-fast) ease-out;
+  }
+
+  .wheel-pick[data-on] {
+    transform: scale(1.12);
+  }
+
+  /* Consult: each line cast draws out from its center as the coins land. */
+  .consult-stack .consult-bar {
+    animation: line-draw 0.32s ease-out;
+  }
+
+  @keyframes line-draw {
+    from {
+      opacity: 0.4;
+      transform: scaleX(0.2);
+    }
+  }
+
+  /* The phone menu drops in. A browser without @starting-style opens it at once, as before. */
+  .menu-drop {
+    transition:
+      opacity var(--duration-fast) ease-out,
+      transform var(--duration-fast) ease-out;
+  }
+
+  @starting-style {
+    .menu-drop {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
   }
 }

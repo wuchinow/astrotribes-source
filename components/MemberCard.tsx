@@ -19,13 +19,15 @@ interface MemberCardProps {
   points: number;
   /** True the first time a key appears on the screen, so its gloss shows once. */
   firstTime: (keyId: string) => boolean;
+  /** Where the two of you stand on a hello (5b): a link to say hello, answer, or message, or a quiet note. */
+  hello?: { href?: string; text: string; label?: string };
 }
 
 /** One member on the members list (3g, 3p): name, Tribe, your connection points, how many Keys you share, and the first few with their gloss. */
-export function MemberCard({ href, name, isDemo, sun, top, personalCount, points, firstTime }: MemberCardProps) {
+export function MemberCard({ href, name, isDemo, sun, top, personalCount, points, firstTime, hello }: MemberCardProps) {
   const more = personalCount - top.length;
   return (
-    <li className="grid min-w-0 content-start gap-4 rounded-md border border-ink-200 bg-surface-200 p-4 shadow-rest md:p-6">
+    <li className="flex min-w-0 flex-col gap-4 rounded-md border border-ink-200 bg-surface-200 p-4 shadow-rest md:p-6">
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="min-w-0 type-heading-3 text-ink-900 [overflow-wrap:anywhere]">{name}</h2>
         {isDemo ? <span className="type-label text-ink-500">{membersCopy.demo}</span> : null}
@@ -43,13 +45,29 @@ export function MemberCard({ href, name, isDemo, sun, top, personalCount, points
           {more > 0 ? <p className="type-caption text-ink-500">{membersCopy.more(more)}</p> : null}
         </div>
       ) : null}
-      {href ? (
-        <Link
-          href={href}
-          className="inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
-        >
-          {membersCopy.open(name)}
-        </Link>
+      {href || hello ? (
+        <div className="mt-auto flex flex-wrap items-center gap-x-6">
+          {hello?.href ? (
+            <Link
+              href={hello.href}
+              aria-label={hello.label}
+              className="inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+            >
+              {hello.text}
+            </Link>
+          ) : hello ? (
+            <p className="inline-flex min-h-touch items-center type-body-sm text-ink-700">{hello.text}</p>
+          ) : null}
+          {href ? (
+            <Link
+              href={href}
+              aria-label={membersCopy.open(name)}
+              className="inline-flex min-h-touch items-center type-ui font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+            >
+              {membersCopy.keys}
+            </Link>
+          ) : null}
+        </div>
       ) : null}
     </li>
   );

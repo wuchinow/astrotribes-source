@@ -88,7 +88,7 @@ export default async function LearnPage() {
           {SERIES_TITLE}
         </h2>
         <Lede className="mt-4">{copy.seriesLede}</Lede>
-        <ol role="list" className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <ol role="list" className="fill-rows mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {SERIES.map((article, index) => (
             <ArticleCard key={article.url} article={article} eyebrow={copy.part(index + 1)} />
           ))}
@@ -99,7 +99,7 @@ export default async function LearnPage() {
         <h2 id="learn-articles" className="type-display-lg text-ink-900">
           {copy.articlesHeading}
         </h2>
-        <ul role="list" className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <ul role="list" className="fill-rows mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {ARTICLES.map((article) => (
             <ArticleCard key={article.url} article={article} />
           ))}

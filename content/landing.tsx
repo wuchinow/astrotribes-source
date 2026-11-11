@@ -23,7 +23,9 @@ export const hero = {
   note: 'Sign in with Google, then add your birth details. About a minute.',
   pins: [
     { href: '/oracle', title: 'Daily Oracle', line: 'One hexagram, one card', mark: 'hexagram' },
-    { href: '/#tribes', title: 'Find your Tribe', line: 'Twelve homes, one is yours', mark: 'sign' },
+    // The 12 Tribes page, like the nav's link and the pin beside it, which opens a page too (it jumped
+    // down this page to the Tribes section, which stays and ends with its own link to that page).
+    { href: '/tribes', title: 'Find your Tribe', line: 'Twelve homes, one is yours', mark: 'sign' },
   ],
 } satisfies Block & Record<string, unknown>;
 
@@ -79,6 +81,8 @@ export const tribes = {
   lede: 'Your Tribe is your Sun sign.',
   /** Under the grid, with the primary action beside it (1h). The dates are the usual ones; this says so. */
   closing: 'Born near a change of sign? Your chart knows for sure.',
+  /** To the 12 Tribes page, which says more about each (David, Nov 11). */
+  more: { href: '/tribes', label: 'More about the 12 Tribes' },
 } satisfies Block & Record<string, unknown>;
 
 export const keys = {

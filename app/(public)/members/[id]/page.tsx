@@ -6,11 +6,13 @@ import { Eyebrow, Headline } from '@/components/Section';
 import { KeyChip } from '@/components/KeyChip';
 import { PointsBreakdown } from '@/components/PointsBreakdown';
 import { glossOnce } from '@/components/MemberCard';
+import { HelloPanel, SafetyPanel } from '@/components/HelloPanel';
 import { SharedKeys } from '@/components/SharedKeys';
 import { TribeBadge } from '@/components/TribeBadge';
 import { ZodiacJade } from '@/components/ZodiacJade';
 import { memberCopy, membersCopy, pointsCopy, pointsCount } from '@/content/members';
 import { BODIES, KEYS, SIGNS } from '@/lib/keys';
+import { hasBlocked, helloWith } from '@/lib/council';
 import { FAMILY_BODIES } from '@/lib/mates';
 import { memberAnimal, ownPlacements, visibleMember } from '@/lib/members';
 import { hasBirthTime } from '@/lib/shared-keys';
@@ -31,9 +33,10 @@ const pageLink =
  * (3p) and every Key the two of you share, in the six groups of the 28 Keys page, with the outer
  * planets' sign keys apart, then how the points add up. Read as the
  * viewer under RLS: a member the database does not let you see is a 404, the same as one who does
- * not exist, so the page never says which. Checks the session itself (invariant 5).
+ * not exist, so the page never says which. Say hello, block, and report (5b, 0009) sit under the
+ * badge and at the foot. Checks the session itself (invariant 5).
  */
-export default async function MemberPage({ params }: PageProps<'/members/[id]'>) {
+export default async function MemberPage({ params, searchParams }: PageProps<'/members/[id]'>) {
   if (!supabaseConfigured()) redirect('/sign-in?error=off');
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
@@ -46,7 +49,13 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
   if (!mine.some((row) => row.body === 'sun')) redirect('/welcome');
   const member = await visibleMember(supabase, id, mine);
   if (!member) notFound();
-  const animal = await memberAnimal(supabase, id);
+  const [animal, hello, blocked, query] = await Promise.all([
+    memberAnimal(supabase, id),
+    helloWith(supabase, user.id, id),
+    hasBlocked(supabase, user.id, id),
+    searchParams,
+  ]);
+  const flag = (key: string) => (typeof query[key] === 'string' ? (query[key] as string) : null);
 
   const sun = member.placements.find((row) => row.body === 'sun')!;
   const theirs = new Map(member.placements.map((row) => [row.body, row]));
@@ -67,6 +76,10 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
       <Headline as="h1" line={<span className="[overflow-wrap:anywhere]">{member.name}</span>} accent={memberCopy.accent} />
       <TribeBadge sign={sun.sign} element={SIGNS[sun.sign].element} label={SIGNS[sun.sign].name} />
 
+      {/* Who they are, with Say hello beside it from lg (on a phone, after it), so the panel fills the
+          room the three Keys leave and a card's Say hello link still lands near the top. */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-x-16">
+      <div>
       <section aria-labelledby="their-three" className="mt-10">
         <h2 id="their-three" className="type-heading-3 text-ink-900 [overflow-wrap:anywhere]">
           {memberCopy.threeHeading(member.name)}
@@ -125,6 +138,13 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
         </section>
       ) : null}
 
+      </div>
+      {/* Say hello (5b): only once the database has the tables, and not to someone you blocked. */}
+      {hello.state === 'ok' && !blocked ? (
+        <HelloPanel me={user.id} memberId={id} name={member.name} hello={hello.value} status={flag('hello')} />
+      ) : null}
+      </div>
+
       <section aria-labelledby="shared-heading" className="mt-12 border-t border-ink-200 pt-10">
         <h2 id="shared-heading" className="type-display-lg max-w-[22ch] text-ink-900">
           {memberCopy.sharedHeading}
@@ -156,6 +176,8 @@ export default async function MemberPage({ params }: PageProps<'/members/[id]'>)
           <PointsBreakdown points={member.points} firstTime={firstTime} noTime={!myTime || !theirTime} />
         </div>
       </section>
+
+      {hello.state === 'ok' ? <SafetyPanel memberId={id} name={member.name} blocked={blocked} status={flag('safety')} /> : null}
 
       <div className="mt-12">
         <Button href="/members" variant="secondary">

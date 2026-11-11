@@ -9,12 +9,13 @@ import { Eyebrow, Headline, Lede, Section } from '@/components/Section';
 import { TintPanel } from '@/components/TintPanel';
 import { TribeBadge } from '@/components/TribeBadge';
 import { TribeCard } from '@/components/TribeCard';
+import { TribeMembers } from '@/components/TribeMembers';
 import { TribePainting } from '@/components/TribePainting';
 import { famousByName } from '@/content/famous-charts';
 import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { SUN_STORIES } from '@/content/sun-stories';
 import { TRIBE_DAWA, starList } from '@/content/tribe-dawa';
-import { TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
+import { SIGN_PLURALS, TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
 import { clanLinks } from '@/content/clans';
 import { TribeNewsFlash } from '@/components/TribeNewsFlash';
 import { tribeNews } from '@/lib/tribe-news';
@@ -27,6 +28,8 @@ import { PRIMARY_ACTION } from '@/lib/site';
 // pass: every section is finished content today (the sign's signature, with Dawa's shadow side under
 // its strengths; how the keys split a Tribe; questions to bring; the element family), and what
 // arrives with members is one band, said as a promise rather than as empty placeholders. Static: no database.
+// A signed-in member also sees the Tribe's members under the famous names (5b), through an island
+// (components/TribeMembers.tsx) that asks a session-checked route, so the page itself stays static.
 //
 // Art (David, Nov 4): Kirstie Connon's paintings belong to the Tribes, the ink landscapes to the backgrounds. The
 // hero carries Kirstie's painting of the sign, framed and credited under it, the one painting in the
@@ -214,17 +217,19 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
                 </p>
               ))}
             </div>
-            {/* Astro humor (4r, Dawa's Nov 7 note 19): three of our lines beside a Grandville engraving (4j), until his cartoons. */}
-            <div className="mt-10 grid items-center gap-6 sm:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
+            {/* Astro humor (4r, Dawa's Nov 7 note 19): three of our lines beside a Grandville engraving (4j), until his cartoons.
+                From lg the engraving stands in the other column, under the News Flash (below): beside
+                the lines it made this column three times the News Flash's height, with nothing under it. */}
+            <div className="mt-10 grid items-center gap-6 sm:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:block">
               <OldPrint
                 id={`cartoon-${TRIBE_CARTOON[sign]}`}
                 alt={CARTOONS[TRIBE_CARTOON[sign]].alt}
                 sizes="(min-width: 40rem) 17rem, calc(100vw - 2rem)"
-                className="max-w-[17rem]!"
+                className="max-w-[17rem]! lg:hidden"
               />
               <figure className="border-l-2 border-gold-500 pl-5">
                 <figcaption className="type-label text-ink-500">{copy.signature.smileLabel}</figcaption>
-                <ul role="list" className="mt-2 grid max-w-[40ch] gap-4">
+                <ul role="list" className="mt-2 grid max-w-[40ch] gap-4 lg:max-w-[56ch]">
                   {[words.smile, ...words.jokes].map((line) => (
                     <li key={line} className="font-display text-[1.375rem] italic leading-snug text-ink-900">
                       {line}
@@ -234,14 +239,23 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
               </figure>
             </div>
           </div>
-          <TribeNewsFlash sign={sign} news={news} />
+          {/* The engravings differ in shape, so this one centers in whatever room the other column leaves. */}
+          <div className="flex flex-col gap-8">
+            <TribeNewsFlash sign={sign} news={news} />
+            <OldPrint
+              id={`cartoon-${TRIBE_CARTOON[sign]}`}
+              alt={CARTOONS[TRIBE_CARTOON[sign]].alt}
+              sizes="24rem"
+              className="hidden lg:m-auto lg:block"
+            />
+          </div>
         </div>
       </Section>
 
       <Section labelledBy="famous-title" backdrop={{ gradient: true }}>
         <Eyebrow>{copy.famous.eyebrow}</Eyebrow>
         <h2 id="famous-title" className="type-heading-2 font-normal text-ink-900">
-          {copy.famous.title(name)}
+          {copy.famous.title(SIGN_PLURALS[sign])}
         </h2>
         <p className="mt-2 type-body-sm text-ink-500">{copy.famous.lede}</p>
         <ul role="list" className="mt-6 columns-2 gap-x-6 sm:columns-3 lg:columns-4">
@@ -263,6 +277,22 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
             );
           })}
         </ul>
+        {/* A Tribe's members (5b), for a signed-in member only: an island, so the page stays static. */}
+        <TribeMembers
+          sign={sign}
+          words={{
+            eyebrow: copy.members.eyebrow,
+            title: copy.members.title(name),
+            emptyTitle: copy.members.emptyTitle(name),
+            lede: copy.members.lede,
+            council: copy.members.council,
+            all: copy.members.all(name),
+            empty: copy.members.empty(name),
+            noChart: copy.members.noChart,
+            start: copy.members.start,
+            failed: copy.members.failed,
+          }}
+        />
       </Section>
 
       <Section labelledBy="people-title" band backdrop={{ sky: 'andromeda' }}>
@@ -311,7 +341,8 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
             </li>
           ))}
         </ol>
-        <div className="mt-10">
+        {/* For visitors only: a member already sees the Tribe's members above and has the Council. */}
+        <div className="guest-only mt-10">
           <NightBand
             id="opening-title"
             eyebrow={copy.opening.eyebrow}

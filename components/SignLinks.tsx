@@ -1,3 +1,4 @@
+import { LIFT } from '@/lib/motion';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
 import { SIGN_IDS, SIGNS, type SignId } from '@/lib/keys';
@@ -43,7 +44,7 @@ export function SignLinks({ base, title, lines, current, className }: SignLinksP
             ) : (
               <Link
                 href={`${base}/${sign}`}
-                className={cn(box, 'border-ink-200 bg-surface-200 no-underline shadow-rest transition-shadow duration-200 hover:shadow-warm')}
+                className={cn(box, `border-ink-200 bg-surface-200 no-underline shadow-rest ${LIFT}`)}
               >
                 {inner}
               </Link>

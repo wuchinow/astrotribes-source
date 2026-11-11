@@ -68,12 +68,12 @@ export function MobileMenu() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-6rem)] overflow-y-auto border-b border-ink-200 bg-surface-100 shadow-warm"
+        className="menu-drop absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-6rem)] overflow-y-auto border-b border-ink-200 bg-surface-100 shadow-warm"
       >
         <div className="mx-auto max-w-content px-4 py-2">
           {/* On a phone the primary action moves in here, so the logo has room in the bar (David, Nov 9). */}
           <GuestOnly>
-            <div className="pt-2 pb-3 sm:hidden">
+            <div className="guest-only pt-2 pb-3 sm:hidden">
               <Button href={PRIMARY_ACTION.href}>
                 {PRIMARY_ACTION.label}
               </Button>

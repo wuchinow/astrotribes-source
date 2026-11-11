@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { FramedArt } from '@/components/FramedArt';
@@ -12,6 +11,7 @@ import { SkyWindow, type SkyWindowId } from '@/components/SkyWindow';
 import { TintPanel } from '@/components/TintPanel';
 import { EXAMPLE_CHART } from '@/content/keys-example';
 import { keysPage } from '@/content/keys-page';
+import { privacyFaq } from '@/content/landing';
 import { planetHref, planetPage, planetPageCopy } from '@/content/planets';
 import { clanLinks } from '@/content/clans';
 import { cn } from '@/lib/cn';
@@ -40,6 +40,8 @@ export const metadata: Metadata = { title: keysPage.metaTitle, description: keys
 const anchor = (group: BodyGroup) => group.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 
 const HOUSES_ID = 'houses';
+/** Dawa's answer on birth times, the landing page's own (one place for the words). */
+const birthTimeAnswer = privacyFaq.items.find((item) => item.id === 'faq-birth-time')?.answer;
 
 const { placements: example } = EXAMPLE_CHART;
 const surname = EXAMPLE_CHART.name.split(' ').at(-1)!;
@@ -187,12 +189,19 @@ export default function KeysPage() {
                 <dd className="mt-1 type-body-sm text-ink-700">{keysPage.strip.time.body(withTime)}</dd>
               </div>
             </dl>
-            <Link
-              href={keysPage.strip.more.href}
-              className="mt-2 inline-flex min-h-touch items-center type-ui text-cobalt-600 underline-offset-4 hover:underline"
-            >
-              {keysPage.strip.more.label}
-            </Link>
+            {/* The answer opens here, where it is asked (it led away to the landing page's questions):
+                the same words as that page's answer, from the same place. */}
+            {birthTimeAnswer ? (
+              <details className="group mt-2 max-w-measure">
+                <summary className="inline-flex min-h-touch cursor-pointer list-none items-center gap-2 type-ui text-cobalt-600 underline-offset-4 [&::-webkit-details-marker]:hidden [&:hover>span:first-child]:underline">
+                  <span>{keysPage.strip.more.label}</span>
+                  <span aria-hidden="true" className="text-[1.25rem] leading-none font-normal transition-transform duration-200 group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="open-in pb-2 type-body-sm text-ink-700">{birthTimeAnswer}</div>
+              </details>
+            ) : null}
 
             <nav aria-label={keysPage.contents} className="mt-4 lg:hidden">
               <p className="type-label text-ink-500">{keysPage.contents}</p>

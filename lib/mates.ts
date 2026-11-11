@@ -3,6 +3,8 @@
 // sign in one sign, with those who also share the viewer's Tribe, Vibe or Clan, or Hearth set apart.
 // Generational families (4r, Dawa's punch list: "click-through to all members in each family regardless
 // of Tribe"): the same, for Uranus, Neptune, or Pluto in one sign, with the viewer's Tribe set apart.
+// A Tribe's members (5b, David, Nov 11: "i should see dawa in aries, right?"): the same, for the Sun,
+// with those who also share the viewer's Clan or Vibe set apart.
 // Pure: no database, so it is tested on its own. It never widens who is visible, only narrows.
 import type { HouseNumber, SignId } from './keys';
 import type { PlacementRow } from './shared-keys';
@@ -10,7 +12,7 @@ import type { PlacementRow } from './shared-keys';
 /** The fewest people a group total is shown for, so a small group can't single anyone out (plan, Nov 8). */
 export const MIN_TOTAL = 5;
 
-export type MatesBody = 'moon' | 'rising' | FamilyBody;
+export type MatesBody = 'sun' | 'moon' | 'rising' | FamilyBody;
 
 /** The generational planets, whose sign makes a family. */
 export const FAMILY_BODIES = ['uranus', 'neptune', 'pluto'] as const;
@@ -52,6 +54,13 @@ export function mates<T extends WithPlacements>(members: readonly T[], mine: rea
     if (list.length > 0) groups.push({ kind, value, members: list });
   };
   const mySun = signOf(mine, 'sun');
+  if (body === 'sun') {
+    const myMoon = signOf(mine, 'moon');
+    add('clan', myMoon, (m) => signOf(m.placements, 'moon') === myMoon);
+    const myRising = signOf(mine, 'rising');
+    add('vibe', myRising, (m) => signOf(m.placements, 'rising') === myRising);
+    return finish(all, groups, mine, body, sign);
+  }
   add('tribe', mySun, (m) => signOf(m.placements, 'sun') === mySun);
   if (body === 'moon') {
     const myRising = signOf(mine, 'rising');
@@ -63,6 +72,10 @@ export function mates<T extends WithPlacements>(members: readonly T[], mine: rea
     const myMoon = signOf(mine, 'moon');
     add('clan', myMoon, (m) => signOf(m.placements, 'moon') === myMoon);
   }
+  return finish(all, groups, mine, body, sign);
+}
+
+function finish<T>(all: T[], groups: MatesGroup<T>[], mine: readonly PlacementRow[], body: MatesBody, sign: SignId): Mates<T> {
   const count = all.length + (signOf(mine, body) === sign ? 1 : 0);
   return { all, groups, total: count >= MIN_TOTAL ? count : null };
 }

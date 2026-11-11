@@ -1,6 +1,6 @@
 import { memberCopy, sharedCount } from '@/content/members';
-import { BODY_GROUPS, bodiesIn } from '@/lib/keys';
-import { splitShared, type SharedKey } from '@/lib/shared-keys';
+import { BODY_GROUPS } from '@/lib/keys';
+import { groupShared, splitShared, type SharedKey } from '@/lib/shared-keys';
 import { KeyChip } from './KeyChip';
 
 /**
@@ -27,10 +27,7 @@ export function SharedKeys({
         <p className="mt-6 max-w-[56ch] type-body text-ink-700">{memberCopy.sharedNone}</p>
       ) : (
         <div className="mt-8 grid gap-10">
-          {BODY_GROUPS.filter((group) => group.id !== 'generational').map((group) => {
-            const bodies = new Set(bodiesIn(group.id));
-            const list = personal.filter((s) => bodies.has(s.key.body));
-            if (list.length === 0) return null;
+          {groupShared(personal).map(({ group, list }) => {
             return (
               <div key={group.id}>
                 <h3 className="type-label text-ink-500">{group.name}</h3>
