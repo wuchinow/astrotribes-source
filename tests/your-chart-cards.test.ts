@@ -5,6 +5,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { PLANET_PAGES, TEASER_MAX, paragraphs, teaserLine } from '@/content/planets';
 import { knownFor } from '@/content/tribe-dawa';
+import { TRIBE_WORDS, tribePage } from '@/content/tribes';
 import { SIGN_IDS } from '@/lib/keys';
 import { MEMBER_NAV, PRIMARY_NAV } from '@/lib/site';
 
@@ -49,7 +50,7 @@ describe('a short card on Your chart (5c)', () => {
   it('keeps the whole text one tap away in a native <details>, with the summary over the closed card', () => {
     const page = read('app/(public)/your-chart/page.tsx');
     expect(page).toMatch(/<details data-key-card=""/);
-    expect(page).toMatch(/className="key-card"/);
+    expect(page).toMatch(/className=\{cn\('key-card', /);
     const css = read('app/globals.css');
     expect(css).toMatch(/\.key-card > details > summary \{[^}]*position: absolute;[^}]*inset: 0;/);
     // "Read more" stands at the card's foot, and once open the summary is only the strip there.
@@ -69,12 +70,25 @@ describe('a group of one card (David, Nov 11)', () => {
     expect(page).toContain('id={`your-group-${of.id}`}');
   });
 
-  it("never leaves a group's last card alone in its row: its sign's star card stands beside it (the audit, Nov 11)", () => {
+  it("never leaves a group's last card alone in its row: it takes the whole row (5e)", () => {
     const page = read('app/(public)/your-chart/page.tsx');
-    expect(page).toMatch(/const lone = cards % 2 === 1/);
-    expect(page).toMatch(/\{lone \? \(\s*<OldPrint\s+id=\{`plate-\$\{lone\.sign\}`\}[\s\S]*?hidden[^"]*lg:block/);
-    // The card it stands beside does not show the same star card again inside.
-    expect(page).toMatch(/beside && 'lg:hidden'/);
+    expect(page).toMatch(/return bodies\.length % 2 === 1 \? bodies\[bodies\.length - 1\] : undefined;/);
+    expect(page).toMatch(/cn\('key-card', wide && 'lg:col-span-2'\)/);
+    // No star card stands loose in the grid any more.
+    expect(page).not.toMatch(/sizes="20rem"/);
+  });
+
+  it('shows each star card once on the page (David, Nov 11: "cancer plate twice")', () => {
+    const page = read('app/(public)/your-chart/page.tsx');
+    // The Sun sign's is the one beside the Keys introduction, so no card shows it again.
+    expect(page).toMatch(/backdrop=\{\{ print: `plate-\$\{sun\.sign\}` \}\}/);
+    expect(page).toMatch(/const platesShown = new Set<SignId>\(\[sun\.sign\]\);/);
+    expect(page).toMatch(/if \(!sign \|\| platesShown\.has\(sign\)\) return;/);
+    // Wide cards choose first (theirs shows closed), then the rest in page order.
+    expect(page).toMatch(/wides\.forEach\(claimPlate\);\s*groupsShown\.flatMap\(\(group\) => cardsIn\(group\.id\)\)\.forEach\(claimPlate\);/);
+    // Every star card a card shows comes from that one plan.
+    expect(page.match(/id=\{`plate-\$\{[^}]+\}`\}/g)).toEqual(['id={`plate-${sign}`}', 'id={`plate-${plate}`}']);
+    expect(page).toMatch(/plate=\{wide \? plateOf\.get\(planet\.body\) : undefined\}/);
   });
 
   it('fills the last row of the next steps and of Learn, whatever the count', () => {
@@ -179,5 +193,28 @@ describe('links that keep their promise (the audit, Nov 11)', () => {
 
   it('lets the user menu grow to fit a long name before it wraps', () => {
     expect(read('components/HeaderAccount.tsx')).toMatch(/w-max[^"']*max-w-\[min\(20rem,calc\(100vw-2rem\)\)\]/);
+  });
+});
+
+describe('the member pages (5e, David, Nov 11: "no bg for main section")', () => {
+  it('carry an ink landscape at the right from lg, never under words', () => {
+    const layout = read('app/(public)/members/layout.tsx');
+    expect(layout).toMatch(/<div data-backdrop-from="lg" className="backdrop-region">\s*<BackdropLayer backdrop=\{\{ art: 'p8'[^}]*\}\} reach="screen" \/>/);
+    const css = read('app/globals.css');
+    expect(css).toMatch(/@media \(width < 64rem\) \{\s*\[data-backdrop-from="lg"\] > \.backdrop-layer\[data-reach="screen"\] \{\s*display: none;/);
+    expect(css).toMatch(/\[data-backdrop-from="lg"\] > \.backdrop-layer\[data-reach="screen"\] \{[^}]*height: min\(calc\(100% - 8rem\), 44rem\);/);
+    // What stands in the right column of a member page is on a card.
+    expect(read('components/HelloPanel.tsx')).toMatch(/id="hello"[\s\S]{0,120}className="[^"]*bg-surface-200[^"]*"/);
+    expect(read('app/(public)/members/messages/page.tsx')).toMatch(/<aside className="[^"]*bg-surface-200[^"]*">/);
+  });
+});
+
+describe("a Tribe's people in a sentence", () => {
+  it('keep their capital letter ("Meet your fellow Scorpios")', () => {
+    for (const words of Object.values(TRIBE_WORDS)) {
+      const titles = tribePage.opening.items(words.fellows, 'Scorpio').map((item) => item.title);
+      expect(titles.some((title) => title.includes(words.fellows)), words.fellows).toBe(true);
+      expect(words.fellows[0]).toBe(words.fellows[0].toUpperCase());
+    }
   });
 });

@@ -80,7 +80,7 @@ export function HelloPanel({
     body = (
       <div className="mt-3">
         <p className="type-body-sm text-ink-700 [overflow-wrap:anywhere]">{helloCopy.theyWrote(name)}</p>
-        <p className="mt-2 max-w-measure whitespace-pre-line rounded-md border border-ink-200 bg-surface-200 p-4 type-body text-ink-900 [overflow-wrap:anywhere]">
+        <p className="mt-2 max-w-measure whitespace-pre-line rounded-md border border-ink-200 bg-surface-100 p-4 type-body text-ink-900 [overflow-wrap:anywhere]">
           {hello.note}
         </p>
         <form action={answerHello} className="mt-3 flex flex-wrap gap-3">
@@ -97,7 +97,13 @@ export function HelloPanel({
   }
 
   return (
-    <section id="hello" aria-labelledby="hello-heading" className="mt-10 max-w-[40rem] scroll-mt-28">
+    // On a card: beside a member's three Keys it stands where the page's picture is (5e), and words
+    // never sit on a picture.
+    <section
+      id="hello"
+      aria-labelledby="hello-heading"
+      className="mt-10 max-w-[40rem] scroll-mt-28 self-start rounded-md border border-ink-200 bg-surface-200 p-5 shadow-rest md:p-6"
+    >
       <h2 id="hello-heading" className="type-heading-3 text-ink-900">
         {helloCopy.heading}
       </h2>
