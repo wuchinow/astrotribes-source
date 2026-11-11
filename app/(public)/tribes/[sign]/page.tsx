@@ -14,12 +14,15 @@ import { TribePainting } from '@/components/TribePainting';
 import { famousByName } from '@/content/famous-charts';
 import { TRIBE_FAMOUS } from '@/content/tribe-famous';
 import { SUN_STORIES } from '@/content/sun-stories';
-import { TRIBE_DAWA, starList } from '@/content/tribe-dawa';
+import { TRIBE_DAWA } from '@/content/tribe-dawa';
 import { SIGN_PLURALS, TRIBE_WORDS, tribePage as copy } from '@/content/tribes';
 import { clanLinks } from '@/content/clans';
 import { TribeNewsFlash } from '@/components/TribeNewsFlash';
 import { tribeNews } from '@/lib/tribe-news';
-import { houseOf, KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
+import { cn } from '@/lib/cn';
+import { KEYS, SIGN_IDS, SIGNS, signDates, type SignId } from '@/lib/keys';
+import { PLATE_BESIDE } from '@/lib/tribe-columns';
+import { tribeFacts, tribeHelloColumns } from '@/lib/tribe-facts';
 import { GuestOnly, PrimaryAction } from '@/components/HeaderAccount';
 import { CARTOONS, PLATES, TRIBE_CARTOON } from '@/lib/old-prints';
 import { PRIMARY_ACTION } from '@/lib/site';
@@ -61,6 +64,15 @@ export async function generateMetadata({ params }: PageProps<'/tribes/[sign]'>):
   return { title: copy.metaTitle(name), description: copy.description(name) };
 }
 
+/** The star card's width under the facts from lg, as lib/tribe-columns.ts picks it; a phone shows it whole. */
+const PLATE_WIDTH = {
+  24: undefined,
+  20: 'lg:max-w-[20rem]!',
+  16: 'lg:max-w-[16rem]!',
+  14: 'lg:max-w-[14rem]!',
+  12: 'lg:max-w-[12rem]!',
+} as const;
+
 const textLink = 'inline-flex min-h-touch items-center gap-2 type-ui text-cobalt-600 underline-offset-4 hover:underline';
 
 export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>) {
@@ -70,7 +82,6 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
   const def = SIGNS[sign];
   const words = TRIBE_WORDS[sign];
   const dawa = TRIBE_DAWA[sign];
-  const house = houseOf(dawa.house);
   const news = tribeNews(sign);
   const name = def.name;
   const element = copy.element[def.element];
@@ -79,6 +90,28 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
   const next = SIGN_IDS[(index + 1) % 12];
   const family = SIGN_IDS.filter((s) => SIGNS[s].element === def.element);
   const others = family.filter((s) => s !== sign).map((s) => SIGNS[s].name);
+  // Where the star card and "Did you know?" stand in the first section (lib/tribe-columns.ts).
+  const columns = tribeHelloColumns(sign);
+  const portrait = PLATES[sign].size[1] > PLATES[sign].size[0];
+  const didYouKnow = (className?: string, wide = false) => (
+    <div className={className}>
+      <h3 className="type-label text-ink-500">{copy.signature.didYouKnow}</h3>
+      <ul role="list" className={cn('mt-2 grid gap-3', wide && dawa.didYouKnow.length > 1 && 'grid-cols-2 items-start gap-x-16')}>
+        {dawa.didYouKnow.map((fact) => (
+          <li key={fact.slice(0, 24)} className="max-w-[65ch] border-l-2 border-gold-500 pl-4 type-body-sm text-ink-700">
+            {fact}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+  // The sign's Urania's Mirror card (4j), whole and full strength; credited in the footer.
+  const plateWords = (
+    <>
+      <h3 className="type-label text-ink-500">{copy.signature.plate.label}</h3>
+      <p className="mt-2 mb-4 max-w-[56ch] text-pretty type-body-sm text-ink-700">{copy.signature.plate.line(name)}</p>
+    </>
+  );
 
   return (
     <>
@@ -134,58 +167,70 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
               </p>
             ))}
           </div>
-          <div className="grid content-start gap-10">
+          {/* The facts, and under them whichever of "Did you know?" and the star card keeps the two
+              columns' ends close on this Tribe (lib/tribe-columns.ts); the rest stands in the row
+              below. Where his story still runs longer, the column stays in view beside it. */}
+          <div className="grid content-start gap-10 lg:sticky lg:top-8 lg:self-start">
             <dl className="grid content-start border-b border-ink-200">
-              {[
-                [copy.signature.facts.dates, signDates(sign)],
-                [copy.signature.facts.latin, dawa.latin.text],
-                [copy.signature.facts.element, element],
-                [copy.signature.facts.mode, copy.mode[def.mode]],
-                [copy.signature.facts.symbol, words.symbol],
-              ].map(([label, value]) => (
-                <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-                  <dt className="type-label text-ink-500">{label}</dt>
-                  <dd className="type-body-sm text-ink-900">{value}</dd>
-                </div>
-              ))}
-              <div className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-                <dt className="type-label text-ink-500">{copy.signature.facts.ruler}</dt>
-                <dd className="type-body-sm text-ink-700">
-                  <span className="font-semibold text-ink-900">{words.ruler.name}</span>
-                  <span className="mt-1 block">{words.ruler.line}</span>
-                </dd>
-              </div>
-              {[
-                [copy.signature.facts.house, `${house.roman} ${house.name}: ${house.question}`],
-                [copy.signature.facts.season, dawa.season.text],
-                [copy.signature.facts.stars, starList(dawa.stars)],
-              ].map(([label, value]) => (
-                <div key={label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
-                  <dt className="type-label text-ink-500">{label}</dt>
-                  <dd className="type-body-sm text-ink-900">{value}</dd>
+              {tribeFacts(sign).map((fact) => (
+                <div key={fact.label} className="grid grid-cols-[8rem_1fr] gap-3 border-t border-ink-200 py-3">
+                  <dt className="type-label text-ink-500">{fact.label}</dt>
+                  {fact.lead ? (
+                    <dd className="type-body-sm text-ink-700">
+                      <span className="font-semibold text-ink-900">{fact.lead}</span>
+                      <span className="mt-1 block">{fact.value}</span>
+                    </dd>
+                  ) : (
+                    <dd className="type-body-sm text-ink-900">{fact.value}</dd>
+                  )}
                 </div>
               ))}
             </dl>
-            {dawa.didYouKnow.length > 0 ? (
+            {/* On a phone the order never changes: the facts, "Did you know?", then the star card. */}
+            {columns.didYouKnow === 'right' ? didYouKnow() : null}
+            {columns.didYouKnow === 'foot' && columns.plate !== 'foot' ? didYouKnow('lg:hidden') : null}
+            {columns.plate === 'beside' ? (
+              <div className="lg:grid lg:grid-cols-[9rem_minmax(0,1fr)] lg:items-center lg:gap-x-5">
+                <div className="lg:col-start-2 lg:row-start-1 lg:[&>p]:mb-0">{plateWords}</div>
+                <OldPrint
+                  id={`plate-${sign}`}
+                  alt={PLATES[sign].alt}
+                  sizes={`(min-width: 64rem) ${PLATE_BESIDE}rem, calc(100vw - 2rem)`}
+                  className="lg:col-start-1 lg:row-start-1"
+                />
+              </div>
+            ) : columns.plate !== 'foot' ? (
               <div>
-                <h3 className="type-label text-ink-500">{copy.signature.didYouKnow}</h3>
-                <ul role="list" className="mt-2 grid gap-3">
-                  {dawa.didYouKnow.map((fact) => (
-                    <li key={fact.slice(0, 24)} className="border-l-2 border-gold-500 pl-4 type-body-sm text-ink-700">
-                      {fact}
-                    </li>
-                  ))}
-                </ul>
+                {plateWords}
+                <OldPrint
+                  id={`plate-${sign}`}
+                  alt={PLATES[sign].alt}
+                  sizes={`(min-width: 64rem) ${columns.plate}rem, calc(100vw - 2rem)`}
+                  className={PLATE_WIDTH[columns.plate]}
+                />
               </div>
             ) : null}
-            {/* The sign's Urania's Mirror card (4j), whole and full strength; credited in the footer. */}
-            <div>
-              <h3 className="type-label text-ink-500">{copy.signature.plate.label}</h3>
-              <p className="mt-2 mb-4 type-body-sm text-ink-700">{copy.signature.plate.line(name)}</p>
-              <OldPrint id={`plate-${sign}`} alt={PLATES[sign].alt} sizes="(min-width: 64rem) 24rem, calc(100vw - 2rem)" />
-            </div>
           </div>
         </div>
+        {columns.plate === 'foot' ? (
+          <div
+            className={cn(
+              'mt-10 grid gap-10 lg:mt-14 lg:items-center lg:gap-x-16 lg:gap-y-8 lg:border-t lg:border-ink-200 lg:pt-12',
+              portrait ? 'lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]' : 'lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]',
+            )}
+          >
+            {columns.didYouKnow === 'foot' ? didYouKnow('lg:col-start-2 lg:row-start-2 lg:self-start') : null}
+            <div className={cn('lg:col-start-2 lg:row-start-1', columns.didYouKnow === 'foot' && 'lg:self-end')}>{plateWords}</div>
+            <OldPrint
+              id={`plate-${sign}`}
+              alt={PLATES[sign].alt}
+              sizes={`(min-width: 64rem) ${portrait ? 16 : 24}rem, calc(100vw - 2rem)`}
+              className={cn('-mt-10 lg:col-start-1 lg:row-start-1 lg:mt-0', columns.didYouKnow === 'foot' && 'lg:row-span-2')}
+            />
+          </div>
+        ) : columns.didYouKnow === 'foot' ? (
+          <div className="mt-14 hidden border-t border-ink-200 pt-12 lg:block">{didYouKnow(undefined, true)}</div>
+        ) : null}
       </Section>
 
       <Section labelledBy="signature-title" band backdrop={{ art: 'p7', foot: true }}>

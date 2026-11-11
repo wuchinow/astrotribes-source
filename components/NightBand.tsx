@@ -27,7 +27,8 @@ export function NightBand({ id, eyebrow, title, items, art }: NightBandProps) {
     <div
       className={cn(
         'rounded-[12px] bg-night-900 px-6 py-8 text-on-night night:border night:border-ink-200 md:px-10 md:py-10',
-        art && 'grid gap-8 md:grid-cols-[minmax(0,1fr)_16rem] md:items-start',
+        // The words stand centered beside the painting: at the top they left the band's lower left empty (5f).
+        art && 'grid gap-8 md:grid-cols-[minmax(0,1fr)_16rem] md:items-center',
       )}
     >
       <div>
