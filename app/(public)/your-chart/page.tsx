@@ -232,7 +232,7 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
         {row.house && houseText ? (
           <div data-your-key={houseKey.id} className={signKey && signText ? 'mt-6 border-t border-ink-200 pt-5' : undefined}>
             <p className="type-label text-ink-500">
-              {yourChartCopy.keys.inHouse(name, houseOf(row.house).roman, houseOf(row.house).name)}
+              {yourChartCopy.keys.inHouse(name, houseOf(row.house).numeral, houseOf(row.house).name)}
             </p>
             <Lines text={houseText} />
           </div>

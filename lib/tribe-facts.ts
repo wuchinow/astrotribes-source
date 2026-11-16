@@ -19,7 +19,7 @@ export function tribeFacts(sign: SignId): HelloColumnsInput['facts'] {
     { label: labels.mode, value: copy.mode[def.mode] },
     { label: labels.symbol, value: words.symbol },
     { label: labels.ruler, value: words.ruler.line, lead: words.ruler.name },
-    { label: labels.house, value: `${house.roman} ${house.name}: ${house.question}` },
+    { label: labels.house, value: `${house.numeral} ${house.name}: ${house.question}` },
     { label: labels.season, value: dawa.season.text },
     { label: labels.stars, value: starList(dawa.stars) },
   ];

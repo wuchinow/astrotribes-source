@@ -119,10 +119,10 @@ export default async function ClanPage({ params }: PageProps<'/clans/[sign]'>) {
               className="grid grid-cols-[4.5rem_1fr] gap-x-3 border-t border-ink-200 py-5"
             >
               <span className="step-numeral" aria-hidden="true">
-                {house.roman}
+                {house.numeral}
               </span>
               <div className="grid content-start gap-2">
-                <p className="type-label text-ink-500">{copy.hearth.label(house.roman, house.name)}</p>
+                <p className="type-label text-ink-500">{copy.hearth.label(house.numeral, house.name)}</p>
                 <p className="type-body-sm text-ink-700">{moon.houses[house.number]}</p>
               </div>
             </li>

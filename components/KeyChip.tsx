@@ -27,7 +27,7 @@ export function KeyChip({ keyId, value, showGloss = false, compact = false, href
   const key = KEYS[keyId];
   const isHouse = key.dimension === 'house';
   const valueText =
-    value === undefined ? null : typeof value === 'number' ? houseOf(value).roman : SIGNS[value].name;
+    value === undefined ? null : typeof value === 'number' ? houseOf(value).numeral : SIGNS[value].name;
   const gloss = glossSentence(key);
 
   // A chip that links is cobalt (design system .at-chip). One that links nowhere

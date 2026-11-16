@@ -132,8 +132,9 @@ export const KEYS = {
   },
   venusSign: {
     id: 'venusSign',
-    // Dawa's "Keys and Houses" doc (Drive, Nov 5), his newest list (David, Nov 6: go with the newest).
-    name: 'Goddess',
+    // Dawa's "Keys and Houses" doc (Drive), his newest list (David, Nov 6: go with the newest): Muse
+    // again in his Nov 12 edit (5g), after Goddess in the Nov 5 version.
+    name: 'Muse',
     body: 'venus',
     dimension: 'sign',
     gloss: "Venus' sign; what you harmonize with",
@@ -380,11 +381,12 @@ export const RETIRED_KEY_NAMES: readonly string[] = [
   // Replaced by Dawa's Keys and Houses doc (Nov 5; David, Nov 6: go with the newest). Channel came back
   // from the pre-Sept 18 list as Neptune's house key.
   'Kingdom',
-  'Muse',
   'Attraction',
   'Enchantment',
   // Saturn's sign from the Nov 5 Keys and Houses doc until its Nov 8 edit brought back Challenge.
   'Test',
+  // Venus's sign from the Nov 5 Keys and Houses doc until its Nov 12 edit brought back Muse (5g).
+  'Goddess',
 ];
 
 /** Keys that need a birth time: every house key, and Vibe (the rising sign). */
@@ -518,6 +520,12 @@ export const modeOf = (sign: SignId): Mode => SIGNS[sign].mode;
 export interface HouseDef {
   number: HouseNumber;
   roman: string;
+  /**
+   * What the site shows (5g, D2, David, Nov 16: numbers 1 to 12, after Dawa's Nov 15 note 8: younger
+   * readers may not read Roman numerals confidently). `roman` stays as Dawa's docs number the houses, and
+   * is checked against the brief; it is not shown.
+   */
+  numeral: string;
   name: string;
   question: string;
   /** Dawa's line for the house in his doc's list of the twelve (the Oct 21 edit), verbatim but for case. */
@@ -525,18 +533,18 @@ export interface HouseDef {
 }
 
 export const HOUSES: readonly HouseDef[] = [
-  { number: 1, roman: 'I', name: 'Identity', question: 'Who am I?', line: 'How you show up in the world' },
-  { number: 2, roman: 'II', name: 'Resources', question: 'What supports me?', line: 'What you value and rely on' },
-  { number: 3, roman: 'III', name: 'Awareness', question: 'How do I connect?', line: 'How you engage with your world' },
-  { number: 4, roman: 'IV', name: 'Roots', question: 'Where do I come from?', line: 'Where you find your foundation' },
-  { number: 5, roman: 'V', name: 'Creativity', question: 'What can I bring forth?', line: 'How you express your unique gifts' },
-  { number: 6, roman: 'VI', name: 'Service', question: 'How can I contribute?', line: 'How you contribute through training' },
-  { number: 7, roman: 'VII', name: 'Partnership', question: 'Where is my synergy?', line: 'How you grow through relationship' },
-  { number: 8, roman: 'VIII', name: 'Intrigue', question: 'What lies beneath the surface?', line: 'What draws you deep' },
-  { number: 9, roman: 'IX', name: 'Exploration', question: 'How do I discover more?', line: 'How you expand your horizons' },
-  { number: 10, roman: 'X', name: 'Accomplishment', question: 'What can I accomplish?', line: 'Your accomplishments in the world' },
-  { number: 11, roman: 'XI', name: 'Aspiration', question: 'What future do I envision?', line: 'Shared hopes and dreams' },
-  { number: 12, roman: 'XII', name: 'Completeness', question: 'How do I become whole?', line: 'Finding wholeness' },
+  { number: 1, roman: 'I', numeral: '1', name: 'Identity', question: 'Who am I?', line: 'How you show up in the world' },
+  { number: 2, roman: 'II', numeral: '2', name: 'Resources', question: 'What supports me?', line: 'What you value and rely on' },
+  { number: 3, roman: 'III', numeral: '3', name: 'Awareness', question: 'How do I connect?', line: 'How you engage with your world' },
+  { number: 4, roman: 'IV', numeral: '4', name: 'Roots', question: 'Where do I come from?', line: 'Where you find your foundation' },
+  { number: 5, roman: 'V', numeral: '5', name: 'Creativity', question: 'What can I bring forth?', line: 'How you express your unique gifts' },
+  { number: 6, roman: 'VI', numeral: '6', name: 'Service', question: 'How can I contribute?', line: 'How you contribute through training' },
+  { number: 7, roman: 'VII', numeral: '7', name: 'Partnership', question: 'Where is my synergy?', line: 'How you grow through relationship' },
+  { number: 8, roman: 'VIII', numeral: '8', name: 'Intrigue', question: 'What lies beneath the surface?', line: 'What draws you deep' },
+  { number: 9, roman: 'IX', numeral: '9', name: 'Exploration', question: 'How do I discover more?', line: 'How you expand your horizons' },
+  { number: 10, roman: 'X', numeral: '10', name: 'Accomplishment', question: 'What can I accomplish?', line: 'Your accomplishments in the world' },
+  { number: 11, roman: 'XI', numeral: '11', name: 'Aspiration', question: 'What future do I envision?', line: 'Shared hopes and dreams' },
+  { number: 12, roman: 'XII', numeral: '12', name: 'Completeness', question: 'How do I become whole?', line: 'Finding wholeness' },
 ];
 
 export const houseOf = (number: HouseNumber): HouseDef => HOUSES[number - 1];

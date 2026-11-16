@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SignLinks } from '@/components/SignLinks';
@@ -25,8 +26,12 @@ export default function ClansPage() {
   return (
     <div className="mx-auto max-w-content px-4 pt-31 pb-16 md:px-6 md:pt-38 md:pb-24">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Headline as="h1" line={copy.line} accent={copy.accent(clan)} />
-      <Lede>{paragraphs(moon.signsNote ?? '')[0]}</Lede>
+      {/* The Moon's glyph beside the heading, to match the twelve Vibes (5g, our call after Dawa's Nov 15 note 13), as on each sign's own page. */}
+      <div className="flex items-center gap-4">
+        <GlyphIcon glyph="moon" size={96} className="shrink-0 text-ink-900" />
+        <Headline as="h1" line={copy.line} accent={copy.accent(clan)} className="mb-0" />
+      </div>
+      <Lede className="mt-6">{paragraphs(moon.signsNote ?? '')[0]}</Lede>
       <div className="mt-6 max-w-[28rem]">
         <KeyChip keyId="moonSign" showGloss />
       </div>

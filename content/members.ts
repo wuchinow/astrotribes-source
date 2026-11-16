@@ -66,7 +66,8 @@ export const memberCopy = {
   familiesNote: 'Uranus, Neptune, and Pluto stay in a sign for years, so everyone born around the same time shares their signs. Open one to see who else is in it.',
   family: (planet: string, sign: string) => `${planet} in ${sign}`,
   // 4s (David, Nov 9: "show it"): the animal only, never the element, which with it names the year.
-  chineseHeading: (name: string) => `${name}'s Chinese zodiac sign`,
+  // Dawa's name for it (Nov 15, note 1; 5g).
+  chineseHeading: (name: string) => `${name}'s Chinese animal year`,
   chineseName: (animal: string) => `Year of the ${animal}`,
   chineseNote: 'From the Chinese calendar, a tradition separate from the Western chart.',
 };
@@ -86,7 +87,7 @@ export const pointsCopy = {
   bonusHeading: 'Rare combinations',
   closeHeading: 'Close by degree',
   cross: (mine: string, theirs: string, where: string) => `Your ${mine} and their ${theirs}, both in ${where}`,
-  house: (roman: string) => `house ${roman}`,
+  house: (numeral: string) => `house ${numeral}`,
   bonus: (names: readonly string[]) => `The same ${joinNames(names)} signs`,
   close: (mine: string, theirs: string) => `Your ${mine} and their ${theirs} sit within a few degrees`,
   sitsOn: (mine: string, theirs: string) => `Your ${mine} sits on their ${theirs}`,

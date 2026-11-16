@@ -317,12 +317,13 @@ export const tribePage = {
 
   // Key names come from lib/keys.ts: the counts are written around them.
   people: {
-    // Dawa, Nov 7: "Tighter connections" and "1728 possibilities", counted over his three, Tribe, Clan, and Vibe.
+    // Dawa, Nov 7: "Tighter connections", counted over his three, Tribe, Clan, and Vibe. His Nov 15 note 12
+    // (5g): "'1728 possible combinations'. I.e. 'You are one of 1728 possible combinations'".
     eyebrow: 'Tighter connections',
     line: (count: number) => count.toLocaleString('en-US'),
-    accent: 'possibilities.',
+    accent: 'possible combinations.',
     lede: (sign: string) =>
-      `Everyone here is ${article(sign)} ${sign} Sun. Your Moon sign and your rising sign make you one of 144 kinds of ${sign}, and one of 1,728 across all twelve Tribes. Match on all three to find the people closest to you.`,
+      `Everyone here is ${article(sign)} ${sign} Sun. Your Moon sign and your rising sign make you one of 144 kinds of ${sign}. You are one of 1,728 possible combinations across all twelve Tribes. Match on all three to find the people closest to you.`,
     sum: (tribe: string, moon: string, rising: string) =>
       `Twelve ${tribe}s times twelve ${moon}s times twelve ${rising}s.`,
     action: 'Find your three',
@@ -332,7 +333,10 @@ export const tribePage = {
     eyebrow: (sign: string) => `Around the ${sign} fire`,
     line: 'Three conversations',
     accent: 'to bring with you.',
-    lede: 'Your Tribe talks them over when the doors open. Start thinking now.',
+    // The Council is open (5b), so "when the doors open" went (5g). Dawa and Yuvi, Nov 15 note 16: "needs a
+    // hyper link; maybe a call to action prompt along the lines of 'Join the Conversation'".
+    lede: 'Bring them to the Council, where members of all 12 Tribes talk things over.',
+    join: 'Join the conversation',
   },
 
   // A Tribe's members (5b, David, Nov 11), shown to a signed-in member only, at the foot of the famous names.
@@ -358,7 +362,7 @@ export const tribePage = {
       { title: 'The Council', body: 'Questions, wins, and advice, with members of all 12 Tribes in one place.' },
       { title: `Meet your fellow ${fellows}`, body: `Members see the ${sign} members they can meet, right on this page, and can say hello.` },
       { title: 'Your Moon and rising sign', body: 'Members also see who shares their Moon sign or their rising sign, and can say hello there too.' },
-      { title: 'The gallery', body: `Room for three pieces of art from every member, with ${article(sign)} ${sign} piece in the spotlight each month.` },
+      { title: 'The gallery', body: `Room for up to five pieces of art from every member, with ${article(sign)} ${sign} piece in the spotlight each month.` },
     ],
   },
 

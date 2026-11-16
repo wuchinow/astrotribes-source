@@ -13,13 +13,20 @@ export const chartWheelCopy = {
   noTime:
     'Without a birth time there are no houses, and the planets sit where they were at midday, so the Moon may be a few degrees off.',
   listLabel: 'What the wheel shows',
-  house: (roman: string) => `house ${roman}`,
-  /** The tap panel (3t). */
-  hint: 'Tap a planet on the wheel or in the list to see its Keys.',
-  /** With a birth time (3z, Dawa, Nov 5: the house degrees on hover or tap, not printed). */
-  hintHouses: 'Tap a planet on the wheel or in the list to see its Keys, or a house line to see where it begins.',
+  house: (numeral: string) => `house ${numeral}`,
+  /**
+   * The hint beside the wheel's heading (5g, Dawa, Nov 15 note 4: "a small notice that says something like
+   * 'hover and click on any planet or house cusp to see more details'"), at reading size. A device that
+   * can hover reads the first; a touch screen the second (David, Nov 11: "tap" is phone-only wording).
+   */
+  hint: { pointer: 'Hover over or click any planet to see more.', touch: 'Press any planet to see more.' },
+  /** With a birth time (3z, Dawa, Nov 5: the house degrees on hover or press, not printed). */
+  hintHouses: {
+    pointer: 'Hover over or click any planet or house line to see more.',
+    touch: 'Press any planet or house line to see more.',
+  },
   /** "House IV, Roots" */
-  houseTitle: (roman: string, name: string) => `House ${roman}, ${name}`,
+  houseTitle: (numeral: string, name: string) => `House ${numeral}, ${name}`,
   /** "Begins at 12°05′ Leo" */
   cuspAt: (degrees: string, sign: string) => `Begins at ${degrees} ${sign}`,
   housesLabel: 'Where each house begins',

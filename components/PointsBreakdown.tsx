@@ -4,7 +4,7 @@ import { BODIES, SIGNS, houseOf, type HouseNumber, type SignId } from '@/lib/key
 import { KeyChip } from './KeyChip';
 
 const where = (value: SignId | HouseNumber): string =>
-  typeof value === 'number' ? pointsCopy.house(houseOf(value).roman) : SIGNS[value].name;
+  typeof value === 'number' ? pointsCopy.house(houseOf(value).numeral) : SIGNS[value].name;
 
 const closeLabel = ({ mine, theirs, kind }: CloseMatch): string =>
   kind === 'newMoon'
