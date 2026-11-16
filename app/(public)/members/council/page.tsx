@@ -8,6 +8,7 @@ import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { COUNCIL_POST_MAX, REPORT_REASON_MAX, councilCopy, sendingCopy } from '@/content/council';
 import { councilPosts, type CouncilPost } from '@/lib/council';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { deleteCouncilPost, postToCouncil, reportCouncilPost } from './actions';
 
@@ -33,7 +34,7 @@ export default async function CouncilPage({ searchParams }: PageProps<'/members/
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
+  if (!user) redirect(signInFor('/members/council'));
 
   const { data: profile } = await supabase.from('profiles').select('display_name').eq('id', user.id).maybeSingle();
   if (!profile?.display_name) redirect('/welcome');

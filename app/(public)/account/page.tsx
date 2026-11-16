@@ -6,6 +6,7 @@ import { Eyebrow, Headline } from '@/components/Section';
 import { accountCopy } from '@/content/account';
 import { visibilityCopy } from '@/content/members';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { DEFAULT_VISIBILITY, VISIBILITY_LEVELS, isVisibility } from '@/lib/visibility';
 import { saveDisplayName, saveVisibility } from './actions';
@@ -24,7 +25,7 @@ export default async function AccountPage({ searchParams }: PageProps<'/account'
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
+  if (!user) redirect(signInFor('/account'));
 
   const [{ data: profile }, { data: birth }] = await Promise.all([
     supabase.from('profiles').select('display_name, visibility').eq('id', user.id).maybeSingle(),

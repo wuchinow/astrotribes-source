@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 import { birthZone, computeChart, EngineError } from '@/lib/engine';
 import { choicesNeeded, parseBirthForm, placementRows, type BirthFormState } from '@/lib/birth-details';
 import { takeRateLimit } from '@/lib/rate-limit';
+import { afterSignIn, safeReturnTo } from '@/lib/return-path';
 import { adminClient } from '@/lib/supabase/admin';
 import { memberClient } from '@/lib/supabase/server';
 
@@ -93,6 +94,7 @@ export async function saveBirthDetails(_previous: BirthFormState, form: FormData
     if (error) return fail('failed', refOf('rising', error));
   }
 
-  // The welcome steps decide what is next: the name if there is none yet, otherwise the chart.
-  redirect('/welcome');
+  // The welcome steps decide what is next: the name if there is none yet, otherwise the chart, or the
+  // page the member started from (5k), checked again here.
+  redirect(afterSignIn(safeReturnTo(form.get('next'))));
 }

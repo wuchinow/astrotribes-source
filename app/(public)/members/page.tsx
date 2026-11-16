@@ -10,6 +10,7 @@ import { helloLinks, myHellos } from '@/lib/council';
 import { ownPlacements, visibleMembers } from '@/lib/members';
 import { topShared } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { DEFAULT_VISIBILITY, isVisibility } from '@/lib/visibility';
 
@@ -27,7 +28,7 @@ export default async function MembersPage() {
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
+  if (!user) redirect(signInFor('/members'));
 
   const [{ data: profile }, mine] = await Promise.all([
     supabase.from('profiles').select('display_name, visibility').eq('id', user.id).maybeSingle(),

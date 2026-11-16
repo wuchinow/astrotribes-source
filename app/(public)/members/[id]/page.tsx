@@ -17,6 +17,7 @@ import { FAMILY_BODIES } from '@/lib/mates';
 import { memberAnimal, ownPlacements, visibleMember } from '@/lib/members';
 import { hasBirthTime } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 
 // The member's name is never in the page title or the address bar beyond its id.
@@ -41,9 +42,9 @@ export default async function MemberPage({ params, searchParams }: PageProps<'/m
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
-
   const { id } = await params;
+  if (!user) redirect(signInFor(`/members/${id}`));
+
   if (id === user.id) redirect('/your-chart');
   const mine = await ownPlacements(supabase, user.id);
   if (!mine.some((row) => row.body === 'sun')) redirect('/welcome');

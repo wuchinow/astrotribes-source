@@ -4,6 +4,7 @@ import { ArtWash } from '@/components/ArtWash';
 import { Button } from '@/components/Button';
 import { Eyebrow, Headline } from '@/components/Section';
 import { signInCopy } from '@/content/account';
+import { afterSignIn, safeReturnTo } from '@/lib/return-path';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import { memberClient } from '@/lib/supabase/server';
 import { startGoogleSignIn } from './actions';
@@ -12,14 +13,16 @@ export const metadata: Metadata = { title: signInCopy.title };
 
 /**
  * Sign in (2b): Google only for now (David, Oct 21). Open to anyone since Oct 22
- * (David). A member who is already signed in goes on to the welcome steps (2c).
+ * (David). A member who is already signed in goes on to the welcome steps (2c). `next` is the page
+ * a signed-out visitor tried to open (5k): the button carries it, and sign-in comes back to it.
  */
 export default async function SignInPage({ searchParams }: PageProps<'/sign-in'>) {
+  const params = await searchParams;
+  const next = safeReturnTo(params.next);
   if (supabaseConfigured()) {
     const { data } = await (await memberClient()).auth.getUser();
-    if (data.user) redirect('/welcome');
+    if (data.user) redirect(afterSignIn(next));
   }
-  const params = await searchParams;
   const error = typeof params.error === 'string' ? signInCopy.errors[params.error] : undefined;
 
   return (
@@ -35,6 +38,7 @@ export default async function SignInPage({ searchParams }: PageProps<'/sign-in'>
             </p>
           ) : null}
           <form action={startGoogleSignIn} className="mt-8">
+            {next ? <input type="hidden" name="next" value={next} /> : null}
             <Button type="submit">{signInCopy.google}</Button>
           </form>
           <p className="mt-6 max-w-[56ch] type-body-sm text-ink-700">{signInCopy.note}</p>

@@ -8,6 +8,8 @@ import { WaitNote } from '@/components/WaitNote';
 import { accountCopy } from '@/content/account';
 import { welcomeCopy } from '@/content/welcome';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { isMemberPath } from '@/lib/preview';
+import { safeReturnTo, signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { saveDisplayName } from '../account/actions';
 
@@ -17,7 +19,8 @@ export const metadata: Metadata = { title: welcomeCopy.title };
  * The welcome steps (2c): birth details, then the name (Google's is never used), then the member's
  * own chart. Birth details come first since Nov 3 (David), so the name is asked once the chart is
  * already saved. It shows whichever step is still missing, so a member who leaves halfway picks up
- * where they were; `?edit=birth` reopens the birth step from the account page. Checks the
+ * where they were; `?edit=birth` reopens the birth step from the account page; `?next=` is the page
+ * the member started from before signing in (5k), carried through both steps. Checks the
  * session itself (invariant 5). The member's own birth details are read under RLS, for the
  * form only, on a page that is never cached.
  */
@@ -26,9 +29,10 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
-
   const params = await searchParams;
+  const next = safeReturnTo(params.next);
+  if (!user) redirect(next ? signInFor(next) : '/sign-in');
+
   const [{ data: profile }, { data: birth }, { data: sun }] = await Promise.all([
     supabase.from('profiles').select('display_name').eq('id', user.id).maybeSingle(),
     supabase
@@ -47,7 +51,14 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
   const edit = (params.edit === 'birth' && Boolean(birth)) || redraw;
   // `joined` comes only from the name step, a new member's last one: their chart opens the welcome guide.
   // Every other arrival (a returning member signing in, an edit) goes to the chart without it.
-  if (name && birth && sun && !edit) redirect(params.joined === '1' ? '/your-chart?welcome=1' : '/your-chart');
+  // `next` wins (5k), except that a new member who signed in from a public page (the header's Sign in
+  // on a Tribe page, say) sees their chart and its welcome guide first: they came for the chart. A
+  // member page they asked for (the Council from Join the conversation) is where they go.
+  if (name && birth && sun && !edit) {
+    const joined = params.joined === '1';
+    if (next && (!joined || isMemberPath(next))) redirect(next);
+    redirect(joined ? '/your-chart?welcome=1' : '/your-chart');
+  }
 
   if (birth && !name && !edit) {
     const error = params.error === 'name';
@@ -58,6 +69,7 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
         <Lede>{accountCopy.nameNeeded}</Lede>
         <form action={saveDisplayName} className="mt-8 grid gap-2">
           <input type="hidden" name="next" value="welcome" />
+          {next ? <input type="hidden" name="return_to" value={next} /> : null}
           <label htmlFor="display_name" className="font-semibold text-[1rem] text-ink-900">
             {accountCopy.nameLabel}
           </label>
@@ -110,7 +122,7 @@ export default async function WelcomePage({ searchParams }: PageProps<'/welcome'
       <Lede>{welcomeCopy.lede}</Lede>
       {redraw ? <p className="mt-3 type-body-sm text-ink-700">{welcomeCopy.redraw}</p> : null}
       {edit && birth && !redraw ? <WaitNote changedAt={birth.updated_at} /> : null}
-      <BirthDetailsForm initial={initial} edit={edit} />
+      <BirthDetailsForm initial={initial} edit={edit} next={next} />
     </Shell>
   );
 }

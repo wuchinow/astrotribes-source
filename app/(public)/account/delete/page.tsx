@@ -5,6 +5,7 @@ import { Button } from '@/components/Button';
 import { Eyebrow, Headline } from '@/components/Section';
 import { accountCopy } from '@/content/account';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { deleteAccount } from '../actions';
 
@@ -19,7 +20,7 @@ export default async function DeleteAccountPage({ searchParams }: PageProps<'/ac
   if (!supabaseConfigured()) redirect('/sign-in?error=off');
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
-  if (!data.user) redirect('/sign-in');
+  if (!data.user) redirect(signInFor('/account/delete'));
   const params = await searchParams;
   const error = typeof params.error === 'string' ? params.error : null;
 

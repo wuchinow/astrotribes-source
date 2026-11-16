@@ -5,6 +5,7 @@ import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { cleanDisplayName } from '@/lib/display-name';
 import { isVisibility } from '@/lib/visibility';
+import { safeReturnTo } from '@/lib/return-path';
 import { takeRateLimit } from '@/lib/rate-limit';
 import { adminClient } from '@/lib/supabase/admin';
 import { memberClient } from '@/lib/supabase/server';
@@ -21,13 +22,16 @@ export async function saveDisplayName(form: FormData): Promise<void> {
   const { supabase, user } = await signedInMember();
   // The welcome steps (2c) send the member on to their birth details; the account page stays put.
   const page = form.get('next') === 'welcome' ? '/welcome' : '/account';
+  // The page a new member started from (5k), carried by the welcome steps and checked again here.
+  const back = page === '/welcome' ? safeReturnTo(form.get('return_to')) : null;
+  const carry = back ? `&next=${encodeURIComponent(back)}` : '';
   const name = cleanDisplayName(form.get('display_name'));
-  if (!name) redirect(`${page}?error=name`);
+  if (!name) redirect(`${page}?error=name${carry}`);
   // The member's own grant (update of display_name) and RLS (own row) do the rest.
   const { error } = await supabase.from('profiles').update({ display_name: name }).eq('id', user.id);
-  if (error) redirect(`${page}?error=name`);
+  if (error) redirect(`${page}?error=name${carry}`);
   // From the welcome steps, the name is the last first-time step, so the chart opens the welcome guide.
-  redirect(page === '/welcome' ? '/welcome?joined=1' : '/account?saved=name');
+  redirect(page === '/welcome' ? `/welcome?joined=1${carry}` : '/account?saved=name');
 }
 
 /**
