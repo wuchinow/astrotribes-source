@@ -2,6 +2,7 @@
 
 import { ChevronDown, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type ComponentProps, type ReactNode } from 'react';
 import { startGoogleSignIn } from '@/app/(public)/sign-in/actions';
 import { accountSlotCopy } from '@/content/account';
@@ -130,14 +131,17 @@ export function HeaderAccount({
   onNavigate?: () => void;
 }) {
   const slot = useMember();
+  const pathname = usePathname();
   if (slot.state === 'loading') return null;
   if (show !== 'both' && slot.state !== show) return null;
 
   if (slot.state === 'out') {
     // One click to Google (David, Nov 4): the link posts straight to the action that starts sign-in,
     // with no stop on /sign-in. When email sign-in arrives this can open a small menu of the two.
+    // It comes back to this page (5k), checked on the server; from the home page it goes on to the chart.
     return (
       <form action={startGoogleSignIn} className={place === 'header' ? 'hidden lg:inline-flex' : 'flex w-full'}>
+        <input type="hidden" name="next" value={pathname} />
         <button
           type="submit"
           className={cn(linkClass, 'cursor-pointer', place === 'header' ? 'inline-flex px-2 text-[1rem]' : 'flex w-full text-[1.125rem]')}

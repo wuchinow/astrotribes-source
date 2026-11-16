@@ -30,7 +30,16 @@ const FIELD_OF: Partial<Record<string, FieldName>> = {
  * The values live in this component's state and go to the server action in the POST body only.
  * On a day the Sun or the Moon changed sign, with no time, the action asks for a pick first.
  */
-export function BirthDetailsForm({ initial, edit = false }: { initial: BirthInitial | null; edit?: boolean }) {
+export function BirthDetailsForm({
+  initial,
+  edit = false,
+  next = null,
+}: {
+  initial: BirthInitial | null;
+  edit?: boolean;
+  /** The page to come back to once the welcome steps are done (5k), already checked by the page. */
+  next?: string | null;
+}) {
   const uid = useId();
   const [state, action, pending] = useActionState<BirthFormState, FormData>(saveBirthDetails, { status: 'idle' });
   const [date, setDate] = useState(initial?.date ?? '');
@@ -63,6 +72,7 @@ export function BirthDetailsForm({ initial, edit = false }: { initial: BirthInit
       }}
       className="mt-8 grid gap-6"
     >
+      {next ? <input type="hidden" name="next" value={next} /> : null}
 
       <div className="grid gap-2">
         <label htmlFor={ids.date} className="font-semibold text-[1rem] text-ink-900">

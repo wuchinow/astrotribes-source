@@ -37,6 +37,7 @@ import { BODIES, BODY_GROUPS, KEYS, SIGNS, houseOf, keyFor, type BodyGroup, type
 import { CARTOONS, PLATES } from '@/lib/old-prints';
 import { cn } from '@/lib/cn';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { wheelDetails } from '@/lib/wheel-details';
 import { memberWheel } from '@/lib/your-wheel';
@@ -90,7 +91,7 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
+  if (!user) redirect(signInFor('/your-chart'));
   const firstVisit = (await searchParams).welcome === '1';
 
   const { data: rows } = await supabase

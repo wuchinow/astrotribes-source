@@ -11,7 +11,14 @@ import { isFamilyBody, mates, type MatesBody } from '@/lib/mates';
 import { ownPlacements, visibleMembers, type MemberSummary } from '@/lib/members';
 import { topShared } from '@/lib/shared-keys';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
+
+/** This page's own address, for sign-in to come back to (5k). */
+const matesPath = (body: MatesBody, sign: SignId): string =>
+  isFamilyBody(body)
+    ? `/members/family/${body}/${sign}`
+    : `/members/${body === 'sun' ? 'tribe' : body === 'moon' ? 'clan' : 'vibe'}/${sign}`;
 
 const link = 'font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4';
 
@@ -28,7 +35,7 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
+  if (!user) redirect(signInFor(matesPath(body, sign)));
 
   const mine = await ownPlacements(supabase, user.id);
   if (!mine.some((row) => row.body === 'sun')) redirect('/welcome');

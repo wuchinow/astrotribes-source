@@ -8,6 +8,7 @@ import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { councilCopy, messagesCopy, sendingCopy } from '@/content/council';
 import { myHellos, otherIn, unreadByConversation } from '@/lib/council';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { answerHello } from './actions';
 
@@ -26,7 +27,7 @@ export default async function MessagesPage() {
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
+  if (!user) redirect(signInFor('/members/messages'));
 
   const hellos = await myHellos(supabase);
   const unread = hellos.state === 'ok' ? await unreadByConversation(supabase, user.id) : new Map<string, number>();

@@ -8,6 +8,7 @@ import { MESSAGE_MAX, REPORT_REASON_MAX, messagesCopy, safetyCopy, sendingCopy }
 import { conversation, helloById, otherIn } from '@/lib/council';
 import { isMemberId } from '@/lib/members';
 import { supabaseConfigured } from '@/lib/supabase/env';
+import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { reportMember, sendMessage, setBlock } from '../actions';
 
@@ -32,9 +33,9 @@ export default async function ConversationPage({ params, searchParams }: PagePro
   const supabase = await memberClient();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
-  if (!user) redirect('/sign-in');
-
   const { id } = await params;
+  if (!user) redirect(signInFor(`/members/messages/${id}`));
+
   if (!isMemberId(id)) notFound();
   const hello = await helloById(supabase, id);
   if (!hello || hello.status !== 'accepted') notFound();

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { startGoogleSignIn } from '@/app/(public)/sign-in/actions';
 import { Button } from '@/components/Button';
 import { KeyChip } from '@/components/KeyChip';
 import { NightBand } from '@/components/NightBand';
@@ -387,13 +388,24 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
           ))}
         </ol>
         {/*
-          Dawa and Yuvi's call to action (Nov 15 note 16, 5g). The Council is a member path: a visitor goes on
-          to sign in, as at every member link.
+          Dawa and Yuvi's call to action (Nov 15 note 16, 5g). A member goes straight to the Council; a
+          visitor goes straight to Google and comes back to the Council (5k), through the welcome steps
+          if they are new. The page stays static: the sign-in hint on <html> picks which one shows, and
+          the Council checks the session itself either way.
         */}
-        <Button href="/members/council" variant="secondary" className="mt-8">
-          {copy.fire.join}
-          <span aria-hidden="true">{'→'}</span>
-        </Button>
+        <div className="member-only mt-8">
+          <Button href="/members/council" variant="secondary">
+            {copy.fire.join}
+            <span aria-hidden="true">{'→'}</span>
+          </Button>
+        </div>
+        <form action={startGoogleSignIn} className="guest-only mt-8">
+          <input type="hidden" name="next" value="/members/council" />
+          <Button type="submit" variant="secondary">
+            {copy.fire.join}
+            <span aria-hidden="true">{'→'}</span>
+          </Button>
+        </form>
         {/* For visitors only: a member already sees the Tribe's members above and has the Council. */}
         <div className="guest-only mt-10">
           <NightBand

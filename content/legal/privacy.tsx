@@ -67,6 +67,13 @@ export const privacy = {
               not open again. It holds only the number 1, never leaves your browser, and says nothing
               about you.
             </li>
+            {/* PLACEHOLDER (Nov 16, 5k): the return-to cookie, for Kevin to review. */}
+            <li>
+              <strong>One short cookie while you sign in.</strong> A cookie called{' '}
+              <code className="type-data-sm">at-return</code> holds the address of the page you
+              signed in from, such as the Council, so you come back to it after Google. It lasts ten
+              minutes at most, is removed as soon as you are back, and says nothing about you.
+            </li>
             <li>
               <strong>Our host&apos;s request logs.</strong> Vercel, which hosts the site, keeps
               short logs of each request, including your IP address and the page you asked for, to
