@@ -386,6 +386,14 @@ export default async function TribePage({ params }: PageProps<'/tribes/[sign]'>)
             </li>
           ))}
         </ol>
+        {/*
+          Dawa and Yuvi's call to action (Nov 15 note 16, 5g). The Council is a member path: a visitor goes on
+          to sign in, as at every member link.
+        */}
+        <Button href="/members/council" variant="secondary" className="mt-8">
+          {copy.fire.join}
+          <span aria-hidden="true">{'→'}</span>
+        </Button>
         {/* For visitors only: a member already sees the Tribe's members above and has the Council. */}
         <div className="guest-only mt-10">
           <NightBand

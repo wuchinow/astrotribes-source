@@ -53,7 +53,7 @@ export async function MatesPage({ body, sign }: { body: MatesBody; sign: SignId 
   const noTime = body === 'rising' && !mine.some((row) => row.body === 'rising');
 
   const groupTitle = (kind: string, value: SignId | HouseNumber) => {
-    if (kind === 'hearth') return copy.groups.hearth(KEYS.moonHouse.name, HOUSES[(value as number) - 1].roman);
+    if (kind === 'hearth') return copy.groups.hearth(KEYS.moonHouse.name, HOUSES[(value as number) - 1].numeral);
     const sign = SIGNS[value as SignId].name;
     if (kind === 'tribe') return copy.groups.tribe(KEYS.sunSign.name, sign);
     if (kind === 'vibe') return copy.groups.vibe(KEYS.risingSign.name, sign);

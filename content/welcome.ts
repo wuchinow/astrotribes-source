@@ -79,7 +79,7 @@ export const yourChartCopy = {
     accent: 'your Keys.',
     // 5c: his "snapshot of the solar system" sentence stands once, beside the wheel
     // (content/chart-wheel.ts), so the introduction no longer opens with it again.
-    lede: 'In your horoscope the Sun, the Moon, and each planet carry an energy (its *sign*) and an area of manifestation (its *house*). Each one gives you two Keys, and each Key unlocks a piece of *your* horoscope’s puzzle.',
+    lede: 'In your horoscope the Sun, the Moon, and each planet carry an energy (its *sign*) and an area of manifestation (its *house*). Each planet has two Keys, and each Key unlocks a piece of *your* horoscope’s puzzle.',
     // PLACEHOLDER (5c, David, Nov 11: short cards that open): the words around the cards.
     hint: 'Each card starts with a line. Open one to read it in full.',
     jump: 'Jump to a group',
@@ -94,7 +94,7 @@ export const yourChartCopy = {
     /** "Jupiter in Leo" */
     inSign: (planet: string, sign: string) => `${planet} in ${sign}`,
     /** "Jupiter in house X, Accomplishment" */
-    inHouse: (planet: string, roman: string, name: string) => `${planet} in house ${roman}, ${name}`,
+    inHouse: (planet: string, numeral: string, name: string) => `${planet} in house ${numeral}, ${name}`,
     noTime: (keyName: string) => `Your ${keyName} needs your birth time. Add it and it appears here.`,
     more: (planet: string) => `All of ${the(planet)}'s Keys`,
   },
@@ -112,10 +112,12 @@ export const yourChartCopy = {
     more: { href: '/keys#generational', label: 'How generations work' },
   },
   // The Chinese zodiac sign (3y, admin to-do): a small panel under Your Keys. PLACEHOLDER words for Dawa.
+  // Its name is Dawa's (Nov 15, note 1; 5g): "not truly a 'zodiac'; maybe call it straightforwardly 'Your
+  // Chinese Animal Year'".
   chinese: {
-    title: 'Your Chinese zodiac sign',
+    title: 'Your Chinese animal year',
     /** In the side list (5d). */
-    rail: 'Chinese zodiac',
+    rail: 'Chinese animal year',
     /** "Fire Horse" */
     name: (element: string, animal: string) => `${element} ${animal}`,
     /** "February 17, 1966" */
@@ -185,7 +187,7 @@ export const welcomeGuideCopy = {
       line: 'Your chart',
       accent: 'and your Tribe.',
       body: [
-        'The wheel on this page is the sky at the moment you were born. Tap any planet to see its two Keys, one from its sign and one from its house, and what they say about you.',
+        'The wheel on this page is the sky at the moment you were born. Hover over or press any planet to see its two Keys, one from its sign and one from its house, and what they say about you.',
         'Your Sun sign is your Tribe. Further down the page you can meet the people who share it.',
       ],
       links: [],

@@ -59,7 +59,7 @@ function exampleCluster() {
   }
   const [house, names] = [...byHouse].reduce((a, b) => (b[1].length > a[1].length ? b : a));
   const list = names.length > 1 ? `${names.slice(0, -1).join(', ')}, and ${names.at(-1)}` : names[0];
-  return keysPage.example.cluster(names.length, houseOf(house).roman, houseOf(house).name, list);
+  return keysPage.example.cluster(names.length, houseOf(house).numeral, houseOf(house).name, list);
 }
 
 /**
@@ -170,7 +170,7 @@ export default function KeysPage() {
                   <KeyChip keyId="sunSign" value={sun.sign} showGloss />
                 </div>
                 <div className="border-t border-ink-200 pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-8">
-                  <p className="mb-2 type-label text-ink-500">{keysPage.how.house(sunHouse.roman, sunHouse.name)}</p>
+                  <p className="mb-2 type-label text-ink-500">{keysPage.how.house(sunHouse.numeral, sunHouse.name)}</p>
                   <KeyChip keyId="sunHouse" value={sun.house!} showGloss />
                 </div>
               </div>
@@ -269,7 +269,7 @@ export default function KeysPage() {
               <Eyebrow>{keysPage.houses.eyebrow}</Eyebrow>
               <Headline id={`${HOUSES_ID}-title`} line={keysPage.houses.line} accent={keysPage.houses.accent} />
               <p className="max-w-measure text-ink-700">{keysPage.houses.intro}</p>
-              {/* The numbered-item pattern, the numeral Roman: reading across, I to XII. */}
+              {/* The numbered-item pattern, the house numbers 1 to 12 reading across (5g, D2). */}
               <ol role="list" className="mt-8 grid gap-x-8 border-b border-ink-200 sm:grid-cols-2 xl:grid-cols-3">
                 {HOUSES.map((house) => (
                   <li
@@ -279,7 +279,7 @@ export default function KeysPage() {
                   >
                     <span className="step-numeral">
                       <span className="sr-only">{keysPage.houses.numberLabel} </span>
-                      {house.roman}
+                      {house.numeral}
                     </span>
                     <div>
                       <h3 className="font-body text-[1.375rem] font-semibold leading-snug text-ink-900">

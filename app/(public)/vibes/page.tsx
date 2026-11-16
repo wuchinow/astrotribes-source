@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GlyphIcon } from '@/components/GlyphIcon';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
 import { SignLinks } from '@/components/SignLinks';
@@ -17,8 +18,12 @@ export default function VibesPage() {
   return (
     <div className="mx-auto max-w-content px-4 pt-31 pb-16 md:px-6 md:pt-38 md:pb-24">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Headline as="h1" line={copy.line} accent={copy.accent(vibe)} />
-      <Lede>{style}</Lede>
+      {/* Dawa's Rising glyph beside the heading (Nov 15 note 13, 5g: "The Twelve vibes section needs the glyph"), as on each sign's own page. */}
+      <div className="flex items-center gap-4">
+        <GlyphIcon glyph="rising" size={96} className="shrink-0 text-ink-900" />
+        <Headline as="h1" line={copy.line} accent={copy.accent(vibe)} className="mb-0" />
+      </div>
+      <Lede className="mt-6">{style}</Lede>
       <p className="mt-3 max-w-measure type-body-sm text-ink-700">{horizon}</p>
       <div className="mt-6 max-w-[28rem]">
         <KeyChip keyId="risingSign" showGloss />

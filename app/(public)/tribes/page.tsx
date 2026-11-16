@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { GlyphIcon } from '@/components/GlyphIcon';
 import { PrimaryAction } from '@/components/HeaderAccount';
 import { KeyChip } from '@/components/KeyChip';
 import { Eyebrow, Headline, Lede } from '@/components/Section';
@@ -64,10 +65,10 @@ export default function TribesPage() {
         <h2 className="mt-16 type-heading-2 text-ink-900">{copy.more.title}</h2>
         <p className="mt-3 max-w-measure type-body text-ink-700">{copy.more.body}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <Card href="/clans" title={copy.more.clans}>
+          <Card href="/clans" title={copy.more.clans} icon={<GlyphIcon glyph="moon" size={48} className="text-ink-900" />}>
             <KeyChip keyId="moonSign" showGloss compact />
           </Card>
-          <Card href="/vibes" title={copy.more.vibes}>
+          <Card href="/vibes" title={copy.more.vibes} icon={<GlyphIcon glyph="rising" size={48} className="text-ink-900" />}>
             <KeyChip keyId="risingSign" showGloss compact />
           </Card>
         </div>

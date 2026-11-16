@@ -167,10 +167,10 @@ export default async function PlanetPage({ params }: PageProps<'/keys/[planet]'>
                   className="grid grid-cols-[4.5rem_1fr] gap-x-3 border-t border-ink-200 py-5"
                 >
                   <span className="step-numeral" aria-hidden="true">
-                    {house.roman}
+                    {house.numeral}
                   </span>
                   <div className="grid gap-2">
-                    <p className="type-label text-ink-500">{copy.houseLabel(house.roman, house.name)}</p>
+                    <p className="type-label text-ink-500">{copy.houseLabel(house.numeral, house.name)}</p>
                     <Lines text={planet.houses[house.number]!} />
                   </div>
                 </li>

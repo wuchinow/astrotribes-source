@@ -24,7 +24,7 @@ export const clanPage = {
     line: 'Twelve houses,',
     accent: 'twelve kinds of home.',
     lede: (hearth: string) => `Your ${hearth} is the house your Moon is in. Find yours: it needs a birth time.`,
-    label: (roman: string, name: string) => `${roman} · ${name}`,
+    label: (numeral: string, name: string) => `${numeral} · ${name}`,
   },
   sun: {
     eyebrow: (tribe: string, clan: string) => `Your ${tribe} and your ${clan}`,
@@ -137,7 +137,7 @@ export const matesCopy = {
     tribe: (tribe: string, sign: string) => `Also in your ${tribe}, ${sign}`,
     vibe: (vibe: string, sign: string) => `Also your ${vibe}, ${sign} rising`,
     clan: (clan: string, sign: string) => `Also your ${clan}, Moon in ${sign}`,
-    hearth: (hearth: string, roman: string) => `Also your ${hearth}, Moon in house ${roman}`,
+    hearth: (hearth: string, numeral: string) => `Also your ${hearth}, Moon in house ${numeral}`,
   },
   everyone: 'Everyone',
   empty: 'Members appear here once they save their chart and let others see it.',

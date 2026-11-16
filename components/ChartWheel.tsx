@@ -39,7 +39,9 @@ const R_SIGN_GLYPH = (R_OUT + R_SIGN) / 2;
 const R_BODY = 71;
 const R_NODE = 57;
 const R_INNER = 46;
-const R_HOUSE_NUM = 38;
+// 5g (D2): numbers in place of Roman numerals, which ran wide in a narrow house (Dawa, Nov 15 note 8:
+// "the X for example or even I and II are too closely placed"), and a little further out, where a house is wider.
+const R_HOUSE_NUM = 40;
 const SIGN_GLYPH = 9.5;
 const BODY_GLYPH = 12;
 const NODE_GLYPH = 8;
@@ -115,6 +117,7 @@ interface ChartWheelProps {
 export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}, aside }: ChartWheelProps) {
   const layout = wheelLayout(wheel);
   const timeKnown = layout.cusps.length > 0;
+  const hint = timeKnown ? chartWheelCopy.hintHouses : chartWheelCopy.hint;
   const axes = new Set([1, 4, 7, 10]);
   const name = (body: WheelBodyId) => BODIES[body].name;
   const [selected, setSelected] = useState<WheelBodyId | null>(null);
@@ -134,7 +137,14 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
   return (
     // The headline comes first on a phone; from lg the wheel and its panel stand at the left of both.
     <div className="grid gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-12">
-      <div className="lg:col-start-2 lg:row-start-1">{header}</div>
+      <div className="lg:col-start-2 lg:row-start-1">
+        {header}
+        {/* Beside the heading, at reading size (5g, Dawa's note 4); one of the two lines shows, by device. */}
+        <p className="mt-3 max-w-measure type-body text-ink-700">
+          <span className="pointer-coarse:hidden">{hint.pointer}</span>
+          <span className="hidden pointer-coarse:inline">{hint.touch}</span>
+        </p>
+      </div>
       <div className="mx-auto w-full max-w-[34rem] lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
         <figure>
           <svg viewBox="-100 -100 200 200" className="block w-full" aria-hidden="true">
@@ -189,7 +199,7 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                       fontFamily="var(--font-body)"
                       className="fill-ink-700"
                     >
-                      {HOUSES[c.house - 1].roman}
+                      {HOUSES[c.house - 1].numeral}
                     </text>
                   );
                 })}
@@ -262,7 +272,7 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                     setHouse((current) => (current === c.house ? null : c.house));
                   }}
                 >
-                  <title>{`${chartWheelCopy.houseTitle(HOUSES[c.house - 1].roman, HOUSES[c.house - 1].name)}. ${chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}`}</title>
+                  <title>{`${chartWheelCopy.houseTitle(HOUSES[c.house - 1].numeral, HOUSES[c.house - 1].name)}. ${chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}`}</title>
                 </line>
               );
             })}
@@ -280,9 +290,7 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
             <div key={`house-${chosenCusp.house}`} className="motion-in">
               <HousePanel house={chosenCusp.house} longitude={chosenCusp.longitude} onClose={() => setHouse(null)} />
             </div>
-          ) : (
-            <p className="text-center type-body-sm text-ink-500">{timeKnown ? chartWheelCopy.hintHouses : chartWheelCopy.hint}</p>
-          )}
+          ) : null}
         </div>
         {aside ? <div className="mt-10 hidden lg:block">{aside}</div> : null}
       </div>
@@ -320,7 +328,7 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
                     <span className="block">
                       {SIGNS[b.sign].name}
                       {degrees ? ` ${degrees}` : null}
-                      {b.house ? `, ${chartWheelCopy.house(HOUSES[b.house - 1].roman)}` : null}
+                      {b.house ? `, ${chartWheelCopy.house(HOUSES[b.house - 1].numeral)}` : null}
                     </span>
                     <span className="block type-caption text-ink-500">{keys.map((k) => k!.name).join(' · ')}</span>
                   </span>
@@ -336,7 +344,7 @@ export function ChartWheel({ wheel, header, words = chartWheelCopy, details = {}
               const at = cuspPlace(c.longitude);
               return (
                 <li key={c.house}>
-                  {chartWheelCopy.houseTitle(HOUSES[c.house - 1].roman, HOUSES[c.house - 1].name)}.{' '}
+                  {chartWheelCopy.houseTitle(HOUSES[c.house - 1].numeral, HOUSES[c.house - 1].name)}.{' '}
                   {chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}
                 </li>
               );
@@ -356,7 +364,7 @@ function HousePanel({ house, longitude, onClose }: { house: HouseNumber; longitu
     <div data-wheel-house={house} className="rounded-md border border-ink-200 bg-surface-200 p-4 shadow-rest md:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="type-heading-3 text-ink-900">{chartWheelCopy.houseTitle(def.roman, def.name)}</h3>
+          <h3 className="type-heading-3 text-ink-900">{chartWheelCopy.houseTitle(def.numeral, def.name)}</h3>
           <p className="mt-1 type-body-sm text-ink-700">{chartWheelCopy.cuspAt(degreeText(at)!, SIGNS[at.sign].name)}</p>
         </div>
         <button
@@ -399,7 +407,7 @@ function WheelPanel({
             <p className="mt-1 type-body text-ink-700">
               {SIGNS[b.sign].name}
               {degrees ? ` ${degrees}` : null}
-              {b.house ? `, ${chartWheelCopy.house(HOUSES[b.house - 1].roman)}` : null}
+              {b.house ? `, ${chartWheelCopy.house(HOUSES[b.house - 1].numeral)}` : null}
             </p>
           </div>
         </div>

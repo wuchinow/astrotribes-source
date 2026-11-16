@@ -621,7 +621,7 @@ export const planetPageCopy = {
   signsLede: (keyName: string, planet: string) => `Your ${keyName} is the sign ${the(planet)} was in when you were born.`,
   housesLede: (keyName: string, planet: string) =>
     `Your ${keyName} is the house ${the(planet)} was in. It needs your birth time.`,
-  houseLabel: (roman: string, name: string) => `House ${roman}, ${name}`,
+  houseLabel: (numeral: string, name: string) => `House ${numeral}, ${name}`,
   /** Where Dawa has not yet written the lines for a section. */
   signsComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each sign are still to come.`,
   housesComing: (planet: string) => `Dawa’s lines for ${the(planet)} in each house are still to come.`,

@@ -87,7 +87,7 @@ describe('the 28 Keys page', () => {
         chips += 1;
       }
       if (house) {
-        expect(words, body).toContain(`${house.name}${houseOf(at.house!).roman}`.replace(/\s/g, ''));
+        expect(words, body).toContain(`${house.name}${houseOf(at.house!).numeral}`.replace(/\s/g, ''));
         chips += 1;
       }
     }
@@ -100,19 +100,19 @@ describe('the 28 Keys page', () => {
     expect(BODY_GROUPS.flatMap((group) => bodiesIn(group.id)).sort()).toEqual([...BODY_IDS].sort());
   });
 
-  it('lists the twelve houses, I to XII, with their names, questions, and lines', () => {
+  it('lists the twelve houses, 1 to 12, with their names, questions, and lines', () => {
     const items = [...document.querySelectorAll('[data-house]')];
     expect(items).toHaveLength(12);
     items.forEach((item, i) => {
       const house = HOUSES[i];
       expect(item.getAttribute('data-house')).toBe(String(house.number));
-      expect(text(item.querySelector('.step-numeral'))).toBe(`${keysPage.houses.numberLabel} ${house.roman}`);
+      expect(text(item.querySelector('.step-numeral'))).toBe(`${keysPage.houses.numberLabel} ${house.numeral}`);
       expect(text(item.querySelector('h3'))).toBe(house.name);
       expect(text(item.querySelector('p'))).toBe(house.question);
       expect(text(item.querySelector('[data-house-line]'))).toBe(house.line);
     });
-    // Roman numerals only: no house is shown by its digit.
-    for (const item of items) expect(text(item)).not.toMatch(/\d/);
+    // Numbers since 5g (D2), not Dawa's Roman numerals.
+    items.forEach((item, i) => expect(text(item.querySelector('.step-numeral'))).toBe(`${keysPage.houses.numberLabel} ${i + 1}`));
   });
 
   it('says which keys need a birth time and which are generational, on exactly those keys', () => {
