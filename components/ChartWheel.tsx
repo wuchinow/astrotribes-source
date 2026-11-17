@@ -420,7 +420,9 @@ function WheelPanel({
         </button>
       </div>
       {showsRetrograde(b) ? <p className="mt-2 type-body-sm text-ink-700">{chartWheelCopy.retrograde(planet)}</p> : null}
-      <div className="mt-4 grid gap-5 sm:grid-cols-2">
+      {/* Two columns only where each has room for a Key's chip (5h, Dawa's note 5: on a laptop the panel
+          beside the wheel is narrow, and Chiron's chip ran under its house Key's). */}
+      <div className="mt-4 grid gap-5 grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))]">
         {signKey ? (
           <div>
             <KeyChip keyId={signKey.id} value={b.sign} showGloss />

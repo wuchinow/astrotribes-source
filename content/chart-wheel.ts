@@ -13,7 +13,8 @@ export const chartWheelCopy = {
   noTime:
     'Without a birth time there are no houses, and the planets sit where they were at midday, so the Moon may be a few degrees off.',
   listLabel: 'What the wheel shows',
-  house: (numeral: string) => `house ${numeral}`,
+  // A no-break space, so the number never drops to a line of its own (5h, Dawa's note 5).
+  house: (numeral: string) => `house\u00a0${numeral}`,
   /**
    * The hint beside the wheel's heading (5g, Dawa, Nov 15 note 4: "a small notice that says something like
    * 'hover and click on any planet or house cusp to see more details'"), at reading size. A device that

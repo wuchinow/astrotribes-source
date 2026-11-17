@@ -33,9 +33,11 @@ export function KeyChip({ keyId, value, showGloss = false, compact = false, href
   // A chip that links is cobalt (design system .at-chip). One that links nowhere
   // yet is a quiet paper pill with the name in ink (.at-chip-static), because
   // cobalt means clickable.
+  // A long name and sign ("Vulnerability Sagittarius") wrap inside the pill rather than run past a
+  // narrow column into the next one (5h, Dawa's Nov 15 note 5: words overlapping on Mars and Chiron).
   const chipClasses = cn(
     // Dawa, Nov 7: Key names much larger everywhere. 20px on a phone, 22px from md (was 16px).
-    'inline-flex min-h-11 items-baseline gap-2 rounded-pill border px-4 py-2 font-body text-[1.25rem] leading-[1.25] text-ink-900 no-underline md:text-[1.375rem]',
+    'inline-flex min-h-11 max-w-full flex-wrap items-baseline gap-x-2 rounded-pill border px-4 py-2 font-body text-[1.25rem] leading-[1.25] text-ink-900 no-underline md:text-[1.375rem]',
     href
       ? 'relative border-transparent bg-cobalt-100 transition-colors duration-200 hover:border-cobalt-400'
       : 'border-ink-200 bg-surface-200',
@@ -52,7 +54,7 @@ export function KeyChip({ keyId, value, showGloss = false, compact = false, href
   );
 
   return (
-    <span className={cn('inline-flex flex-col items-start', className)}>
+    <span className={cn('inline-flex max-w-full flex-col items-start', className)}>
       {href ? (
         <Link href={href} className={chipClasses} title={showGloss ? undefined : gloss}>
           {content}
