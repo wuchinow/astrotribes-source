@@ -37,9 +37,13 @@ export async function ownBirthChart(supabase: SupabaseClient, userId: string): P
 }
 
 export async function memberWheel(supabase: SupabaseClient, userId: string, saved: SavedSigns): Promise<WheelInput | null> {
+  const chart = await ownBirthChart(supabase, userId);
+  return chart ? wheelFrom(chart, saved) : null;
+}
+
+/** The wheel from a chart already worked out (Your chart runs the engine once for the wheel and the Moon's phase, 5h). */
+export function wheelFrom(chart: Chart, saved: SavedSigns): WheelInput | null {
   try {
-    const chart = await ownBirthChart(supabase, userId);
-    if (!chart) return null;
     const picked: Partial<Record<string, SignId>> = { sun: saved.sun, moon: saved.moon ?? undefined };
     return {
       bodies: WHEEL_BODIES.map((body) => {

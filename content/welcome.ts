@@ -62,12 +62,25 @@ export const yourChartCopy = {
   lede: 'Your Sun, your Moon, and your rising sign start your chart. Your 28 Keys follow below.',
   /** On a picked sign: "You chose Leo. Virgo is the other one it could be." */
   picked: (chosen: string, other: string) => `You chose ${chosen}. ${other} is the other sign it could be.`,
-  noTime: 'You saved your chart without a birth time, so Rising and the houses wait on one.',
-  // PLACEHOLDER (5c): the three under the wheel, in one panel beside the member's Tribe painting.
-  three: {
-    title: 'Your three',
-    /** With no birth time: the one link beside the note above. */
+  // 5h (Dawa, Nov 15, notes 2, 3, and 15; David took the plan's D5): his greeting over the member's own
+  // name, top and center, so the page says at once whose it is. His words, in the singular here because
+  // the page greets one member (David, Nov 17: "change to singular"); listed in Drafts for Dawa.
+  greeting: 'Welcome, fellow space and time traveler',
+  // PLACEHOLDER (5h, Dawa's note 6; David took the plan's D1, "Your Core Five" as one panel): the five
+  // Keys at the heart of a chart, the three signs above with Kirstie's painting of each (note 7), the
+  // Sun's and Moon's houses below them as equals. "Core Five" is Dawa's own word for them.
+  core: {
+    title: 'Your Core Five',
+    /** With no birth time, two of the five. */
+    titleNoTime: 'Your core Keys',
+    lede: 'The heart of your chart: your three signs, and the houses your Sun and Moon stand in.',
+    ledeNoTime: 'The heart of your chart: the signs your Sun and Moon stand in.',
+    /** With no birth time: the note, then the one link after it. */
+    noTime:
+      'You saved your chart without a birth time. With one there are five: your rising sign and the houses of your Sun and Moon join these two.',
     addTime: 'Add your birth time',
+    /** "Your Sun in house 5, Creativity" */
+    inHouse: (planet: string, numeral: string, name: string) => `Your ${planet} in house ${numeral}, ${name}`,
   },
   // PLACEHOLDER: the member's own Keys, one planet at a time as Dawa writes each in full
   // (content/planets.ts). Key names arrive as arguments.
@@ -123,6 +136,11 @@ export const yourChartCopy = {
     /** "February 17, 1966" */
     body: (newYear: string) =>
       `It comes from the Chinese calendar, a tradition separate from your Western chart. Your Chinese year began at Lunar New Year, ${newYear}, and each year pairs one of twelve animals with one of five elements.`,
+    // 5h (Dawa's note 1): what the two mean, our words (content/chinese-meanings.ts). "The Snake" and "Water"
+    meaningAnimal: (animal: string) => `The ${animal}`,
+    meaningElement: (element: string) => element,
+    /** Only the member sees the two together; other members see the animal alone. */
+    privacy: 'Other members see your animal, never your element: the two together would give away your birth year.',
   },
   next: {
     eyebrow: 'What comes next',

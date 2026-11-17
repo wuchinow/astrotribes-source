@@ -22,6 +22,10 @@ import { TintPanel } from '@/components/TintPanel';
 import { TribePainting } from '@/components/TribePainting';
 import { WelcomeGuide } from '@/components/WelcomeGuide';
 import { ZodiacHanzi, ZodiacJade } from '@/components/ZodiacJade';
+import { MoonDisc } from '@/components/sky/MoonDisc';
+import { HouseMark } from '@/components/HouseMark';
+import { birthMoonCopy } from '@/content/birth-moon';
+import { ANIMAL_MEANINGS, ELEMENT_MEANINGS } from '@/content/chinese-meanings';
 import { PLANET_PAGES, paragraphs, planetHref, teaserLine } from '@/content/planets';
 import { resultCopy } from '@/content/chart';
 import { chartWheelCopy } from '@/content/chart-wheel';
@@ -30,6 +34,7 @@ import { yourChartCopy } from '@/content/welcome';
 import { clanLinks } from '@/content/clans';
 import { VIBE_DRAFTS, VIBE_LINES } from '@/content/vibes';
 import { THREE, sharePath, type FreeChart } from '@/lib/free-chart';
+import { BIRTH_PHASES, birthMoon, litShare, phaseLook, type BirthPhase } from '@/lib/birth-moon';
 import { chineseSign } from '@/lib/chinese-zodiac';
 import { familyOf, GENERATIONAL } from '@/lib/generations';
 import { drawn } from '@/lib/glyphs';
@@ -40,7 +45,7 @@ import { supabaseConfigured } from '@/lib/supabase/env';
 import { signInFor } from '@/lib/return-path';
 import { memberClient } from '@/lib/supabase/server';
 import { wheelDetails } from '@/lib/wheel-details';
-import { memberWheel } from '@/lib/your-wheel';
+import { ownBirthChart, wheelFrom } from '@/lib/your-wheel';
 
 export const metadata: Metadata = { title: yourChartCopy.title };
 
@@ -94,11 +99,16 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
   if (!user) redirect(signInFor('/your-chart'));
   const firstVisit = (await searchParams).welcome === '1';
 
-  const { data: rows } = await supabase
-    .from('placements')
-    .select('body, sign, sign_alternate, house')
-    .eq('user_id', user.id)
-    .in('body', [...THREE, ...PLANET_PAGES.map((planet) => planet.body)]);
+  const [{ data: rows }, { data: profile }] = await Promise.all([
+    supabase
+      .from('placements')
+      .select('body, sign, sign_alternate, house')
+      .eq('user_id', user.id)
+      .in('body', [...THREE, ...PLANET_PAGES.map((planet) => planet.body)]),
+    supabase.from('profiles').select('display_name').eq('id', user.id).maybeSingle(),
+  ]);
+  // The member's own name, top and center (5h, Dawa's notes 2 and 3).
+  const displayName = typeof profile?.display_name === 'string' && profile.display_name.trim() ? profile.display_name.trim() : null;
   const byBody = new Map((rows as Row[] | null)?.map((row) => [row.body, row]) ?? []);
   const sun = byBody.get('sun');
   if (!sun) redirect('/welcome');
@@ -124,8 +134,14 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
         return family ? [family] : [];
       })
     : [];
-  // The wheel (3g): the member's own chart redrawn on the server from their birth details. Null on any failure.
-  const wheel = await memberWheel(supabase, user.id, { sun: sun.sign, moon: moon?.sign ?? null });
+  // The wheel (3g): the member's own chart redrawn on the server from their birth details. Null on any
+  // failure. The engine runs once, for the wheel and the Moon's phase at birth (5h, Dawa's note 9),
+  // and the chart is dropped with the page: only the phase's name reaches it, never a degree.
+  const chart = await ownBirthChart(supabase, user.id);
+  const wheel = chart ? wheelFrom(chart, { sun: sun.sign, moon: moon?.sign ?? null }) : null;
+  const moonAtBirth = chart
+    ? birthMoon(chart.placements.sun.longitude, chart.placements.moon.longitude, chart.timeKnown)
+    : null;
 
   const familyBy = new Map(families.map((family) => [family.planet as BodyId, family]));
 
@@ -279,11 +295,21 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
   // Where each of the three leads: the Tribe, and the Moon's and the rising sign's own pages (4l).
   const THREE_HREF = { sun: '/tribes', moon: '/clans', rising: '/vibes' } as const;
   const THREE_KEY = { sun: 'sunSign', moon: 'moonSign', rising: 'risingSign' } as const;
+  // The Core Five (5h): the three signs, then the Sun's and Moon's houses, each Key leading on to its
+  // planet's page. The houses wait on a birth time, so without one the panel holds two.
+  const coreSigns = THREE.filter((body) => byBody.has(body));
+  const coreHouses = (['sun', 'moon'] as const).flatMap((body) => {
+    const house = byBody.get(body)?.house;
+    const page = PLANET_PAGES.find((planet) => planet.body === body);
+    return house && page ? [{ body, house, href: planetHref(page), keyId: body === 'sun' ? ('sunHouse' as const) : ('moonHouse' as const) }] : [];
+  });
+  const coreTitle = rising ? yourChartCopy.core.title : yourChartCopy.core.titleNoTime;
   // The side list's places, in page order (5d).
   const railItems = [
-    { id: 'your-three', label: yourChartCopy.three.title },
+    { id: 'your-core', label: coreTitle },
     ...groupsShown.flatMap((group) => [
       { id: `your-group-${group.id}`, label: group.name },
+      ...(group.id === 'identity' && moonAtBirth ? [{ id: 'your-birth-moon', label: birthMoonCopy.rail }] : []),
       ...(group.id === 'identity' && chinese ? [{ id: 'your-chinese', label: yourChartCopy.chinese.rail }] : []),
     ]),
     { id: 'your-chart-next', label: yourChartCopy.next.eyebrow },
@@ -309,8 +335,70 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
             </div>
           </div>
           <p className="mt-4 max-w-measure type-body-sm text-ink-700">{yourChartCopy.chinese.body(longDate(chinese.newYear))}</p>
+          {/* What the two mean (5h, Dawa's note 1). Here only: other members see the animal alone (0008). */}
+          <dl data-your-chinese-meaning="" className="mt-5 grid max-w-measure gap-4">
+            <div>
+              <dt className="type-ui font-semibold text-ink-900">{yourChartCopy.chinese.meaningAnimal(chinese.animal)}</dt>
+              <dd className="mt-1 type-body text-ink-900">{ANIMAL_MEANINGS[chinese.animal]}</dd>
+            </div>
+            <div>
+              <dt className="type-ui font-semibold text-ink-900">{yourChartCopy.chinese.meaningElement(chinese.element)}</dt>
+              <dd className="mt-1 type-body text-ink-900">{ELEMENT_MEANINGS[chinese.element]}</dd>
+            </div>
+          </dl>
+          <p className="mt-5 max-w-measure type-caption text-ink-500">{yourChartCopy.chinese.privacy}</p>
         </TintPanel>
         <ZodiacJade animal={chinese.animal} sizes="(width >= 64rem) 14rem, 12rem" className="mx-auto max-w-[12rem]! lg:mx-0 lg:max-w-[14rem]!" />
+      </div>
+    </Section>
+  ) : null;
+
+  // The Moon's phase at birth (5h, Dawa's note 9), under Identity beside the Chinese year: plain paper
+  // like it, its disc where the jade figure stands. With no birth time and a day that crossed from one
+  // phase to the next, both are read.
+  const moonPhases: BirthPhase[] = moonAtBirth ? [moonAtBirth.phase, ...(moonAtBirth.or ? [moonAtBirth.or] : [])] : [];
+  const moonSection = moonAtBirth ? (
+    <Section labelledBy="your-birth-moon">
+      <div data-your-birth-moon={moonAtBirth.phase} className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,14rem)]">
+        <TintPanel>
+          <h2 id="your-birth-moon" className="type-heading-3 text-ink-900">
+            {birthMoonCopy.title}
+          </h2>
+          <p className="mt-2 type-heading-2 italic text-highlight">
+            {moonAtBirth.or
+              ? birthMoonCopy.orName(birthMoonCopy.names[moonAtBirth.phase], birthMoonCopy.names[moonAtBirth.or])
+              : birthMoonCopy.names[moonAtBirth.phase]}
+          </p>
+          <p className="mt-4 max-w-measure type-body-sm text-ink-700">{birthMoonCopy.intro}</p>
+          {moonAtBirth.or ? (
+            <p className="mt-3 max-w-measure type-body-sm text-ink-700">
+              {birthMoonCopy.either(birthMoonCopy.names[moonAtBirth.phase], birthMoonCopy.names[moonAtBirth.or])}
+            </p>
+          ) : null}
+          {moonPhases.map((phase) => (
+            <div key={phase} className="mt-5 max-w-measure">
+              {moonAtBirth.or ? <h3 className="type-ui font-semibold text-ink-900">{birthMoonCopy.names[phase]}</h3> : null}
+              <p className={cn('type-body text-ink-900', moonAtBirth.or && 'mt-1')}>
+                {birthMoonCopy.lines[phase]}
+              </p>
+              {birthMoonCopy.also[phase] ? (
+                <p className="mt-2 type-caption text-ink-500">{birthMoonCopy.alsoCalled(birthMoonCopy.also[phase]!)}</p>
+              ) : null}
+            </div>
+          ))}
+          <p className="mt-5 max-w-measure type-caption text-ink-500">{birthMoonCopy.source}</p>
+        </TintPanel>
+        {/* The phase drawn in its familiar shape, never at the member's own degree. */}
+        <div className="flex justify-center gap-6 text-gold-500 lg:flex-col lg:items-center">
+          {moonPhases.map((phase) => (
+            <MoonDisc
+              key={phase}
+              illumination={litShare(phaseLook(phase))}
+              waning={BIRTH_PHASES.indexOf(phase) >= 4}
+              size={moonPhases.length > 1 ? 112 : 160}
+            />
+          ))}
+        </div>
       </div>
     </Section>
   ) : null;
@@ -319,9 +407,21 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
     <>
       <ArtWash piece="p9" top>
         <div className="mx-auto max-w-content px-4 pt-31 pb-12 md:px-6 md:pt-38 md:pb-16">
-          {/* The wheel leads the page (David, Nov 4); the plain introduction stands in only if it cannot be drawn. */}
-          {wheel ? (
-            <div className="panel-frost p-6 md:p-10">
+          {/*
+            The member's own page (5h, Dawa, Nov 15, notes 2, 3, and 15): his greeting, then their name,
+            large, top and center, so the page says at once whose it is. Then the wheel, which leads the
+            page (David, Nov 4); the plain introduction stands in only if it cannot be drawn.
+          */}
+          <div className="panel-frost p-6 md:p-10">
+            <header data-your-name="" className="mb-8 border-b border-ink-200 pb-8 text-center md:mb-10 md:pb-10">
+              {/* One heading at one size, the greeting's accent line over the name (David, Nov 17: the
+                  greeting was too small and the name too big). */}
+              <h1 className="mx-auto max-w-[24ch] type-display-lg text-ink-900">
+                <span className="block font-normal italic text-highlight">{yourChartCopy.greeting}</span>
+                {displayName ? <span className="mt-1 block [overflow-wrap:anywhere]">{displayName}</span> : null}
+              </h1>
+            </header>
+            {wheel ? (
               <ChartWheel
                 wheel={wheel}
                 details={wheelDetails(wheel)}
@@ -334,73 +434,90 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
                     className="mx-auto max-w-[18rem]!"
                   />
                 }
-                header={
-                  <>
-                    <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>
-                    <Headline as="h1" line={chartWheelCopy.line} accent={chartWheelCopy.accent} />
-                  </>
-                }
+                header={<Headline line={chartWheelCopy.line} accent={chartWheelCopy.accent} />}
               />
-            </div>
-          ) : (
-            <div className="panel-frost max-w-[40rem] p-6 md:p-10">
-              <Eyebrow>{yourChartCopy.eyebrow}</Eyebrow>
-              <Headline as="h1" line={yourChartCopy.line} accent={yourChartCopy.accent} />
-              <Lede>{yourChartCopy.lede}</Lede>
-            </div>
-          )}
+            ) : (
+              <div className="max-w-[40rem]">
+                <Headline line={yourChartCopy.line} accent={yourChartCopy.accent} />
+                <Lede>{yourChartCopy.lede}</Lede>
+              </div>
+            )}
+          </div>
           {/*
-            The three, once (5c): one panel beside Kirstie's painting of the member's Tribe, each Key a
-            link to its own page, in place of three cards that the planets below then repeated. The
+            Your Core Five (5h, Dawa's note 6; David took the plan's D1): the three signs across the top,
+            each beside Kirstie's painting of its sign at one size (note 7), and the Sun's and Moon's
+            houses below them as equals, no longer only inside the Sun and Moon cards. Without a birth
+            time it holds the two signs and the way to add one. Each Key links to its own page. The
             birth time note stands here and nowhere else on the page.
           */}
-          <section aria-labelledby="your-three" data-your-three="" className="panel-frost mt-6 grid gap-6 p-6 sm:grid-cols-[minmax(0,11rem)_minmax(0,1fr)] sm:items-center md:gap-10 md:p-8 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
-            <TribePainting
-              sign={sun.sign}
-              sizes="(width >= 64rem) 14rem, 11rem"
-              className="mx-auto max-w-[9rem]! sm:mx-0 sm:max-w-none!"
-            />
-            <div className="min-w-0">
-              <h2 id="your-three" className="type-label text-ink-500">
-                {yourChartCopy.three.title}
-              </h2>
-              <ul role="list" className="mt-4 grid gap-5 lg:grid-cols-3 lg:gap-6">
-                {THREE.map((body) => {
-                  const row = byBody.get(body);
-                  return (
-                    <li key={body} data-your-body={body} className="flex items-start gap-3 lg:flex-col lg:gap-2">
-                      <GlyphIcon glyph={row ? row.sign : body} size={48} className="mt-1 shrink-0 text-ink-900 lg:mt-0" />
-                      <div className="min-w-0">
-                        <p className="type-caption text-ink-500">{resultCopy.bodies[body]}</p>
-                        {row ? (
-                          <KeyChip keyId={THREE_KEY[body]} value={row.sign} href={`${THREE_HREF[body]}/${row.sign}`} showGloss compact className="mt-1" />
-                        ) : (
-                          <KeyChip keyId={THREE_KEY[body]} showGloss compact className="mt-1" />
-                        )}
-                        {row?.sign_alternate && body !== 'rising' ? (
-                          <p className="mt-1 type-caption text-ink-500">
-                            {yourChartCopy.picked(SIGNS[row.sign].name, SIGNS[row.sign_alternate].name)}
-                          </p>
-                        ) : null}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-              {rising ? null : (
-                <p className="mt-5 max-w-measure type-body-sm text-ink-700">
-                  {yourChartCopy.noTime}{' '}
-                  <Link
-                    href="/welcome?edit=birth"
-                    className="font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+          <section aria-labelledby="your-core" data-your-core="" className="panel-frost mt-6 p-6 md:p-8">
+            <h2 id="your-core" className="type-heading-2 text-ink-900">
+              {coreTitle}
+            </h2>
+            <p className="mt-2 max-w-measure type-body text-ink-700">
+              {rising ? yourChartCopy.core.lede : yourChartCopy.core.ledeNoTime}
+            </p>
+            <ul role="list" className={cn('mt-6 grid gap-6 md:gap-8', coreSigns.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2')}>
+              {coreSigns.map((body) => {
+                const row = byBody.get(body)!;
+                return (
+                  <li
+                    key={body}
+                    data-your-body={body}
+                    className="grid grid-cols-[minmax(0,6rem)_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] sm:gap-6 lg:grid-cols-1 lg:items-start lg:gap-4"
                   >
-                    {yourChartCopy.three.addTime}
-                  </Link>
-                </p>
-              )}
-              <div className="mt-6">
-                <Button href={`/tribes/${sun.sign}`}>{yourChartCopy.next.tribe(SIGNS[sun.sign].name)}</Button>
-              </div>
+                    <TribePainting sign={row.sign} sizes="(width >= 64rem) 13rem, (width >= 40rem) 9rem, 6rem" className="lg:max-w-[13rem]!" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <GlyphIcon glyph={row.sign} size={24} className="shrink-0 text-ink-900" />
+                        <p className="type-caption text-ink-500">{resultCopy.bodies[body]}</p>
+                      </div>
+                      <KeyChip keyId={THREE_KEY[body]} value={row.sign} href={`${THREE_HREF[body]}/${row.sign}`} showGloss compact className="mt-2" />
+                      {row.sign_alternate && body !== 'rising' ? (
+                        <p className="mt-2 type-caption text-ink-500">
+                          {yourChartCopy.picked(SIGNS[row.sign].name, SIGNS[row.sign_alternate].name)}
+                        </p>
+                      ) : null}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            {coreHouses.length > 0 ? (
+              <ul role="list" className="mt-6 grid gap-4 border-t border-ink-200 pt-6 md:mt-8 md:gap-6 md:pt-8 lg:grid-cols-2">
+                {coreHouses.map(({ body, house, href, keyId }) => (
+                  // Each house beside its mark (David, Nov 17): Dawa draws no glyph for a house, so a
+                  // circle of twelve with this one filled, the width of a painting on a phone and tablet.
+                  <li
+                    key={keyId}
+                    data-your-key={keyId}
+                    className="grid min-w-0 grid-cols-[minmax(0,6rem)_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] sm:gap-6 lg:items-start"
+                  >
+                    <HouseMark house={house} className="text-ink-900" />
+                    <div className="min-w-0">
+                      <p className="type-caption text-ink-500">
+                        {yourChartCopy.core.inHouse(BODIES[body].name, houseOf(house).numeral, houseOf(house).name)}
+                      </p>
+                      <KeyChip keyId={keyId} value={house} href={href} showGloss compact className="mt-2" />
+                      <p className="mt-2 type-body-sm italic text-ink-700">{houseOf(house).question}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {rising ? null : (
+              <p className="mt-6 max-w-measure type-body-sm text-ink-700">
+                {yourChartCopy.core.noTime}{' '}
+                <Link
+                  href="/welcome?edit=birth"
+                  className="font-semibold text-cobalt-600 underline decoration-gold-500 decoration-2 underline-offset-4"
+                >
+                  {yourChartCopy.core.addTime}
+                </Link>
+              </p>
+            )}
+            <div className="mt-8">
+              <Button href={`/tribes/${sun.sign}`}>{yourChartCopy.next.tribe(SIGNS[sun.sign].name)}</Button>
             </div>
           </section>
         </div>
@@ -513,6 +630,7 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
                 {group.id === 'identity' ? risingCard : null}
               </div>
             </Section>
+            {group.id === 'identity' ? moonSection : null}
             {group.id === 'identity' ? chineseSection : null}
           </Fragment>
         );
