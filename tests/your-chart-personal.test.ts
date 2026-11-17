@@ -89,7 +89,13 @@ describe('Your Core Five (note 6, D1) with the three paintings (note 7)', () => 
     expect(page).toMatch(/coreSigns\.map\(\(body\) =>[\s\S]*?<TribePainting sign=\{row\.sign\}/);
     expect(page).toMatch(/keyId: body === 'sun' \? \('sunHouse' as const\) : \('moonHouse' as const\)/);
     // Each house beside its mark: twelve slices, its own filled (David, Nov 17).
-    expect(page).toMatch(/<HouseMark house=\{house\}/);
+    expect(page).toMatch(/<HouseMark house=\{house\} sign=\{sign\}/);
+    // Drawn like the chart wheel (5m, David, Nov 17): its ink lines, its element tints, its body font.
+    const mark = read('components/HouseMark.tsx');
+    expect(mark).toContain('fontFamily="var(--font-body)"');
+    expect(mark).toMatch(/className="stroke-ink-500"/);
+    expect(mark).toMatch(/fill-fire/);
+    expect(mark).not.toMatch(/fill-highlight|font-display/);
     expect(page).not.toMatch(/yourChartCopy\.three/);
   });
 });

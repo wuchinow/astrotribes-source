@@ -301,7 +301,8 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
   const coreHouses = (['sun', 'moon'] as const).flatMap((body) => {
     const house = byBody.get(body)?.house;
     const page = PLANET_PAGES.find((planet) => planet.body === body);
-    return house && page ? [{ body, house, href: planetHref(page), keyId: body === 'sun' ? ('sunHouse' as const) : ('moonHouse' as const) }] : [];
+    const sign = byBody.get(body)?.sign;
+    return house && page ? [{ body, house, sign, href: planetHref(page), keyId: body === 'sun' ? ('sunHouse' as const) : ('moonHouse' as const) }] : [];
   });
   const coreTitle = rising ? yourChartCopy.core.title : yourChartCopy.core.titleNoTime;
   // The side list's places, in page order (5d).
@@ -485,15 +486,16 @@ export default async function YourChartPage({ searchParams }: PageProps<'/your-c
             </ul>
             {coreHouses.length > 0 ? (
               <ul role="list" className="mt-6 grid gap-4 border-t border-ink-200 pt-6 md:mt-8 md:gap-6 md:pt-8 lg:grid-cols-2">
-                {coreHouses.map(({ body, house, href, keyId }) => (
+                {coreHouses.map(({ body, house, sign, href, keyId }) => (
                   // Each house beside its mark (David, Nov 17): Dawa draws no glyph for a house, so a
-                  // circle of twelve with this one filled, the width of a painting on a phone and tablet.
+                  // circle of twelve with this one filled, drawn like the wheel (5m), the width of a painting on
+                  // a phone and tablet.
                   <li
                     key={keyId}
                     data-your-key={keyId}
                     className="grid min-w-0 grid-cols-[minmax(0,6rem)_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] sm:gap-6 lg:items-start"
                   >
-                    <HouseMark house={house} className="text-ink-900" />
+                    <HouseMark house={house} sign={sign} />
                     <div className="min-w-0">
                       <p className="type-caption text-ink-500">
                         {yourChartCopy.core.inHouse(BODIES[body].name, houseOf(house).numeral, houseOf(house).name)}
